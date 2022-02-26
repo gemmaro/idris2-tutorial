@@ -1219,7 +1219,7 @@ column, concatenating and zipping tables, and so on.
 We will stop for now, probably coming back to this in
 later examples.
 
-## Conclusion
+## まとめ
 
 Dependent pairs and records are necessary to at runtime
 inspect the values defining the types we work with. By pattern

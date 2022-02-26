@@ -881,7 +881,7 @@ replicate'' {n = S _} v = v :: replicate'' v
    [[1, 4], [2, 5], [3, 6]]
    ```
 
-## Conclusion
+## まとめ
 
 * Dependent types allow us to calculate types from values.
   This makes it possible to encode properties of values
@@ -919,7 +919,7 @@ Note, that data type `Vect` together with many of the functions we
 implemented here is available from module `Data.Vect` from the *base*
 library. Likewise, `Fin` is available from `Data.Fin` from *base*.
 
-### What's next
+### お次は？
 
 In the [next section](IO.md), it is time to learn how to write effectful programs
 and how to do this while still staying *pure*.

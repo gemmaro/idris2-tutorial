@@ -1440,7 +1440,7 @@ already been in use in Haskell. They where introduced in the
 article [*Applicative Programming with Effects*](https://www.staff.city.ac.uk/~ross/papers/Applicative.html),
 which is freely available online and a highly recommended read.
 
-## Conclusion
+## まとめ
 
 * Interfaces `Functor`, `Applicative`, and `Monad` abstract over
   programming patterns that come up when working with type

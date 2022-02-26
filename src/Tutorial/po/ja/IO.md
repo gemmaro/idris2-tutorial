@@ -1117,7 +1117,7 @@ a state monad in disguise but with an abstract state
 type, which makes it impossible for us to run the
 stateful computation.
 
-## Conclusion
+## まとめ
 
 * Values of type `IO a` describe programs with side effects,
   which will eventually result in a value of type `a`.
@@ -1146,7 +1146,7 @@ stateful computation.
   operating on a symbolic `%World` state.
 
 
-### What's next
+### お次は？
 
 Now, that we had a glimpse at *monads* and the *bind* operator,
 it is time to in the [next chapter](Functor.md) introduce `Monad` and some

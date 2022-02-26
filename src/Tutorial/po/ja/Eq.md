@@ -1113,7 +1113,7 @@ the compiled Idris program.
    plus `Data.HList.(++)` instead of custom function `appRows`.
 
 
-## Conclusion
+## まとめ
 
 The concept of *types as propositions, values as proofs* is
 a very powerful tool for writing provably correct programs. We
