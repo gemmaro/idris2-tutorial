@@ -1143,7 +1143,7 @@ You can find more examples for functor/bifunctor compositions
 in Haskell's [bifunctors](https://hackage.haskell.org/package/bifunctors)
 package.
 
-## Conclusion
+## まとめ
 
 Interface `Traversable` and its main function `traverse` are incredibly
 powerful forms of abstraction - even more so, because both `Applicative`

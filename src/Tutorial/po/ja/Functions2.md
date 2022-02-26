@@ -336,7 +336,7 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
         Nothing => UnknownUser email
 ```
 
-### Exercises
+### 演習
 
 The exercises in this section are supposed to increase
 you experience in writing purely functional code. In some
@@ -910,7 +910,7 @@ Tutorial.Functions2> readDNA "CGFTAQ"
 Left ["Unknown nucleobase: 'F'", "Unknown nucleobase: 'Q'"]
 ```
 
-## Conclusion
+## まとめ
 
 We again covered a lot of ground in this section. I can't stress enough that you
 should get yourselves accustomed to programming with holes and let the
@@ -941,7 +941,7 @@ in at a later time. Use the REPL (or your editor) to inspect
 the types of holes together with the names, types, and quantities of all
 variables in their context.
 
-### What's next
+### お次は？
 
 In the [next chapter](Dependent.md)
 we'll start using dependent types to help us write provably correct code.

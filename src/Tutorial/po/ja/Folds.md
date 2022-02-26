@@ -1073,7 +1073,7 @@ implement all six functions of the interface.
      snd : g a
    ```
 
-## Conclusion
+## まとめ
 
 We learned a lot about recursion, totality checking, and folds
 in this chapter, all of which are important concepts in pure
