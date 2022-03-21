@@ -310,7 +310,7 @@ using a technique called *proof search*. This allows us
 to make functions safe and convenient to use at the same
 time.
 
-### Exercises part 1
+### 演習 パート1
 
 In these exercises, you'll have to implement several
 functions making use of auto implicits, to constrain
@@ -437,7 +437,7 @@ It can be instructive to implement `get` yourself, using holes on
 the right hand side to see the context and types of values Idris
 infers based on the value of the `Elem` predicate.
 
-Let's give this a spin at the REPL:
+ちょっとREPLで動かしてみましょう。
 
 ```repl
 Tutorial.Predicates> get Nat ["foo", Just "bar", S Z]
@@ -683,7 +683,7 @@ At the end of this chapter we will use `InSchema` in
 our CSV command-line application to list all values
 in a column.
 
-### Exercises part 2
+### 演習 パート2
 
 1. Show that `InSchema` is decidable by changing the output type
    of `inSchema` to `Dec (c ** InSchema n ss c)`.
@@ -1035,7 +1035,7 @@ Below, we will see an additional way of handling all
 errors at once by defining a custom interface for
 error handling.
 
-### Exercises part 3
+### 演習 パート3
 
 1. Implement the following utility functions for `Union`:
 

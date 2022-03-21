@@ -246,7 +246,7 @@ from the first law that `traverse Id = Id`. This means, that
 `traverse` must not change the size or shape of the container
 type, nor is it allowed to change the order of elements.
 
-### Exercises part 1
+### 演習 パート1
 
 1. It is interesting that `Traversable` has a `Functor`
    constraint. Proof that every `Traversable` is
@@ -583,7 +583,7 @@ again return an updated state, `s3`, which is passed on to
 later stateful computations together with the result of
 applying `f` to `va`.
 
-### Exercises part 2
+### 演習 パート2
 
 This sections consists of two extended exercise, the aim
 of which is to increase your understanding of the state monad.
@@ -1046,7 +1046,7 @@ checkers, arriving eventually at a function for parsing
 properly typed CSV tables with automatic line numbering and
 error accumulation, all of which just worked on first try.
 
-### Exercises part 3
+### 演習 パート3
 
 The *Prelude* provides three additional interfaces for
 container types parameterized over *two* type parameters
