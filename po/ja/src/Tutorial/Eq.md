@@ -276,7 +276,7 @@ concatTables3 (MkTable s1 m rs1) (MkTable s2 n rs2) = case eqSchema s1 s2 of
   Nothing   => Nothing
 ```
 
-### Exercises part 1
+### 演習 パート1
 
 In the following exercises, you are going to implement
 some very basic properties of equality proofs. You'll
@@ -558,7 +558,7 @@ Note: If you have semantic highlighting turned on in your editor
 you will note that `map` and `id` in `mapMaybeId1` get
 highlighted differently: `map` as a function name, `id` as a bound variable.
 
-### Exercises part 2
+### 演習 パート2
 
 In these exercises, you are going to proof several simple properties
 of small functions. When writing proofs, it is even more important
@@ -834,7 +834,7 @@ There is an interface called `DecEq` exported by module `Decidable.Equality`
 for types for which we can implement a decision procedure for propositional
 equality. We can implement this to figure out if two values are equal or not.
 
-### Exercises part 3
+### 演習 パート3
 
 1. Show that there can be no non-empty vector of `Void`
    by writing a corresponding implementation of uninhabited
@@ -1076,7 +1076,7 @@ This allows us to run arbitrarily complex computations to produce
 such values without fear of these computations slowing down
 the compiled Idris program.
 
-### Exercises part 4
+### 演習パート4
 
 1. Implement `plusSuccRightSucc` yourself.
 

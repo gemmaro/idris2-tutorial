@@ -319,7 +319,7 @@ Note also, that *do blocks* are ordinary expressions,
 and we can, for instance, start a new *do block* on
 the right hand side of a case expression.
 
-### Exercises part 1
+### 演習 パート1
 
 In these exercises, you are going to implement some
 small command-line applications. Some of these will potentially
@@ -736,7 +736,7 @@ it is abused just to show how clever you are, you make things
 harder for other people (including your future self!)
 reading and trying to understand your code.
 
-### Exercises part 2
+### 演習 パート2
 
 1. Reimplement the following *do blocks*, once by using
    *bang notation*, and once by writing them in their
@@ -966,7 +966,7 @@ use cases for this in later chapters, especially when we
 talk about monad transformers. For now, you can treat these
 `io` parameters as being specialized to `IO`.
 
-### Exercises part 3
+### 演習 パート3
 
 1. As we have seen in the examples above, `IO` actions
    working with file handles often come with the risk

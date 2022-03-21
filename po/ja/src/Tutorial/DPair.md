@@ -35,7 +35,7 @@ import Text.CSV
 %default total
 ```
 
-## Dependent Pairs
+## 依存対
 
 We've already seen several examples of how useful the length
 index of a vector is to describe more precisely in the types what
@@ -345,7 +345,7 @@ Again, as a quick exercise, try implementing `toDPair` in terms
 of `length`, and note how Idris will fail to unify the
 result of `length` with the actual length of the vector.
 
-### Exercises part 1
+### 演習 パート1
 
 1. Declare and implement a function for filtering a
    vector similar to `Data.List.filter`.
@@ -625,7 +625,7 @@ format. Failing to do so leads to a compile time exception instead of
 an error at runtime or - even worse - the program silently running
 a bogus computation.
 
-### Dependent Records vs Sum Types
+### 依存型対直和型
 
 Dependent records as shown for `AnyVect a` are a generalization
 of dependent pairs: We can have an arbitrary number of fields
@@ -657,7 +657,7 @@ one value, as we will see in the exercises. In such cases,
 sum types and dependent pairs quickly become unwieldy, and
 you should go for an encoding as a dependent record.
 
-### Exercises part 2
+### 演習 パート2
 
 Sharpen your skills in using dependent pairs and dependent
 records! In exercises 2 to 7 you have to decide yourself,
@@ -763,9 +763,7 @@ Enter a command: quit
 Goodbye.
 ```
 
-This example was inspired by a similar program used as an example
-in the [Type-Driven Development with Idris](https://www.manning.com/books/type-driven-development-with-idris)
-book.
+この例は書籍[Type-Driven Development with Idris](https://www.manning.com/books/type-driven-development-with-idris)にある例で使われたプログラムに着想を得ました。
 
 We'd like to focus on several things here:
 
@@ -1150,7 +1148,7 @@ main : IO ()
 main = runProg $ MkTable [] _ []
 ```
 
-### Exercises part 3
+### 演習 パート3
 
 The challenges presented here all deal with enhancing our
 table editor in several interesting ways. Some of them are

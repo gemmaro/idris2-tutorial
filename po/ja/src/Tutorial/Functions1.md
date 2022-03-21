@@ -167,7 +167,7 @@ Tutorial.Functions1> (twice . twice . twice . twice) square 2
 ```
 
 この結果にはびっくりしたかもしれません。
-なので溶き解していきましょう。
+なのでときほぐしていきましょう。
 以下の2つの式は振舞いについて等価です。
 
 ```idris
@@ -472,7 +472,7 @@ arithTest' = 5 + 10 * 12
    not : (Integer -> Bool) -> Integer -> Bool
    ```
 
-   他の2つの関数を実装してREPLで試してください。
+   残りの2つの関数 `(||)` と `not` を実装してREPLで試してください。
 
    ```repl
    Tutorial.Functions1> not (isSmall && isOdd) 73

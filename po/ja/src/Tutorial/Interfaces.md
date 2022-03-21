@@ -186,7 +186,7 @@ by Idris for us.
 Thus, we have defined all these utility functions once and for
 all for every type with an implementation of interface `Comp`.
 
-### Exercises part 1
+### 演習 パート1
 
 1. Implement function `anyLarger`, which should return `True`,
 if and only if a list of values contains at least one element larger
@@ -349,7 +349,7 @@ Equals Bool where
   neq _ _         = False
 ```
 
-### Exercises part 2
+### 演習 パート2
 
 1. Implement interfaces `Equals`, `Comp`, `Concat`, and
   `Empty` for pairs, constraining your implementations as necessary.
@@ -363,7 +363,7 @@ Equals Bool where
    ```idris
    data Tree : Type -> Type where
      Leaf : a -> Tree a
-     Node : Tree a -> Tree a
+     Node : Tree a -> Tree a -> Tree a
    ```
 
 ## Interfaces in the *Prelude*
@@ -581,9 +581,9 @@ functions each provides:
 
 * `Num`
 
-  * `(+)` : Addition
+  * `(+)`: 加算
 
-  * `(*)` : Multiplication
+  * `(*)`: 乗算
 
   * `fromInteger` : Overloaded integer literals
 
@@ -592,7 +592,7 @@ functions each provides:
 
   * `negate` : Negation
 
-  * `(-)` : Subtraction
+  * `(-)`: 減算
 
 
 * `Integral`
@@ -604,7 +604,7 @@ functions each provides:
 
 * `Fractional`
 
-  * `(/)` : Division
+  * `(/)`: 除算
 
   * `recip` : Calculates the reciprocal of a value
 
@@ -633,7 +633,7 @@ there are `Cast` implementations from going from `SnocList` to
 or for going from `List1` to `List`, although these would
 be just as feasible.
 
-### Exercises part 3
+### 演習 パート3
 
 These exercises are meant to make you comfortable with
 implementing interfaces for your own data types, as you

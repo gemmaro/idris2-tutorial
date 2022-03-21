@@ -379,7 +379,7 @@ add or remove any wrapped value, nor - in case of `List` -
 change their order. With `IO`, this can best be described as `map`
 not performing additional side effects.
 
-### Exercises part 1
+### 演習 パート1
 
 1. Write your own implementations of `Functor'` for `Maybe`, `List`,
    `List1`, `Vect n`, `Either e`, and `Pair a`.
@@ -971,7 +971,7 @@ laws. Here they are:
   whether we apply a pure value from the left or
   right of the *apply* operator.
 
-### Exercises part 2
+### 演習 パート2
 
 1. Implement `Applicative'` for `Either e` and `Identity`.
 
@@ -1260,7 +1260,7 @@ must behave the same as the implementation in terms of `(>>=)`:
 * `mf <*> ma = mf >>= (\fun => map (fun $) ma)`.
 
 
-### Exercises part 3
+### 演習 パート3
 
 1. `Applicative` extends `Functor`, because every `Applicative`
    is also a `Functor`. Proof this by implementing `map` in
