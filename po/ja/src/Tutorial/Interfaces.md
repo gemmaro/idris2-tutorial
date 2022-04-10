@@ -1,11 +1,10 @@
-# Interfaces
+# インターフェース (Interface)
 
-Function overloading - the definition of functions
-with the same name but different implementations - is a concept
-found in many programming languages. Idris natively supports overloading
-of functions: Two functions with the same name can be defined in
-different modules or namespaces, and Idris will try to disambiguate
-between these based on the types involved. Here is an example:
+関数オーバーロード - つまり同名異実装な関数定義 - は多くのプログラミング言語で見られる概念です。
+Idrisには関数のオーバーロードが備わっています。
+つまり、同名の2つの関数は異なるモジュールや名前空間で定義できますし、
+型をもとに曖昧さを解消しようとします。
+例はこちら。
 
 ```idris
 module Tutorial.Interfaces
@@ -29,44 +28,42 @@ namespace List
   size = cast . length
 ```
 
-Here, we defined three different functions
-called `size`, each in its own namespace. We can disambiguate between
-these by prefixing them with their namespace:
+ここでは`size`という名前の互いに異なる関数をそれぞれの名前空間で定義しました。
+これらの曖昧さを解消するにはそれぞれの名前空間を前置すればよいです。
 
 ```repl
 Tutorial.Interfaces> :t Bool.size
 Tutorial.Interfaces.Bool.size : Bool -> Integer
 ```
 
-However, this is usually not necessary:
+しかし、大抵は必要ありません。
 
 ```idris
 mean : List Integer -> Integer
 mean xs = sum xs `div` size xs
 ```
 
-As you can see, Idris can disambiguate between the different
-`size` functions, since `xs` is of type `List Integer`, which
-unifies only with `List a`, the argument type of `List.size`.
+見てみるとIdrisは互いに異なる`size`関数の曖昧さを解消できていることがわかります。
+`xs`は型`List Integer`であり、この型は`List a`にのみ統合できるので、
+`List a`が引数の型である`List.size`が選ばれます。
 
-## Interface Basics
+## インターフェースの基本
 
-While function overloading as described above
-works well, there are use cases, where
-this form of overloaded functions leads to a lot of code duplication.
+関数オーバーロードは上述したようにいい感じに動くものの、
+こうした関数オーバーロードの形式だと沢山のコードの重複に繋がるような使用例があります。
 
-As an example, consider a function `cmp` (short for *compare*, which is
-already exported by the *Prelude*), for describing an ordering
-for the values of type `String`:
+例として、関数`cmp`を考えてみましょう。
+（*compare*を縮めたもので、既に*Prelude*から公開されています。）
+この関数は型`String`の値の序列を表現するものとします。
 
 ```idris
 cmp : String -> String -> Ordering
 ```
 
-We'd also like to have similar functions for many other data types.
-Function overloading allows us to do just that, but `cmp` is not an
-isolated piece of functionality. From it, we can derive functions
-like `greaterThan'`, `lessThan'`, `minmum'`, `maximum'`, and many others:
+似たような関数が沢山の他のデータ型についても欲しいです。
+これだけだったら関数オーバーロードでいいですが、
+`cmp`の機能性ははそれだけに留まりません。
+この関数があれば`greaterThan`, `lessThan`, `minimum`, `maximum`やその他諸々の関数を導出できます。
 
 ```idris
 lessThan' : String -> String -> Bool
@@ -88,14 +85,13 @@ maximum' s1 s2 =
     _  => s2
 ```
 
-We'd need to implement all of these again for the other types with a `cmp`
-function, and most if not all of these implementations would be identical
-to the ones written above. That's a lot of code repetition.
+これら全てを`cmp`関数を使って他の型について再実装しなくてはならず、
+それにこれらの実装は、全てではないにしても、上に書いたものと同じになります。
+そうなると沢山のコードの重複になります。
 
-One way to solve this is to use higher-order functions.
-For instance, we could define function `minimumBy`, which takes
-a comparison function as its first argument and returns the smaller
-of the two remaining arguments:
+1つの方法として高階関数を使うという手があります。
+例えば、関数`minimumBy`を定義するとしましょう。
+この関数は最初の引数に比較関数を取り、残りの2つの引数のうちより小さいほうを返します。
 
 ```idris
 minimumBy : (a -> a -> Ordering) -> a -> a -> a
@@ -105,14 +101,12 @@ minimumBy f a1 a2 =
     _  => a2
 ```
 
-This solution is another proof of how higher-order functions
-allow us to reduce code duplication. However, the need to explicitly
-pass around the comparison function all the time
-can get tedious as well.
-It would be nice, if we could teach Idris to come up with
-such a function on its own.
+この解決策は高階関数があればコードの重複を減らせることの傍証になっています。
+しかしながら、いつも比較関数を持ち回らなければいけないのは億劫です。
+Idrisにこの例での比較関数のようなものを自分で思い出せるようにさせられたらいいですね。
 
-Interfaces solve exactly this issue. Here's an example:
+インターフェースはまさにこの問題を解消するものです。
+こちらが例です。
 
 ```idris
 interface Comp a where
@@ -125,36 +119,33 @@ implementation Comp Bits16 where
   comp = compare
 ```
 
-The code above defines *interface* `Comp` providing
-function `comp` for calculating the
-ordering for two values of a type `a`, followed by two *implementations*
-of this interface for types `Bits8` and `Bits16`. Note, that the
-`implementation` keyword is optional.
+上記のコードは*インターフェース*`Comp`を定義し、
+型`a`の2つの値の序列を計算するための関数`comp`を提供しています。
+これにさらにこのインターフェースについての型`Bits8`と`Bits16`のための2つの*実装*が続きます。
+ただし`implementation`キーワードはあってもなくてもよいです。
 
-The `comp` implementations for `Bits8` and `Bits16` both use
-function `compare`, which is part of a similar interface
-from the *Prelude* called `Ord`.
+`Bits8`と`Bits16`のための`comp`の実装両方で使われている関数`compare`は、
+*Prelude*の似たようなインターフェースである`Ord`の一部です。
 
-The next step is to look at the type of `comp` at the REPL:
+次に`comp`の型をREPLで見てみます。
 
 ```repl
 Tutorial.Interfaces> :t comp
 Tutorial.Interfaces.comp : Comp a => a -> a -> Ordering
 ```
 
-The interesting part in the type signature of `comp` is
-the initial `Comp a =>` argument. Here, `Comp` is a *constraint* on
-type parameter `a`. This signature can be read as:
-"For any type `a`, given an implementation
-of interface `Comp` for `a`, we can compare two values
-of type `a` and return an `Ordering` for these."
-Whenever we invoke `comp`, we expect Idris to come up with a
-value of type `Comp a` on its own, hence the new `=>` arrow.
-If Idris fails to do so, it will answer with a type error.
+`comp`の型シグネチャの面白い部分は最初の引数`Comp a =>`です。
+ここで`Comp`は型変数`a`の*制約*です。
+このシグネチャはこんな感じに読めます。
+「あらゆる型`a`、ただしインターフェース`Comp`の実装があるもの、
+については型`a`の2つの値を比較でき、それらの`Ordering`を返す。」
+`comp`をどんなもので呼び出そうとも、
+Idris自ら`Comp a`であるような型の値を思い付いてくれます。
+そう、新しい矢印`=>`があればね。
+もしIdrisがこれに失敗するなら、それは型エラーです。
 
-We can now use `comp` in the implementations of related functions.
-All we have to do is to also prefix these derived functions
-with a `Comp` constraint:
+これにて`comp`を関係する関数の実装に使えます。
+やらなければいけないことはこれらの導出される関数に`Comp`制約を前置することだけです。
 
 ```idris
 lessThan : Comp a => a -> a -> Bool
@@ -176,60 +167,51 @@ maximum s1 s2 =
     _  => s2
 ```
 
-Note, how the definition of `minimum` is almost identical
-to `minimumBy`. The only difference being that in case of
-`minimumBy` we had to pass the comparison function as an
-explicit argument, while for `minimum` it is provided as
-part of the `Comp` implementation, which is passed around
-by Idris for us.
+`minimum`の定義は`minimumBy`と瓜二つですね。
+強いて違うところを挙げるとすれば、
+`minimumBy`の場合は比較関数を明示的な引数として渡さねばならないところ、
+`minimum`は`Comp`の実装の一部で提供されているのでIdrisが代わりに渡してくれることです。
 
-Thus, we have defined all these utility functions once and for
-all for every type with an implementation of interface `Comp`.
+したがってこれら全ての小間物的関数を一度定義してしまえば、
+インターフェース`Comp`の実装がある全ての型に適用できます。
 
 ### 演習 パート1
 
-1. Implement function `anyLarger`, which should return `True`,
-if and only if a list of values contains at least one element larger
-than a given reference value. Use interface `Comp` in your
-implementation.
+1. 関数`anyLarger`を実装してください。
+この関数は、値のリストが与えられた参照値より大きい要素を少なくとも1つ含んでいるときに限り`True`を返します。
+インターフェース`Comp`を実装で使ってください。
 
-2. Implement function `allLarger`, which should return `True`,
-if and only if a list of values contains *only* elements larger
-than a given reference value. Note, that this is trivially true
-for the empty list. Use interface `Comp` in your implementation.
+2. 関数`allLarger`を実装してください。
+この関数は、値のリストが与えられた参照値より大きい要素*のみ*を含んでいるときに限り`True`を返します。
+ここで、自明な場合である空リストについては真になります。
+インターフェース`Comp`を実装で使ってください。
 
-3. Implement function `maxElem`, which tries to extract the
-largest element from a list of values with a `Comp` implementation.
-Likewise for `minElem`, which tries to extract the smallest element.
-Note, that the possibility of the list being empty must be considered
-when deciding on the output type.
+3. 関数`maxElem`を実装してください。
+この関数は`Comp`の実装を使って値のリストから最も大きい要素を抽出しようとします。
+`minElem`も同様にしてください。
+この関数は最も小さい要素を抽出しようとするものです。
+出力の型を決めるときは、リストが空になる可能性があることを考慮しなくてはいけませんよ。
 
-4. Define an interface `Concat` for values like lists or
-strings, which can be concatenated. Provide implementations
-for lists and strings.
+4. リストや文字列のような連結できる値のためのインターフェース`Concat`を定義してください。
+リストと文字列向けの実装を提供してください。
 
-5. Implement function `concatList` for concatenating the
-values in a list holding values with a `Concat` implementation.
-Make sure to reflect the possibility of the list being empty in your
-output type.
+5. `Concat`の実装が備わる値を持つリスト中の値を連結する関数`concatList`を実装してください。
+リストが空になる可能性があることを出力の型に反映してくださいね。
 
-## More about Interfaces
+## もっとインターフェース
 
-In the last section, we learned about the very basics
-of interfaces: Why they are useful and how to define and
-implement them.
-In this section, we will learn about some slightly
-advanced concepts: Extending interfaces, interfaces with
-constraints, and default implementations.
+先の節ではごく基本的なインターフェースを学びました。
+なぜ便利なのか、そしてどのように定義し実装するのかについてです。
+この節では僅かに発展的な概念を学びます。
+それはインターフェースを拡張すること、制約付きのインターフェース、そして既定実装です。
 
-### Extending Interfaces
+### インターフェースを拡張する
 
-Some interfaces form a kind of hierarchy. For instance, for
-the `Concat` interface used in exercise 4, there might
-be a child interface called `Empty`, for those types,
-which have a neutral element with relation to concatenation.
-In such a case, we make an implementation of `Concat` a
-prerequisite for implementing `Empty`:
+階層を形成するインターフェースがあります。
+例えば演習4で使った`Concat`インターフェースについては、
+`Empty`という名前の子インターフェースがあってもいいでしょう。
+このインターフェースを満たすような型には、連結の際に何の効果も生じない値があります。
+そのような場合、`Concat`の実装が`Empty`の実装の必要条件にできます。
 
 ```idris
 interface Concat a where
@@ -245,12 +227,10 @@ implementation Empty String where
   empty = ""
 ```
 
-`Concat a => Empty a` should be read as: "An implementation
-of `Concat` for type `a` is a *prerequisite* for there being
-an implementation of `Empty` for `a`."
-But this also means that, whenever we have an implementation
-of interface `Empty`, we *must* also have an implementation of `Concat`
-and can invoke the corresponding functions:
+`Concat a => Empty a`はこのように読めます。
+「`Concat`の型`a`のための実装は、`a`に対して`Empty`の実装をするための必要条件である。」
+しかしこれは、インターフェース`Empty`の実装があるならば、常に`Concat`の実装が*なくてはならず*、
+いつでも`Concat`にある関数を呼び出すことができる、という意味でもあるのです。
 
 ```idris
 concatListE : Empty a => List a -> a
@@ -258,18 +238,16 @@ concatListE []        = empty
 concatListE (x :: xs) = concat x (concatListE xs)
 ```
 
-Note, how in the type of `concatListE` we only used an `Empty`
-constraint, and how in the implementation we were still able
-to invoke both `empty` and `concat`.
+`concatListE`の型で`Empty`制約のみ使っているにも関わらず、
+実装で`empty`と`concat`の両方を呼び出せていますね。
 
-### Constrained Implementations
+### 制約付きの実装
 
-Sometimes, it is only possible to implement an interface
-for a generic type, if its type parameters implement
-this interface as well. For instance, implementing interface `Comp`
-for `Maybe a` makes sense only if type `a` itself implements
-`Comp`. We can constrain interface implementations with
-the same syntax we use for constrained functions:
+ときに、ある汎化型のインターフェースを実装できるのが、
+その型変数がこのインターフェースを実装しているときだけ、ということがあります。
+たとえば、インターフェース`Comp`を`Maybe a`に実装するのが可能なのは、
+型`a`自体が`Comp`を実装しているときだけです。
+インターフェースの実装に制約を課すのは、制約付きの関数で使ったのと同じ文法でできます。
 
 ```idris
 implementation Comp a => Comp (Maybe a) where
@@ -279,44 +257,37 @@ implementation Comp a => Comp (Maybe a) where
   comp (Just x) (Just y) = comp x y
 ```
 
-This is not the same as extending an interface, although
-the syntax looks very similar. Here, the constraint lies
-on a *type parameter* instead of the full type.
-The last line in the implementation of `Comp (Maybe a)`
-compares the values stored in the two `Just`s. This is
-only possible, if there is a `Comp` implementation for
-these values as well. Go ahead, and remove the `Comp a`
-constraint from the above implementation. Learning to
-read and understand Idris' type errors is important
-for fixing them.
+これはインターフェースを拡張することとは同じではありません。
+文法がよく似てはいますが。
+制約は*型変数*に課されていて、全体の型ではないですね。
+`Comp (Maybe a)`の実装の最後の行では2つの`Just`に格納された値を比較します。
+これが可能となるのは、これらの値にも`Comp`の実装があるときだけです。
+さあ、上記の実装から`Comp a`制約を消去してみましょう。
+Idrisの型エラーを読み解くことは、修正を行う上で大事です。
 
-The good thing is, that Idris will solve all these
-constraints for us:
+幸いにもIdrisはこれら全ての制約を代わりに解いてくれます。
 
 ```idris
 maxTest : Maybe Bits8 -> Ordering
 maxTest = comp (Just 12)
 ```
 
-Here, Idris tries to find an implementation for `Comp (Maybe Bits8)`.
-In order to do so, it needs an implementation for `Comp Bits8`.
-Go ahead, and replace `Bits8` in the type of `maxTest` with `Bits64`,
-and have a look at the error message Idris produces.
+ここでIdrisは`Comp (Maybe Bits8)`の実装を見つけ出そうとします。
+そのためには`Comp Bits8`のための実装が必要です。
+さあさあ`maxInt`の型にある`Bits8`を`Bits64`に変えてみましょう。
+どんなエラー文言をIdrisが出すでしょうか。
 
-### Default Implementations
+### 既定実装
 
-Sometimes, we'd like to pack several related functions
-in an interface to allow programmers to implement each
-in the most efficient way, although they *could* be
-implemented in terms of each other. For instance,
-consider an interface `Equals` for comparing two
-values for equality, with functions `eq` returning
-`True` if two values are equal and `neq` returning
-`True` if they are not. Surely, we can implement `neq`
-in terms of `eq`, so most of the time when implementing
-`Equals`, we will only implement the latter.
-In this case, we can give an implementation for `neq`
-already in the definition of `Equals`:
+ときどき、いくつかの関係する関数を1つのインターフェースに収めて、
+そのインターフェースにある関数を使うことが*できながらも*、
+プログラマがそれぞれの関数をもっとも効率的に動くように実装できるようにしたいことがあります。
+たとえば、2つの値の等値性で比較するインターフェース`Equals`を考えましょう。
+このインターフェースには2つの値が等しいとき`True`を返す関数`eq`と、
+等しくないときに`True`を返す`neq`があります。
+もちろん`neq`は`eq`を使って実装できますし、
+ほとんどの場合で`Equals`を実装するときは`eq`のみを実装すればよいでしょう。
+この場合、`neq`の実装を`Equals`の定義中に含めてしまうことができます。
 
 ```idris
 interface Equals a where
@@ -326,17 +297,15 @@ interface Equals a where
   neq a1 a2 = not (eq a1 a2)
 ```
 
-If in an implementation of `Equals` we only implement `eq`,
-Idris will use the default implementation for `neq` as
-shown above:
+`Equals`の実装で`eq`のみ実装した場合は、
+Idrisは上記の`neq`の既定実装を使うことになります。
 
 ```idris
 Equals String where
   eq = (==)
 ```
 
-If on the other hand we'd like to provide explicit implementations
-for both functions, we can do so as well:
+他方で両方の関数に陽に実装を提供したい場合も同様に可能です。
 
 ```idris
 Equals Bool where
@@ -351,13 +320,13 @@ Equals Bool where
 
 ### 演習 パート2
 
-1. Implement interfaces `Equals`, `Comp`, `Concat`, and
-  `Empty` for pairs, constraining your implementations as necessary.
-  (Note, that multiple constraints can be given sequentially like
-  other function arguments: `Comp a => Comp b => Comp (a,b)`.)
+1. インターフェース`Equals`, `Comp`, `Concat`, `Empty`を対（2つ組タプル）に実装してください。
+  実装では必要に応じて制約を課して構いません。
+  （他の関数の引数と同様に、複数の制約を連続して課すことができます。
+  例えば`Comp a => Comp b => Comp (a,b)`です。）
 
-2. Below is an implementation of a binary tree. Implement
-   interfaces `Equals` and `Concat` for this type.
+2. 以下は2分木の実装です。
+   インターフェース`Equals`と`Concat`をこの型に実装してください。
 
 
    ```idris
@@ -366,94 +335,86 @@ Equals Bool where
      Node : Tree a -> Tree a -> Tree a
    ```
 
-## Interfaces in the *Prelude*
+## *Prelude*にあるインターフェース
 
-The Idris *Prelude* provides several interfaces plus implementations
-that are useful in almost every non-trivial program. I'll introduce
-the basic ones here. The more advanced ones will be discussed in later
-chapters.
+Idrisの*Prelude*はいくつかのインターフェースと実装を提供します。
+これらはほぼ全てのある程度以上のプログラムで便利です。
+基本的なものをここで紹介します。
+より発展的なものは後の章でお話ししましょう。
 
-Most of these interfaces come with associated mathematical laws,
-and implementations are assumed to adhere to these laws. These
-laws will be given here as well.
+これらのインターフェースのほとんどは数学的な法則に関連します。
+そして、実装はこれらの実装に従うことになっています。
+法則についてもここで触れます。
 
 ### `Eq`
 
-Probably the most often used interface, `Eq` corresponds to
-interface `Equals` we used above as an example. Instead of
-`eq` and `neq`, `Eq` provides two operators `(==)` and `(/=)`
-for comparing two values of the same type for being equal
-or not. Most of the data types defined in the *Prelude* come
-with an implementation of `Eq`, and whenever programmers define
-their own data types, `Eq` is typically one of the first
-interfaces they implement.
+おそらく最も使われているインターフェースは`Eq`でしょう。
+これは前述の例で使ったインターフェース`Equal`に対応します。
+`eq`と`neq`の代わりに、`Eq`は2つの演算子`(==)`と`(/=)`を提供し、
+2つの同じ型の値について等しいか異なるかを比べられます。
+*Prelude*で定義されているほとんどのデータ型は`Eq`の実装付きですし、
+プログラマが自前のデータ型を作るときも最初に実装するインターフェースでしょう。
 
-#### `Eq` Laws
+#### `Eq`の法則
 
-We expect the following laws to hold for all implementations of `Eq`:
+`Eq`の全ての実装について以下の法則を満たすようにしてください。
 
-* `(==)` is *reflexive*: `x == x = True` for all `x`. This means, that
-every value is equal to itself.
+* `(==)`は*反射的*です。
+`x == x = True`が全ての`x`について成り立ちます。
+つまり、全ての値はそれ自身と等しいです。
 
-* `(==)` is *symmetric*: `x == y = y == x` for all `x` and `y`.
-This means, that the order of arguments passed to `(==)` does not matter.
+* `(==)`は*対称的*です。
+`x == y = y == x`が全ての`x`と`y`について成り立ちます。
+つまり、`(==)`の引数の順序は重要ではありません。
 
-* `(==)` is *transitive*: From `x == y = True` and `y == z = True` follows
-`x == z = True`.
+* `(==)`は*推移的*です。
+`x == y = True`と`y == z = True`から`x == z = True`が導かれます。
 
-* `(/=)` is the negation of `(==)`: `x == y = not (x /= y)`
-for all `x` and `y`.
+* `(/=)`は`(==)`の否定です。`x == y = not (x /= y)`が全ての`x`と`y`について成り立ちます。
 
-In theory, Idris has the power to verify these laws at compile time
-for many non-primitive types. However, out of pragmatism this is not
-required when implementing `Eq`, since writing such proofs can be
-quite involved.
+理論上、Idrisにはこれらの法則を非原始型に対してコンパイル時に検証する能力があります。
+しかしながら、実用上`Eq`の実装には必要ではありません。
+そのような証明を書くというのはちょっとしたハマりどころだからです。
 
 ### `Ord`
 
-The pendant to `Comp` in the *Prelude* is interface `Ord`. In addition
-to `compare`, which is identical to our own `comp` it provides comparison
-operators `(>=)`, `(>)`, `(<=)`, and `(<)`, as well as utility functions
-`max` and `min`. Unlike `Comp`, `Ord` extends `Eq`,
-so whenever there is an `Ord` constraint, we also have access to operators
-`(==)` and `(/=)` and related functions.
+*Prelude*版`Comp`として`Ord`があります。
+自前の`comp`と等価な`compare`に加えて、
+比較演算子`(>=)`, `(>)`, `(<=)`, `(<)`や小間物関数`max`と`min`を提供します。
+`Comp`とは異なり、`Ord`は`Eq`を拡張します。
+なので`Ord`制約がある場合は、常に演算子`(==)`および`(/=)`と関連する関数が使えます。
 
-#### `Ord` Laws
+#### `Ord`の法則
 
-We expect the following laws to hold for all implementations of `Ord`:
+`Ord`の全ての実装について以下の法則を満たすようにしてください。
 
-* `(<=)` is *reflexive* and *transitive*.
+* `(<=)`は*反射的*で*推移的*です。
 
-* `(<=)` is *antisymmetric*: From `x <= y = True` and `y <= x = True`
-follows `x == y = True`.
-* `x <= y = y >= x`.
+* `(<=)`は*非対称的*です。
+`x <= y = True`と`y <= x = True`から`x == y = True`が導かれます。
+* `x <= y = y >= x`
 * `x < y = not (y <= x)`
 * `x > y = not (y >= x)`
 * `compare x y = EQ` => `x == y = True`
 * `compare x y == GT = x > y`
 * `compare x y == LT = x < y`
 
-### `Semigroup` and `Monoid`
+### `Semigroup`と`Monoid`
 
-`Semigroup` is the pendant to our example interface `Concat`,
-with operator `(<+>)` (also called *append*) corresponding
-to function `concat`.
+`Semigroup`は例に出てきたインターフェース`Concat`のようなもので、
+関数`concat`に対応する演算子`(<+>)`（*append*とも）を持ちます。
 
-Likewise, `Monoid` corresponds to `Empty`,
-with `neutral` corresponding to `empty`.
+同様に`Monoid`は`Empty`に対応するもので、`empty`に対応する`neutral`があります。
 
-These are incredibly important interfaces, which can be used
-to combine two or more values of a data type into a single
-value of the same type. Examples include but are not limited
-to addition or multiplication
-of numeric types, concatenation of sequences of data, or
-sequencing of computations.
+これらは極めて重要なインターフェースで、
+2つ以上のデータ型の値を単一の同じ型の値に結合するのに使えます。
+前述の例にもありましたが数値型の和や積に留まらず、
+連続するデータや連続する計算処理の結合にも使えます。
 
-As an example, consider a data type for representing
-distances in a geometric application. We could just use `Double`
-for this, but that's not very type safe. It would be better
-to use a single field record wrapping values type `Double`,
-to give such values clear semantics:
+例として地理を扱うアプリケーションでの距離を表すデータ型を考えます。
+単に`Double`を使うこともできますが、あまり型安全ではありません。
+単一のフィールドを持つレコード型で`Double`型の値をくるむとよいでしょう。
+値に明確な意味論が備わるためです。
 
 ```idris
 record Distance where
@@ -461,43 +422,43 @@ record Distance where
   meters : Double
 ```
 
-There is a natural way for combining two distances: We sum up
-the values they hold. This immediately leads to an implementation
-of `Semigroup`:
+2つの距離を結合するには自然な方法があります。
+それらが持つ値を加算すればよいのです。
+そこで直ちに`Semigroup`の実装が導かれます。
 
 ```idris
 Semigroup Distance where
   x <+> y = MkDistance $ x.meters + y.meters
 ```
 
-It is also immediately clear, that zero is the neutral element of this
-operation: Adding zero to any value does not affect the value at all.
-This allows us to implement `Monoid` as well:
+これも直ちに明らかなことですが、
+ゼロはこの操作での中立的な要素です。
+ゼロを加算しても値には何ら影響がありません。
+これにより`Monoid`も同様に実装できます。
 
 ```idris
 Monoid Distance where
   neutral = MkDistance 0
 ```
 
-#### `Semigroup` and `Monoid` Laws
+#### `Semigroup`と`Monoid`の法則
 
-We expect the following laws to hold for all implementations of `Semigroup`
-and `Monoid`:
+`Semigroup`と`Monoid`の全ての実装について以下の法則を満たすようにしてください。
 
-* `(<+>)` is *associative*: `x <+> (y <+> z) = (x <+> y) <+> z`, for all
-  values `x`, `y`, and `z`.
+* `(<+>)`は結合的です。
+  `x <+> (y <+> z) = (x <+> y) <+> z`は全ての`x`, `y`, `z`の値について成り立ちます。
 
-* `neutral` is the *neutral element* with relation to `(<+>)`:
-  `neutral <+> x = x <+> neutral = x`, for all `x`.
+* `neural`は`(<+>)`に関して*中立な要素*です。
+  `neural <+> x = x <+> neural = x`が全ての`x`について成り立ちます。
 
 
 ### `Show`
 
-The `Show` interface is mainly used for debugging purposes, and is
-supposed to display values of a given type as a string, typically closely
-resembling the Idris code used to create the value. This includes the
-proper wrapping of arguments in parentheses where necessary. For instance,
-experiment with the output of the following function at the REPL:
+`Show`インターフェースは主にデバッグ用途で使われ、
+与えられた型の値を文字列として表示するためのものです。
+典型的にはその値を作るIdrisのコードに近付けることが多いです。
+その場合は必要に応じて括弧内に引数を適切にくるむことがあります。
+例えば以下の関数の出力がどうなるかREPLでやってみてください。
 
 ```idris
 showExample : Maybe (Either String (List (Maybe Integer))) -> String
@@ -511,29 +472,28 @@ Tutorial.Interfaces> showExample (Just (Right [Just 12, Nothing]))
 "Just (Right [Just 12, Nothing])"
 ```
 
-We will learn how to implement instances of `Show` in an exercise.
+`Show`のインスタンスを実装する方法は演習で学びましょう。
 
-### Overloaded Literals
+### オーバーロードされたリテラル
 
-Literal values in Idris, such as integer literals (`12001`), string
-literals (`"foo bar"`), floating point literals (`12.112`), and
-character literals  (`'$'`) can be overloaded. This means, that we
-can create values of types other than `String` from just a string
-literal. The exact workings of this has to wait for another section,
-but for many common cases, it is sufficient for a value to implement
-interfaces `FromString` (for using string literals), `FromChar` (for using
-character literals), or `FromDouble` (for using floating point literals).
-The case of integer literals is special, and will be discussed in the next
-section.
+Idrisのリテラル値、例えば整数リテラル (`12001`)、
+文字列リテラル (`"foo bar"`)、
+浮動小数点数リテラル (`12.112`) 、そして文字リテラル (`'$'`) はオーバーロードできます。
+つまり、`String`ではない型の値を単なる文字列リテラルから作れるということです。
+ちゃんとした仕組みは他の節まで待たなければいけませんが、
+大体はインターフェース`FromString`（文字列リテラル用）や
+`FromChar` （文字リテラル用）や`FromDouble`（浮動小数点リテラル用）を実装すれば充分でしょう。
+整数リテラルについては特殊なので次の節で詳述します。
 
-Here is an example of using `FromString`. Assume, we write an application
-where users can identify themselves with a username and password. Both
-consist of strings of characters, so it is pretty easy to confuse and mix
-up the two things, although they clearly have very different semantics.
-In these cases, it is advisable to come up with new types for the two,
-especially since getting these things wrong is a security concern.
+`FromString`の使用例はこちらです。
+アプリケーションを書いており、利用者が利用者名とパスワードで自身であることを同定できるものだとします。
+いずれも文字からなる文字列なので、
+2つを混同してしまいがちです。
+はっきりと異なる意味論を持つものではあるのですが。
+この場合、これら2つのために新しい型を用意することが望ましいです。
+特にこれらを取り違えたりなんかするとセキュリティ上の問題になりますから。
 
-Here are three example record types to do this:
+例としてレコード型を3つ用意しました。
 
 ```idris
 record UserName where
@@ -550,17 +510,17 @@ record User where
   password : Password
 ```
 
-In order to create a value of type `User`, even for testing, we'd have
-to wrap all strings using the given constructors:
+型`User`の値を作るには、試したいときであっても、
+逐一文字列を構築子でくるむ必要があります。
 
 ```idris
 hock : User
 hock = MkUser (MkUserName "hock") (MkPassword "not telling")
 ```
 
-This is rather cumbersome, and some people might think this to be too high
-a price to pay just for an increase in type safety (I'd tend to disagree).
-Luckily, we can get the convenience of string literals back very easily:
+これはわりとまどろっこしく、型安全性を増すには割に合わなさすぎると考える人もいるでしょう。
+（私はどちらかというと違いますが。）
+幸運にも文字列リテラルの便利さをとても簡単に取り戻せます。
 
 ```idris
 FromString UserName where
@@ -573,11 +533,10 @@ hock2 : User
 hock2 = MkUser "hock" "not telling"
 ```
 
-### Numeric Interfaces
+### 数的インターフェース
 
-The *Prelude* also exports several interfaces providing the usual arithmetic
-operations. Below is a comprehensive list of the interfaces and the
-functions each provides:
+*Prelude*はよくある代数操作を提供するインターフェースもいくつか公開しています。
+以下はインターフェースと提供されている関数の網羅的な一覧です。
 
 * `Num`
 
@@ -585,81 +544,77 @@ functions each provides:
 
   * `(*)`: 乗算
 
-  * `fromInteger` : Overloaded integer literals
+  * `fromInteger`: オーバーロードされた整数リテラル
 
 
 * `Neg`
 
-  * `negate` : Negation
+  * `negate` : 正負反転
 
   * `(-)`: 減算
 
 
-* `Integral`
+* 整数
 
-  * `div` : Integer division
+  * `div`: 整数の除算
 
-  * `mod` : Modulo operation
+  * `mod` : 剰余演算
 
 
 * `Fractional`
 
   * `(/)`: 除算
 
-  * `recip` : Calculates the reciprocal of a value
+  * `recip` : 値の逆数を計算する
 
+
+ここで次のことがわかります。
+所与の型に整数リテラルを使うのにはインターフェース`Num`を実装する必要があります。
+`-12`のような負数の整数リテラルを使うためにはインターフェース`Neg`も実装する必要があります。
 
 ### `Cast`
 
-The last interface we will quickly discuss in this section is `Cast`. It
-is used to convert values of one type to values of another via
-function `cast`. `Cast` is special, since it is parameterized
-over *two* type parameters unlike the other interfaces we looked
-at so far, with only one type parameter.
+最後にこの節で手早く説明するインターフェースは`Cast`です。
+ある型の値を他の型の値に関数`cast`で変換するというものです。
+`Cast`は特別です。
+なぜならこのインターフェースは*2つ*の型変数を引数に取りますが、
+これまで見てきた他のインターフェースは型変数が1つしかないからです。
 
-So far, `Cast` is mainly used for interconversion
-between primitive types in the standard libraries,
-especially numeric types. When you look
-at the implementations exported from the *Prelude* (for instance,
-by invoking `:doc Cast` at the REPL), you'll see that there are
-dozens of implementations for most pairings of primitive types.
+これまで`Cast`を主に標準ライブラリにある原始型の相互変換に使ってきました。
+特に数値型です。
+*Prelude*から公開されている実装を見てみると（例えば`:doc Cast`とREPLで呼び出します）、
+原始型のほとんどの対に関して沢山の実装があることがわかるでしょう。
 
-Although `Cast` would also be useful for other conversions (for
-going from `Maybe` to `List` or for going from `Either e` to `Maybe`,
-for instance), the *Prelude* and
-*base* seem not to introduce these consistently. For instance,
-there are `Cast` implementations from going from `SnocList` to
-`List` and vice versa, but not for going from `Vect n` to `List`,
-or for going from `List1` to `List`, although these would
-be just as feasible.
+`Cast`は他の変換にも便利ですが（`Maybe`から`List`であったり、
+`Either e`から`Maybe`であったり）、
+*Prelude*と*base*はそうした変換を一環して提供してはいないようです。
+例として`Cast`の実装として`SnocList`から`List`とその逆のものがありますが、
+`Vect n`から`List`へ、あるいは`Vect n`から`List`への実装はありません。
+そうした実装も可能ではあるのですが。
 
 ### 演習 パート3
 
-These exercises are meant to make you comfortable with
-implementing interfaces for your own data types, as you
-will have to do so regularly when writing Idris code.
+ここにある演習は流暢に自前のデータ型のためのインターフェースが実装できるようになることを意図しています。
+Idrisのコードを書くときはしばしば必要になることですから。
 
-While it is immediately clear why interfaces like
-`Eq`, `Ord`, or `Num` are useful, the usability of
-`Semigroup` and `Monoid` may be harder to appreciate at first.
-Therefore, there are several exercises where you'll implement
-different instances for these.
+`Eq`, `Ord`, `Num`のようなインターフェースが便利な理由は直ちに明らかですが、
+一方で`Semigroup`と`Monoid`の便利さは最初は実感しにくいかもしれません。
+したがって演習の中にはいくつかの異なるインスタンスについて実装するものがあります。
 
-1. Define a record type `Complex` for complex numbers, by pairing
-   two values of type `Double`.
-   Implement interfaces `Eq`, `Num`, `Neg`, and `Fractional` for `Complex`.
+1. レコード型`Complex`を複素数について定義してください。
+   型`Double`の値2つを対にします。
+   `Eq`, `Num`, `Neg`、そして`Fractional`を`Complex`に実装してください。
 
 
-2. Implement interface `Show` for `Complex`. Have a look at data type `Prec`
-   and function `showPrec` and how these are used in the
-   *Prelude* to implement instances for `Either` and `Maybe`.
+2. `Show`を`Complex`に実装してください。
+   データ型`Prec`と関数`showPrec`を調べて、
+   *Prelude*で`Either`や`Maybe`のインスタンスを実装するためにどのようにこれらが使われているのか見てみましょう。
 
 
-   Verify the correct behavior of your implementation by wrapping
-   a value of type `Complex` in a `Just` and `show` the result at
-   the REPL.
+   書いた実装が正しい振舞いになっていることを確かめるために、
+   REPLで型`Complex`の値を`Just`でくるんで`show`してみましょう。
 
-3. Consider the following wrapper for optional values:
+3. あってもなくてもよい値の、以下の梱包について考えてみましょう。
 
 
    ```idris
@@ -668,10 +623,10 @@ different instances for these.
      value : Maybe a
    ```
 
-   Implement interfaces `Eq`, `Ord`, `Show`, `FromString`, `FromChar`, `FromDouble`,
-   `Num`, `Neg`, `Integral`, and `Fractional` for `First a`. All of these will require
-   corresponding constraints on type parameter `a`. Consider implementing and
-   using the following utility functions where they make sense:
+   インターフェース`Eq`, `Ord`, `Show`, `FromString`, `FromChar`, `FromDouble`,
+   `Num`, `Neg`, `Integral`, `Fractional`を`First a`に実装してください。
+   これらは全て型変数`a`に対応する制約が必要になるでしょう。
+   必要に応じて、以下の小間物関数を実装したのち使ってください。
 
    ```idris
    pureFirst : a -> First a
@@ -681,14 +636,14 @@ different instances for these.
    mapFirst2 : (a -> b -> c) -> First a -> First b -> First c
    ```
 
-4. Implement interfaces `Semigroup` and `Monoid` for `First a` in such a way,
-   that `(<+>)` will return the first non-nothing argument and `neutral` is
-   the corresponding neutral element. There must be no constraints on type
-   parameter `a` in these implementations.
+4. 同様にインターフェース`Semigroup`と`Monoid`を`First a`に実装してください。
+   `(<+>)`は最初の非空な引数を返します。
+   また、`neutral`は対応する中立要素です。
+   これらの実装では型変数`a`に制約があってはいけません。
 
 
-5. Repeat exercises 3 and 4 for record `Last`. The `Semigroup` implementation
-   should return the last non-nothing value.
+5. 問題3と4をレコード`Last`に改めて行ってください。
+   `Semigroup`の実装は最後の非空な値を返します。
 
 
    ```idris
@@ -697,18 +652,17 @@ different instances for these.
      value : Maybe a
    ```
 
-6. Function `foldMap` allows us to map a function returning a `Monoid` over
-   a list of values and accumulate the result using `(<+>)` at the same time.
-   This is a very powerful way to accumulate the values stored in a list.
-   Use `foldMap` and `Last` to extract the last element (if any) from a list.
+6. 関数`foldMap`は関数を順番に写して`Monoid`を返します。
+   値のリストを巡回しつつ`(<+>)`で結果を積み重ねます。
+   これはリストに格納された値を集積するとても強力な方法です。
+   `foldMap`と`Last`でリストから最後の要素を（もしあれば）取り出してください。
 
 
-   Note, that the type of `foldMap` is more general and not specialized
-   to lists only. It works also for `Maybe`, `Either` and other container
-   types we haven't looked at so far. We will learn about
-   interface `Foldable` in a later section.
+   ここで`foldMap`の型はより一般的でリストのみが専門ではありません。
+   `Maybe`や`Either`やその他のまだ見ぬ荷車型に対しても動きます。
+   後の節でインターフェース`Foldable`を学びましょう。
 
-7. Consider record wrappers `Any` and `All` for boolean values:
+7. 真偽値の値のレコード梱包`Any`と`All`を考えます。
 
 
    ```idris
@@ -721,28 +675,26 @@ different instances for these.
      all : Bool
    ```
 
-   Implement `Semigroup` and `Monoid` for `Any`, so that the result of
-   `(<+>)` is `True`, if and only if at least one of the arguments is `True`.
-   Make sure that `neutral` is indeed the neutral element for this operation.
+   `Semigroup`と`Monoid`を`Any`に実装してください。
+   ただし`(<+>)`の結果は、少なくとも1つの引数が`True`であるときにのみ`True`です。
+   `neural`はもちろんこの操作において中立な要素になるようにしてくださいね。
 
-   Likewise, implement `Semigroup` and `Monoid` for `All`, so that the result of
-   `(<+>)` is `True`, if and only if both of the arguments are `True`.
-   Make sure that `neutral` is indeed the neutral element for this operation.
+   同様に`Semigroup`と`Monoid`を`All`に実装してください。
+   `(<+>)`の結果は、両方の引数が`True`のときにのみ`True`であるようにしてください。
+   `neural`はもちろんこの操作において中立な要素になるようにしてくださいね。
 
-8. Implement functions `anyElem` and `allElems` using `foldMap` and
-   `Any` or `All`, respectively:
+8. 関数`anyElem`と`allElems`を、`foldMap`と`Any`ないし`All`を使って実装してください。
 
 
    ```idris
-   -- True, if the predicate holds for at least one element
+   -- 命題が少なくとも1つの要素について満たされているとき真
    anyElem : (a -> Bool) -> List a -> Bool
 
-   -- True, if the predicate holds for all elements
+   -- 命題が全ての要素について満たされているとき真
    allElems : (a -> Bool) -> List a -> Bool
    ```
 
-9. Record wrappers `Sum` and `Product` are mainly used to hold
-   numeric types.
+9. レコード梱包`Sum`と`Product`は主に数値型を保持するのに使われます。
 
 
    ```idris
@@ -755,17 +707,16 @@ different instances for these.
      value : a
    ```
 
-   Given an implementation of `Num a`, implement `Semigroup (Sum a)`
-   and `Monoid (Sum a)`, so that `(<+>)` corresponds to addition.
+   `Num a`の実装があったとして、`Semigroup (Sum a)`と`Monoid (Sum a)`を実装してください。
+   ただし`(<+>)`は加算に対応します。
 
-   Likewise, implement `Semigroup (Product a)` and `Monoid (Product a)`,
-   so that `(<+>)` corresponds to multiplication.
+   同様に`Semigroup (Product a)`と`Monoid (Product a)`を実装してください。
+   ただし`(<+>)`は乗算に対応します。
 
-   When implementing `neutral`, remember that you can use integer
-   literals when working with numeric types.
+   `neutral`を実装する際は、数値型を扱うときは整数リテラルが使えることを思い出してください。
 
-10. Implement `sumList` and `productList` by using `foldMap` together
-    with the wrappers from Exercise 9:
+10. `sumList`と`productList`を実装してください。
+    `foldMap`とともに演習9の梱包を使ってください。
 
 
     ```idris
@@ -774,11 +725,10 @@ different instances for these.
     productList : Num a => List a -> a
     ```
 
-11. To appreciate the power and versatility of `foldMap`, after
-    solving exercises 6 to 10 (or by loading `Solutions.Inderfaces`
-    in a REPL session), run the following at the REPL, which will -
-    in a single list traversal! - calculate the first and last
-    element of the list as well as the sum and product of all values.
+11. `foldMap`の強力さと多芸さを享受するために、
+    演習6から10までを解いたあとに（もしくはREPLで`Solutions.Interfaces`をロードしてもよいです）、
+    以下をREPLで実行してください。
+    これは、たった1回の巡回で！、リストの最初と最後の要素と全ての値の和と積を計算しています。
 
 
     ```repl
@@ -786,58 +736,56 @@ different instances for these.
     (MkFirst (Just 3), (MkLast (Just 12), (MkSum 26, MkProduct 1008)))
     ```
 
-    Note, that there are also `Semigroup` implementations for
-    types with an `Ord` implementation, which will return
-    the smaller or larger of two values. In case of types
-    with an absolute minimum or maximum (for instance, 0 for
-    natural numbers, or 0 and 255 for `Bits8`), these can even
-    be extended to `Monoid`.
+   `Ord`の実装付きの型のための`Semigroup`の実装もあります。
+   この実装は2つの値のうちより小さいかより大きいほうを返します。
+   決まった最小値や最大値がある型の場合（例えば自然数の0や、`Bits8`の0と255）、
+   これらについてもまた`Monoid`に拡張できます。
 
-12. In an earlier exercise, you implemented a data type representing
-    chemical elements and wrote a function for calculating their
-    atomic masses. Define a new single field record type for
-    representing atomic masses, and implement interfaces
-    `Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, and `Monoid` for this.
+12. 以前の演習で化学の元素を表現するデータ型を実装し、
+    化学の体積を計算する関数を書きました。
+    新しく原子の体積を表現する単一フィールドレコード型を定義して、
+    インターフェース`Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, `Monoid`をこの型に実装してください。
 
 
-13. Use the new data type from exercise 12 to calculate the atomic
-    mass of an element and compute the molecular mass
-    of a molecule given by its formula.
+13. 演習12の新しいデータ型を使って原子の原子質量を算出し、
+    分子式で与えられる分子の分子質量を計算してください。
 
 
-    Hint: With a suitable utility function, you can use `foldMap`
-    once again for this.
+   解決の糸口：相応しい小間物関数があれば、ここでも`foldMap`が使えます。
 
-Final notes: If you are new to functional programming, make sure
-to give your implementations of exercises 6 to 10 a try at the REPL.
-Note, how we can implement all of these functions with a minimal amount
-of code and how, as shown in exercise 11, these behaviors can be
-combined in a single list traversal.
+最後の註釈：もし関数型プログラミングが初めてであれば、
+演習6から10の実装をREPLで確かめてみてください。
+これら全ての関数を最小限の量のコードでどのように実装できたか、
+そして演習11で見たように1回のリストの巡回においてこれらの振舞いをどのように組み合わせられたか、
+を思い返しましょう。
 
 ## まとめ
 
-* Interfaces allow us to implement the same function with different
-behavior for different types.
+* インターフェースのおかげで、異なる型で異なる振舞いをする同じ関数を実装できます。
 
-* Functions taking one or more interface implementations as
-arguments are called *constrained functions*.
+* 1つ以上のインターフェースの実装を引数に取る関数は*制約付き関数*と呼ばれます。
 
-* Interfaces can be organized hierarchically by *extending*
-other interfaces.
+* インターフェースは他のインターフェースを*拡張*することで階層的に組織付けられます。
 
-* Interfaces implementations can themselves be *constrained*
-requiring other implementations to be available.
+* インターフェースの実装は、それ自体が他の実装を必要とする*制約*が課されることがあります。
 
-* Interface functions can be given a *default implementation*,
-which can be overridden by implementers, for instance for reasons
-of efficiency.
+* インターフェースの関数には*既定実装*を与えられます。
+  この実装は実装者によって上書きできます。
+  例えば効率性の理由などからです。
+
+* いくつかのインターフェースがあれば、
+  文字列や整数といったリテラルのリテラル値を自前のデータ型に使えます。
+
+
+ただ、この節ではリテラル値の一部始終はまだお話ししていません。
+限られた値の集合のみを受け付ける型にリテラルを使うことに関するもっと詳しい話は、
+[原始型](Prim.md)についての章にあります。
 
 ### お次は？
 
-In the [next chapter](Functions2.md), we have a closer look
-at functions and their types. We will learn about named arguments,
-implicit arguments, and erased arguments as well as some
-constructors for implementing more complex functions.
+[次の章](Functions2.md)では関数とその型にさらに迫ります。
+名前付き引数、暗黙の引数、引数消去に加え、
+より複雑な関数を実装するためのいくつかの構築子について学びます。
 
 <!-- vi: filetype=idris2
 -->

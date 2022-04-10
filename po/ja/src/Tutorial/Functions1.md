@@ -329,6 +329,40 @@ True
 前者は引数が10より小さいかの検査で、
 後者は10が引数より小さいかの検査です。
 
+演算子節がうまくいかない例外の1つは*負符号*演算子`(-)`です。
+以下はこのことを実演する例です。
+
+```idris
+applyToTen : (Integer -> Integer) -> Integer
+applyToTen f = f 10
+```
+
+これは単に高階関数を数字の10に関数の引数として適用しているだけです。
+以下の例では実にうまくいきます。
+
+```repl
+Tutorial.Functions1> applyToThen (* 2)
+20
+```
+
+しかし、10から5を引こうとして以下のように失敗します。
+
+```repl
+Tutorial.Functions1> applyToTen (- 5)
+Error: Can't find an implementation for Num (Integer -> Integer).
+
+(Interactive):1:12--1:17
+ 1 | applyToTen (- 5)
+```
+
+ここでの問題は、Idrisが`- 5`を演算子節ではなく整数リテラルとして扱うということです。
+この特別な場合においては、代わりに匿名関数を使わねばなりません。
+
+```repl
+Tutorial.Functions1> applyToTen (\x => x - 5)
+5
+```
+
 ### 演算子ではない関数のための中置記法
 
 Idrisでは通常の2引数関数も、バッククォートにくるむことで中置記法することができます。
@@ -439,7 +473,7 @@ arithTest' = 5 + 10 * 12
    negate : (Integer -> Bool) -> Integer -> Bool
    ```
 
-   この演習を問いたら、
+   この演習を解いたら、
    REPLを立ち上げてください。
    以下の例では2引数関数 `and` をバッククォートでくるんだ中置記法にして使っています。
    これは単に文法的に便利だからで、
