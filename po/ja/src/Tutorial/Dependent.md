@@ -1,11 +1,9 @@
 # 依存型
 
-The ability to calculate types from values, pass them as arguments to
-functions, and return them as results from functions - in short, being a
-dependently typed language - is one of the most distinguishing features of
-Idris. Many of the more advanced type level extensions of languages like
-Haskell (and quite a bit more) can be treated in one fell swoop with
-dependent types.
+値から型を計算したり、型を引数として関数に渡したり、型を関数からの結果として返したりできるということ、
+これを端的に依存型言語であると言いますが、
+そのことはIdrisの最も際立った特徴の1つです。
+Haskellのような多くの（というかちょっと多すぎる）より発展的な型段階拡張を行う言語も、依存型を一息に処理できます。
 
 ```idris
 module Tutorial.Dependent
@@ -13,7 +11,7 @@ module Tutorial.Dependent
 %default total
 ```
 
-以下のわざとらしい例について考えましょう。
+以下の関数を考えます。
 
 ```idris
 bogusMapList : (a -> b) -> List a -> List b
@@ -23,21 +21,21 @@ bogusZipList : (a -> b -> c) -> List a -> List b -> List c
 bogusZipList _ _ _ = []
 ```
 
-The implementations type check, and still, they are obviously not what users
-of our library would expect. In the first example, we'd expect the
-implementation to apply the function argument to all values stored in the
-list, without dropping any of them or changing their order.  The second is
-trickier: The two list arguments might be of different length.  What are we
-supposed to do when that's the case? Return a list of the same length as the
-smaller of the two? Return an empty list? Or shouldn't we in most use cases
-expect the two lists to be of the same length? How could we even describe
-such a precondition?
+実装は型検査を通りますがしかし、その実装は明らかにライブラリ利用者が期待するものではありません。
+最初の例では実装で関数引数をリスト中に格納された全ての値に適用されることが期待されています。
+1つとして欠落していてはいけませんし、順番が変わってもなりません。
+2つ目はもう少し注意が必要です。
+というのは、2つのリストの引数が異なる長さかもしれないからです。
+その場合どうしたらいいのでしょうか。
+2つのうち小さいほうのと同じ長さのリストを返すのでしょうか。
+空リストを返すのでしょうか。
+それともほとんどの使用例で2つのリストが同じ長さであることを期待すべきではないのでしょうか。
+どうすればそのような前提条件を表現できるのでしょうか。
 
-## Length-Indexed Lists
+## 長さ指標付きリスト
 
-The answer to the issues described above is of course: Dependent types.  And
-the most common introductory example is the *vector*: A list indexed by its
-length:
+上述した問題への答えはもちろん、依存型です。
+そして最もよく知られた導入例は*ベクタ*、長さ指標付きリストです。
 
 ```idris
 data Vect : (len : Nat) -> (a : Type) -> Type where
@@ -45,27 +43,26 @@ data Vect : (len : Nat) -> (a : Type) -> Type where
   (::) : (x : a) -> (xs : Vect n a) -> Vect (S n) a
 ```
 
-Before we move on, please compare this with the implementation of `Seq` in
-the [section about algebraic data types](DataTypes.md). The constructors
-are exactly the same: `Nil` and `(::)`. But there is an important difference:
-`Vect`, unlike `Seq` or `List`, is not a function from `Type` to `Type`, it is
-a function from `Nat` to `Type` to `Type`. Go ahead! Open the REPL and
-verify this! The `Nat` argument (also called an *index*) represents
-the *length* of the vector here.
-`Nil` has type `Vect 0 a`: A vector of length
-zero. *Cons* has type `a -> Vect n a -> Vect (S n) a`: It is exactly one
-element longer (`S n`) than its second argument, which is of length `n`.
+進める前に、これと[代数的データ型の節](DataTypes.md)の`Seq`の実装を比較してください。
+構築子はまったく同じで、`Nil`と`(::)`です。
+それでも重大な違いがあります。
+`Vect`は、`Seq`や`List`とは違い、`Type`から`Type`への関数ではなく、`Nat`から`Type`そして`Type`への関数なのです。
+さあ、REPLを開いてこれを確かめましょう！
+`Nat`引数（*指標*とも呼ばれます）はここではベクタの*長さ*を表しています。
+`Nil`は型`Vect 0 a`で長さゼロのベクタです。
+*Cons*は型`a -> Vect n a -> Vect (S n) a`です。
+これは`n`2つ目の引数よりちょうど要素1つ分長い (`S n`) です。
 
-Let's experiment with this idea to gain a better understanding.  There is
-only one way to come up with a vector of length zero:
+この考え方を手を動かしてより深く理解しましょう。
+長さがゼロのベクタを作る方法は1つだけです。
 
 ```idris
 ex1 : Vect 0 Integer
 ex1 = Nil
 ```
 
-The following, on the other hand, leads to a type error (a pretty
-complicated one, actually):
+他方で以下は型エラーです。
+（実際はかなり複雑なエラーです。）
 
 ```idris
 failing "Mismatch between: S ?n and 0."
@@ -73,35 +70,34 @@ failing "Mismatch between: S ?n and 0."
   ex2 = [12]
 ```
 
-The problem: `[12]` gets desugared to `12 :: Nil`, but this has the wrong
-type! Since `Nil` has type `Vect 0 Integer` here, `12 :: Nil` has type `Vect
-(S 0) Integer`, which is identical to `Vect 1 Integer`. Idris verifies, at
-compile time, that our vector is of the correct length!
+問題点は以下です。
+`[12]`は`12 :: Nil`に脱糖されますが、
+これは誤った型です！
+`Nil`はここでは型`Vect 0 Integer`なので、`12 :: Nil`は型`Vect (S 0) Integer`、つまり`Vect 1
+Integer`となります。
+Idrisはベクタが正しい長さになっていることを、コンパイル時に検証するのです。
 
 ```idris
 ex3 : Vect 1 Integer
 ex3 = [12]
 ```
 
-So, we found a way to encode the *length* of a list-like data structure in
-its *type*, and it is a *type error* if the number of elements in a vector
-does not agree with then length given in its type. We will shortly see
-several use cases, where this additional piece of information allows us to
-be more precise in the types and rule out additional programming
-mistakes. But first, we need to quickly clarify some terminology.
+というわけでリストのようなデータ構造の*長さ*を*型*に書き換える方法がわかりました。
+ベクタの要素数が型にある長さと合致しなければ*型エラー*になるのです。
+すぐあとでいくつかの使用例を見ていきますが、
+この追加情報により型をより精密なものにしてこれ以上のプログラミングの誤りを排除できます。
+でもまずはさくっといくつかの用語を明らかにしておかねばなりません。
 
-### Type Indices versus Type Parameters
+### 型指標対型変数
 
-`Vect` is not only a generic type, parameterized over the type of elements
-it holds, it is actually a *family of types*, each of them associated with a
-natural number representing it's length. We also say, the type family `Vect`
-is *indexed* by its length.
+`Vect`は汎化型、つまり保管している要素の型を変数として取るもの、というだけではなくて、
+実のところは*型族*で、それぞれがその長さを表す自然数と関連付けられています。
+もっと言うと型族`Vect`は長さが*指標付けられている*のです。
 
-The difference between a type parameter and an index is, that the latter can
-and does change across data constructors, while the former is the same for
-all data constructors. Or, put differently, we can learn about the *value*
-of an index by pattern matching on a *value* of the type family, while this
-is not possible with a type parameter.
+型変数と指標の違いは、後者がデータ構築子によって異なるようにすることができるということです。
+対して前者は全てのデータ構築子について同じです。
+あるいは視点を変えると、型族の*値*にパターン照合することで指標の*値*を知ることができますが、
+これは型変数では不可能なことです。
 
 以下のわざとらしい例について考えましょう。
 
@@ -112,21 +108,22 @@ data Indexed : Nat -> Type where
   I4 : String -> Indexed 4
 ```
 
-Here, `Indexed` is indexed over its `Nat` argument, as values of the index
-changes across constructors (I chose some arbitrary value for each
-constructor), and we can learn about these values by pattern matching on
-`Indexed` values.  We can use this, for instance, to create a `Vect` of the
-same length as the index of `Indexed`:
+ここで`Index`は`Nat`引数が指標付けられていますが、
+それは指標値が構築子によって変わっているからです。
+（それぞれの構築子には好きに値をを選びました。）
+こうすると`Indexed`の値にパターン照合することでこれらの値がわかります。
+例えばこれを`Indexed`の指標と同じ長さの`Vect`を作るのに使えます。
 
 ```idris
 fromIndexed : Indexed n -> a -> Vect n a
 ```
 
-Go ahead, and try implementing this yourself! Work with holes, pattern match
-on the `Indexed` argument, and learn about the expected output type in each
-case by inspecting the holes and their context.
+さあ、自分でこれを実装してみましょう！
+穴あきを使い、
+`Indexed`引数でパターン照合し、
+そして穴あきその文脈を調べることによってそれぞれの場合の期待される出力型を知りましょう。
 
-考えられる実装はこちらです。
+私の実装はこうです。
 
 ```idris
 fromIndexed I0     va = []
@@ -134,17 +131,16 @@ fromIndexed I3     va = [va, va, va]
 fromIndexed (I4 _) va = [va, va, va, va]
 ```
 
-As you can see, by pattern matching on the value of the `Indexed n`
-argument, we learned about the value of the `n` index itself, which was
-necessary to return a `Vect` of the correct length.
+見てわかるように、`Indexed n`の引数の値にパターン照合することで`n`指標自体の値がわかり、
+それを使って正しい長さの`Vect`を返す必要があるのです。
 
-### Length-Preserving `map`
+### 長さが保存された`map`
 
-Function `bogusMapList` behaved unexpectedly, because it always returned the
-empty list. With `Vect`, we need to be true to the types here. If we map
-over a `Vect`, the argument *and* output type contain a length index, and
-these length indices will tell us *exactly*, if and how the lengths of our
-vectors are modified:
+関数`bogusMapList`は期待した通りには振舞いませんでしたが、
+これはいつも空リストを返却していたからです。
+これが`Vect`だったら型に正直でなければなりません。
+`Vect`をmapする場合、引数*および*出力型は長さ指標を含んでおり、
+この長さ指標は*厳密に*ベクタの長さがどれほど変わったのかがわかります。
 
 ```idris
 map3_1 : (a -> b) -> Vect 3 a -> Vect 1 b
@@ -157,32 +153,34 @@ map5_10 : (a -> b) -> Vect 5 a -> Vect 10 b
 map5_10 f [u,v,w,x,y] = [f u, f u, f v, f v, f w, f w, f x, f x, f y, f y]
 ```
 
-While these examples are quite interesting, they are not really useful, are
-they? That's because they are too specialized. We'd like to have a *general*
-function for mapping vectors of any length.  Instead of using concrete
-lengths in type signatures, we can also use *variables* as already seen in
-the definition of `Vect`.  This allows us to declare the general case:
+こうした例はかなり面白いとはいえ、あまり便利ではありませんよね。
+どうしてかというと、あまりにも局所的だからです。
+どんな長さのベクタにもmapできる*汎化*関数がほしいものです。
+型処方に固定長を使う代わりに、既に`Vect`の定義で見たように*変数*を使うこともできます。
+これがあれば汎用的な場合を宣言できます。
 
 ```idris
 mapVect' : (a -> b) -> Vect n a -> Vect n b
 ```
 
-This type describes a length-preserving map. It is actually more instructive
-(but not necessary) to include the implicit arguments as well:
+この型は長さ保存のmapを表します。
+暗黙引数も含めるようにすれば実際どうなっているのかがよりわかりやすくなります。
+（必要ではありませんが。）
 
 ```idris
 mapVect : {0 a,b : _} -> {0 n : Nat} -> (a -> b) -> Vect n a -> Vect n b
 ```
 
-We ignore the two type parameters `a`, and `b`, as these just describe a
-generic function (note, however, that we can group arguments of the same
-type and quantity in a single pair of curly braces; this is optional, but it
-sometimes helps making type signatures a bit shorter). The implicit argument
-of type `Nat`, however, tells us that the input and output `Vect` are of the
-same length. It is a type error to not uphold to this contract. When
-implementing `mapVect`, it is very instructive to follow along and use some
-holes. In order to get *any* information about the length of the `Vect`
-argument, we need to pattern match on it:
+2つの型変数`a`と`b`は無視できます。
+ただの汎化関数なので。
+（ただ、同じ型と量化子の引数を単一対の波括弧内にまとめられることは覚えておいてください。
+これはやってもやらなくてもいいですが、型処方を少しだけ短くできることもあります。）
+型`Nat`の暗黙引数はしかし、入出力の`Vect`が同じ長さであることを示しています。
+この契約を履行しないと型エラーです。
+`mapVect`を実装しているときなどでこの契約は大変説明的なもので、
+これに沿って実装したり穴あきを使ったりできます。
+`Vect`の長さについての*どんな*情報を得るのにも、
+パターン照合が必要です。
 
 ```repl
 mapVect _ Nil       = ?impl_0
@@ -211,25 +209,26 @@ Tutorial.Dependent> :t impl_1
 impl_1 : Vect (S n) b
 ```
 
-The first hole, `impl_0` is of type `Vect 0 b`. There is only one such
-value, as discussed above:
+最初の穴あき`impl_0`は型`Vect 0 b`です。
+前述したようにそのような値は1つしかありません。
 
 ```idris
 mapVect _ Nil       = Nil
 ```
 
-The second case is again more interesting. We note, that `xs` is of type
-`Vect n a`, for an arbitrary length `n` (given as an erased argument), while
-the result is of type `Vect (S n) b`. So, the result has to be one element
-longer than `xs`. Luckily, we already have a value of type `a` (bound to
-variable `x`) and a function from `a` to `b` (bound to variable `f`), so we
-can apply `f` to `x` and prepend the result to a yet unknown remainder:
+2つ目の場合はこれまたもっと面白いものです。
+`xs`は任意長の`n`（消去引数として与えられます）について型`Vect n a`であると書きました。
+そうして結果は型`Vect (S n) b`なのです。
+ということは、結果は`xs`よりも1要素分長くなければいけません。
+運よく既に型`a`の値（変数`x`に束縛されています）があり、
+`a`から`b`への関数（変数`f`に束縛されています）があるので、
+`f`を`x`に適用して結果を未知の残りの部分の先頭にくっつけられます。
 
 ```repl
 mapVect f (x :: xs) = f x :: ?rest
 ```
 
-ちょっとREPLで動かしてみましょう。
+REPLで新しい穴あきを調べてみましょう。
 
 ```repl
 Tutorial.Dependent> :t rest
@@ -243,26 +242,25 @@ Tutorial.Dependent> :t rest
 rest : Vect n b
 ```
 
-Now, we have a `Vect n a` and need a `Vect n b`, without knowing anything
-else about `n`. We *could* learn more about `n` by pattern matching further
-on `xs`, but this would quickly lead us down a rabbit hole, since after such
-a pattern match, we'd end up with another `Nil` case and another *cons*
-case, with a new tail of unknown length. Instead, we can invoke `mapVect`
-recursively to convert the remainder (`xs`) to a `Vect n b`.  The type
-checker guarantees, that the lengths of `xs` and `mapVect f xs` are the
-same, so the whole expression type checks and we are done:
+さて、`Vect n a`があり、`Vect n b`がほしいところです。
+ただし`n`についてはなんにもわかりません。
+さらに`xs`をパターン照合することで`n`をより知ることは*できはします*が、
+すぐさま鼬ごっこになってしまうでしょう。
+というのはそのようなパターン照合をしたら、新しく未知の長さの尾鰭が生まれるからです。
+その代わり、`mapVect`を再帰的に呼び出して残り (`xs`) を`Vect n b`に変換できます。
+`xs`と`mapVect f xs`の長さが等しいことは型検査器が保証してくれます。
+式全体が型検査を通ったので、これにて完了です。
 
 ```idris
 mapVect f (x :: xs) = f x :: mapVect f xs
 ```
 
-### Zipping Vectors
+### ベクタを縫い合わす
 
-Let us now have a look at `bogusZipList`: We'd like to pairwise merge two
-lists holding elements of (possibly) distinct types through a given binary
-function. As discussed above, the most reasonable thing to do is to expect
-the two lists as well as the result to be of equal length.  With `Vect`,
-this can be expressed and implemented as follows:
+さて、`bogusZipList`を見てみましょう。
+異な（りう）る型の要素を持つ2つのリストについて、所与の2引数関数を通して向かい合うものを1つに閉じるというものです。
+前述したように、2つのリストと結果はいずれも同じ長さになるのが一番理に適っています。
+`Vect`があればこれは以下のように表現でき、実装されます。
 
 ```idris
 zipWith : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c
@@ -270,28 +268,29 @@ zipWith f []        []         = Nil
 zipWith f (x :: xs) (y :: ys)  = f x y :: zipWith f xs ys
 ```
 
-Now, here is an interesting thing: The totality checker (activated
-throughout this source file due to the initial `%default total` pragma)
-accepts the above implementation as being total, although it is missing two
-more cases. This works, because Idris can figure out on its own, that the
-other two cases are *impossible*.  From the pattern match on the first
-`Vect` argument, Idris learns whether `n` is zero or the successor of
-another natural number. But from this it can derive, whether the second
-vector, being also of length `n`, is a `Nil` or a *cons*. Still, it can be
-informative to add the impossible cases explicitly. We can use keyword
-`impossible` to do so:
+さてさて、ここが面白いところです。
+全域性検査器（最初の`%default total`プラグマがあるのでこのソースファイルを通じて有効）は、
+あと2つ場合分けが足りないのですが、
+上の実装を全域であるとして受理します。
+これが動くのは、他の2つの場合が*不可能*であることを、
+Idrisが自分で調べてくれるからです。
+最初の`Vect`引数にパターン照合したことから、
+Idrisは`n`がゼロかゼロよりあとに続く他の自然数だと読み取ります。
+しかしここから、2つ目のベクタもまた長さが`n`であり、`Nil`ないし*cons*であることを導出できるのです。
+それでも明示的に不可能な場合を加えたほうが親切なこともあります。
+これには`impossible`キーワードが使えます。
 
 ```idris
 zipWith _ [] (_ :: _) impossible
 zipWith _ (_ :: _) [] impossible
 ```
 
-It is - of course - a type error to annotate a case in a pattern match with
-`impossible`, if Idris cannot verify that this case is indeed impossible. We
-will learn in a later section what to do, when we think we are right about
-an impossible case and Idris is not.
+もちろん、パターン照合中の場合に`impossible`を付けるのは、
+Idrisがたしかに不可能だと確証できない限り、型エラーです。
+後の節で、自分は不可能だとわかっているのにIdrisがわかってくれないときに、
+どうすればよいのかを学びます。
 
-ちょっとREPLで動かしてみましょう。
+ちょっとREPLで`zipWith`を動かしてみましょう。
 
 ```repl
 Tutorial.Dependent> zipWith (*) [1,2,3] [10,20,30]
@@ -299,32 +298,29 @@ Tutorial.Dependent> zipWith (*) [1,2,3] [10,20,30]
 Tutorial.Dependent> zipWith (\x,y => x ++ ": " ++ show y) ["The answer"] [42]
 ["The answer: 42"]
 Tutorial.Dependent> zipWith (*) [1,2,3] [10,20]
-... Nasty type error ...
+... ひどい型エラー ...
 ```
 
-#### Simplifying Type Errors
+#### 型エラーを簡潔にする
 
-It is amazing to experience the amount of work Idris can do for us and the
-amount of things it can infer on its own when things go well. When things
-don't go well, however, the error messages we get from Idris can be quite
-long and hard to understand, especially for programmers new to the
-language. For instance, the error message in the last REPL example above was
-pretty long, listing different things Idris tried to do together with the
-reason why each of them failed.
+Idrisがやってくれることの多さと、物事がうまく運んでいるときに自分で推論できることの多さには、目を瞠るものがあります。
+しかし物事がうまく運んでいない場合は、Idrisが出力するエラー文言はかなり長く、理解しづらいものです。
+とりわけ言語に入門したてのプログラマはそうでしょう。
+例えば前述した最後のREPLでの例でのエラー文言はかなり長く、
+Idrisが試みたことそれぞれを、なぜ失敗したのかについての理由を混じえて一覧にしています。
 
-If this happens, it often means that a combination of a type error and an
-ambiguity resulting from overloaded function names is at work. In the
-example above, the two vectors are of distinct length, which leads to a type
-error if we interpret the list literals as vectors. However, list literals
-are overloaded to work with all data types with constructors `Nil` and
-`(::)`, so Idris will now try other data constructors than those of `Vect`
-(the ones of `List` and `Stream` from the *Prelude* in this case), each of
-which will again fail with a type error since `zipWith` expects arguments of
-type `Vect`, and neither `List` nor `Stream` will work.
+こうなってしまうと、型エラーとオーバーロード関数由来の曖昧さのごった煮に手を付けることになります。
+上の例では2つのベクタは異なる長さであり、
+そのためリスト表記をベクタとして見做すなら型エラーとなります。
+しかしリスト表記はオーバーロードされており構築子`Nil`と`(::)`を持つ全てのデータ型に対して使えるため、
+Idrisは`Vect`以外の他のデータ構築子を試し始めてしまうのです。
+（今回の場合は*Prelude*にある`List`と`Stream`の構築子があたります。）
+`zipWith`は型`Vect`の引数を期待しており、
+`List`も`Stream`も当てはまらないため、
+これらの構築子それぞれについても型エラーにより失敗します。
 
-If this happens, prefixing overloaded function names with their namespaces
-can often simplify things, as Idris no longer needs to disambiguate these
-functions:
+そんなときは名前空間をオーバーロードされた関数名に前置することで事態が簡単になることがよくあります。
+Idrisがもはやこれらの関数の曖昧さを解消する必要がないからです。
 
 ```repl
 Tutorial.Dependent> zipWith (*) (Dependent.(::) 1 Dependent.Nil) Dependent.Nil
@@ -335,14 +331,14 @@ and:
 Mismatch between: 0 and 1.
 ```
 
-Here, the message is much clearer: Idris can't *unify* the lengths of the
-two vectors. *Unification* means: Idris tries to at compile time convert two
-expressions to the same normal form. If this succeeds, the two expressions
-are considered to be equivalent, if it doesn't, Idris fails with a
-unification error.
+ほら、文言がぐっと明らかになりました。
+Idrisは2つのベクタの長さを*統合*できていません。
+*統合*とは、Idrisがコンパイル時に2つの式を同じ普遍的な形式に変換しようとすることです。
+これが成功すれば2式は等価であると考えられ、
+そうでない場合はIdrisは統合エラーにより失敗します。
 
-As an alternative to prefixing overloaded functions with their namespace, we
-can use `the` to help with type inference:
+名前空間でオーバーロードされた関数を前置する代替として、
+`the`を使って型推論の手助けができます。
 
 ```repl
 Tutorial.Dependent> zipWith (*) (the (Vect 3 _) [1,2,3]) (the (Vect 2 _) [10,20])
@@ -353,144 +349,136 @@ and:
 Mismatch between: 0 and 1.
 ```
 
-It is interesting to note, that the error above is not "Mismatch between: 2
-and 3" but "Mismatch between: 0 and 1" instead. Here's what's going on:
-Idris tries to unify integer literals `2` and `3`, which are first converted
-to the corresponding `Nat` values `S (S Z)` and `S (S (S Z))`,
-respectively.  The two patterns match until we arrive at `Z` vs `S Z`,
-corresponding to values `0` and `1`, which is the discrepancy reported in
-the error message.
+面白い点ですが、上のエラーは "Mismatch between: 2 and 3" ではなく、
+"Mismatch between: 0 and 1" です。
+そうなっている理由はこうです。
+Idrisは整数表記`2`と`3`を統合しようとします。
+これらの整数は最初に対応する`Nat`値`S (S Z)`と`S (S (S Z))`にそれぞれ変換されます。
+2式は`Z`と`S Z`に行き着くまでパターン照合され、
+これは値`0`と`1`に対応します。
+これがエラー文言で不一致として報告されます。
 
-### Creating Vectors
+### ベクタを作る
 
-So far, we were able to learn something about the lengths of vectors by
-pattern matching on them. In the `Nil` case, it was clear that the length is
-0, while in the *cons* case the length was the successor of another natural
-number.  This is not possible when we want to create a new vector:
+これまでパターン照合することでベクタの長さについてのことを知ることができました。
+`Nil`の場合は長さがゼロであることが明らかで、
+*cons*の場合は長さが後続する他の自然数の長さなのでした。
+新しいベクタを作りたいときはそう簡単にはいきません。
 
 ```idris
 failing "Mismatch between: S ?n and n."
   fill : a -> Vect n a
 ```
 
-You will have a hard time implementing `fill`. The following, for instance,
-leads to a type error:
+`fill`を実装すると手詰まりになるでしょう。
+例えば以下は型エラーになります。
 
 ```idris
   fill va = [va,va]
 ```
 
-The problem is, that *the callers of our function decide about the length of
-the resulting vector*. The full type of `fill` is actually the following:
+問題は*関数の呼び出し手が結果のベクタの長さを決める*というところにあります。
+`fill`の型全体は実は以下のようです。
 
 ```idris
 fill' : {0 a : Type} -> {0 n : Nat} -> a -> Vect n a
 ```
 
-You can read this type as follows: For every type `a` and for every natural
-number `n` (about which I know *nothing* at runtime, since it has quantity
-zero), given a value of type `a`, I'll give you a vector holding exactly `n`
-elements of type `a`. This is like saying: "Think about a natural number
-`n`, and I'll give you `n` apples without you telling me the value of `n`".
-Idris is powerful, but it is not a clairvoyant.
+この型は以下のように読めます。
+あらゆる型`a`とあらゆる自然数`n`（量化子ゼロなので実行時には*何にも*わかりません）について、
+型`a`の値が与えられたとき、ちょうど`n`個の型`a`の要素を保管するベクタを渡してくれる、と。
+これは次のように言うような感じです。
+「自然数`n`について考えてください。
+そしたら`n`の値を教えてくれなくても、`n`個のりんごをあげます。」
+Idrisは強力ですが、透視能力者ではありません。
 
-In order to implement `fill`, we need to know what `n` actually is: We need
-to pass `n` as an explicit, unerased argument, which will allow us to
-pattern match on it and decide - based on this pattern match - which
-constructors of `Vect` to use:
+`fill`を実装するには`n`が実際なんであるかを知る必要があります。
+`n`を明示的で消去されない引数として渡さねばなりません。
+そうすることでそれをパターン照合でき、
+そのパターン照合に基づいてどちらの`Vect`の構築子を使うのかを決定するのです。
 
 ```idris
 replicate : (n : Nat) -> a -> Vect n a
 ```
 
-Now, `replicate` is a *dependent function type*: The output type *depends*
-on the value of one the arguments. It is straight forward to implement
-`replicate` by pattern matching on `n`:
+ここで`replicate`は*依存関数型*です。
+出力型は引数中の1つの値に*依存*しています。
+`replicate`を`n`についてのパターン照合により実装するのは直感的です。
 
 ```idris
 replicate 0     _  = []
 replicate (S k) va = va :: replicate k va
 ```
 
-This is a pattern that comes up often when working with indexed types: We
-can learn about the values of the indices by pattern matching on the values
-of the type family. However, in order to return a value of the type family
-from a function, we need to either know the values of the indices at compile
-time (see constants `ex1` or `ex3`, for instance), or we need to have access
-to the values of the indices at runtime, in which case we can pattern match
-on them and learn from this, which constructor(s) of the type family to use.
+こうしたことは指標付き型に取り組む際によく思い浮かぶパターンです。
+型族の値にパターン照合によって指標の値について知ることができます。
+しかし関数から型族の値を返すためには、
+コンパイル時に指標の値を知っているか（例えば定数`ex1`や`ex3`を見てください）、
+または実行時に指標値にアクセスする必要があります。
+後者の場合、指標値に対してパターン照合でき、型族のどの構築子を使うべきかがわかります。
 
-### 演習 パート1
+### 演習 その1
 
-1. Implement function `head` for non-empty vectors:
+1. 関数`head`を非空のベクタに実装してください。
 
    ```idris
    head : Vect (S n) a -> a
    ```
 
-   Note, how we can describe non-emptiness by using a *pattern*
-   in the length of `Vect`. This rules out the `Nil` case, and we can
-   return a value of type `a`, without having to wrap it in
-   a `Maybe`! Make sure to add an `impossible` clause for the `Nil`
-   case (although this is not strictly necessary here).
+   `Vect`の長さに*パターン*を使うことで非空性を表現できているところに注目してください。
+   ここでは`Nil`の場合は排除されており、`Maybe`にくるむことなく型`a`の値を返せます！
+   `Nil`の場合に`impossible`節を加えて確かめてみてください。
+   （ただ、ここでは厳密には必要ありません。）
 
-2. Using `head` as a reference, declare and implement function `tail` for
-   non-empty vectors. The types should reflect that the output is exactly
-   one element shorter than the input.
+2. `head`を参照しつつ、非空のベクタに対して関数`tail`を宣言し実装してください。
+   型では出力が入力よりちょうど1要素分短かくなることを反映してください。
 
-3. Implement `zipWith3`. If possible, try to doing so without looking at the
-   implementation of `zipWith`:
+3. `zipWith3`を実装してください。
+   もし可能であれば`zipWith`の実装を見ずにやってみてください。
 
    ```idris
    zipWith3 : (a -> b -> c -> d) -> Vect n a -> Vect n b -> Vect n c -> Vect n d
 
-4. Declare and implement a function `foldSemi`
-   for accumulating the values stored
-   in a `List` through `Semigroup`s append operator (`(<+>)`).
-   (Make sure to only use a `Semigroup` constraint, as opposed to
-   a `Monoid` constraint.)
+4. `List`に格納された値を`Semigroup`の結合演算子 (`<+>`) を用いて積み重ねる関数`foldSemi`を宣言し実装してください。
+   （必ず`Semigroup`制約のみを使ってください。`Monoid`制約ではないですよ。）
 
-5. Do the same as in Exercise 4, but for non-empty vectors. How
-   does a vector's non-emptiness affect the output type?
+5. 演習4と同じことを非空のベクタについて行ってください。
+   ベクタが非空であることで出力型にどう影響するでしょうか。
 
-6. Given an initial value of type `a` and a function `a -> a`,
-   we'd like to generate `Vect`s of `a`s, the first value of
-   which is `a`, the second value being `f a`, the third
-   being `f (f a)` and so on.
+6. 型`a`の初期値と関数`a -> a`が与えられているとき、
+   `a`の`Vect`を生成したいとします。
+   最初の値は`a`、2つ目の値は`f a`、3つ目の値は`f (f a)`、などなど、といった感じです。
 
-   For instance, if `a` is 1 and `f` is `(* 2)`, we'd like
-   to get results similar to the following: `[1,2,4,8,16,...]`.
+   例えば`a`が1で`f`が`(* 2)`のとき、
+   次のような結果が得られます。
+   `[1,2,4,8,16,...]`
 
-   Declare and implement function `iterate`, which should
-   encapsulate this behavior. Get some inspiration from `replicate`
-   if you don't know where to start.
+   この振舞いを内蔵化する関数`iterate`を宣言し実装してください。
+   どこから手を付ければよいか分からなかったら`replicate`から着想が得られます。
 
-7. Given an initial value of a state type `s` and
-   a function `fun : s -> (s,a)`,
-   we'd like to generate `Vect`s of `a`s. Declare and implement
-   function `generate`, which should encapsulate this behavior. Make sure to use
-   the updated state in every new invocation of `fun`.
+7. 状態型`s`の初期値と関数`fun : s -> (s,a)`が与えられているとき、
+   `a`の`Vect`を生成したいとします。
+   この振舞いを内蔵化する関数`generate`を宣言し実装してください。
+   `fun`を呼び出すときはいつも更新された状態を使うことに気を付けてください。
 
-   Here's an example how this can be used to generate the first
-   `n` Fibonacci numbers:
+   これを使って最初から`n`個までのフィボナッチ数を生成する例がこちらです。
 
    ```repl
    generate 10 (\(x,y) => let z = x + y in ((y,z),z)) (0,1)
    [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
    ```
 
-8. Implement function `fromList`, which converts a list of values to a
-   `Vect` of the same length. Use holes if you get stuck:
+8. 関数`fromList`を実装してください。
+   この関数は値のリストを同じ長さのベクタに変換します。
+   詰まったら穴開きを使ってください。
 
    ```idris
    fromList : (as : List a) -> Vect (length as) a
    ```
 
-   Note how, in the type of `fromList`, we can *calculate* the
-   length of the resulting vector by passing the list argument
-   to function *length*.
+   `fromList`の型で、リスト引数を関数*length*に渡すことで、結果のベクタの長さを*計算*できていることにご注目。
 
-9. あってもなくてもよい値の、以下の梱包について考えてみましょう。
+9. 以下の宣言について考えてください。
 
    ```idris
    maybeSize : Maybe a -> Nat
@@ -498,13 +486,13 @@ on them and learn from this, which constructor(s) of the type family to use.
    fromMaybe : (m : Maybe a) -> Vect (maybeSize m) a
    ```
 
-   Choose a reasonable implementation for `maybeSize` and
-   implement `fromMaybe` afterwards.
+   `maybeSize`の理に適った実装を選び、
+   その後で`fromMaybe`を実装してください。
 
-## `Fin`: Safe Indexing into Vectors
+## `Fin`、ベクタから安全に指標で引く
 
-Consider function `index`, which tries to extract a value from a `List` at
-the given position:
+関数`index`を考えましょう。
+この関数は`List`から所与の位置で値を抽出しようとします。
 
 ```idris
 indexList : (pos : Nat) -> List a -> Maybe a
@@ -513,29 +501,28 @@ indexList 0     (x :: _)  = Just x
 indexList (S k) (_ :: xs) = indexList k xs
 ```
 
-Now, here is a thing to consider when writing functions like `indexList`: Do
-we want to express the possibility of failure in the output type, or do we
-want to restrict the accepted arguments, so the function can no longer fail?
-These are important design decisions, especially in larger applications.
-Returning a `Maybe` or `Either` from a function forces client code to
-eventually deal with the `Nothing` or `Left` case, and until this happens,
-all intermediary results will carry the `Maybe` or `Either` stain, which
-will make it more cumbersome to run calculations with these intermediary
-results.  On the other hand, restricting the values accepted as input will
-complicate the argument types and will put the burden of input validation on
-our functions' callers, (although, at compile time we can get help from
-Idris, as we will see when we talk about auto implicits) while keeping the
-output pure and clean.
+さて、ここで`indexList`のような関数を書くときに考慮すべき点があります。
+出力型で失敗する可能性を表現したものか、
+もしくは関数が決して失敗しないように受け付ける引数を制限したものか、ということです。
+これは大切な設計時の決断であり、特に大きめのアプリケーションではそうです。
+`Maybe`や`Either`を関数から返すと、
+その関数を使う側のコードで結局`Nothing`や`Left`の場合に対処することになります。
+そして対処するまでは中間結果は`Maybe`や`Either`の手荷物を持ち回ることになり、
+これらの中間結果を計算するのが億劫になっていきます。
+他方で入力として受け付ける値を制限するのは、
+引数の型を複雑にすることになり、
+関数の呼び出し手に入力の検証という重荷を強いることになります。
+（とはいえ、auto暗示子でお話しすることになりますが、コンパイル時にIdrisから助けが得られます。）
+出力は純粋で明快になるのですが。
 
-Languages without dependent types (like Haskell), can often only take the
-route described above: To wrap the result in a `Maybe` or `Either`.
-However, in Idris we can often *refine* the input types to restrict the set
-of accepted values, thus ruling out the possibility of failure.
+依存型のない言語（例えばHaskell）は上の道筋のみをよく取ります。
+つまり結果を`Maybe`や`Either`でくるむのです。
+しかし、Idrisでは入力型を*洗練する*ことで受け付ける値の集合を制限でき、
+したがって失敗の可能性を排除できるのです。
 
-Assume, as an example, we'd like to extract a value from a `Vect n a` at
-(zero-based) index `k`. Surely, this can succeed if and only if `k` is a
-natural number strictly smaller than the length `n` of the vector. Luckily,
-we can express this precondition in an indexed type:
+例として、（ゼロ始まりの）索引`k`で`Vect n a`から値を抽出したいときを考えましょう。
+当然これが成功するのは、`k`がベクタの長さ`n`より厳密に小さい自然数であるときに限ります。
+幸運にもこの前提条件を指標付き型で表現できます。
 
 ```idris
 data Fin : (n : Nat) -> Type where
@@ -543,13 +530,15 @@ data Fin : (n : Nat) -> Type where
   FS : (k : Fin n) -> Fin (S n)
 ```
 
-`Fin n` is the type of natural numbers strictly smaller than `n`.  It is
-defined inductively: `FZ` corresponds to natural number *zero*, which, as
-can be seen in its type, is strictly smaller than `S n` for any natural
-number `n`. `FS` is the inductive case: If `k` is strictly smaller than `n`
-(`k` being of type `Fin n`), then `FS k` is strictly smaller than `S n`.
+`Fin n`は`n`より厳密に小さい自然数の型です。
+これは機能的に定義されています。
+`FZ`は自然数*ゼロ*に対応し、
+型で見てとれるようにあらゆる自然数`n`に対して`S n`より厳密に小さいです。
+`FS`は帰納的な場合です。
+もし`k`が`n`より厳密に小さいなら（`k`は型が`Fin n`です）、
+`FS k`は`S n`より厳密に小さいです。
 
-Let's come up with some values of type `Fin`:
+型`Fin`の値をいくつか挙げてみましょう。
 
 ```idris
 fin0_5 : Fin 5
@@ -565,92 +554,92 @@ fin4_5 : Fin 5
 fin4_5 = FS (FS (FS (FS FZ)))
 ```
 
-Note, that there is no value of type `Fin 0`. We will learn in a later
-session, how to express "there is no value of type `x`" in a type.
+型`Fin 0`の値がないことにご注意を。
+のちの節で、「型`x`に値が1つもない」ことを型中で表現する方法を学びます。
 
-Let us now check, whether we can use `Fin` to safely index into a `Vect`:
+`Fin`を使って`Vect`から安全に指標で引けるかどうかを確認してみましょう。
 
 ```idris
 index : Fin n -> Vect n a -> a
 ```
 
-Before you continue, try to implement `index` yourself, making use of holes
-if you get stuck.
+読み進める前に自分で`index`を実装してみてください。
+詰まったら穴開きを利用しましょう。
 
 ```idris
 index FZ     (x :: _) = x
 index (FS k) (_ :: xs) = index k xs
 ```
 
-Note, how there is no `Nil` case and the totality checker is still
-happy. That's because `Nil` is of type `Vect 0 a`, but there is no value of
-type `Fin 0`! We can verify this by adding the missing impossible clauses:
+`Nil`の場合がなくても全域性検査器は満足していますね。
+なぜかというと`Nil`は型が`Vect 0 a`ですが、型`Fin 0`が存在しないからです！
+このことは欠けている不可能節を加えることで確かめられます。
 
 ```idris
 index FZ     Nil impossible
 index (FS _) Nil impossible
 ```
 
-### 演習 パート2
+### 演習 その2
 
-1. Implement function `update`, which, given a function of type `a -> a`,
-   updates the value in a`Vect n a` at position `k < n`.
+1. 関数`update`を実装してください。
+   この関数は型`a -> a`の関数を受け取って`Vect n a`の位置`k < n`での値を更新します。
 
-2. Implement function `insert`, which inserts a value of type `a` at
-   position `k <= n` in a `Vect n a`. Note, that `k` is the index of the
-   freshly inserted value, so that the following holds:
+2. 関数`insert`を実装してください。
+   この関数は`Vect n a`の位置`k <= n`に型`a`の値を挿入します。
+   ここで`k`は新しく挿入された値の索引であり、なので以下が満たされます。
 
    ```repl
    index k (insert k v vs) = v
    ```
 
-3. Implement function `delete`, which deletes a value from a vector at the
-   given index.
+3. 関数`delete`を実装してください。
+   この関数はベクタから所与の索引のところで値を削除します。
 
-   This is trickier than Exercises 1 and 2, as we have to properly
-   encode in the types that the vector is getting one element shorter.
+   これは演習1, 2よりも取っ付きにくいです。
+   というのは、ベクタが1要素分短いことを適切に型に落とし込む必要があるからです。
 
-4. We can use `Fin` to implement safe indexing into `List`s as well. Try to
-   come up with a type and implementation for `safeIndexList`.
+4. `Fin`があれば`List`も同様に安全に索引で引くように実装できます。
+   `safeIndexList`の型を思い浮かべて実装してください。
 
-   Note: If you don't know how to start, look at the type of `fromList`
-   for some inspiration. You might also need give the arguments in
-   a different order than for `index`.
+   注意：どこから手を付けたらよいかわからなかったら、
+   `fromList`の型を見ると着想が得られるでしょう。
+   また、`index`とは異なる順番で引数を与えなくてはならないでしょう。
 
-5. Implement function `finToNat`, which converts a `Fin n` to the
-   corresponding natural number, and use this to declare and implement
-   function `take` for splitting of the first `k` elements of a `Vect n a`
-   with `k <= n`.
+5. 関数`finToNat`を実装してください。
+   この関数は`Fin n`を対応する自然数に変換します。
+   そして、これを使って関数`take`を宣言し実装してください。
+   `take`は`Vect n a`から最初の`k`個分の要素を切り出します。
+   なお`k <= n`です。
 
-6. Implement function `minus` for subtracting a value `k` from a natural
-   number `n` with `k <= n`.
+6. 自然数`n`から値`k`を差し引く関数`minus`を実装してください。
+   なお`k <= n`です。
 
-7. Use `minus` from Exercise 6 to declare and implement function `drop`, for
-   dropping the first `k` values from a `Vect n a`, with `k <= n`.
+7. 演習6の`minus`を使って、`Vect n a`から最初の`k`個分の値を切り落とす関数`drop`を宣言し実装してください。
+   なお`k <= n`です。
 
-8. Implement function `splitAt` for splitting a `Vect n a` at position `k <=
-   n`, returning the prefix and suffix of the vector wrapped in a pair.
+8. 位置`k <= n`で`Vect n a`を切り分ける関数`splitAt`を実装してください。
+   この関数はベクタの前半部分と後半部分を対に包んで返します。
 
-   Hint: Use `take` and `drop` in your implementation.
+   解決の糸口：実装で`take`と`drop`を使ってください。
 
-Hint: Since `Fin n` consists of the values strictly smaller than `n`, `Fin
-(S n)` consists of the values smaller than or equal to `n`.
+解決の糸口：`Fin n`は`n`より厳密に小さい値からなります。
+`Fin (S n)`は`n`以下の値からなります。
 
-Note: Functions `take`, `drop`, and `splitAt`, while correct and provably
-total, are rather cumbersome to type.  There is an alternative way to
-declare their types, as we will see in the next section.
+附記：関数`take`, `drop`, `splitAt`は正確で全域性が証明されていますが、
+それ以上に型付けるのが億劫です。
+型を宣言する代わりの方法があるので、それを次の節で見ていきます。
 
-## Compile-Time Computations
+## コンパイル時計算
 
-In the last section - especially in some of the exercises - we started more
-and more to use compile time computations to describe the types of our
-functions and values.  This is a very powerful concept, as it allows us to
-compute output types from input types. Here's an example:
+先程の節、特にいくつかの演習では、関数や値の型を表現するために、ますますコンパイル時計算を使い始めました。
+これは大変強力な概念で、というのも入力型から出力型を計算できるからです。
+以下は例です。
 
-It is possible to concatenate two `List`s with the `(++)` operator. Surely,
-this should also be possible for `Vect`. But `Vect` is indexed by its
-length, so we have to reflect in the types exactly how the lengths of the
-inputs affect the lengths of the output. Here's how to do this:
+`(++)`演算子で2つの`List`を結合することができます。
+もちろんこれは`Vect`についても可能です。
+しかし`Vect`は長さで指標付けられているので、入力の長さがどのように出力の長さに影響しているのかを厳密に型に反映させなくてはなりません。
+こちらがその方法です。
 
 ```idris
 (++) : Vect m a -> Vect n a -> Vect (m + n) a
@@ -658,12 +647,12 @@ inputs affect the lengths of the output. Here's how to do this:
 (++) (x :: xs) ys = x :: (xs ++ ys)
 ```
 
-Note, how we keep track of the lengths at the type-level, again ruling out
-certain common programming errors like inadvertently dropping some values.
+型段階で長さを監視していますね。
+ここでも手違いで値が欠落するようなよくあるプログラミングの誤りの類を排除します。
 
-We can also use type-level computations as patterns on the input types. Here
-is an alternative type and implementation for `drop`, which you implemented
-in the exercises by using a `Fin n` argument:
+型段階計算を入力型でのパターンとして使うこともできます。
+こちらは`drop`の別の型と実装です。
+この関数は演習で`Fin n`引数を使って実装したのでした。
 
 ```idris
 drop' : (m : Nat) -> Vect (m + n) a -> Vect n a
@@ -671,18 +660,15 @@ drop' 0     xs        = xs
 drop' (S k) (_ :: xs) = drop' k xs
 ```
 
-### Limitations
+### 制約
 
-After all the examples and exercises in this section you might have come to
-the conclusion that we can use arbitrary expressions in the types and Idris
-will happily evaluate and unify all of them for us.
+本節の全ての例と演習を終えたあとでは、型で任意の式が使えて、Idrisが喜んですべて評価・一体化してくれるのだ、という結論に至るかもしれません。
 
-I'm afraid that's not even close to the truth. The examples in this section
-were hand-picked because they are known to *just work*. The reason being,
-that there was always a direct link between our own pattern matches and the
-implementations of functions we used at compile time.
+残念ですがそれは真実からはほど遠いものです。
+本節の例は*ひとまず動く*ことが知られているような、選別されたものなのです。
+その理由というのは、パターン照合とコンパイル時に使う関数の実装との間に常に直接の繋がりがあるためです。
 
-For instance, here is the implementation of addition of natural numbers:
+例えば、以下は自然数の加算の実装です。
 
 ```idris
 add : Nat -> Nat -> Nat
@@ -690,17 +676,15 @@ add Z     n = n
 add (S k) n = S $ add k n
 ```
 
-As you can see, `add` is implemented via a pattern match on its *first*
-argument, while the second argument is never inspected. Note, how this is
-exactly how `(++)` for `Vect` is implemented: There, we also pattern match
-on the first argument, returning the second unmodified in the `Nil` case,
-and prepending the head to the result of appending the tail in the *cons*
-case. Since there is a direct correspondence between the two pattern
-matches, it is possible for Idris to unify `0 + n` with `n` in the `Nil`
-case, and `(S k) + n` with `S (k + n)` in the *cons* case.
+見てみると`add`は*最初の*引数でパターン照合して実装されており、
+2つ目の引数は調べられていません。
+これは`(++)`が`Vect`に実装されているのとちょうど同じですね。
+最初の引数でパターン照合して、`Nil`の場合あ2つ目を変更せずに返し、
+*cons*の場合は尾っぽをくっつけた結果に先頭を前置したものを返しているのでした。
+ここで2つのパターン照合には直接合致するところがあるので、
+Idrisは`Nil`の場合に`0 + n`と`n`を、*cons*の場合に`(S k) + n`と`S (k + n)`を、それぞれ一体化できます。
 
-Here is a simple example, where Idris will not longer be convinced without
-some help from us:
+以下の素朴な例では、手助けなしには、Idrisはもはや納得してくれません。
 
 ```idris
 failing "Can't solve constraint"
@@ -709,75 +693,71 @@ failing "Can't solve constraint"
   reverse (x :: xs) = reverse xs ++ [x]
 ```
 
-When we type-check the above, Idris will fail with the following error
-message: "Can't solve constraint between: plus n 1 and S n." Here's what's
-going on: From the pattern match on the left hand side, Idris knows that the
-length of the vector is `S n`, for some natural number `n` corresponding to
-the length of `xs`. The length of the vector on the right hand side is `n +
-1`, according to the type of `(++)` and the lengths of `xs` and
-`[x]`. Overloaded operator `(+)` is implemented via function `Prelude.plus`,
-that's why Idris replaces `(+)` with `plus` in the error message.
+上記を型検査すると、
+Idrisは以下のエラー文言とともに失敗します。
+"Can't solve constraint between: plus n 1 and S n."
+（訳註：制約を解決できません：plus n 1とS nとで差があります。）
+何が起こっているのかというと、こうです。
+左側のパターン照合から、Idrisはベクタの長さが`S n`であること、自然数`n`は`xs`の長さに対応することがわかります。
+`(++)`の型と`xs`の長さおよび`[x]`によると、右側のベクタの長さは`n + 1`です。
+オーバーロードされた演算子`(+)`は関数`Prelude.plus`を介して実装されており、
+そのためIdrisはエラー文言で`(+)`を`plus`に置き換えています。
 
-As you can see from the above, Idris can't verify on its own that `1 + n` is
-the same thing as `n + 1`.  It can accept some help from us, though. If we
-come up with a *proof* that the above equality holds (or - more generally -
-that our implementation of addition for natural numbers is *commutative*),
-we can use this proof to *rewrite* the types on the right hand side of
-`reverse`. Writing proofs and using `rewrite` will require some in-depth
-explanations and examples. Therefore, these things will have to wait until
-another chapter.
+上からわかるように、Idrisは自分では`1 + n`が`n + 1`と同じことを確かめられません。
+手助けを受けることはできるんですけどね。
+上の等式が満たされるという*証明*を思い付いたら（または、もっと一般化すれば、自然数の加算の実装が*可換的*であれば）、
+証明を`reverse`の右側の型を*書き換える*のに使うことができます。
+証明を書いたり`rewrite`を使ったりするには詳細な説明と例が必要でしょう。
+したがってこれらの話題は別の章まで待つことにします。
 
-### Unrestricted Implicits
+### 制約なし暗黙子
 
-In functions like `replicate`, we pass a natural number `n` as an explicit,
-unrestricted argument from which we infer the length of the vector to
-return.  In some circumstances, `n` can be inferred from the context.  For
-instance, in the following example it is tedious to pass `n` explicitly:
+`replicate`のような関数では、自然数`n`を明示的で制約のない引数として渡しましたが、
+これは返すベクタの長さから推論したものでした。
+状況次第で`n`は文脈から推論できます。
+例えば以下の例では`n`を明示的に渡すのは億劫です。
 
 ```idris
 ex4 : Vect 3 Integer
 ex4 = zipWith (*) (replicate 3 10) (replicate 3 11)
 ```
 
-The value `n` is clearly derivable from the context, which can be confirmed
-by replacing it with underscores:
+値`n`が文脈から導出できることは明らかで、下線文字で置き換えることでも確かめられます。
 
 ```idris
 ex5 : Vect 3 Integer
 ex5 = zipWith (*) (replicate _ 10) (replicate _ 11)
 ```
 
-We therefore can implement an alternative version of `replicate`, where we
-pass `n` as an implicit argument of *unrestricted* quantity:
+したがって`replicate`の代わりの版を実装でき、
+*制約なし*量化子の暗黙引数として`n`を渡すとします。
 
 ```idris
 replicate' : {n : _} -> a -> Vect n a
 replicate' = replicate n
 ```
 
-Note how, in the implementation of `replicate'`, we can refer to `n` and
-pass it as an explicit argument to `replicate`.
+`replicate`の実装中で`n`を推論し、`replicate`の明示的な引数として渡せていますね。
 
-Deciding whether to pass potentially inferable arguments to a function
-implicitly or explicitly is a question of how often the arguments actually
-*are* inferable by Idris. Sometimes it might even be useful to have both
-verions of a function. Remember, however, that even in case of an implicit
-argument we can still pass the value explicitly:
+関数へ潜在的に推論可能な引数を渡しているとき、それを暗黙的にすべきか明示的にすべきか決定することとは、
+その引数が実際どれほどIdrisによって推論されて*いる*のかということです。
+その関数の両方の版があると便利なことさえあるでしょう。
+ただし覚えておいてほしいのですが、暗黙引数の場合でも明示的に値を渡せることには変わりないのです。
 
 ```idris
 ex6 : Vect ? Bool
 ex6 = replicate' {n = 2} True
 ```
 
-In the type signature above, the question mark (`?`) means, that Idris
-should try and figure out the value on its own by unification. This forces
-us to specify `n` explicitly on the right hand side of `ex6`.
+上の型処方中の疑問符 (`?`) は、
+Idrisがどうにかして自分で一体化により値を見付けだせるだろうという意味です。
+こうなると`ex6`の右側で明示的に`n`を指定することになります。
 
-#### Pattern Matching on Implicits
+#### 暗黙子に対するパターン照合
 
-The implementation of `replicate'` makes use of function `replicate`, where
-we could pattern match on the explicit argument `n`. However, it is also
-possible to pattern match on implicit, named arguments of non-zero quantity:
+`replicate'`の実装は関数`replicate`を使っています。
+`replicate`のほうで明示引数`n`でパターン照合しているのでした。
+しかし、暗黙子、つまり非ゼロの量化子の名前付き引数でパターン照合することもできます。
 
 ```idris
 replicate'' : {n : _} -> a -> Vect n a
@@ -785,27 +765,27 @@ replicate'' {n = Z}   _ = Nil
 replicate'' {n = S _} v = v :: replicate'' v
 ```
 
-### 演習 パート3
+### 演習 その3
 
-1. Here is a function declaration for flattening a `List` of `List`s:
+1. 以下は`List`の`List`を平坦にする関数の宣言です。
 
    ```idris
    flattenList : List (List a) -> List a
    ```
 
-   Implement `flattenList` and declare and implement a similar
-   function `flattenVect` for flattening vectors of vectors.
+   `flattenList`を実装し、これと似たベクタのベクタを平坦にする関数`flattenVect`を宣言し実装してください。
 
-2. Implement functions `take'` and `splitAt'` like in the exercises of the
-   previous section but using the technique shown for `drop'`.
+2. 前の節の演習のように関数`take'`と`splitAt'`を実装してください。
+   ただし`drop'`で見た技法を使ってください。
 
-3. Implement function `transpose` for converting an `m x n`-matrix
-   (represented as a `Vect m (Vect n a)`)  to an `n x m`-matrix.
+3. `m x n`行列（`Vect m (Vect n a)`として表されます）を`n x
+   m`行列に変換する関数`transpose`を実装してください。
 
-   Note: This might be a challenging exercise, but make sure
-   to give it a try. As usual, make use of holes if you get stuck!
+   附記：これは発展的な演習かもしれませんが、
+   ぜひ挑戦してみてください。
+   いつも通り手詰まりになったら穴開きを活用しましょう！
 
-   Here is an example how this should work in action:
+   以下は実際に動かす例です。
 
    ```repl
    Solutions.Dependent> transpose [[1,2,3],[4,5,6]]
@@ -814,38 +794,30 @@ replicate'' {n = S _} v = v :: replicate'' v
 
 ## まとめ
 
-* Dependent types allow us to calculate types from values.  This makes it
-  possible to encode properties of values at the type-level and verify these
-  properties at compile time.
+* 依存型があれば型を値から計算できます。
+  この性質により値の性質を型段階に落とし込み、その性質をコンパイル時に検証できます。
 
-* Length-indexed lists (vectors) let us rule out certain implementation
-  errors, by forcing us to be precise about the lengths of input and output
-  vectors.
+* 長さで指標付けられたリスト（ベクタ）は、
+  入出力ベクタの長さを強制的に正確にすることにより、
+  特定の実装誤りを排除してくれます。
 
-* We can use patterns in type signatures, for instance to express that the
-  length of a vector is non-zero and therefore, the vector is non-empty.
+* 型処方でパターンを使用でき、例えばベクタの長さが非ゼロなのでベクタが非空だということを表現できます。
 
-* When creating values of a type family, the values of the indices need to
-  be known at compile time, or they need to be passed as arguments to the
-  function creating the values, where we can pattern match on them to figure
-  out, which constructors to use.
+* 型族の値をつくる場合、指標値はコンパイル時に既知であるか、値を作る関数に引数として渡されていなくてはいけません。
+  関数は指標値でパターン照合してどの構築子を使うべきか調べられます。
 
-* We can use `Fin n`, the type of natural numbers strictly smaller than `n`,
-  to safely index into a vector of length `n`.
+* `n`より厳密に小さい自然数の型である`Fin n`を使って、安全に長さ`n`のベクタから索引で引くことができます。
 
-* Sometimes, it is convenient to pass inferable arguments as non-erased
-  implicits, in which case we can still inspect them by pattern matching or
-  pass them to other functions, while Idris will try and fill in the values
-  for us.
+* 時々推論できる引数を消去されない暗黙子として渡すと便利なことがあります。
+  このとき、Idrisはできる限り値を埋めてくれますが、
+  パターン照合したり他の関数に渡すこともできることには変わりありません。
 
-Note, that data type `Vect` together with many of the functions we
-implemented here is available from module `Data.Vect` from the *base*
-library. Likewise, `Fin` is available from `Data.Fin` from *base*.
+データ型`Vect`とここで実装した大くの関数は*base*ライブラリのモジュール`Data.Vect`で使えます。
+同様に`Fin`は*base*の`Data.Fin`で使えます。
 
 ### お次は？
 
-In the [next section](IO.md), it is time to learn how to write effectful
-programs and how to do this while still staying *pure*.
+[次節](IO.md)では、そろそろ副作用のあるプログラムを*純粋*なまま書く方法について学びましょう。
 
 <!-- vi: filetype=idris2
 -->

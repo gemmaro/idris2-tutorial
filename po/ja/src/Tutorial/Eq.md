@@ -269,7 +269,7 @@ concatTables3 (MkTable s1 m rs1) (MkTable s2 n rs2) = case eqSchema s1 s2 of
   Nothing   => Nothing
 ```
 
-### 演習 パート1
+### 演習 その1
 
 In the following exercises, you are going to implement some very basic
 properties of equality proofs. You'll have to come up with the types of the
@@ -533,7 +533,7 @@ plugin](https://github.com/idris-community/idris2-lsp)), you will note that
 `map` and `id` in `mapMaybeId1` get highlighted differently: `map` as a
 function name, `id` as a bound variable.
 
-### 演習 パート2
+### 演習 その2
 
 In these exercises, you are going to proof several simple properties of
 small functions. When writing proofs, it is even more important to use holes
@@ -790,7 +790,7 @@ for types for which we can implement a decision procedure for propositional
 equality. We can implement this to figure out if two values are equal or
 not.
 
-### 演習 パート3
+### 演習 その3
 
 1. Show that there can be no non-empty vector of `Void` by writing a
    corresponding implementation of uninhabited

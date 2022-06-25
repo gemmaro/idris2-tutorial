@@ -275,7 +275,7 @@ compile time, we can let Idris try and build these values for us using a
 technique called *proof search*. This allows us to make functions safe and
 convenient to use at the same time.
 
-### 演習 パート1
+### 演習 その1
 
 In these exercises, you'll have to implement several functions making use of
 auto implicits, to constrain the values accepted as function arguments. The
@@ -617,7 +617,7 @@ inSchema (MkColumn cn t :: xs) n = case decEq cn n of
 At the end of this chapter we will use `InSchema` in our CSV command-line
 application to list all values in a column.
 
-### 演習 パート2
+### 演習 その2
 
 1. Show that `InSchema` is decidable by changing the output type of
    `inSchema` to `Dec (c ** InSchema n ss c)`.
@@ -945,7 +945,7 @@ handleAll h (Left $ U ix v) = extract h ix v
 Below, we will see an additional way of handling all errors at once by
 defining a custom interface for error handling.
 
-### 演習 パート3
+### 演習 その3
 
 1. `List`についての以下の汎化関数を実装してください。
 
