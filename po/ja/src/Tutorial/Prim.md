@@ -427,7 +427,7 @@ Make sure to look at the example strings at the REPL to see the effect of
 interpolation and raw string literals and compare it with the syntax we
 used.
 
-### 演習 パート1
+### 演習 その1
 
 In these exercises, you are supposed to implement a bunch of utility
 functions for consuming and converting strings.  I don't give the expected
@@ -677,7 +677,7 @@ Tutorial.Prim> 0xffa2
 65442
 ```
 
-### 演習 パート2
+### 演習 その2
 
 1. Define a wrapper record for integral values and implement `Monoid` so
    that `(<+>)` corresponds to `(.&.)`.
@@ -893,7 +893,7 @@ escaped : Escaped
 escaped = "Hello World!"
 ```
 
-### 演習 パート3
+### 演習 その3
 
 In this massive set of exercises, you are going to build a small library for
 working with predicates on primitives.  We want to keep the following goals

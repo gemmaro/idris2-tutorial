@@ -345,7 +345,7 @@ use `fastPack` and `fastUnpack` at runtime; see the corresponding rules in
 [the following source
 file](https://github.com/idris-lang/Idris2/blob/main/libs/prelude/Prelude/Types.idr)).
 
-### 演習 パート1
+### 演習 その1
 
 In these exercises you are going to implement several recursive
 functions. Make sure to use tail recursion whenever possible and quickly
@@ -624,7 +624,7 @@ tedious task - and error-prone on its own. Instead, we resort to using the
 mighty sledgehammer of totality checking: `assert_total`. Needless to say
 that this comes with the same risks as `assert_smaller`, so be very careful.
 
-### 演習 パート2
+### 演習 その2
 
 Implement the following functions in a provably total way without
 "cheating". Note: It is not necessary to implement these in a tail recursive
@@ -933,7 +933,7 @@ this is a non-tail recursive function running in linear time complexity,
 while a hand-written implementation can just return its argument without any
 modifications.
 
-### 演習 パート3
+### 演習 その3
 
 In these exercises, you are going to implement `Foldable` for different data
 types. Make sure to try and manually implement all six functions of the

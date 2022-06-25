@@ -329,7 +329,7 @@ Again, as a quick exercise, try implementing `toDPair` in terms of `length`,
 and note how Idris will fail to unify the result of `length` with the actual
 length of the vector.
 
-### 演習 パート1
+### 演習 その1
 
 1. Declare and implement a function for filtering a vector similar to
    `Data.List.filter`.
@@ -622,7 +622,7 @@ on more than one value, as we will see in the exercises. In such cases, sum
 types and dependent pairs quickly become unwieldy, and you should go for an
 encoding as a dependent record.
 
-### 演習 パート2
+### 演習 その2
 
 Sharpen your skills in using dependent pairs and dependent records! In
 exercises 2 to 7 you have to decide yourself, when a function should return
@@ -1077,7 +1077,7 @@ main : IO ()
 main = runProg $ MkTable [] _ []
 ```
 
-### 演習 パート3
+### 演習 その3
 
 The challenges presented here all deal with enhancing our table editor in
 several interesting ways. Some of them are more a matter of style and less a
