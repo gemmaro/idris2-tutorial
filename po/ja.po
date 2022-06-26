@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: idris 2-tutorial\n"
-"POT-Creation-Date: 2022-06-05 18:08+0900\n"
-"PO-Revision-Date: 2022-06-25 17:07+0900\n"
+"POT-Creation-Date: 2022-06-26 20:00+0900\n"
+"PO-Revision-Date: 2022-06-26 21:08+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1797,7 +1797,8 @@ msgid ""
 "[Type-Driven Development with Idris](https://www.manning.com/books/type-"
 "driven-development-with-idris)  book."
 msgstr ""
-"この例は書籍[Type-Driven Development with Idris](https://www.manning.com/books/type-driven-development-with-idris)にある例で\n"
+"この例は書籍[Type-Driven Development with Idris](https://www.manning.com/"
+"books/type-driven-development-with-idris)にある例で\n"
 "使われたプログラムに着想を得ました。"
 
 #. type: Plain text
@@ -2476,8 +2477,10 @@ msgid ""
 "importance is the ability to define our own data types and use them as "
 "arguments and results in functions."
 msgstr ""
-"[前の節](Functions1.md)では自前の関数を書いたり、関数同士を組み合わせてより複雑な機能をつくったりしました。\n"
-"関数と同じくらい大事なのは、自前のデータ型を定義できたり、関数の引数や返り値に使えたりすることです。"
+"[前の節](Functions1.md)では自前の関数を書いたり、関数同士を組み合わせてより複"
+"雑な機能をつくったりしました。\n"
+"関数と同じくらい大事なのは、自前のデータ型を定義できたり、関数の引数や返り値"
+"に使えたりすることです。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:15
@@ -2541,7 +2544,8 @@ msgid ""
 "at the REPL:"
 msgstr ""
 "上記の宣言は新しい *型* （`Weekday`）と、\n"
-"この型のいくつかの新しい *値* （`Monday`から`Sunday`まで）を定義しています。\n"
+"この型のいくつかの新しい *値* （`Monday`から`Sunday`まで）を定義していま"
+"す。\n"
 "さあ、REPLで確かめてみてください。"
 
 #. type: Fenced code block (repl)
@@ -2592,7 +2596,8 @@ msgid ""
 "weekday:"
 msgstr ""
 "新しいデータ型を関数の引数で使うためには、\n"
-"関数型プログラミング言語の重要な概念、パターン照合について学ばねばなりません。\n"
+"関数型プログラミング言語の重要な概念、パターン照合について学ばねばなりませ"
+"ん。\n"
 "次の曜日を計算する関数を実装してみましょう。"
 
 #. type: Fenced code block (idris)
@@ -2651,7 +2656,8 @@ msgid ""
 "patterns, which we will talk about in a moment)."
 msgstr ""
 "例えば、`next`を引数`Thursday`で呼び出したら、\n"
-"最初の3つの引数（`Monday`, `Tuesday`, `Wednesday`）は引数と比較されるものの、\n"
+"最初の3つの引数（`Monday`, `Tuesday`, `Wednesday`）は引数と比較されるもの"
+"の、\n"
 "照合に失敗します。\n"
 "4つ目のパターンには合致し、結果である`Friday`が返されます。\n"
 "それ以降のパターンは無視されます。\n"
@@ -2674,7 +2680,8 @@ msgstr ""
 "Idrisは`Weekday`のとりうる値を知っており、\n"
 "したがってパターン照合が全ての可能性を網羅していることを突き止めます。\n"
 "この場合さらに関数を`total`キーワードで註釈することができます。\n"
-"こうするとIdrisはその関数の全域性を検証できなかったときに型エラーを出すようになります。\n"
+"こうするとIdrisはその関数の全域性を検証できなかったときに型エラーを出すように"
+"なります。\n"
 "（さあさあ、`next`から節を1つ消してみてください。\n"
 "網羅性検査器はどんなエラー文言を出しましたか。）"
 
@@ -2688,7 +2695,8 @@ msgid ""
 "functions, stack space)."
 msgstr ""
 "覚えておいてほしいのですが、\n"
-"全域であるということは型検査器による大変強力な保証がなされているということです。\n"
+"全域であるということは型検査器による大変強力な保証がなされているということで"
+"す。\n"
 "充分なリソースがあれば、\n"
 "全域であると証明された関数は *常に* 有限時間内で正しい型の結果を返します。\n"
 "（ここでの*リソース*とは、計算機の資源を指します。\n"
@@ -2915,7 +2923,8 @@ msgid ""
 "indented by the same amount of whitespace."
 msgstr ""
 "ここでの字下げは大事ですよ。\n"
-"caseブロック全体は（新しい行から始まる場合）字下げされていなければいけません。\n"
+"caseブロック全体は（新しい行から始まる場合）字下げされていなければいけませ"
+"ん。\n"
 "そして、それぞれの場合は空白文字で同じ字下げが必要です。"
 
 #. type: Plain text
@@ -2938,7 +2947,9 @@ msgstr "もし、そうなら、でないなら"
 msgid ""
 "When working with `Bool`, there is an alternative to pattern matching common "
 "to most programming languages:"
-msgstr "`Bool`で何かするときは、パターン照合の代わりにほとんどのプログラミング言語でもよくあるアレがあります。"
+msgstr ""
+"`Bool`で何かするときは、パターン照合の代わりにほとんどのプログラミング言語で"
+"もよくあるアレがあります。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:215
@@ -2984,7 +2995,8 @@ msgstr ""
 "型構築子とデータ構築子は大文字始まりの識別子でなければいけません。\n"
 "でなければIdrisが困惑します。\n"
 "（ちなみに演算子は大文字でもOKです。）\n"
-"たとえば以下のデータ定義は妥当ではなく、Idrisは大文字の識別子ではないことに小言を言います。"
+"たとえば以下のデータ定義は妥当ではなく、Idrisは大文字の識別子ではないことに小"
+"言を言います。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/DataTypes.md:234
@@ -3021,7 +3033,8 @@ msgid ""
 "later). This is not enforced by Idris, however, so if you are working in a "
 "domain where upper-case identifiers are preferable, feel free to use those:"
 msgstr ""
-"他方で、ほぼ型検査で使うつもりでない限り（詳細はのちほど）、関数名には大抵小文字始まりの識別子を使います。\n"
+"他方で、ほぼ型検査で使うつもりでない限り（詳細はのちほど）、関数名には大抵小"
+"文字始まりの識別子を使います。\n"
 "とはいえこれはIdrisが何か後押しするわけではないので、\n"
 "大文字始まりの識別子が好ましいような状況では自由に使ってください。"
 
@@ -3076,7 +3089,8 @@ msgid ""
 "converting between time spans using different units. Hint: Use integer "
 "division (`div`)  when going from seconds to some larger unit like hours)."
 msgstr ""
-"異なる時間の単位（秒 (second)、分 (minute)、時 (hour)、日 (day)、週 (week)）を表す自前のデータ型を定義してください。\n"
+"異なる時間の単位（秒 (second)、分 (minute)、時 (hour)、日 (day)、週 (week)）"
+"を表す自前のデータ型を定義してください。\n"
 "そして、単位間で期間を変換する以下の関数を実装してください。\n"
 "解決の糸口：秒から時のようなより大きい単位に変換するには、\n"
 "整数の除算(`div`)を使ってください。"
@@ -3173,7 +3187,8 @@ msgid ""
 "Idris data type:"
 msgstr ""
 "なんらかのWebフォームを書くとします。\n"
-"このフォームでは、Webアプリケーションのユーザーがどう呼ばれてほしいかを決められます。\n"
+"このフォームでは、Webアプリケーションのユーザーがどう呼ばれてほしいかを決めら"
+"れます。\n"
 "2つのよくある事前に定義された呼び方（MrとMrs）だけではなく、\n"
 "自前で決められる形式にもできるとします。\n"
 "取れる選択肢は、Idrisのデータ型で次のようにカプセル化できます。"
@@ -3220,7 +3235,8 @@ msgid ""
 "can pass `Other` a `String` argument and get a `Title` as the result:"
 msgstr ""
 "つまり、`Other`は`String`から`Type`への*関数*です。\n"
-"言い換えると、`Other`に`String`な引数を渡すと、結果として`Title`な値が得られます。"
+"言い換えると、`Other`に`String`な引数を渡すと、結果として`Title`な値が得られ"
+"ます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:348
@@ -3243,7 +3259,8 @@ msgid ""
 msgstr ""
 "繰り返しになりますが、\n"
 "型`Title`の値は前述した3つの選択肢のうちのいずれかです。\n"
-"さらに、パターン照合を使って`Title`データ型に関する関数を実装できるのも同じです。\n"
+"さらに、パターン照合を使って`Title`データ型に関する関数を実装できるのも同じで"
+"す。\n"
 "この実装は全域であることが証明されています。"
 
 #. type: Fenced code block (idris)
@@ -3271,7 +3288,8 @@ msgid ""
 "`Other` and `x` were to distinct function arguments."
 msgstr ""
 "パターン照合の最後の場合にご注目。\n"
-"`Other`データ構築子に格納された文字列の値がローカル変数`x`に*束縛*されています。\n"
+"`Other`データ構築子に格納された文字列の値がローカル変数`x`に*束縛*されていま"
+"す。\n"
 "また、`Other x`パターンは括弧でくるまれていなければいけません。\n"
 "そうしないとIdrisは`Other`と`x`が別個な関数の引数だと考えます。"
 
@@ -3334,7 +3352,8 @@ msgid ""
 msgstr ""
 "`Title`のようなデータ型は*直和型*と呼ばれます。\n"
 "なぜならこの型はそれぞれの場合の和からなっているためです。\n"
-"型`Title`の値は`Mr`か`Mrs`かそれとも`Other`にくるまれた`String`かのいずれかです。"
+"型`Title`の値は`Mr`か`Mrs`かそれとも`Other`にくるまれた`String`かのいずれかで"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:407
@@ -3496,7 +3515,8 @@ msgid ""
 "our web application."
 msgstr ""
 "関数`showError : LoginError -> String`を実装してください。\n"
-"この関数はWebアプリケーションにログインしようとして失敗した利用者にエラー文言を表示するのに使えます。"
+"この関数はWebアプリケーションにログインしようとして失敗した利用者にエラー文言"
+"を表示するのに使えます。"
 
 #. type: Title ##
 #: src/Tutorial/DataTypes.md:472
@@ -3514,10 +3534,12 @@ msgid ""
 "define them is the `record` construct:"
 msgstr ""
 "いくつかの値を論理的な単位として集めておくと便利なことがよくあります。\n"
-"たとえば、Webアプリケーションで利用者の情報を単一のデータ型に集めておきたいことがあるでしょう。\n"
+"たとえば、Webアプリケーションで利用者の情報を単一のデータ型に集めておきたいこ"
+"とがあるでしょう。\n"
 "そのようなデータ型はしばしば*直積型*と呼ばれます。\n"
 "（後述の説明を参照してください。）\n"
-"これを定義するもっとも一般的で便利な方法は*record*構築子を使うというものです。"
+"これを定義するもっとも一般的で便利な方法は*record*構築子を使うというもので"
+"す。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:482
@@ -3542,7 +3564,8 @@ msgid ""
 "constructor* called `MkUser`. As usual, have a look at their types in the "
 "REPL:"
 msgstr ""
-"上記の宣言は`User`という名前の新しい*型*と`MkUser`という名前の新しい*データ構築子*を作ります。\n"
+"上記の宣言は`User`という名前の新しい*型*と`MkUser`という名前の新しい*データ構"
+"築子*を作ります。\n"
 "いつものように、型をREPLでのぞいてみましょう。"
 
 #. type: Fenced code block (repl)
@@ -3564,7 +3587,9 @@ msgstr ""
 msgid ""
 "We can use `MkUser` (which is a function from `String` to `Title` to `Bits8` "
 "to `User`)  to create values of type `User`:"
-msgstr "`MkUser`（`String`と`Title`と`Bits8`から`User`を返す関数）は型`User`の値を作るのに使えます。"
+msgstr ""
+"`MkUser`（`String`と`Title`と`Bits8`から`User`を返す関数）は型`User`の値を作"
+"るのに使えます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:505
@@ -3638,13 +3663,17 @@ msgid ""
 msgstr ""
 "ここでIdrisがよくある間違いを防いでいることにご注目。\n"
 "引数の順序を混同したら実装は型検査を通りません。\n"
-"エラーを含むコードを`failing`ブロック内に置くことで、このことを確かめられます。\n"
-"これは字下げされたブロックで、このブロックの中のコードは細密化（型検査）の段階でエラーになります。\n"
+"エラーを含むコードを`failing`ブロック内に置くことで、このことを確かめられま"
+"す。\n"
+"これは字下げされたブロックで、このブロックの中のコードは細密化（型検査）の段"
+"階でエラーになります。\n"
 "期待されるエラーメッセージの一部を失敗ブロックの引数に加えても構いません。\n"
-"これがエラーメッセージの一部と一致しないとき（もしくはコードブロック全体が型検査に失敗しなかったとき）は、\n"
+"これがエラーメッセージの一部と一致しないとき（もしくはコードブロック全体が型"
+"検査に失敗しなかったとき）は、\n"
 "`failing`ブロック自体が型検査に失敗します。\n"
 "これは型安全性が2つの方面で便利な道具であることを示しています。\n"
-"Idrisの細密化器によって、妥当なコードが型検査に通ることだけではなく、不当なコードが弾かれることがわかるのです。"
+"Idrisの細密化器によって、妥当なコードが型検査に通ることだけではなく、不当な"
+"コードが弾かれることがわかるのです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:546
@@ -3753,7 +3782,8 @@ msgid ""
 "just access and update the `age` field of a value:"
 msgstr ""
 "こんな簡単なことなのに、コードを沢山書いています。\n"
-"なのでIdrisではこうした操作について、いくつかの文法的な便宜が図られています。\n"
+"なのでIdrisではこうした操作について、いくつかの文法的な便宜が図られていま"
+"す。\n"
 "たとえば、*record*文法を使えば、\n"
 "値の`age`フィールドにアクセスして更新することができます。"
 
@@ -3789,9 +3819,11 @@ msgid ""
 "operator for function composition (`(.)`)."
 msgstr ""
 "レコードのフィールドは2つの方法で読み取れます。\n"
-"1つはフィールド名の射影関数（`age u`のように。REPLで`:t age`としてみてください。）を使うことで、\n"
+"1つはフィールド名の射影関数（`age u`のように。REPLで`:t age`としてみてくださ"
+"い。）を使うことで、\n"
 "もう1つは`u.age`のようなドット文法を使うものです。\n"
-"ドット文法は特殊な文法であり、関数合成のためのドット演算子（`(.)`）とは関係*ありません*。"
+"ドット文法は特殊な文法であり、関数合成のためのドット演算子（`(.)`）とは関係*"
+"ありません*。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:616
@@ -3878,7 +3910,8 @@ msgstr ""
 msgid ""
 "It is possible to use this syntax to set and/or update several record fields "
 "at once:"
-msgstr "この文法では複数のレコードフィールドを一度に設定・更新することができます。"
+msgstr ""
+"この文法では複数のレコードフィールドを一度に設定・更新することができます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:654
@@ -3935,7 +3968,8 @@ msgstr ""
 "答えは`7 * 2 = 14`です。\n"
 "なぜなら`Monday`の全ての取り得るもの（計7つ）と\n"
 "`Bool`の全ての取り得るもの（計2つ）の組であると見なせるためです。\n"
-"ですから、レコード型で有り得る値の数はそれぞれのフィールドの有り得る値の数の*積*なのです。"
+"ですから、レコード型で有り得る値の数はそれぞれのフィールドの有り得る値の数の*"
+"積*なのです。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:680
@@ -3967,7 +4001,8 @@ msgid ""
 "Bool)`. Likewise, instead of `MkPair wd b`, we can just write `(wd, b)` (the "
 "space is optional):"
 msgstr ""
-"いくつかの値を関数から`Pair`やより大きなタプルにくるんで返すことはかなりよくあるので、\n"
+"いくつかの値を関数から`Pair`やより大きなタプルにくるんで返すことはかなりよく"
+"あるので、\n"
 "Idrisはいくつかの糖衣構文を提供しています。\n"
 "`Pair Weekday Bool`とする代わりに、\n"
 "ただ`(Weekday, Bool)`と書けばよいです。\n"
@@ -4016,7 +4051,9 @@ msgstr ""
 msgid ""
 "In the example above, `triple2` is converted to the form used in `triple` by "
 "the Idris compiler."
-msgstr "上の例での`triple2`はIdrisのコンパイラによって`triple`での形式に変換されます。"
+msgstr ""
+"上の例での`triple2`はIdrisのコンパイラによって`triple`での形式に変換されま"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:715
@@ -4050,7 +4087,8 @@ msgid ""
 "still retain the value as a whole for using it in further computations:"
 msgstr ""
 "ときどき、値をパターン照合でばらしつつ、\n"
-"あとあとの計算で使うために元の全体の値をそのまま取っておきたいときがあります。"
+"あとあとの計算で使うために元の全体の値をそのまま取っておきたいときがありま"
+"す。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:729
@@ -4150,7 +4188,8 @@ msgstr ""
 "ときどき、概念が充分に汎用的であるために、\n"
 "1つの型だけに適用するのではなく、\n"
 "ある種類の型全てに適用したいときがあります。\n"
-"たとえば、整数型のリストと文字列型のリストと真偽値型のリストを定義したくはありません。\n"
+"たとえば、整数型のリストと文字列型のリストと真偽値型のリストを定義したくはあ"
+"りません。\n"
 "どうしてかっていうと、これをやると沢山コードに重複が生まれるためです。\n"
 "その代わりに、1つの汎化されたリスト型でもって、\n"
 "そのリストが持つ値の型を*変数に取る*ようにしたいのです。\n"
@@ -4182,7 +4221,8 @@ msgstr ""
 "でもこれはライブラリを使うプログラマが期待する振舞いなのでしょうか。\n"
 "そうではないでしょう。\n"
 "不正な利用者の入力を目の前にして、\n"
-"何事もなかったかのようにデフォルト値で続行するのはめったに最善の選択ではないですし、\n"
+"何事もなかったかのようにデフォルト値で続行するのはめったに最善の選択ではない"
+"ですし、\n"
 "多大な混乱のもとになるでしょう。"
 
 #. type: Plain text
@@ -4197,7 +4237,8 @@ msgstr ""
 "Idrisでもそれはできます\n"
 "（このために*Prelude*に`idris_crash`という関数があります）、\n"
 "がしかし、そうすると全域性を放棄することになります！\n"
-"パースエラーのようなよくあることのために、全域性を捨てるのはコスパが悪いです。"
+"パースエラーのようなよくあることのために、全域性を捨てるのはコスパが悪いで"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:803
@@ -4212,12 +4253,14 @@ msgid ""
 "in order to increase type safety.  Here's an example how to do this:"
 msgstr ""
 "Javaのような言語では関数は`null`値の類を返すこともあります。\n"
-"（各々のコードで適切に対処されていないと、恐るべき`NullPointererException`に。）\n"
+"（各々のコードで適切に対処されていないと、恐るべき`NullPointererException`"
+"に。）\n"
 "Idrisの解決策もこれに似ていますが、しれっと`null`を返すのではなく、\n"
 "型で失敗する可能性があることを目に見えるようにします！\n"
 "このために自前のデータ型を定義し、\n"
 "その型が失敗する可能性をカプセル化するようにします。\n"
-"Idrisで新しいデータ型を定義することは（必要なコードの量の意味で）とても安く済みます。\n"
+"Idrisで新しいデータ型を定義することは（必要なコードの量の意味で）とても安く済"
+"みます。\n"
 "なのでこれは型安全性を増すためにはよくあるやりかたです。\n"
 "例はこちら。"
 
@@ -4260,7 +4303,8 @@ msgid ""
 msgstr ""
 "でもここで、`Bool`も利用者の入力から読めるようにしたいのだとします。\n"
 "そうしたら自前のデータ型`MaybeBool`を書くはめになり、\n"
-"`String`から読み取りたい全ての型と失敗するかもしれない変換に対して同じようなことをすることになります。"
+"`String`から読み取りたい全ての型と失敗するかもしれない変換に対して同じような"
+"ことをすることになります。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:827
@@ -4268,7 +4312,8 @@ msgid ""
 "Idris, like many other programming languages, allows us to generalize this "
 "behavior by using *generic data types*. Here's an example:"
 msgstr ""
-"Idrisは他のプログラミング言語のようにこの振舞いを*汎化データ型*で汎化できます。\n"
+"Idrisは他のプログラミング言語のようにこの振舞いを*汎化データ型*で汎化できま"
+"す。\n"
 "例はこんな感じ。"
 
 #. type: Fenced code block (idris)
@@ -4365,7 +4410,8 @@ msgid ""
 "invalid input is so common, that there is a data type like `Option` already "
 "in the *Prelude*: `Maybe`, with data constructors `Just` and `Nothing`."
 msgstr ""
-"不正な入力に直面したときに*null*のような類の値を返しうるというのはよくあるので、\n"
+"不正な入力に直面したときに*null*のような類の値を返しうるというのはよくあるの"
+"で、\n"
 "*Prelude*には既に`Option`のようなデータ型があります。\n"
 "その名は`Maybe`。\n"
 "データ構築子は`Just`と`Nothing`です。"
@@ -4383,9 +4429,11 @@ msgid ""
 "leading to unexpected and sometimes hard to debug runtime exceptions."
 msgstr ""
 "失敗しうる関数で`Maybe Integer`を返すのと、\n"
-"Javaのような言語で`null`を返すのには違いがある、ということを理解するのは大事です。\n"
+"Javaのような言語で`null`を返すのには違いがある、ということを理解するのは大事"
+"です。\n"
 "前者では失敗する可能性があることは型で見てとれます。\n"
-"型検査器によって`Maybe Integer`を`Integer`とは違う風に取り扱うようにしなくてはいけません。\n"
+"型検査器によって`Maybe Integer`を`Integer`とは違う風に取り扱うようにしなくて"
+"はいけません。\n"
 "Idrisは決して失敗する場合の対処をするのを忘れさせ*ません*。\n"
 "`null`が何食わぬ顔で返されて、型に合わし損ねるのとは違います。\n"
 "プログラマはもしかすると（というかまあ*きっと*）\n"
@@ -4409,7 +4457,8 @@ msgid ""
 "above, this concept is general enough that we might encounter other types of "
 "invalid values.  Here's a data type to encapsulate this:"
 msgstr ""
-"`Maybe`がとても便利で、手っ取り早くなんらかの失敗を知らせるために既定値を返してくれるとはいえ、\n"
+"`Maybe`がとても便利で、手っ取り早くなんらかの失敗を知らせるために既定値を返し"
+"てくれるとはいえ、\n"
 "この値 (`Nothing`) はそれほど有意味ではありません。\n"
 "*実際に何が*まずかったのかがわからないのです。\n"
 "たとえば、`Weekday`を読み取る関数の例でいうと、\n"
@@ -4476,9 +4525,11 @@ msgid ""
 "the type safe (and total!) alternative to throwing a catchable exception in "
 "an imperative language."
 msgstr ""
-"繰り返しますが、これは汎用的な概念なので`Validated`に似たデータ型が既に*Prelude*にあります。\n"
+"繰り返しますが、これは汎用的な概念なので`Validated`に似たデータ型が既に"
+"*Prelude*にあります。\n"
 "それは`Either`で、データ構築子は`Left`と`Right`です。\n"
-"関数が失敗する可能性をカプセル化して`Either err val`として返すことはとてもよくあります。\n"
+"関数が失敗する可能性をカプセル化して`Either err val`として返すことはとてもよ"
+"くあります。\n"
 "ここで`err`はエラーの型で`val`は求める結果の型です。\n"
 "これは型安全であり（加えて全域です！）、\n"
 "命令型言語で例外を投げたり捕えたりするものに代わるものです。"
@@ -4491,8 +4542,10 @@ msgid ""
 "that it can have to different types of results, each of which are *tagged* "
 "with the corresponding data constructor."
 msgstr ""
-"ただしかし、`Either`の意味論は必ずしも「`Left`が失敗で`Right`が成功を表す」ものとは限りません。\n"
-"関数が`Either`を返すということは、単に異なる型の結果を返すという意味であり、\n"
+"ただしかし、`Either`の意味論は必ずしも「`Left`が失敗で`Right`が成功を表す」も"
+"のとは限りません。\n"
+"関数が`Either`を返すということは、単に異なる型の結果を返すという意味であ"
+"り、\n"
 "それぞれが対応するデータ構築子に*タグ付けされている*だけなのです。"
 
 #. type: Title ###
@@ -4533,7 +4586,8 @@ msgid ""
 msgstr ""
 "これには少々説明が必要です。\n"
 "`Seq`は2つの*データ構築子*からなります。\n"
-"`Nil`（値の連なりが空であることを表す）と`(::)`（またの名を*cons演算子*）です。\n"
+"`Nil`（値の連なりが空であることを表す）と`(::)`（またの名を*cons演算子*）で"
+"す。\n"
 "`(::)`は型`a`の新しい値を既存の同じ型の値からなるリストに後付けします。\n"
 "見てみると、演算子をデータ構築子としても使えることがわかります。\n"
 "しかし、乱用しないでください。\n"
@@ -4619,8 +4673,10 @@ msgstr ""
 "（cons演算子は値と別の`Seq`を引数に取ります。）\n"
 "このようなデータ型を*再帰的な*データ型と呼び、\n"
 "この再帰的な性質のために、\n"
-"この型の値を分解したり消費したりするためには再帰的な関数が必要になるのがお約束です。\n"
-"命令型言語ではforの繰返しのようなもので`List`や`Seq`の値を巡っていきますが、\n"
+"この型の値を分解したり消費したりするためには再帰的な関数が必要になるのがお約"
+"束です。\n"
+"命令型言語ではforの繰返しのようなもので`List`や`Seq`の値を巡っていきます"
+"が、\n"
 "そのようなものはその場で値を変更することがない言語には存在しません。\n"
 "こちらが整数のリストの合計を求めるやりかたです。"
 
@@ -4705,7 +4761,8 @@ msgstr "   7 + (5 + (9 + intSum [])\n"
 msgid ""
 "In a fourth invocation, `intSum` is called with list `[]` and returns `0` "
 "immediately:"
-msgstr "4回目の呼び出しでは`intSum`はリスト`[]`とともに呼ばれ、直ちに`0`を返します。"
+msgstr ""
+"4回目の呼び出しでは`intSum`はリスト`[]`とともに呼ばれ、直ちに`0`を返します。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/DataTypes.md:1031
@@ -4740,7 +4797,8 @@ msgstr "   7 + 14\n"
 msgid ""
 "Finally, our initial invocation of `intSum` adds `7` and `14` and returns "
 "`21`."
-msgstr "最後に`intSum`の最初の呼び出しの部分で、`7`と`14`が加算されて`21`が返ります。"
+msgstr ""
+"最後に`intSum`の最初の呼び出しの部分で、`7`と`14`が加算されて`21`が返ります。"
 
 #. type: Plain text
 #: src/Tutorial/DataTypes.md:1055
@@ -4748,7 +4806,8 @@ msgid ""
 "Thus, the recursive implementation of `intSum` leads to a sequence of nested "
 "calls to `intSum`, which terminates once the argument is the empty list."
 msgstr ""
-"なので、`intSum`の再帰的な実装によって、`intSum`の入れ子の呼び出しの連なりになり、\n"
+"なので、`intSum`の再帰的な実装によって、`intSum`の入れ子の呼び出しの連なりに"
+"なり、\n"
 "その連なりは引数が空リストになったときに終わります。"
 
 #. type: Title ###
@@ -4803,7 +4862,8 @@ msgid ""
 "fashion. That's exactly what the generic function `fromOption` does:"
 msgstr ""
 "これもまたかなり明らかなことですが、充分に汎用的ではありません。\n"
-"当然`Option Bool`や`Option String`を似たような様式で解体したくなるでしょう。\n"
+"当然`Option Bool`や`Option String`を似たような様式で解体したくなるでしょ"
+"う。\n"
 "そしてこれを実現するのがまさに汎化関数`fromOption`なのです。"
 
 #. type: Fenced code block (idris)
@@ -4939,7 +4999,8 @@ msgstr ""
 msgid ""
 "Remember, that lower-case identifiers in a function signature are treated as "
 "type parameters."
-msgstr "いいですか、関数のシグネチャにある小文字の識別子は型変数と見なされますよ。"
+msgstr ""
+"いいですか、関数のシグネチャにある小文字の識別子は型変数と見なされますよ。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/DataTypes.md:1142
@@ -5149,7 +5210,9 @@ msgstr ""
 #: src/Tutorial/DataTypes.md:1245
 msgid ""
 "Assume we store user data for our web application in the following record:"
-msgstr "Webアプリケーションで、以下のレコードで利用者のデータを保存するのだとしましょう。"
+msgstr ""
+"Webアプリケーションで、以下のレコードで利用者のデータを保存するのだとしましょ"
+"う。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:1246
@@ -5254,7 +5317,8 @@ msgstr ""
 "`Option`, `Validated`, `Seq`の定義を改めて出します。\n"
 "ただしこの汎用的な形式で。\n"
 "（定義を*namespace*の中に置きましたが、\n"
-"これでIdrisは1つのソースファイル中に同じ名前があることについて文句を言わなくなります。"
+"これでIdrisは1つのソースファイル中に同じ名前があることについて文句を言わなく"
+"なります。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/DataTypes.md:1291
@@ -5453,10 +5517,12 @@ msgid ""
 "Haskell (and quite a bit more) can be treated in one fell swoop with "
 "dependent types."
 msgstr ""
-"値から型を計算したり、型を引数として関数に渡したり、型を関数からの結果として返したりできるということ、\n"
+"値から型を計算したり、型を引数として関数に渡したり、型を関数からの結果として"
+"返したりできるということ、\n"
 "これを端的に依存型言語であると言いますが、\n"
 "そのことはIdrisの最も際立った特徴の1つです。\n"
-"Haskellのような多くの（というかちょっと多すぎる）より発展的な型段階拡張を行う言語も、依存型を一息に処理できます。"
+"Haskellのような多くの（というかちょっと多すぎる）より発展的な型段階拡張を行う"
+"言語も、依存型を一息に処理できます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Dependent.md:10
@@ -5504,15 +5570,18 @@ msgid ""
 "expect the two lists to be of the same length? How could we even describe "
 "such a precondition?"
 msgstr ""
-"実装は型検査を通りますがしかし、その実装は明らかにライブラリ利用者が期待するものではありません。\n"
-"最初の例では実装で関数引数をリスト中に格納された全ての値に適用されることが期待されています。\n"
+"実装は型検査を通りますがしかし、その実装は明らかにライブラリ利用者が期待する"
+"ものではありません。\n"
+"最初の例では実装で関数引数をリスト中に格納された全ての値に適用されることが期"
+"待されています。\n"
 "1つとして欠落していてはいけませんし、順番が変わってもなりません。\n"
 "2つ目はもう少し注意が必要です。\n"
 "というのは、2つのリストの引数が異なる長さかもしれないからです。\n"
 "その場合どうしたらいいのでしょうか。\n"
 "2つのうち小さいほうのと同じ長さのリストを返すのでしょうか。\n"
 "空リストを返すのでしょうか。\n"
-"それともほとんどの使用例で2つのリストが同じ長さであることを期待すべきではないのでしょうか。\n"
+"それともほとんどの使用例で2つのリストが同じ長さであることを期待すべきではない"
+"のでしょうか。\n"
 "どうすればそのような前提条件を表現できるのでしょうか。"
 
 #. type: Title ##
@@ -5619,7 +5688,8 @@ msgstr ""
 "問題点は以下です。\n"
 "`[12]`は`12 :: Nil`に脱糖されますが、\n"
 "これは誤った型です！\n"
-"`Nil`はここでは型`Vect 0 Integer`なので、`12 :: Nil`は型`Vect (S 0) Integer`、つまり`Vect 1 Integer`となります。\n"
+"`Nil`はここでは型`Vect 0 Integer`なので、`12 :: Nil`は型`Vect (S 0) "
+"Integer`、つまり`Vect 1 Integer`となります。\n"
 "Idrisはベクタが正しい長さになっていることを、コンパイル時に検証するのです。"
 
 #. type: Fenced code block (idris)
@@ -5642,10 +5712,12 @@ msgid ""
 "be more precise in the types and rule out additional programming mistakes. "
 "But first, we need to quickly clarify some terminology."
 msgstr ""
-"というわけでリストのようなデータ構造の*長さ*を*型*に書き換える方法がわかりました。\n"
+"というわけでリストのようなデータ構造の*長さ*を*型*に書き換える方法がわかりま"
+"した。\n"
 "ベクタの要素数が型にある長さと合致しなければ*型エラー*になるのです。\n"
 "すぐあとでいくつかの使用例を見ていきますが、\n"
-"この追加情報により型をより精密なものにしてこれ以上のプログラミングの誤りを排除できます。\n"
+"この追加情報により型をより精密なものにしてこれ以上のプログラミングの誤りを排"
+"除できます。\n"
 "でもまずはさくっといくつかの用語を明らかにしておかねばなりません。"
 
 #. type: Title ###
@@ -5662,8 +5734,10 @@ msgid ""
 "natural number representing it's length. We also say, the type family `Vect` "
 "is *indexed* by its length."
 msgstr ""
-"`Vect`は汎化型、つまり保管している要素の型を変数として取るもの、というだけではなくて、\n"
-"実のところは*型族*で、それぞれがその長さを表す自然数と関連付けられています。\n"
+"`Vect`は汎化型、つまり保管している要素の型を変数として取るもの、というだけで"
+"はなくて、\n"
+"実のところは*型族*で、それぞれがその長さを表す自然数と関連付けられていま"
+"す。\n"
 "もっと言うと型族`Vect`は長さが*指標付けられている*のです。"
 
 #. type: Plain text
@@ -5675,9 +5749,11 @@ msgid ""
 "of an index by pattern matching on a *value* of the type family, while this "
 "is not possible with a type parameter."
 msgstr ""
-"型変数と指標の違いは、後者がデータ構築子によって異なるようにすることができるということです。\n"
+"型変数と指標の違いは、後者がデータ構築子によって異なるようにすることができる"
+"ということです。\n"
 "対して前者は全てのデータ構築子について同じです。\n"
-"あるいは視点を変えると、型族の*値*にパターン照合することで指標の*値*を知ることができますが、\n"
+"あるいは視点を変えると、型族の*値*にパターン照合することで指標の*値*を知るこ"
+"とができますが、\n"
 "これは型変数では不可能なことです。"
 
 #. type: Plain text
@@ -5757,7 +5833,8 @@ msgid ""
 "argument, we learned about the value of the `n` index itself, which was "
 "necessary to return a `Vect` of the correct length."
 msgstr ""
-"見てわかるように、`Indexed n`の引数の値にパターン照合することで`n`指標自体の値がわかり、\n"
+"見てわかるように、`Indexed n`の引数の値にパターン照合することで`n`指標自体の"
+"値がわかり、\n"
 "それを使って正しい長さの`Vect`を返す必要があるのです。"
 
 #. type: Title ###
@@ -5815,7 +5892,8 @@ msgstr ""
 "こうした例はかなり面白いとはいえ、あまり便利ではありませんよね。\n"
 "どうしてかというと、あまりにも局所的だからです。\n"
 "どんな長さのベクタにもmapできる*汎化*関数がほしいものです。\n"
-"型処方に固定長を使う代わりに、既に`Vect`の定義で見たように*変数*を使うこともできます。\n"
+"型処方に固定長を使う代わりに、既に`Vect`の定義で見たように*変数*を使うことも"
+"できます。\n"
 "これがあれば汎用的な場合を宣言できます。"
 
 #. type: Fenced code block (idris)
@@ -5831,7 +5909,8 @@ msgid ""
 "(but not necessary) to include the implicit arguments as well:"
 msgstr ""
 "この型は長さが保存されたmapを表します。\n"
-"暗黙引数も含めるようにすれば実際どうなっているのかがよりわかりやすくなります。\n"
+"暗黙引数も含めるようにすれば実際どうなっているのかがよりわかりやすくなりま"
+"す。\n"
 "（必要ではありませんが。）"
 
 #. type: Fenced code block (idris)
@@ -5855,9 +5934,12 @@ msgid ""
 msgstr ""
 "2つの型変数`a`と`b`は無視できます。\n"
 "ただの汎化関数なので。\n"
-"（ただ、同じ型と量化子の引数を単一対の波括弧内にまとめられることは覚えておいてください。\n"
-"これはやってもやらなくてもいいですが、型処方を少しだけ短くできることもあります。）\n"
-"型`Nat`の暗黙引数はしかし、入出力の`Vect`が同じ長さであることを示しています。\n"
+"（ただ、同じ型と量化子の引数を単一対の波括弧内にまとめられることは覚えておい"
+"てください。\n"
+"これはやってもやらなくてもいいですが、型処方を少しだけ短くできることもありま"
+"す。）\n"
+"型`Nat`の暗黙引数はしかし、入出力の`Vect`が同じ長さであることを示していま"
+"す。\n"
 "この契約を履行しないと型エラーです。\n"
 "`mapVect`を実装しているときなどでこの契約は大変説明的なもので、\n"
 "これに沿って実装したり穴あきを使ったりできます。\n"
@@ -5945,7 +6027,8 @@ msgid ""
 "can apply `f` to `x` and prepend the result to a yet unknown remainder:"
 msgstr ""
 "2つ目の場合はこれまたもっと面白いものです。\n"
-"`xs`は任意長の`n`（消去引数として与えられます）について型`Vect n a`であると書きました。\n"
+"`xs`は任意長の`n`（消去引数として与えられます）について型`Vect n a`であると書"
+"きました。\n"
 "そうして結果は型`Vect (S n) b`なのです。\n"
 "ということは、結果は`xs`よりも1要素分長くなければいけません。\n"
 "運よく既に型`a`の値（変数`x`に束縛されています）があり、\n"
@@ -6003,8 +6086,10 @@ msgstr ""
 "ただし`n`についてはなんにもわかりません。\n"
 "さらに`xs`をパターン照合することで`n`をより知ることは*できはします*が、\n"
 "すぐさまいたちごっこになってしまうでしょう。\n"
-"というのはそのようなパターン照合をしたら、新しく未知の長さの尾鰭が生えるからです。\n"
-"その代わり、`mapVect`を再帰的に呼び出して残り (`xs`) を`Vect n b`に変換できます。\n"
+"というのはそのようなパターン照合をしたら、新しく未知の長さの尾鰭が生えるから"
+"です。\n"
+"その代わり、`mapVect`を再帰的に呼び出して残り (`xs`) を`Vect n b`に変換できま"
+"す。\n"
 "`xs`と`mapVect f xs`の長さが等しいことは型検査器が保証してくれます。\n"
 "式全体が型検査を通ったので、これにて完了です。"
 
@@ -6030,8 +6115,10 @@ msgid ""
 "this can be expressed and implemented as follows:"
 msgstr ""
 "さて、`bogusZipList`を見てみましょう。\n"
-"異な（りう）る型の要素を持つ2つのリストについて、所与の2引数関数を通して向かい合うものを1つに閉じるというものです。\n"
-"前述したように、2つのリストと結果はいずれも同じ長さになるのが一番理に適っています。\n"
+"異な（りう）る型の要素を持つ2つのリストについて、所与の2引数関数を通して向か"
+"い合うものを1つに閉じるというものです。\n"
+"前述したように、2つのリストと結果はいずれも同じ長さになるのが一番理に適ってい"
+"ます。\n"
 "`Vect`があればこれは以下のように表現でき、実装されます。"
 
 #. type: Fenced code block (idris)
@@ -6061,14 +6148,16 @@ msgid ""
 "`impossible` to do so:"
 msgstr ""
 "さてさて、ここが面白いところです。\n"
-"全域性検査器（最初の`%default total`プラグマがあるのでこのソースファイルを通じて有効）は、\n"
+"全域性検査器（最初の`%default total`プラグマがあるのでこのソースファイルを通"
+"じて有効）は、\n"
 "あと2つ場合分けが足りないのですが、\n"
 "上の実装を全域であるとして受理します。\n"
 "これが動くのは、他の2つの場合が*不可能*であることを、\n"
 "Idrisが自分で調べてくれるからです。\n"
 "最初の`Vect`引数にパターン照合したことから、\n"
 "Idrisは`n`がゼロかゼロよりあとに続く他の自然数だと読み取ります。\n"
-"しかしここから、2つ目のベクタもまた長さが`n`であり、`Nil`ないし*cons*であることを導出できるのです。\n"
+"しかしここから、2つ目のベクタもまた長さが`n`であり、`Nil`ないし*cons*であるこ"
+"とを導出できるのです。\n"
 "それでも明示的に不可能な場合を加えたほうが親切なこともあります。\n"
 "これには`impossible`キーワードが使えます。"
 
@@ -6135,11 +6224,14 @@ msgid ""
 "long, listing different things Idris tried to do together with the reason "
 "why each of them failed."
 msgstr ""
-"Idrisがやってくれることの多さと、物事がうまく運んでいるときに自分で推論できることの多さには、目を瞠るものがあります。\n"
-"しかし物事がうまく運んでいない場合は、Idrisが出力するエラー文言はかなり長く、理解しづらいものです。\n"
+"Idrisがやってくれることの多さと、物事がうまく運んでいるときに自分で推論できる"
+"ことの多さには、目を瞠るものがあります。\n"
+"しかし物事がうまく運んでいない場合は、Idrisが出力するエラー文言はかなり長く、"
+"理解しづらいものです。\n"
 "とりわけ言語に入門したてのプログラマはそうでしょう。\n"
 "例えば前述した最後のREPLでの例でのエラー文言はかなり長く、\n"
-"Idrisが試みたことそれぞれを、なぜ失敗したのかについての理由を混じえて一覧にしています。"
+"Idrisが試みたことそれぞれを、なぜ失敗したのかについての理由を混じえて一覧にし"
+"ています。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:341
@@ -6154,10 +6246,12 @@ msgid ""
 "which will again fail with a type error since `zipWith` expects arguments of "
 "type `Vect`, and neither `List` nor `Stream` will work."
 msgstr ""
-"こうなってしまうと、型エラーとオーバーロード関数由来の曖昧さのごった煮に手を付けることになります。\n"
+"こうなってしまうと、型エラーとオーバーロード関数由来の曖昧さのごった煮に手を"
+"付けることになります。\n"
 "上の例では2つのベクタは異なる長さであり、\n"
 "そのためリスト表記をベクタとして見做すなら型エラーとなります。\n"
-"しかしリスト表記はオーバーロードされており構築子`Nil`と`(::)`を持つ全てのデータ型に対して使えるため、\n"
+"しかしリスト表記はオーバーロードされており構築子`Nil`と`(::)`を持つ全てのデー"
+"タ型に対して使えるため、\n"
 "Idrisは`Vect`以外の他のデータ構築子を試し始めてしまうのです。\n"
 "（今回の場合は*Prelude*にある`List`と`Stream`の構築子があたります。）\n"
 "`zipWith`は型`Vect`の引数を期待しており、\n"
@@ -6171,7 +6265,8 @@ msgid ""
 "can often simplify things, as Idris no longer needs to disambiguate these "
 "functions:"
 msgstr ""
-"そんなときは名前空間をオーバーロードされた関数名に前置することで事態が簡単になることがよくあります。\n"
+"そんなときは名前空間をオーバーロードされた関数名に前置することで事態が簡単に"
+"なることがよくあります。\n"
 "Idrisがもはやこれらの関数の曖昧さを解消する必要がないからです。"
 
 #. type: Fenced code block (repl)
@@ -6203,7 +6298,8 @@ msgid ""
 msgstr ""
 "ほら、文言がぐっと明らかになりました。\n"
 "Idrisは2つのベクタの長さを*統合*できていません。\n"
-"*統合*とは、Idrisがコンパイル時に2つの式を同じ普遍的な形式に変換しようとすることです。\n"
+"*統合*とは、Idrisがコンパイル時に2つの式を同じ普遍的な形式に変換しようとする"
+"ことです。\n"
 "これが成功すれば2式は等価であると考えられ、\n"
 "そうでない場合はIdrisは統合エラーにより失敗します。"
 
@@ -6249,7 +6345,8 @@ msgstr ""
 "\"Mismatch between: 0 and 1\" になっています。\n"
 "その理由はこうです。\n"
 "Idrisは整数表記`2`と`3`を統合しようとします。\n"
-"これらの整数は最初に対応する`Nat`値`S (S Z)`と`S (S (S Z))`にそれぞれ変換されます。\n"
+"これらの整数は最初に対応する`Nat`値`S (S Z)`と`S (S (S Z))`にそれぞれ変換され"
+"ます。\n"
 "2式は`Z`と`S Z`に行き着くまでパターン照合され、\n"
 "これは値`0`と`1`に対応します。\n"
 "これがエラー文言で不一致として報告されます。"
@@ -6268,7 +6365,8 @@ msgid ""
 "0, while in the *cons* case the length was the successor of another natural "
 "number.  This is not possible when we want to create a new vector:"
 msgstr ""
-"これまでパターン照合することでベクタの長さについてのことを知ることができました。\n"
+"これまでパターン照合することでベクタの長さについてのことを知ることができまし"
+"た。\n"
 "`Nil`の場合は長さがゼロであることが明らかで、\n"
 "*cons*の場合は長さが後続する他の自然数の長さなのでした。\n"
 "新しいベクタを作りたいときはそう簡単にはいきません。"
@@ -6304,7 +6402,8 @@ msgid ""
 "The problem is, that *the callers of our function decide about the length of "
 "the resulting vector*. The full type of `fill` is actually the following:"
 msgstr ""
-"問題は*関数の呼び出し手が結果のベクタの長さを決める*というところにあります。\n"
+"問題は*関数の呼び出し手が結果のベクタの長さを決める*というところにありま"
+"す。\n"
 "`fill`の型全体は実は以下のようです。"
 
 #. type: Fenced code block (idris)
@@ -6324,8 +6423,10 @@ msgid ""
 "\".  Idris is powerful, but it is not a clairvoyant."
 msgstr ""
 "この型は以下のように読めます。\n"
-"あらゆる型`a`とあらゆる自然数`n`（量化子ゼロなので実行時には*何にも*わかりません）について、\n"
-"型`a`の値が与えられたとき、ちょうど`n`個の型`a`の要素を保管するベクタを渡してくれる、と。\n"
+"あらゆる型`a`とあらゆる自然数`n`（量化子ゼロなので実行時には*何にも*わかりま"
+"せん）について、\n"
+"型`a`の値が与えられたとき、ちょうど`n`個の型`a`の要素を保管するベクタを渡して"
+"くれる、と。\n"
 "これは次のように言うような感じです。\n"
 "「自然数`n`について考えてください。\n"
 "そしたら`n`の値を教えてくれなくても、`n`個のりんごをあげます。」\n"
@@ -6385,9 +6486,11 @@ msgstr ""
 "こうしたことは指標付き型に取り組む際によく思い浮かぶパターンです。\n"
 "型族の値にパターン照合によって指標の値について知ることができます。\n"
 "しかし関数から型族の値を返すためには、\n"
-"コンパイル時に指標の値を知っているか（例えば定数`ex1`や`ex3`を見てください）、\n"
+"コンパイル時に指標の値を知っているか（例えば定数`ex1`や`ex3`を見てくださ"
+"い）、\n"
 "または実行時に指標値にアクセスする必要があります。\n"
-"後者の場合、指標値に対してパターン照合でき、型族のどの構築子を使うべきかがわかります。"
+"後者の場合、指標値に対してパターン照合でき、型族のどの構築子を使うべきかがわ"
+"かります。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/Dependent.md:447
@@ -6422,7 +6525,8 @@ msgid ""
 "empty vectors. The types should reflect that the output is exactly one "
 "element shorter than the input."
 msgstr ""
-"`head`を参照しつつ、非空のベクタに対して関数`tail`を宣言し実装してください。\n"
+"`head`を参照しつつ、非空のベクタに対して関数`tail`を宣言し実装してくださ"
+"い。\n"
 "型では出力が入力よりちょうど1要素分短かくなることを反映してください。"
 
 #. type: Bullet: '3. '
@@ -6560,7 +6664,7 @@ msgstr ""
 #: src/Tutorial/Dependent.md:526
 #, no-wrap
 msgid "`Fin`: Safe Indexing into Vectors"
-msgstr "`Fin`、ベクタから安全に指標で引く"
+msgstr "`Fin`: ベクタから安全に指標で引く"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:530
@@ -6604,16 +6708,20 @@ msgid ""
 msgstr ""
 "さて、ここで`indexList`のような関数を書くときに考慮すべき点があります。\n"
 "出力型で失敗する可能性を表現したものか、\n"
-"もしくは関数が決して失敗しないように受け付ける引数を制限したものか、ということです。\n"
+"もしくは関数が決して失敗しないように受け付ける引数を制限したものか、というこ"
+"とです。\n"
 "これは大切な設計時の決断であり、特に大きめのアプリケーションではそうです。\n"
 "`Maybe`や`Either`を関数から返すと、\n"
-"その関数を使う側のコードで結局`Nothing`や`Left`の場合に対処することになります。\n"
-"そして対処するまでは中間結果は`Maybe`や`Either`の手荷物を持ち回ることになり、\n"
+"その関数を使う側のコードで結局`Nothing`や`Left`の場合に対処することになりま"
+"す。\n"
+"そして対処するまでは中間結果は`Maybe`や`Either`の手荷物を持ち回ることにな"
+"り、\n"
 "これらの中間結果を計算するのが億劫になっていきます。\n"
 "他方で入力として受け付ける値を制限するのは、\n"
 "引数の型を複雑にすることになり、\n"
 "関数の呼び出し手に入力の検証という重荷を強いることになります。\n"
-"（とはいえ、auto暗示子でお話しすることになりますが、コンパイル時にIdrisから助けが得られます。）\n"
+"（とはいえ、auto暗示子でお話しすることになりますが、コンパイル時にIdrisから助"
+"けが得られます。）\n"
 "出力は純粋で明快になるのですが。"
 
 #. type: Plain text
@@ -6637,8 +6745,10 @@ msgid ""
 "natural number strictly smaller than the length `n` of the vector. Luckily, "
 "we can express this precondition in an indexed type:"
 msgstr ""
-"例として、（ゼロ始まりの）索引`k`で`Vect n a`から値を抽出したいときを考えましょう。\n"
-"当然これが成功するのは、`k`がベクタの長さ`n`より厳密に小さい自然数であるときに限ります。\n"
+"例として、（ゼロ始まりの）索引`k`で`Vect n a`から値を抽出したいときを考えま"
+"しょう。\n"
+"当然これが成功するのは、`k`がベクタの長さ`n`より厳密に小さい自然数であるとき"
+"に限ります。\n"
 "幸運にもこの前提条件を指標付き型で表現できます。"
 
 #. type: Fenced code block (idris)
@@ -6716,7 +6826,8 @@ msgstr ""
 #: src/Tutorial/Dependent.md:599
 msgid ""
 "Let us now check, whether we can use `Fin` to safely index into a `Vect`:"
-msgstr "`Fin`を使って`Vect`から安全に指標で引けるかどうかを確認してみましょう。"
+msgstr ""
+"`Fin`を使って`Vect`から安全に指標で引けるかどうかを確認してみましょう。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Dependent.md:600
@@ -6771,7 +6882,8 @@ msgid ""
 "updates the value in a`Vect n a` at position `k < n`."
 msgstr ""
 "関数`update`を実装してください。\n"
-"この関数は型`a -> a`の関数を受け取って`Vect n a`の位置`k < n`での値を更新します。"
+"この関数は型`a -> a`の関数を受け取って`Vect n a`の位置`k < n`での値を更新しま"
+"す。"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/Dependent.md:630
@@ -6858,7 +6970,8 @@ msgid ""
 "Use `minus` from Exercise 6 to declare and implement function `drop`, for "
 "dropping the first `k` values from a `Vect n a`, with `k <= n`."
 msgstr ""
-"演習6の`minus`を使って、`Vect n a`から最初の`k`個分の値を切り落とす関数`drop`を宣言し実装してください。\n"
+"演習6の`minus`を使って、`Vect n a`から最初の`k`個分の値を切り落とす関数`drop`"
+"を宣言し実装してください。\n"
 "なお`k <= n`です。"
 
 #. type: Bullet: '8. '
@@ -6910,7 +7023,8 @@ msgid ""
 "functions and values.  This is a very powerful concept, as it allows us to "
 "compute output types from input types. Here's an example:"
 msgstr ""
-"先程の節、特にいくつかの演習では、関数や値の型を表現するために、ますますコンパイル時計算を使い始めました。\n"
+"先程の節、特にいくつかの演習では、関数や値の型を表現するために、ますますコン"
+"パイル時計算を使い始めました。\n"
 "これは大変強力な概念で、というのも入力型から出力型を計算できるからです。\n"
 "以下は例です。"
 
@@ -6924,7 +7038,8 @@ msgid ""
 msgstr ""
 "`(++)`演算子で2つの`List`を結合することができます。\n"
 "もちろんこれは`Vect`についても可能です。\n"
-"しかし`Vect`は長さで指標付けられているので、入力の長さがどのように出力の長さに影響しているのかを厳密に型に反映させなくてはなりません。\n"
+"しかし`Vect`は長さで指標付けられているので、入力の長さがどのように出力の長さ"
+"に影響しているのかを厳密に型に反映させなくてはなりません。\n"
 "こちらがその方法です。"
 
 #. type: Fenced code block (idris)
@@ -6946,7 +7061,8 @@ msgid ""
 "certain common programming errors like inadvertently dropping some values."
 msgstr ""
 "型段階で長さを監視していますね。\n"
-"ここでも手違いで値が欠落するようなよくあるプログラミングの誤りの類を排除します。"
+"ここでも手違いで値が欠落するようなよくあるプログラミングの誤りの類を排除しま"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:704
@@ -6983,7 +7099,9 @@ msgid ""
 "After all the examples and exercises in this section you might have come to "
 "the conclusion that we can use arbitrary expressions in the types and Idris "
 "will happily evaluate and unify all of them for us."
-msgstr "本節の全ての例と演習を終えたあとでは、型で任意の式が使えて、Idrisが喜んですべて評価・一体化してくれるのだ、という結論に至るかもしれません。"
+msgstr ""
+"本節の全ての例と演習を終えたあとでは、型で任意の式が使えて、Idrisが喜んですべ"
+"て評価・一体化してくれるのだ、という結論に至るかもしれません。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:723
@@ -6995,7 +7113,8 @@ msgid ""
 msgstr ""
 "残念ですがそれは真実からはほど遠いものです。\n"
 "本節の例は*ひとまず動く*ことが知られているような、選別されたものなのです。\n"
-"その理由というのは、パターン照合とコンパイル時に使う関数の実装との間に常に直接の繋がりがあるためです。"
+"その理由というのは、パターン照合とコンパイル時に使う関数の実装との間に常に直"
+"接の繋がりがあるためです。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:726
@@ -7031,9 +7150,11 @@ msgstr ""
 "2つ目の引数は調べられていません。\n"
 "これは`(++)`が`Vect`に実装されているのとちょうど同じですね。\n"
 "最初の引数でパターン照合して、`Nil`の場合あ2つ目を変更せずに返し、\n"
-"*cons*の場合は尾っぽをくっつけた結果に先頭を前置したものを返しているのでした。\n"
+"*cons*の場合は尾っぽをくっつけた結果に先頭を前置したものを返しているのでし"
+"た。\n"
 "ここで2つのパターン照合には直接合致するところがあるので、\n"
-"Idrisは`Nil`の場合に`0 + n`と`n`を、*cons*の場合に`(S k) + n`と`S (k + n)`を、それぞれ一体化できます。"
+"Idrisは`Nil`の場合に`0 + n`と`n`を、*cons*の場合に`(S k) + n`と`S (k + n)`"
+"を、それぞれ一体化できます。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:747
@@ -7073,8 +7194,10 @@ msgstr ""
 "\"Can't solve constraint between: plus n 1 and S n.\"\n"
 "（訳註：制約を解決できません：plus n 1とS nとで差があります。）\n"
 "何が起こっているのかというと、こうです。\n"
-"左側のパターン照合から、Idrisはベクタの長さが`S n`であること、自然数`n`は`xs`の長さに対応することがわかります。\n"
-"`(++)`の型と`xs`の長さおよび`[x]`によると、右側のベクタの長さは`n + 1`です。\n"
+"左側のパターン照合から、Idrisはベクタの長さが`S n`であること、自然数`n`は`xs`"
+"の長さに対応することがわかります。\n"
+"`(++)`の型と`xs`の長さおよび`[x]`によると、右側のベクタの長さは`n + 1`で"
+"す。\n"
 "オーバーロードされた演算子`(+)`は関数`Prelude.plus`を介して実装されており、\n"
 "そのためIdrisはエラー文言で`(+)`を`plus`に置き換えています。"
 
@@ -7090,9 +7213,11 @@ msgid ""
 "explanations and examples. Therefore, these things will have to wait until "
 "another chapter."
 msgstr ""
-"上からわかるように、Idrisは自分では`1 + n`が`n + 1`と同じことを確かめられません。\n"
+"上からわかるように、Idrisは自分では`1 + n`が`n + 1`と同じことを確かめられませ"
+"ん。\n"
 "手助けを受けることはできるんですけどね。\n"
-"上の等式が満たされるという*証明*を思い付いたら（あるいはもっと一般化して、自然数の加算の実装が*可換的*であれば）、\n"
+"上の等式が満たされるという*証明*を思い付いたら（あるいはもっと一般化して、自"
+"然数の加算の実装が*可換的*であれば）、\n"
 "証明を`reverse`の右側の型を*書き換える*のに使うことができます。\n"
 "証明を書いたり`rewrite`を使ったりするには詳細な説明と例が必要でしょう。\n"
 "したがってこれらの話題は別の章まで待つことにします。"
@@ -7111,7 +7236,8 @@ msgid ""
 "return.  In some circumstances, `n` can be inferred from the context.  For "
 "instance, in the following example it is tedious to pass `n` explicitly:"
 msgstr ""
-"`replicate`のような関数では、自然数`n`を明示的で制約のない引数として渡しましたが、\n"
+"`replicate`のような関数では、自然数`n`を明示的で制約のない引数として渡しまし"
+"たが、\n"
 "これは返すベクタの長さから推論したものでした。\n"
 "状況次第で`n`は文脈から推論できます。\n"
 "例えば以下の例では`n`を明示的に渡すのは億劫です。"
@@ -7131,7 +7257,9 @@ msgstr ""
 msgid ""
 "The value `n` is clearly derivable from the context, which can be confirmed "
 "by replacing it with underscores:"
-msgstr "値`n`が文脈から導出できることは明らかで、下線文字で置き換えることでも確かめられます。"
+msgstr ""
+"値`n`が文脈から導出できることは明らかで、下線文字で置き換えることでも確かめら"
+"れます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Dependent.md:797
@@ -7167,7 +7295,9 @@ msgstr ""
 msgid ""
 "Note how, in the implementation of `replicate'`, we can refer to `n` and "
 "pass it as an explicit argument to `replicate`."
-msgstr "`replicate`の実装中で`n`を推論し、`replicate`の明示的な引数として渡せていますね。"
+msgstr ""
+"`replicate`の実装中で`n`を推論し、`replicate`の明示的な引数として渡せています"
+"ね。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:819
@@ -7178,10 +7308,12 @@ msgid ""
 "verions of a function. Remember, however, that even in case of an implicit "
 "argument we can still pass the value explicitly:"
 msgstr ""
-"関数へ潜在的に推論可能な引数を渡しているとき、それを暗黙的にすべきか明示的にすべきか決定することとは、\n"
+"関数へ潜在的に推論可能な引数を渡しているとき、それを暗黙的にすべきか明示的に"
+"すべきか決定することとは、\n"
 "その引数が実際どれほどIdrisによって推論されて*いる*のかということです。\n"
 "その関数の両方の版があると便利なことさえあるでしょう。\n"
-"ただし覚えておいてほしいのですが、暗黙引数の場合でも明示的に値を渡せることには変わりないのです。"
+"ただし覚えておいてほしいのですが、暗黙引数の場合でも明示的に値を渡せることに"
+"は変わりないのです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Dependent.md:820
@@ -7217,8 +7349,10 @@ msgid ""
 "we could pattern match on the explicit argument `n`. However, it is also "
 "possible to pattern match on implicit, named arguments of non-zero quantity:"
 msgstr ""
-"`replicate'`の実装は関数`replicate`を使い、そこで明示引数`n`でのパターン照合をしているのでした。\n"
-"しかし、暗黙子、つまり非ゼロの量化子の名前付き引数でパターン照合することもできます。"
+"`replicate'`の実装は関数`replicate`を使い、そこで明示引数`n`でのパターン照合"
+"をしているのでした。\n"
+"しかし、暗黙子、つまり非ゼロの量化子の名前付き引数でパターン照合することもで"
+"きます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Dependent.md:836
@@ -7265,7 +7399,9 @@ msgstr ""
 msgid ""
 "Implement function `transpose` for converting an `m x n`-matrix (represented "
 "as a `Vect m (Vect n a)`)  to an `n x m`-matrix."
-msgstr "`m x n`行列（`Vect m (Vect n a)`として表されます）を`n x m`行列に変換する関数`transpose`を実装してください。"
+msgstr ""
+"`m x n`行列（`Vect m (Vect n a)`として表されます）を`n x m`行列に変換する関数"
+"`transpose`を実装してください。"
 
 #. type: Plain text
 #: src/Tutorial/Dependent.md:863
@@ -7302,7 +7438,8 @@ msgid ""
 "properties at compile time."
 msgstr ""
 "依存型があれば型を値から計算できます。\n"
-"この性質により値の性質を型段階に落とし込み、その性質をコンパイル時に検証できます。"
+"この性質により値の性質を型段階に落とし込み、その性質をコンパイル時に検証でき"
+"ます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Dependent.md:881
@@ -7320,7 +7457,9 @@ msgstr ""
 msgid ""
 "We can use patterns in type signatures, for instance to express that the "
 "length of a vector is non-zero and therefore, the vector is non-empty."
-msgstr "型処方でパターンを使用でき、例えばベクタの長さが非ゼロなのでベクタが非空だということを表現できます。"
+msgstr ""
+"型処方でパターンを使用でき、例えばベクタの長さが非ゼロなのでベクタが非空だと"
+"いうことを表現できます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Dependent.md:890
@@ -7330,7 +7469,8 @@ msgid ""
 "function creating the values, where we can pattern match on them to figure "
 "out, which constructors to use."
 msgstr ""
-"型族の値をつくる場合、指標値はコンパイル時に既知であるか、値を作る関数に引数として渡されていなくてはいけません。\n"
+"型族の値をつくる場合、指標値はコンパイル時に既知であるか、値を作る関数に引数"
+"として渡されていなくてはいけません。\n"
 "関数は指標値でパターン照合してどの構築子を使うべきか調べられます。"
 
 #. type: Bullet: '* '
@@ -7338,7 +7478,9 @@ msgstr ""
 msgid ""
 "We can use `Fin n`, the type of natural numbers strictly smaller than `n`, "
 "to safely index into a vector of length `n`."
-msgstr "`n`より厳密に小さい自然数の型である`Fin n`を使って、安全に長さ`n`のベクタから索引で引くことができます。"
+msgstr ""
+"`n`より厳密に小さい自然数の型である`Fin n`を使って、安全に長さ`n`のベクタから"
+"索引で引くことができます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Dependent.md:898
@@ -7359,7 +7501,8 @@ msgid ""
 "implemented here is available from module `Data.Vect` from the *base* "
 "library. Likewise, `Fin` is available from `Data.Fin` from *base*."
 msgstr ""
-"データ型`Vect`とここで実装した大くの関数は*base*ライブラリのモジュール`Data.Vect`で使えます。\n"
+"データ型`Vect`とここで実装した大くの関数は*base*ライブラリのモジュール`Data."
+"Vect`で使えます。\n"
 "同様に`Fin`は*base*の`Data.Fin`で使えます。"
 
 #. type: Plain text
@@ -7367,7 +7510,9 @@ msgstr ""
 msgid ""
 "In the [next section](IO.md), it is time to learn how to write effectful "
 "programs and how to do this while still staying *pure*."
-msgstr "[次節](IO.md)では、そろそろ副作用のあるプログラムを*純粋*なまま書く方法について学びましょう。"
+msgstr ""
+"[次節](IO.md)では、そろそろ副作用のあるプログラムを*純粋*なまま書く方法につい"
+"て学びましょう。"
 
 #. type: Title #
 #: src/Tutorial/Eq.md:1
@@ -10773,7 +10918,7 @@ msgstr ""
 #: src/Tutorial/Functions1.md:1
 #, no-wrap
 msgid "Functions Part 1"
-msgstr "関数 パート1"
+msgstr "関数 その1"
 
 #. type: Plain text
 #: src/Tutorial/Functions1.md:12
@@ -10787,12 +10932,16 @@ msgid ""
 "and can return functions as their results."
 msgstr ""
 "Idrisは *関数型* プログラミング言語です。\n"
-"つまり、関数は抽象化の主な形式です（例えばJavaのようなオブジェクト指向言語とは違います。\n"
-"オブジェクト指向言語では *オブジェクト* や *クラス* が主な抽象化の形式です）。\n"
+"つまり、関数は抽象化の主な形式です（例えばJavaのようなオブジェクト指向言語と"
+"は違います。\n"
+"オブジェクト指向言語では *オブジェクト* や *クラス* が主な抽象化の形式で"
+"す）。\n"
 "また、関数型であるということから、\n"
-"Idrisではとても簡単に関数を構成・結合して新しい関数をつくれるということがわかります。\n"
+"Idrisではとても簡単に関数を構成・結合して新しい関数をつくれるということがわか"
+"ります。\n"
 "実際、Idrisの関数は *第一級* です。\n"
-"関数は他の関数を引数に取ることができますし、関数の結果として関数を返すこともできます。"
+"関数は他の関数を引数に取ることができますし、関数の結果として関数を返すことも"
+"できます。"
 
 #. type: Plain text
 #: src/Tutorial/Functions1.md:16
@@ -10826,7 +10975,8 @@ msgid ""
 msgstr ""
 "ある関数を実装してみましょう。\n"
 "ここでは3つの `Integer` 型の引数が\n"
-"[ピタゴラスの三つ組（訳註：ピタゴラスの定理を満たす3つの整数）](https://en.wikipedia.org/wiki/Pythagorean_triple)\n"
+"[ピタゴラスの三つ組（訳註：ピタゴラスの定理を満たす3つの整数）](https://en."
+"wikipedia.org/wiki/Pythagorean_triple)\n"
 "になっているかを検査するものとします。\n"
 "このために新しい演算子 `==` を使います。\n"
 "相等性のための演算子です。"
@@ -10894,9 +11044,11 @@ msgstr ""
 "この実装はちょっと数学的な等式に似ています。\n"
 "`=` の左側に引数のリストを書き、\n"
 "右側でこれの引数を使った計算を記述するのです。\n"
-"関数型プログラミング言語での関数の実装は、手続き型言語での実装に比べてより数学的です。\n"
+"関数型プログラミング言語での関数の実装は、手続き型言語での実装に比べてより数"
+"学的です。\n"
 "関数型プログラミング言語では *何を* 計算するのかを記述しますが、\n"
-"手続き型言語では手続き文の連なりとしてのアルゴリズムによって *どのように* 計算するのかを記述します。\n"
+"手続き型言語では手続き文の連なりとしてのアルゴリズムによって *どのように* 計"
+"算するのかを記述します。\n"
 "あとでIdrisでもこの手続き的な書き方ができることを見ていきますが、\n"
 "できるなら宣言的な書き方のほうがいいですね。"
 
@@ -10912,8 +11064,10 @@ msgstr ""
 "REPLでの実行例からわかるように、\n"
 "関数は空白区切りの引数を渡すことで呼び出せます。\n"
 "基本的に括弧は必要ではありません。\n"
-"ただし、ある引数が既に空白を含む関数とその引数であった場合は、その引数を括弧でくくります。\n"
-"この空白区切りの書き方ができることで、部分的に関数を適用するのがとても楽になります（この章で後述します）。"
+"ただし、ある引数が既に空白を含む関数とその引数であった場合は、その引数を括弧"
+"でくくります。\n"
+"この空白区切りの書き方ができることで、部分的に関数を適用するのがとても楽にな"
+"ります（この章で後述します）。"
 
 #. type: Plain text
 #: src/Tutorial/Functions1.md:74
@@ -10977,7 +11131,8 @@ msgstr ""
 msgid ""
 "We could have implemented `squareTimes2` without using the dot operator as "
 "follows:"
-msgstr "以下のようにドット演算子を使わずに `squareTimes2` を実装することもできます。"
+msgstr ""
+"以下のようにドット演算子を使わずに `squareTimes2` を実装することもできます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functions1.md:96
@@ -11033,7 +11188,8 @@ msgstr ""
 "この関数はまず引数を4倍して、\n"
 "2回平方を取って、\n"
 "文字列に変換して (`show`)、\n"
-"そして `String` を逆向きにします（関数 `show`, `reverse` はIdrisの *Prelude* の一部に含まれているので、\n"
+"そして `String` を逆向きにします（関数 `show`, `reverse` はIdrisの *Prelude* "
+"の一部に含まれているので、\n"
 "全てのIdrisのプログラムから使えます）。"
 
 #. type: Title ##
@@ -11197,7 +11353,8 @@ msgid ""
 msgstr ""
 "つまり、 `square` は引数を2乗します。\n"
 "`twice square` は（`square` を2回連続で呼び出すので）4乗します。\n"
-"`twice (twice square)` は（`twice square` を2回連続で呼び出すので）16乗します。\n"
+"`twice (twice square)` は（`twice square` を2回連続で呼び出すので）16乗しま"
+"す。\n"
 "そんな感じで続くと、\n"
 "`twice (twice (twice (twice square)))` は65536乗することとなり、\n"
 "度肝を抜くほど巨大な結果になるのです。"
@@ -11216,7 +11373,8 @@ msgid ""
 "Curry) becomes very important."
 msgstr ""
 "ひとたび高階関数を使いはじめると、\n"
-"部分関数適用（またの名を *カリー化* と呼びます。数学者であり論理学者でもあったHaskell Curryに因みます）はとても大切な概念となります。"
+"部分関数適用（またの名を *カリー化* と呼びます。数学者であり論理学者でもあっ"
+"たHaskell Curryに因みます）はとても大切な概念となります。"
 
 #. type: Plain text
 #: src/Tutorial/Functions1.md:203
@@ -11304,8 +11462,10 @@ msgid ""
 "very useful in general, but we'd still like to pass it to higher-order "
 "function `testSquare`:"
 msgstr ""
-"ときどき、最上位の定義を書くことなしに、小さな自前の関数を高階関数に渡したいときがあります。\n"
-"例えば、以下の関数 `someTest` はとても局所的な用途で一般的にはあまり有用ではないのですが、\n"
+"ときどき、最上位の定義を書くことなしに、小さな自前の関数を高階関数に渡したい"
+"ときがあります。\n"
+"例えば、以下の関数 `someTest` はとても局所的な用途で一般的にはあまり有用では"
+"ないのですが、\n"
 "とはいえ `testSquare` 高階関数に渡したいのだとします。"
 
 #. type: Fenced code block (idris)
@@ -11406,7 +11566,8 @@ msgid ""
 "notation, we have to wrap them in parentheses."
 msgstr ""
 "`.` や `*` や `+` のようなIdrisの中置演算子は言語に組込まれてはいません。\n"
-"これらの演算子は通常のIdrisの関数に、いくらかの中置記法で使うための特別なサポートが付いたものです。\n"
+"これらの演算子は通常のIdrisの関数に、いくらかの中置記法で使うための特別なサ"
+"ポートが付いたものです。\n"
 "演算子を中置記法で使わないときは、括弧でくるまねばなりません。"
 
 #. type: Plain text
@@ -11604,7 +11765,8 @@ msgid ""
 "of an operator section. In this special case, we therefore have to use an "
 "anonymous function instead:"
 msgstr ""
-"ここでの問題は、Idrisが`- 5`を演算子節ではなく整数リテラルとして扱うということです。\n"
+"ここでの問題は、Idrisが`- 5`を演算子節ではなく整数リテラルとして扱うというこ"
+"とです。\n"
 "この特別な場合においては、代わりに匿名関数を使わねばなりません。"
 
 #. type: Fenced code block (repl)
@@ -11631,7 +11793,8 @@ msgid ""
 "(fixity) for these and use them in operator sections, just like regular "
 "operators:"
 msgstr ""
-"Idrisでは通常の2引数関数も、バッククォートにくるむことで中置記法することができます。\n"
+"Idrisでは通常の2引数関数も、バッククォートにくるむことで中置記法することがで"
+"きます。\n"
 "優先度（と結合の向き）を定義して、演算子節で使うこともできます。\n"
 "ちょうど通常の演算子のように。"
 
@@ -11690,7 +11853,8 @@ msgid ""
 msgstr ""
 "以下は *Prelude* から公開されている重要な演算子の一覧です。\n"
 "これらのうちほとんどは *制約付き* のものです。\n"
-"制約付きというのは、特定の *インターフェース* を実装した型に対してのみ使える、ということです。\n"
+"制約付きというのは、特定の *インターフェース* を実装した型に対してのみ使え"
+"る、ということです。\n"
 "今は心配しなくて大丈夫。\n"
 "その時が来たらインターフェースについて学びましょう。\n"
 "インターフェースを知らずとも、演算子は直感的に振舞うことでしょう。\n"
@@ -11780,9 +11944,11 @@ msgid ""
 "free style* and is often the preferred way of writing small utility "
 "functions."
 msgstr ""
-"ドット演算子を使い、2つ目の引数を省くことで、関数 `testSquare` と `twice` を再実装してください。\n"
+"ドット演算子を使い、2つ目の引数を省くことで、関数 `testSquare` と `twice` を"
+"再実装してください。\n"
 "（`squareTimes2` の実装を見れば方針が見えてきます。）\n"
-"この高度に簡潔な関数の実装の書き方はしばしば *ポイントフリースタイル* と呼ばれ、\n"
+"この高度に簡潔な関数の実装の書き方はしばしば *ポイントフリースタイル* と呼ば"
+"れ、\n"
 "小間物的な関数を書くときによく好まれます。"
 
 #. type: Bullet: '2. '
@@ -11824,8 +11990,10 @@ msgid ""
 "implementation, which should be in point-free style."
 msgstr ""
 "関数 `absIsSmall` を宣言・定義してください。\n"
-"この関数は `Integer` な引数の絶対値を取ったものが100以下かどうか検査します。\n"
-"実装では関数 `isSmall` と `abs` （Idrisの *Prelude* 由来）を使ってください。\n"
+"この関数は `Integer` な引数の絶対値を取ったものが100以下かどうか検査しま"
+"す。\n"
+"実装では関数 `isSmall` と `abs` （Idrisの *Prelude* 由来）を使ってくださ"
+"い。\n"
 "また、ポイントフリースタイルを使ってください。"
 
 #. type: Bullet: '6. '
@@ -11836,7 +12004,8 @@ msgid ""
 "Implement the following higher-order functions (use boolean operators `&&`, "
 "`||`, and function `not` in your implementations):"
 msgstr ""
-"ちょっと発展的な演習として、 `Integer` に関する命題を扱う小間物を実装していきます。\n"
+"ちょっと発展的な演習として、 `Integer` に関する命題を扱う小間物を実装していき"
+"ます。\n"
 "（ここでの命題とは、 `Integer` を取って `Bool` を返す関数です。）\n"
 "以下の高階関数を実装してください。\n"
 "（実装では真偽値演算子 `&&`, `||` と関数 `not` を使ってください。）"
@@ -11900,7 +12069,8 @@ msgstr ""
 "前述したように、\n"
 "Idrisでは自前の中置演算子を定義できます。\n"
 "さらにいいことにIdrisでは関数名の *オーバーロード* ができます。\n"
-"というのは、2つ以上の関数や演算子が違う型と実装を持ちつつ同じ名前を持つことができるということです。\n"
+"というのは、2つ以上の関数や演算子が違う型と実装を持ちつつ同じ名前を持つことが"
+"できるということです。\n"
 "Idrisは同じ名前を持つ演算子と関数を型で見分けます。"
 
 #. type: Plain text
@@ -12068,7 +12238,8 @@ msgstr ""
 "同じ名前の2つの関数を定義するには、\n"
 "別々のモジュールで宣言する必要があります。\n"
 "Idrisがどちらを使うべきか判断できないときは、\n"
-"関数に（部分的にでも） *名前空間* を前置することで、名前解決できるようになります。"
+"関数に（部分的にでも） *名前空間* を前置することで、名前解決できるようになり"
+"ます。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functions1.md:568
@@ -12100,7 +12271,7 @@ msgstr ""
 #: src/Tutorial/Functions2.md:1
 #, no-wrap
 msgid "Functions Part 2"
-msgstr "関数 パート2"
+msgstr "関数 その2"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:9
@@ -12112,8 +12283,10 @@ msgid ""
 "polymorphism (interfaces and constrained functions)."
 msgstr ""
 "これまでIdris言語の核となる特徴について学びました。\n"
-"この特徴はHaskellのような他の純粋で強く型付けされたプログラミング言語でもよく見られます。\n"
-"（高階）関数、代数的データ型、パターン照合、パラメトリック多相（汎化型と汎化関数）、\n"
+"この特徴はHaskellのような他の純粋で強く型付けされたプログラミング言語でもよく"
+"見られます。\n"
+"（高階）関数、代数的データ型、パターン照合、パラメトリック多相（汎化型と汎化"
+"関数）、\n"
 "そしてアドホック多相（インターフェースと制約付き関数）です。"
 
 #. type: Plain text
@@ -12159,7 +12332,8 @@ msgid ""
 "important language constructs for introducing and reusing new local "
 "variables and functions. We'll look at these in two case studies."
 msgstr ""
-"これまで見てきた関数はパターン照合で直接実装できる程度には単純なものでした。\n"
+"これまで見てきた関数はパターン照合で直接実装できる程度には単純なものでし"
+"た。\n"
 "追加の付属関数ないし変数を必要としませんでした。\n"
 "いつもこういうわけではなくて、\n"
 "新しい局所変数と局所関数を導入したり再利用したりするための、\n"
@@ -12178,7 +12352,9 @@ msgid ""
 "In this example, we'd like to calculate the arithmetic mean and the standard "
 "deviation of a list of floating point values.  There are several things we "
 "need to consider."
-msgstr "この例では算術平均と標準偏差を浮動小数点数値のリストから計算することを考えます。"
+msgstr ""
+"この例では算術平均と標準偏差を浮動小数点数値のリストから計算することを考えま"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:41
@@ -12207,7 +12383,8 @@ msgid ""
 "`Foldable` implementation. We will learn about interface `Foldable` in a "
 "later section."
 msgstr ""
-"これは、もちろんのこと、[直前の節](Interfaces.md)の演習10での`sumList`に似たものです。\n"
+"これは、もちろんのこと、[直前の節](Interfaces.md)の演習10での`sumList`に似た"
+"ものです。\n"
 "しかし`Foldable`の実装がある全ての積載型に汎化されています。\n"
 "インターフェース`Foldable`については後の節で学びましょう。"
 
@@ -12223,10 +12400,12 @@ msgid ""
 "Here's its type:"
 msgstr ""
 "分散を計算するためにはリストの全ての値を新しい値に計算する必要もあります。\n"
-"なぜならリスト中の全ての値から平均を引いて結果を平方する必要があるからです。\n"
+"なぜならリスト中の全ての値から平均を引いて結果を平方する必要があるからで"
+"す。\n"
 "前の節の演習でこのための関数`mapList`を定義しました。\n"
 "*Prelude*は、当然、既に似たような関数`map`を公開しています。\n"
-"これもまたより汎用的で自前の`Maybe`のための`mapMaybe`や`Either e`のための`mapEither`としても動きます。\n"
+"これもまたより汎用的で自前の`Maybe`のための`mapMaybe`や`Either e`のための"
+"`mapEither`としても動きます。\n"
 "以下が型です。"
 
 #. type: Fenced code block (repl)
@@ -12295,8 +12474,10 @@ msgid ""
 msgstr ""
 "これで`mean`の実装を与えられるようになります。\n"
 "これはIdrisであり、明白な意味論に気をつけているので、\n"
-"単に`Double`のタプルを返すのではなく、ささっと自前のレコード型を定義します。\n"
-"こうすることでより明白になるのは、どちらの小数点数がどちらの統計的な実態に対応するのかということです。"
+"単に`Double`のタプルを返すのではなく、ささっと自前のレコード型を定義しま"
+"す。\n"
+"こうすることでより明白になるのは、どちらの小数点数がどちらの統計的な実態に対"
+"応するのかということです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functions2.md:94
@@ -12367,10 +12548,12 @@ msgstr ""
 "いくつかの局所変数 (`len`, `mean`, `variance`) を導入し、\n"
 "それら全ては実装の残りの部分で1度以上使われます。\n"
 "これには`let`束縛を使います。\n"
-"順に、`let`キーワード、1つ以上の変数代入が続き、最後の式には`in`が後置していなければいけません。\n"
+"順に、`let`キーワード、1つ以上の変数代入が続き、最後の式には`in`が後置してい"
+"なければいけません。\n"
 "空白はここでも重要ですよ。\n"
 "3つの変数名は適切に整列していなくてはいけません。\n"
-"さあ、`mean`や`variance`の前の空白を削除すると何が起こるのかやってみましょう。\n"
+"さあ、`mean`や`variance`の前の空白を削除すると何が起こるのかやってみましょ"
+"う。\n"
 "ただし、代入演算子`:=`は整列していなくても大丈夫です。\n"
 "こうしたのは可読性がよくなると思っているからです。"
 
@@ -12394,7 +12577,8 @@ msgstr ""
 "というのは、`Double`な他の値を長さで割ることになるからです。\n"
 "Idrisはこうしたことに大変厳格です。\n"
 "明示的な嵌め込みなくして、数値型を混在させることはできません。\n"
-"注意していただきたいのは、この場合はIdrisが`len`の型を周囲の文脈から*推論*することができているということです。\n"
+"注意していただきたいのは、この場合はIdrisが`len`の型を周囲の文脈から*推論*す"
+"ることができているということです。\n"
 "`mean`は直感的です。\n"
 "リストに保管された値を`sum`で合計し、リストの長さで割っています。\n"
 "`variance`は3つの中でもっとも込み入っています。\n"
@@ -12416,7 +12600,8 @@ msgid ""
 "around some business logic you'd like to implement."
 msgstr ""
 "2つ目の使用例ではもうちょっと大きいアプリケーションを書いていきます。\n"
-"実装したいビジネスロジックに対して、データ型と関数をどのように設計すればよいかを考えられるようになるでしょう。"
+"実装したいビジネスロジックに対して、データ型と関数をどのように設計すればよい"
+"かを考えられるようになるでしょう。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:161
@@ -12427,7 +12612,8 @@ msgid ""
 msgstr ""
 "音楽配信webサーバを稼動させているのだとします。\n"
 "そこでは利用者はアルバム一式を買ってオンラインで聴くことができます。\n"
-"サーバに接続して購入したアルバムの1つにアクセスする利用者を模擬したいところです。"
+"サーバに接続して購入したアルバムの1つにアクセスする利用者を模擬したいところで"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:163
@@ -12501,13 +12687,15 @@ msgid ""
 "to understand what's going on here."
 msgstr ""
 "これらはほぼ見ればわかります。\n"
-"ただし、いくつかのレコード型（`Email`, `Artist`, `Password`）で単一の値を新しいレコード型で梱包しているところに注目です。\n"
+"ただし、いくつかのレコード型（`Email`, `Artist`, `Password`）で単一の値を新し"
+"いレコード型で梱包しているところに注目です。\n"
 "当然、剥き出しの`String`型を代わりに使うことも*できはします*が、\n"
 "そうすると最終的に`String`のフィールドが沢山あることになるため、\n"
 "見分けがつきにくくなるかもしれません。\n"
 "Eメールの文字列とパスワードの文字列を混同するなんてことがないように、\n"
 "両方を新しいレコード型で梱包しておくと助けになります。\n"
-"いくつかのインターフェースを再実装しなければいけない負担と引き換えに、型安全性を劇的に高めますから。\n"
+"いくつかのインターフェースを再実装しなければいけない負担と引き換えに、型安全"
+"性を劇的に高めますから。\n"
 "*Prelude*由来の小間物関数`on`はこうしたとき大変役に立ちます。\n"
 "型をREPLで調べて、何をするものなのか理解するのをお忘れなく。"
 
@@ -12594,9 +12782,12 @@ msgid ""
 "some kind of connection to start the actual album stream, but we just wrap "
 "up the album we found to simulate this behavior."
 msgstr ""
-"サーバの応答については、自前の直和型を使って、顧客の要求に対するありうる出力を符号化します。\n"
-"実践の場では、`Success`のときには実際にアルバム配信を開始するための何らかの接続を返すのでしょうが、\n"
-"この振舞いを模擬するために、ここでは単に見付かったアルバムを梱包することにします。"
+"サーバの応答については、自前の直和型を使って、顧客の要求に対するありうる出力"
+"を符号化します。\n"
+"実践の場では、`Success`のときには実際にアルバム配信を開始するための何らかの接"
+"続を返すのでしょうが、\n"
+"この振舞いを模擬するために、ここでは単に見付かったアルバムを梱包することにし"
+"ます。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:248
@@ -12636,11 +12827,14 @@ msgid ""
 "single-field records."
 msgstr ""
 "`DB`という名前で`List User`に短い別名を定義しましたね。\n"
-"長めの型処方をより読みやすく、そこでの文脈に即した型の意味を教えてくれるものにするために、こうしておくと役に立つことがよくあります。\n"
+"長めの型処方をより読みやすく、そこでの文脈に即した型の意味を教えてくれるもの"
+"にするために、こうしておくと役に立つことがよくあります。\n"
 "しかし、これはけして新しい型を導入して*いない*ので、\n"
 "型安全性を増すこともありません。\n"
-"`DB`と`List User`は*同一*であり、額面通りの意味で型`DB`の値は`List User`の値が入るよう場所ならどこでも使えますし、逆もまた然りです。\n"
-"したがって、より複雑なプログラムではたいてい単一フィールドレコードに値をくるんで新しい型を定義するほうが好ましいです。"
+"`DB`と`List User`は*同一*であり、額面通りの意味で型`DB`の値は`List User`の値"
+"が入るよう場所ならどこでも使えますし、逆もまた然りです。\n"
+"したがって、より複雑なプログラムではたいてい単一フィールドレコードに値をくる"
+"んで新しい型を定義するほうが好ましいです。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:274
@@ -12655,10 +12849,14 @@ msgid ""
 msgstr ""
 "この関数の実装での処理は以下のように進行します。\n"
 "まずEメールアドレスでデータベースから`User`を見付けだそうとします。\n"
-"もしこれが成功したら、与えられたパスワードと利用者の実際のパスワードと比較します。\n"
-"もし2つが一致したら、利用者のアルバムのリストから要求されたアルバムを見付けだします。\n"
-"もしこれらの過程の全てが成功したら、結果は`Success`にくるまれた`Album`になります。\n"
-"もしどれか1つでも過程が失敗したら、正確に何が起こったのかを表現する結果を返します。"
+"もしこれが成功したら、与えられたパスワードと利用者の実際のパスワードと比較し"
+"ます。\n"
+"もし2つが一致したら、利用者のアルバムのリストから要求されたアルバムを見付けだ"
+"します。\n"
+"もしこれらの過程の全てが成功したら、結果は`Success`にくるまれた`Album`になり"
+"ます。\n"
+"もしどれか1つでも過程が失敗したら、正確に何が起こったのかを表現する結果を返し"
+"ます。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:276
@@ -12719,7 +12917,8 @@ msgstr ""
 "2つ目に2つの*局所*関数を`where`ブロック内に定義しました。\n"
 "`lookupUser`と`lookupAlbum`です。\n"
 "両方の関数は囲まれたスコープにある全ての変数にアクセスできます。\n"
-"例えば`lookupUser`は実装の最初の行にあるパターン照合から`album`変数を使います。\n"
+"例えば`lookupUser`は実装の最初の行にあるパターン照合から`album`変数を使いま"
+"す。\n"
 "同様に`lookupAlbum`も`album`変数を使用します。"
 
 #. type: Plain text
@@ -12731,9 +12930,11 @@ msgid ""
 "whitespace."
 msgstr ""
 "`where`ブロックは新しい局所定義を導入し、\n"
-"`where`がある周囲のスコープと同じ`where`ブロックにある後に定義された他の関数からのみ、\n"
+"`where`がある周囲のスコープと同じ`where`ブロックにある後に定義された他の関数"
+"からのみ、\n"
 "この定義にアクセスできます。\n"
-"これらの定義は明示的に型付けされ同量の空白で字下げされていなければいけません。"
+"これらの定義は明示的に型付けされ同量の空白で字下げされていなければいけませ"
+"ん。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:318
@@ -12748,8 +12949,10 @@ msgstr ""
 "局所定義は`let`キーワードを用いて関数の実装の*前*で導入しても構いません。\n"
 "この`let`の使用法は前述した*let束縛*と混同しないようにしてください。\n"
 "let束縛は一時的な計算の結果を束縛して再利用するものでした。\n"
-"以下では`handleRequest`を`let`キーワードにより導入された局所定義でどのように実装できるかを示しています。\n"
-"繰り返しますが、全ての定義は適切に型付けされ、字下げされている必要があります。"
+"以下では`handleRequest`を`let`キーワードにより導入された局所定義でどのように"
+"実装できるかを示しています。\n"
+"繰り返しますが、全ての定義は適切に型付けされ、字下げされている必要がありま"
+"す。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functions2.md:319
@@ -12811,7 +13014,8 @@ msgid ""
 msgstr ""
 "演習3はまたもや最重要です。\n"
 "`traverseList`はより汎用的な`traverse`の特殊版です。\n"
-"`traverse`は最も強力で多芸な関数の1つで、*Prelude*にあります（型を確認しましょう！）。"
+"`traverse`は最も強力で多芸な関数の1つで、*Prelude*にあります（型を確認しま"
+"しょう！）。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/Functions2.md:355
@@ -12834,9 +13038,11 @@ msgid ""
 "You can use character literals in your implementation like so: `'A'`, `'a'`. "
 "Note, that this function might fail, so adjust the result type accordingly."
 msgstr ""
-"DND鎖に表れる4つの[核酸塩基](https://en.wikipedia.org/wiki/Nucleobase)をリストにした列挙型を定義してください。\n"
+"DND鎖に表れる4つの[核酸塩基](https://en.wikipedia.org/wiki/Nucleobase)をリス"
+"トにした列挙型を定義してください。\n"
 "核酸塩基のリストについて、型別称`DNA`も定義してください。\n"
-"単一文字（型`Char`）を核酸塩基に変換する関数`readBase`を宣言・実装してください。\n"
+"単一文字（型`Char`）を核酸塩基に変換する関数`readBase`を宣言・実装してくださ"
+"い。\n"
 "実装では`'A'`, `'a'`のように文字リテラルが使えます。\n"
 "この関数は失敗するかもしれないので、\n"
 "結果の型をそれにしたがって調整してください。"
@@ -12878,7 +13084,8 @@ msgid ""
 "types defined in exercises 2 and 3.  You will also need function `unpack` "
 "from the *Prelude*."
 msgstr ""
-"演習2と3で定義した関数と型を使って、関数`readDNA : String -> Maybe DNA`を実装してください。\n"
+"演習2と3で定義した関数と型を使って、関数`readDNA : String -> Maybe DNA`を実装"
+"してください。\n"
 "*Prelude*の関数*unpack*も要ることでしょう。"
 
 #. type: Bullet: '5. '
@@ -12922,7 +13129,8 @@ msgid ""
 "values stored in two `Either`s via a binary function. If either of the "
 "`Either` arguments is a `Left`, the result is also a `Left`."
 msgstr ""
-"関数`zipEitherWith`は汎化高階関数で、2つの`Either`に保管された値を2引数関数を介して結合します。\n"
+"関数`zipEitherWith`は汎化高階関数で、2つの`Either`に保管された値を2引数関数を"
+"介して結合します。\n"
 "どちらかの`Either`引数が`Left`なら、結果もまた`Left`です。"
 
 #. type: Plain text
@@ -12935,7 +13143,8 @@ msgid ""
 msgstr ""
 "これは*汎化関数*で*型変数*`a`, `b`, `c`, `e`を取ります。\n"
 "しかし、もっと冗長な型が`zipEitherWith`にはあります。\n"
-"この型はREPLで見ることができ、`:ti zipEitherWith`と入力すればよいです（ここで`i`はIdrisが`implicit`（訳註：暗黙の）引数を含めるようにという意味です）。\n"
+"この型はREPLで見ることができ、`:ti zipEitherWith`と入力すればよいです（ここで"
+"`i`はIdrisが`implicit`（訳註：暗黙の）引数を含めるようにという意味です）。\n"
 "こんな感じの型になります。"
 
 #. type: Fenced code block (idris)
@@ -13043,7 +13252,8 @@ msgstr ""
 msgid ""
 "The arguments in a record's constructor are automatically named in "
 "accordance with the field names:"
-msgstr "レコード構築子内の引数はフィールド名にしたがって自動的に名付けられます。"
+msgstr ""
+"レコード構築子内の引数はフィールド名にしたがって自動的に名付けられます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functions2.md:455
@@ -13076,10 +13286,12 @@ msgid ""
 "the *result type* of a function can *depend* on the *value* of one of its "
 "arguments. Here's a contrived example:"
 msgstr ""
-"上で述べた使用例では、名前付き引数は単に便利というだけで完全にあってもなくてもよいものでした。\n"
+"上で述べた使用例では、名前付き引数は単に便利というだけで完全にあってもなくて"
+"もよいものでした。\n"
 "しかし、Idrisは*依存型*プログラミング言語です。\n"
 "つまり、型は値から計算することができ、型は値に依存することができます。\n"
-"たとえば、関数の*結果の型*はその引数のうちの1つの*値*に*依存*するようにできます。\n"
+"たとえば、関数の*結果の型*はその引数のうちの1つの*値*に*依存*するようにできま"
+"す。\n"
 "以下はわざとらしい例です。"
 
 #. type: Fenced code block (idris)
@@ -13116,8 +13328,10 @@ msgstr ""
 "初めてこれを見ると、何が起こっているのか理解しにくいことでしょう。\n"
 "まず、関数`IntOrString`は`Type`を`Bool`値から算出します。\n"
 "引数が`True`なら返る型は`Integer`で、引数が`False`なら`String`が返ります。\n"
-"これを、真偽値引数`v`に基づいて、関数`intOrString`の返却型を計算するのに使っています。\n"
-"`v`が`True`なら返却型は`Integer`で（`IntOrString True = Integer`に従っています）、そうでなければ`String`です。"
+"これを、真偽値引数`v`に基づいて、関数`intOrString`の返却型を計算するのに使っ"
+"ています。\n"
+"`v`が`True`なら返却型は`Integer`で（`IntOrString True = Integer`に従っていま"
+"す）、そうでなければ`String`です。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:493
@@ -13126,7 +13340,8 @@ msgid ""
 "argument of type `Bool` a name (`v`) in order to reference it in the result "
 "type `IntOrString v`."
 msgstr ""
-"ここで、`intOrString`の型処方では型`Bool`の引数に名前(`v`)を与える*必要*がありますね。\n"
+"ここで、`intOrString`の型処方では型`Bool`の引数に名前(`v`)を与える*必要*があ"
+"りますね。\n"
 "返却型`IntOrString v`で参照するためです。"
 
 #. type: Plain text
@@ -13139,7 +13354,8 @@ msgid ""
 "function's arguments and refer to them by name in the types of other "
 "arguments."
 msgstr ""
-"今の時点では、どうしてこれが便利なのか、どうしてまたそんな妙な型の関数を定義したくなるものか、と怪訝に思われるかもしれません。\n"
+"今の時点では、どうしてこれが便利なのか、どうしてまたそんな妙な型の関数を定義"
+"したくなるものか、と怪訝に思われるかもしれません。\n"
 "来たるべき時に、とても有用な例を沢山見ていきましょう！\n"
 "依存型の関数の型を表現するために、\n"
 "少なくともいくつかの関数の引数に名前を付けたり、\n"
@@ -13163,7 +13379,8 @@ msgid ""
 msgstr ""
 "暗黙引数とは、\n"
 "コンパイラが推論して自動的に記入してくれるような値の引数を指します。\n"
-"たとえば、以下の関数処方では、コンパイラが型変数`a`の値を他の引数の型から自動的に推定してくれるようになっています。\n"
+"たとえば、以下の関数処方では、コンパイラが型変数`a`の値を他の引数の型から自動"
+"的に推定してくれるようになっています。\n"
 "（0量化子はここでは無視してください。\n"
 "次の小節で説明します。）"
 
@@ -13199,7 +13416,8 @@ msgid ""
 "value of an implicit argument is not always possible.  For instance, if we "
 "enter the following at the REPL, Idris will fail with an error:"
 msgstr ""
-"見てとれるように、暗黙引数は波括弧に囲まれており、明示的な名前付き引数とは違います。\n"
+"見てとれるように、暗黙引数は波括弧に囲まれており、明示的な名前付き引数とは違"
+"います。\n"
 "名前付き引数では丸括弧に囲まれていたのでした。\n"
 "暗黙引数の値を推論することはいつもできるわけではありません。\n"
 "たとえば、以下をREPLに入力すると、Idrisはエラーを出して実行に失敗します。"
@@ -13223,7 +13441,8 @@ msgid ""
 "the type checker.  We could, for instance, pass a value for the implicit "
 "argument explicitly. Here's the syntax to do this:"
 msgstr ""
-"Idrisは`a`が実際に何であるかを知らずに`Show (Either String a)`の実装を見つけることはできません。\n"
+"Idrisは`a`が実際に何であるかを知らずに`Show (Either String a)`の実装を見つけ"
+"ることはできません。\n"
 "型変数の前の疑問符がありますね。\n"
 "`?a`となっています。\n"
 "こうなったら型検査器を手助けする方法がいくつかあります。\n"
@@ -13246,7 +13465,8 @@ msgid ""
 "As you can see, we use the same syntax as shown above for explicit named "
 "arguments and the two forms of argument passing can be mixed."
 msgstr ""
-"見てとれるように明示的な名前付き引数のところで前に見たのと同じ文法を使っています。\n"
+"見てとれるように明示的な名前付き引数のところで前に見たのと同じ文法を使ってい"
+"ます。\n"
 "また、2種の引数の渡し方は混在させられます。"
 
 #. type: Plain text
@@ -13254,7 +13474,9 @@ msgstr ""
 msgid ""
 "We could also specify the type of the whole expression using utility "
 "function `the` from the *Prelude*:"
-msgstr "*Prelude*由来の小間物関数`the`を使って、全体の式の型を指定することもできます。"
+msgstr ""
+"*Prelude*由来の小間物関数`the`を使って、全体の式の型を指定することもできま"
+"す。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functions2.md:553
@@ -13342,7 +13564,8 @@ msgid ""
 msgstr ""
 "最後にゼロ多重度について話さねばなりません。\n"
 "ゼロ多重度は本節の型処方でちらほら出ていました。\n"
-"Idris 2は前作のIdris 1とは異なり、*数量的型理論* (quantitative type theory; QTT) と呼ばれる中核言語に基づいています。\n"
+"Idris 2は前作のIdris 1とは異なり、*数量的型理論* (quantitative type theory; "
+"QTT) と呼ばれる中核言語に基づいています。\n"
 "つまり、Idris 2での全ての変数には以下の3つの多重度のうち1つが関係するのです。"
 
 #. type: Bullet: '* '
@@ -13375,7 +13598,8 @@ msgstr ""
 "3つの中で最も複雑な多重度`1`についてはここでは触れません。\n"
 "しかし、多重度`0`はよく着目されます。\n"
 "多重度`0`の変数は*コンパイル時*のみに関係があります。\n"
-"実行時には姿を見せず、その変数の計算はプログラムの実行時効率に何ら影響がありません。"
+"実行時には姿を見せず、その変数の計算はプログラムの実行時効率に何ら影響があり"
+"ません。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:609
@@ -13415,11 +13639,13 @@ msgid ""
 "Idris, which of several arguments we were planning to drop, but we can use "
 "an underscore as a placeholder instead:"
 msgstr ""
-"必要最小限のコードだけを書いて、残りをIdrisに調べさせたいことはよくあります。\n"
+"必要最小限のコードだけを書いて、残りをIdrisに調べさせたいことはよくありま"
+"す。\n"
 "既にそのような状況について学びました。\n"
 "全部堰き止めるパターンです。\n"
 "パターン照合の変数が右側で使われなければ、\n"
-"単に省略するだけということはできないものの（複数の引数のうちどれを省くつもりなのかをIdrisが推定できません）、\n"
+"単に省略するだけということはできないものの（複数の引数のうちどれを省くつもり"
+"なのかをIdrisが推定できません）、\n"
 "代わりに下線文字で場所取りをすることができます。"
 
 #. type: Fenced code block (idris)
@@ -13541,7 +13767,8 @@ msgid ""
 "convenience to make code more readable, and not to show people how clever "
 "you are."
 msgstr ""
-"注意していただきたいのは、`foo`でのように下線文字を使うことはいつも望ましいものとは限らないということです。\n"
+"注意していただきたいのは、`foo`でのように下線文字を使うことはいつも望ましいも"
+"のとは限らないということです。\n"
 "書かれたコードをかなり劇的に朧気なものにしてしまいかねないからです。\n"
 "文法的に便利なものを使うのは常にコードを読みやすくするためにし、\n"
 "人々にあなたの賢さを誇示しないようにしましょう。"
@@ -13550,7 +13777,7 @@ msgstr ""
 #: src/Tutorial/Functions2.md:681
 #, no-wrap
 msgid "Programming with Holes"
-msgstr "穴空きプログラミング"
+msgstr "穴開きプログラミング"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:696
@@ -13569,15 +13796,19 @@ msgid ""
 "plugin).  Let's see them holes in action."
 msgstr ""
 "ここまでの演習を全部解いてきましたか？\n"
-"型検査器にいつも小言をくらっていて本当は役に立っていないと腹を立てているでしょうか？\n"
+"型検査器にいつも小言をくらっていて本当は役に立っていないと腹を立てているで"
+"しょうか？\n"
 "今それが変わります。\n"
 "Idrisにはいくつかの大変役に立つ対話的な編集機能が備わっています。\n"
-"（型が充分に特定のものであれば）時々コンパイラは完全な関数を実装できることがあります。\n"
+"（型が充分に特定のものであれば）時々コンパイラは完全な関数を実装できることが"
+"あります。\n"
 "それができない場合であっても、非常に有用で重要な特徴がIdrisにはあります。\n"
 "型が複雑になりすぎたときに手助けしてくれるもの、それが穴です。\n"
 "穴は変数で、変数名は疑問符が前に付きます。\n"
-"あとで機能の一部を実装するつもりの場所であればどこにでも、穴を仮置場として使えます。\n"
-"加えて穴の型と穴のスコープにある他の全ての変数の型と量化子をREPLで（あるいは必要なプラグインが設定できていればエディタで）調べることができます。\n"
+"あとで機能の一部を実装するつもりの場所であればどこにでも、穴を仮置場として使"
+"えます。\n"
+"加えて穴の型と穴のスコープにある他の全ての変数の型と量化子をREPLで（あるいは"
+"必要なプラグインが設定できていればエディタで）調べることができます。\n"
 "穴あきを実際に見てみましょう。"
 
 #. type: Plain text
@@ -13592,7 +13823,8 @@ msgid ""
 "meet along the way."
 msgstr ""
 "本節の前のほうの演習の`traverseList`の例を覚えていますか。\n"
-"初めて適用的リスト巡回に出喰わしたのだとしたら、仕組みがちょっと腑に落ちなかったかもしれません。\n"
+"初めて適用的リスト巡回に出喰わしたのだとしたら、仕組みがちょっと腑に落ちな"
+"かったかもしれません。\n"
 "そうですね、もう少しつぶさに見てみることにしましょう。\n"
 "`Either e`を返す同じ機能の関数を実装することを考えます。\n"
 "ここで`e`は`Semigroup`の実装を持つ型であり、\n"
@@ -13626,7 +13858,8 @@ msgid ""
 "right hand side:"
 msgstr ""
 "さて、読み進めていくにあたって、\n"
-"読者のみなさんは自分でIdrisのソースファイルを書き始めてREPLセッションに読み込まれるとよいでしょう。\n"
+"読者のみなさんは自分でIdrisのソースファイルを書き始めてREPLセッションに読み込"
+"まれるとよいでしょう。\n"
 "コードはこちらで記述されている内容にしたがって調整していきます。\n"
 "最初にすることは右側に穴あきの実装の骨組を書くことです。"
 
@@ -13762,11 +13995,14 @@ msgid ""
 "with an empty list wrapped in a `Right`:"
 msgstr ""
 "さあ、ここが面白いところです。\n"
-"何にも手を付けることなく型`Either e (List b)`の値を思い付かなければいけません。\n"
-"`a`については何も知らないので、その値を`fun`を呼び出すための引数に渡せないのです。\n"
+"何にも手を付けることなく型`Either e (List b)`の値を思い付かなければいけませ"
+"ん。\n"
+"`a`については何も知らないので、その値を`fun`を呼び出すための引数に渡せないの"
+"です。\n"
 "同様に`e`や`b`についても全然わからないため、\n"
 "これらの値はいずれも生み出すことができません。\n"
-"取るべき*唯一の*選択肢は`impl_0`を`Right`でくるまれた空リストで置き換えることです。"
+"取るべき*唯一の*選択肢は`impl_0`を`Right`でくるまれた空リストで置き換えること"
+"です。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functions2.md:780
@@ -13824,8 +14060,10 @@ msgstr ""
 "`fun`の引数に使ったり、\n"
 "無視してしまったりできます。\n"
 "他方で`xs`はリストの残り部分で型が`List a`です。\n"
-"これも使わずにおいたり`traverseEither`をさらに再帰的に呼び出したりできます。\n"
-"目標は*全ての*値を変換しようとすることですから、いずれも欠かせないことになります。\n"
+"これも使わずにおいたり`traverseEither`をさらに再帰的に呼び出したりできま"
+"す。\n"
+"目標は*全ての*値を変換しようとすることですから、いずれも欠かせないことになり"
+"ます。\n"
 "2つが`Left`な場合は値を積み重ねなければいけないため、\n"
 "何にせよ結局は両方の計算をする必要があります。\n"
 "（`fun`を実行し、そして再帰的に`traverseEither`を呼び出します。）\n"
@@ -14052,7 +14290,8 @@ msgstr ""
 "関数を実装するときにIdrisコンパイラとのやり取りを手助けしてくれます。\n"
 "Idrisコミュニティでよく保証されているエディタの1つはNeovimです。\n"
 "私自身Neovim利用者なので、\n"
-"[補遺](../Appendices/Neovim.md)にどんなことができるのかについて幾つかの例を加えました。\n"
+"[補遺](../Appendices/Neovim.md)にどんなことができるのかについて幾つかの例を加"
+"えました。\n"
 "そろそろそちらで記載した実用品を使い始めていい頃合いです。"
 
 #. type: Plain text
@@ -14068,7 +14307,8 @@ msgstr ""
 "Idrisプログラミング言語をするにはやや保証が薄いかもしれませんが、\n"
 "少なくとも常時REPLセッションを開いておくべきです。\n"
 "このセッションでは現在取り組んでいるソースファイルを読み込んでおきます。\n"
-"こうすればコードを開発しつつ新しいメタ変数を導入しその方と文脈を調べられます。"
+"こうすればコードを開発しつつ新しいメタ変数を導入しその方と文脈を調べられま"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:929
@@ -14161,9 +14401,11 @@ msgid ""
 "you feel lost, add one or more holes and inspect their context to decide "
 "what to do next."
 msgstr ""
-"[次節](Dependent.md)では依存型を使い始め、証明的に正しいコードを書くのに使います。\n"
+"[次節](Dependent.md)では依存型を使い始め、証明的に正しいコードを書くのに使い"
+"ます。\n"
 "Idrisの型処方の読み方をよく理解しておくことは、そこでは最重要となります。\n"
-"道を見失ったように感じたら、いくつか穴を加えてみてその文脈を調べ、次何をすべきかを決めましょう。"
+"道を見失ったように感じたら、いくつか穴を加えてみてその文脈を調べ、次何をすべ"
+"きかを決めましょう。"
 
 #. type: Title #
 #: src/Tutorial/Functor.md:1
@@ -18213,7 +18455,8 @@ msgid ""
 "Idris will try to disambiguate between these based on the types involved. "
 "Here is an example:"
 msgstr ""
-"関数オーバーロード - つまり同名異実装な関数定義 - は多くのプログラミング言語で見られる概念です。\n"
+"関数オーバーロード - つまり同名異実装な関数定義 - は多くのプログラミング言語"
+"で見られる概念です。\n"
 "Idrisには関数のオーバーロードが備わっています。\n"
 "つまり、同名の2つの関数は異なるモジュールや名前空間で定義できますし、\n"
 "型をもとに曖昧さを解消しようとします。\n"
@@ -18270,7 +18513,8 @@ msgid ""
 "namespace. We can disambiguate between these by prefixing them with their "
 "namespace:"
 msgstr ""
-"ここでは`size`という名前の互いに異なる関数をそれぞれの名前空間で定義しました。\n"
+"ここでは`size`という名前の互いに異なる関数をそれぞれの名前空間で定義しまし"
+"た。\n"
 "これらの曖昧さを解消するにはそれぞれの名前空間を前置すればよいです。"
 
 #. type: Fenced code block (repl)
@@ -18305,7 +18549,8 @@ msgid ""
 "functions, since `xs` is of type `List Integer`, which unifies only with "
 "`List a`, the argument type of `List.size`."
 msgstr ""
-"見てみるとIdrisは互いに異なる`size`関数の曖昧さを解消できていることがわかります。\n"
+"見てみるとIdrisは互いに異なる`size`関数の曖昧さを解消できていることがわかりま"
+"す。\n"
 "`xs`は型`List Integer`であり、この型は`List a`にのみ統合できるので、\n"
 "`List a`が引数の型である`List.size`が選ばれます。"
 
@@ -18323,7 +18568,8 @@ msgid ""
 "duplication."
 msgstr ""
 "関数オーバーロードは上述したようにいい感じに動くものの、\n"
-"こうした関数オーバーロードの形式だと沢山のコードの重複に繋がるような使用例があります。"
+"こうした関数オーバーロードの形式だと沢山のコードの重複に繋がるような使用例が"
+"あります。"
 
 #. type: Plain text
 #: src/Tutorial/Interfaces.md:61
@@ -18353,7 +18599,8 @@ msgstr ""
 "似たような関数が沢山の他のデータ型についても欲しいです。\n"
 "これだけだったら関数オーバーロードでいいですが、\n"
 "`cmp`の機能性ははそれだけに留まりません。\n"
-"この関数があれば`greaterThan`, `lessThan`, `minimum`, `maximum`やその他諸々の関数を導出できます。"
+"この関数があれば`greaterThan`, `lessThan`, `minimum`, `maximum`やその他諸々の"
+"関数を導出できます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Interfaces.md:71
@@ -18403,7 +18650,8 @@ msgid ""
 "the ones written above. That's a lot of code repetition."
 msgstr ""
 "これら全てを`cmp`関数を使って他の型について再実装しなくてはならず、\n"
-"それにこれらの実装は、全てではないにしても、上に書いたものと同じになります。\n"
+"それにこれらの実装は、全てではないにしても、上に書いたものと同じになりま"
+"す。\n"
 "そうなると沢山のコードの重複になります。"
 
 #. type: Plain text
@@ -18415,7 +18663,8 @@ msgid ""
 msgstr ""
 "1つの方法として高階関数を使うという手があります。\n"
 "例えば、関数`minimumBy`を定義するとしましょう。\n"
-"この関数は最初の引数に比較関数を取り、残りの2つの引数のうちより小さいほうを返します。"
+"この関数は最初の引数に比較関数を取り、残りの2つの引数のうちより小さいほうを返"
+"します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Interfaces.md:100
@@ -18441,9 +18690,11 @@ msgid ""
 "comparison function all the time can get tedious as well.  It would be nice, "
 "if we could teach Idris to come up with such a function on its own."
 msgstr ""
-"この解決策は高階関数があればコードの重複を減らせることの傍証になっています。\n"
+"この解決策は高階関数があればコードの重複を減らせることの傍証になっていま"
+"す。\n"
 "しかしながら、いつも比較関数を持ち回らなければいけないのは億劫です。\n"
-"Idrisにこの例での比較関数のようなものを自分で思い出せるようにさせられたらいいですね。"
+"Idrisにこの例での比較関数のようなものを自分で思い出せるようにさせられたらいい"
+"ですね。"
 
 #. type: Plain text
 #: src/Tutorial/Interfaces.md:116
@@ -18484,7 +18735,8 @@ msgid ""
 msgstr ""
 "上記のコードは*インターフェース*`Comp`を定義し、\n"
 "型`a`の2つの値の序列を計算するための関数`comp`を提供しています。\n"
-"これにさらにこのインターフェースについての型`Bits8`と`Bits16`のための2つの*実装*が続きます。\n"
+"これにさらにこのインターフェースについての型`Bits8`と`Bits16`のための2つの*実"
+"装*が続きます。\n"
 "ただし`implementation`キーワードはあってもなくてもよいです。"
 
 #. type: Plain text
@@ -18544,7 +18796,8 @@ msgid ""
 "constraint:"
 msgstr ""
 "これにて`comp`を関係する関数の実装に使えます。\n"
-"やらなければいけないことはこれらの導出される関数に`Comp`制約を前置することだけです。"
+"やらなければいけないことはこれらの導出される関数に`Comp`制約を前置することだ"
+"けです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Interfaces.md:159
@@ -18598,7 +18851,8 @@ msgstr ""
 "`minimum`の定義は`minimumBy`と瓜二つですね。\n"
 "強いて違うところを挙げるとすれば、\n"
 "`minimumBy`の場合は比較関数を明示的な引数として渡さねばならないところ、\n"
-"`minimum`は`Comp`の実装の一部で提供されているのでIdrisが代わりに渡してくれることです。"
+"`minimum`は`Comp`の実装の一部で提供されているのでIdrisが代わりに渡してくれる"
+"ことです。"
 
 #. type: Plain text
 #: src/Tutorial/Interfaces.md:188
@@ -18692,7 +18946,8 @@ msgstr ""
 "先の節ではごく基本的なインターフェースを学びました。\n"
 "なぜ便利なのか、そしてどのように定義し実装するのかについてです。\n"
 "この節では僅かに発展的な概念を学びます。\n"
-"それはインターフェースを拡張すること、制約付きのインターフェース、そして既定実装です。"
+"それはインターフェースを拡張すること、制約付きのインターフェース、そして既定"
+"実装です。"
 
 #. type: Title ###
 #: src/Tutorial/Interfaces.md:225
@@ -18712,7 +18967,8 @@ msgstr ""
 "階層を形成するインターフェースがあります。\n"
 "例えば演習4で使った`Concat`インターフェースについては、\n"
 "`Empty`という名前の子インターフェースがあってもいいでしょう。\n"
-"このインターフェースを満たすような型には、連結の際に何の効果も生じない値があります。\n"
+"このインターフェースを満たすような型には、連結の際に何の効果も生じない値があ"
+"ります。\n"
 "そのような場合、`Concat`の実装が`Empty`の実装の必要条件にできます。"
 
 #. type: Fenced code block (idris)
@@ -18797,10 +19053,12 @@ msgid ""
 "the same syntax we use for constrained functions:"
 msgstr ""
 "ときに、ある汎化型のインターフェースを実装できるのが、\n"
-"その型変数がこのインターフェースを実装しているときだけ、ということがあります。\n"
+"その型変数がこのインターフェースを実装しているときだけ、ということがありま"
+"す。\n"
 "たとえば、インターフェース`Comp`を`Maybe a`に実装するのが可能なのは、\n"
 "型`a`自体が`Comp`を実装しているときだけです。\n"
-"インターフェースの実装に制約を課すのは、制約付きの関数で使ったのと同じ文法でできます。"
+"インターフェースの実装に制約を課すのは、制約付きの関数で使ったのと同じ文法で"
+"できます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Interfaces.md:274
@@ -18886,7 +19144,8 @@ msgid ""
 msgstr ""
 "ときどき、いくつかの関係する関数を1つのインターフェースに収めて、\n"
 "そのインターフェースにある関数を使うことが*できながらも*、\n"
-"プログラマがそれぞれの関数をもっとも効率的に動くように実装できるようにしたいことがあります。\n"
+"プログラマがそれぞれの関数をもっとも効率的に動くように実装できるようにしたい"
+"ことがあります。\n"
 "たとえば、2つの値の等値性で比較するインターフェース`Equals`を考えましょう。\n"
 "このインターフェースには2つの値が等しいとき`True`を返す関数`eq`と、\n"
 "等しくないときに`True`を返す`neq`があります。\n"
@@ -19044,7 +19303,8 @@ msgstr ""
 "`eq`と`neq`の代わりに、`Eq`は2つの演算子`(==)`と`(/=)`を提供し、\n"
 "2つの同じ型の値について等しいか異なるかを比べられます。\n"
 "*Prelude*で定義されているほとんどのデータ型は`Eq`の実装付きですし、\n"
-"プログラマが自前のデータ型を作るときも最初に実装するインターフェースでしょう。"
+"プログラマが自前のデータ型を作るときも最初に実装するインターフェースでしょ"
+"う。"
 
 #. type: Title ####
 #: src/Tutorial/Interfaces.md:390
@@ -19104,7 +19364,8 @@ msgid ""
 "non-primitive types. However, out of pragmatism this is not required when "
 "implementing `Eq`, since writing such proofs can be quite involved."
 msgstr ""
-"理論上、Idrisにはこれらの法則を非原始型に対してコンパイル時に検証する能力があります。\n"
+"理論上、Idrisにはこれらの法則を非原始型に対してコンパイル時に検証する能力があ"
+"ります。\n"
 "しかしながら、実用上`Eq`の実装には必要ではありません。\n"
 "そのような証明を書くというのはちょっとしたハマりどころだからです。"
 
@@ -19191,7 +19452,9 @@ msgstr ""
 msgid ""
 "Likewise, `Monoid` corresponds to `Empty`, with `neutral` corresponding to "
 "`empty`."
-msgstr "同様に`Monoid`は`Empty`に対応するもので、`empty`に対応する`neutral`があります。"
+msgstr ""
+"同様に`Monoid`は`Empty`に対応するもので、`empty`に対応する`neutral`がありま"
+"す。"
 
 #. type: Plain text
 #: src/Tutorial/Interfaces.md:449
@@ -19284,7 +19547,9 @@ msgstr "`Semigroup`と`Monoid`の法則"
 msgid ""
 "We expect the following laws to hold for all implementations of `Semigroup` "
 "and `Monoid`:"
-msgstr "`Semigroup`と`Monoid`の全ての実装について以下の法則を満たすようにしてください。"
+msgstr ""
+"`Semigroup`と`Monoid`の全ての実装について以下の法則を満たすようにしてくださ"
+"い。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Interfaces.md:489
@@ -19293,7 +19558,8 @@ msgid ""
 "values `x`, `y`, and `z`."
 msgstr ""
 "`(<+>)`は結合的です。\n"
-"`x <+> (y <+> z) = (x <+> y) <+> z`は全ての`x`, `y`, `z`の値について成り立ちます。"
+"`x <+> (y <+> z) = (x <+> y) <+> z`は全ての`x`, `y`, `z`の値について成り立ち"
+"ます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Interfaces.md:489
@@ -19371,11 +19637,14 @@ msgid ""
 msgstr ""
 "Idrisのリテラル値、例えば整数リテラル (`12001`)、\n"
 "文字列リテラル (`\"foo bar\"`)、\n"
-"浮動小数点数リテラル (`12.112`) 、そして文字リテラル (`'$'`) はオーバーロードできます。\n"
-"つまり、`String`ではない型の値を単なる文字列リテラルから作れるということです。\n"
+"浮動小数点数リテラル (`12.112`) 、そして文字リテラル (`'$'`) はオーバーロード"
+"できます。\n"
+"つまり、`String`ではない型の値を単なる文字列リテラルから作れるということで"
+"す。\n"
 "ちゃんとした仕組みは他の節まで待たなければいけませんが、\n"
 "大体はインターフェース`FromString`（文字列リテラル用）や\n"
-"`FromChar` （文字リテラル用）や`FromDouble`（浮動小数点リテラル用）を実装すれば充分でしょう。\n"
+"`FromChar` （文字リテラル用）や`FromDouble`（浮動小数点リテラル用）を実装すれ"
+"ば充分でしょう。\n"
 "整数リテラルについては特殊なので次の節で詳述します。"
 
 #. type: Plain text
@@ -19389,7 +19658,8 @@ msgid ""
 "especially since getting these things wrong is a security concern."
 msgstr ""
 "`FromString`の使用例はこちらです。\n"
-"アプリケーションを書いており、利用者が利用者名とパスワードで自身であることを同定できるものだとします。\n"
+"アプリケーションを書いており、利用者が利用者名とパスワードで自身であることを"
+"同定できるものだとします。\n"
 "いずれも文字からなる文字列なので、\n"
 "2つを混同してしまいがちです。\n"
 "はっきりと異なる意味論を持つものではあるのですが。\n"
@@ -19457,7 +19727,8 @@ msgid ""
 "price to pay just for an increase in type safety (I'd tend to disagree).  "
 "Luckily, we can get the convenience of string literals back very easily:"
 msgstr ""
-"これはわりとまどろっこしく、型安全性を増すには割に合わなさすぎると考える人もいるでしょう。\n"
+"これはわりとまどろっこしく、型安全性を増すには割に合わなさすぎると考える人も"
+"いるでしょう。\n"
 "（私はどちらかというと違いますが。）\n"
 "幸運にも文字列リテラルの便利さをとても簡単に取り戻せます。"
 
@@ -19496,7 +19767,8 @@ msgid ""
 "operations. Below is a comprehensive list of the interfaces and the "
 "functions each provides:"
 msgstr ""
-"*Prelude*はよくある代数操作を提供するインターフェースもいくつか公開しています。\n"
+"*Prelude*はよくある代数操作を提供するインターフェースもいくつか公開していま"
+"す。\n"
 "以下はインターフェースと提供されている関数の網羅的な一覧です。"
 
 #. type: Bullet: '* '
@@ -19572,8 +19844,10 @@ msgid ""
 "also have to implement interface `Neg`."
 msgstr ""
 "ここで次のことがわかります。\n"
-"所与の型に整数リテラルを使うのにはインターフェース`Num`を実装する必要があります。\n"
-"`-12`のような負数の整数リテラルを使うためにはインターフェース`Neg`も実装する必要があります。"
+"所与の型に整数リテラルを使うのにはインターフェース`Num`を実装する必要がありま"
+"す。\n"
+"`-12`のような負数の整数リテラルを使うためにはインターフェース`Neg`も実装する"
+"必要があります。"
 
 #. type: Title ###
 #: src/Tutorial/Interfaces.md:600
@@ -19607,7 +19881,8 @@ msgid ""
 msgstr ""
 "これまで`Cast`を主に標準ライブラリにある原始型の相互変換に使ってきました。\n"
 "特に数値型です。\n"
-"*Prelude*から公開されている実装を見てみると（例えば`:doc Cast`とREPLで呼び出します）、\n"
+"*Prelude*から公開されている実装を見てみると（例えば`:doc Cast`とREPLで呼び出"
+"します）、\n"
 "原始型のほとんどの対に関して沢山の実装があることがわかるでしょう。"
 
 #. type: Plain text
@@ -19634,7 +19909,8 @@ msgid ""
 "interfaces for your own data types, as you will have to do so regularly when "
 "writing Idris code."
 msgstr ""
-"ここにある演習は流暢に自前のデータ型のためのインターフェースが実装できるようになることを意図しています。\n"
+"ここにある演習は流暢に自前のデータ型のためのインターフェースが実装できるよう"
+"になることを意図しています。\n"
 "Idrisのコードを書くときはしばしば必要になることですから。"
 
 #. type: Plain text
@@ -19645,9 +19921,11 @@ msgid ""
 "appreciate at first.  Therefore, there are several exercises where you'll "
 "implement different instances for these."
 msgstr ""
-"`Eq`, `Ord`, `Num`のようなインターフェースが便利な理由は直ちに明らかですが、\n"
+"`Eq`, `Ord`, `Num`のようなインターフェースが便利な理由は直ちに明らかです"
+"が、\n"
 "一方で`Semigroup`と`Monoid`の便利さは最初は実感しにくいかもしれません。\n"
-"したがって演習の中にはいくつかの異なるインスタンスについて実装するものがあります。"
+"したがって演習の中にはいくつかの異なるインスタンスについて実装するものがあり"
+"ます。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/Interfaces.md:639
@@ -19669,7 +19947,8 @@ msgid ""
 msgstr ""
 "`Show`を`Complex`に実装してください。\n"
 "データ型`Prec`と関数`showPrec`を調べて、\n"
-"*Prelude*で`Either`や`Maybe`のインスタンスを実装するためにどのようにこれらが使われているのか見てみましょう。"
+"*Prelude*で`Either`や`Maybe`のインスタンスを実装するためにどのようにこれらが"
+"使われているのか見てみましょう。"
 
 #. type: Plain text
 #: src/Tutorial/Interfaces.md:647
@@ -19843,7 +20122,9 @@ msgstr ""
 msgid ""
 "Implement functions `anyElem` and `allElems` using `foldMap` and `Any` or "
 "`All`, respectively:"
-msgstr "関数`anyElem`と`allElems`を、`foldMap`と`Any`ないし`All`を使って実装してください。"
+msgstr ""
+"関数`anyElem`と`allElems`を、`foldMap`と`Any`ないし`All`を使って実装してくだ"
+"さい。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Interfaces.md:716
@@ -19954,9 +20235,11 @@ msgid ""
 "product of all values."
 msgstr ""
 "`foldMap`の強力さと多芸さを享受するために、\n"
-"演習6から10までを解いたあとに（もしくはREPLで`Solutions.Interfaces`をロードしてもよいです）、\n"
+"演習6から10までを解いたあとに（もしくはREPLで`Solutions.Interfaces`をロードし"
+"てもよいです）、\n"
 "以下をREPLで実行してください。\n"
-"これは、たった1回の巡回で！、リストの最初と最後の要素と全ての値の和と積を計算しています。"
+"これは、たった1回の巡回で！、リストの最初と最後の要素と全ての値の和と積を計算"
+"しています。"
 
 #. type: Plain text
 #: src/Tutorial/Interfaces.md:765
@@ -20000,7 +20283,8 @@ msgstr ""
 "以前の演習で化学の元素を表現するデータ型を実装し、\n"
 "化学の体積を計算する関数を書きました。\n"
 "新しく原子の体積を表現する単一フィールドレコード型を定義して、\n"
-"インターフェース`Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, `Monoid`をこの型に実装してください。"
+"インターフェース`Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, `Monoid`をこ"
+"の型に実装してください。"
 
 #. type: Bullet: '13. '
 #: src/Tutorial/Interfaces.md:782
@@ -20031,7 +20315,8 @@ msgstr ""
 "最後の註釈：もし関数型プログラミングが初めてであれば、\n"
 "演習6から10の実装をREPLで確かめてみてください。\n"
 "これら全ての関数を最小限の量のコードでどのように実装できたか、\n"
-"そして演習11で見たように1回のリストの巡回においてこれらの振舞いをどのように組み合わせられたか、\n"
+"そして演習11で見たように1回のリストの巡回においてこれらの振舞いをどのように組"
+"み合わせられたか、\n"
 "を思い返しましょう。"
 
 #. type: Bullet: '* '
@@ -20039,27 +20324,34 @@ msgstr ""
 msgid ""
 "Interfaces allow us to implement the same function with different behavior "
 "for different types."
-msgstr "インターフェースのおかげで、異なる型で異なる振舞いをする同じ関数を実装できます。"
+msgstr ""
+"インターフェースのおかげで、異なる型で異なる振舞いをする同じ関数を実装できま"
+"す。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Interfaces.md:807
 msgid ""
 "Functions taking one or more interface implementations as arguments are "
 "called *constrained functions*."
-msgstr "1つ以上のインターフェースの実装を引数に取る関数は*制約付き関数*と呼ばれます。"
+msgstr ""
+"1つ以上のインターフェースの実装を引数に取る関数は*制約付き関数*と呼ばれます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Interfaces.md:807
 msgid ""
 "Interfaces can be organized hierarchically by *extending* other interfaces."
-msgstr "インターフェースは他のインターフェースを*拡張*することで階層的に組織付けられます。"
+msgstr ""
+"インターフェースは他のインターフェースを*拡張*することで階層的に組織付けられ"
+"ます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Interfaces.md:807
 msgid ""
 "Interfaces implementations can themselves be *constrained* requiring other "
 "implementations to be available."
-msgstr "インターフェースの実装は、それ自体が他の実装を必要とする*制約*が課されることがあります。"
+msgstr ""
+"インターフェースの実装は、それ自体が他の実装を必要とする*制約*が課されること"
+"があります。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Interfaces.md:807
@@ -20089,7 +20381,8 @@ msgid ""
 "md)."
 msgstr ""
 "ただ、この節ではリテラル値の一部始終はまだお話ししていません。\n"
-"限られた値の集合のみを受け付ける型にリテラルを使うことに関するもっと詳しい話は、\n"
+"限られた値の集合のみを受け付ける型にリテラルを使うことに関するもっと詳しい話"
+"は、\n"
 "[原始型](Prim.md)についての章にあります。"
 
 #. type: Plain text
@@ -20125,7 +20418,8 @@ msgid ""
 "`src/Solutions` subfolder. There, I use regular `.idr` files."
 msgstr ""
 "Idris 2 入門へようこそ。\n"
-"ここではプログラミング言語 Idris 2 のできるだけ多くの側面を扱ってみることにします。\n"
+"ここではプログラミング言語 Idris 2 のできるだけ多くの側面を扱ってみることにし"
+"ます。\n"
 "ここにある全ての `.md` ファイルは文芸的 Idris ファイルです。\n"
 "つまり、Markdownで書かれていて（だから `.md` で終わります）、\n"
 "Idris のコードブロックを混じえつつ GitHub で綺麗に表示され、\n"
@@ -20239,7 +20533,8 @@ msgstr ""
 "その結果として、\n"
 "同じ入力があったとすると、\n"
 "*常に* 同じ出力を生成することになります。\n"
-"この性質は[参照透過性](https://en.wikipedia.org/wiki/Referential_transparency)として知られています。"
+"この性質は[参照透過性](https://en.wikipedia.org/wiki/"
+"Referential_transparency)として知られています。"
 
 #. type: Plain text
 #: src/Tutorial/Intro.md:59
@@ -20282,7 +20577,8 @@ msgid ""
 "Writing programs that actually *do* something (have some observable effect) "
 "is a bit trickier but certainly possible."
 msgstr ""
-"実際に何かを *する* プログラム（何らかの観測可能な効果を伴う）を書くのにひと工夫いることです。\n"
+"実際に何かを *する* プログラム（何らかの観測可能な効果を伴う）を書くのにひと"
+"工夫いることです。\n"
 "でも、確実にできます。"
 
 #. type: Plain text
@@ -20308,7 +20604,8 @@ msgid ""
 "compiler will refuse to generate an executable from such an ill-typed "
 "program."
 msgstr ""
-"例えば、もしある関数が `String` 型（unicode文字の連なりで、 `\"Hello123\"` など）\n"
+"例えば、もしある関数が `String` 型（unicode文字の連なりで、 `\"Hello123\"` な"
+"ど）\n"
 "の引数を期待しているとすれば、\n"
 "この関数を `Integer` 型で呼び出すと *型エラー* になります。\n"
 "そして、Idrisのコンパイラはそのような型付けできていないプログラムから\n"
@@ -20325,11 +20622,14 @@ msgid ""
 "useful, we'll explore in due time."
 msgstr ""
 "さらに言えば、Idrisは *依存型* です。\n"
-"この依存型というものは、プログラミング言語界隈では最も特徴的な性質の1つです。\n"
+"この依存型というものは、プログラミング言語界隈では最も特徴的な性質の1つで"
+"す。\n"
 "Idrisでは型は第一級です。\n"
-"つまり、型は関数の引数に渡せますし、関数は計算結果として型を返すことができます。\n"
+"つまり、型は関数の引数に渡せますし、関数は計算結果として型を返すことができま"
+"す。\n"
 "さらにさらに、型は他の *値* に *依存* することもできます。\n"
-"このことが何を意味するのか、そしてなぜこれが滅茶苦茶役に立つのかということを、\n"
+"このことが何を意味するのか、そしてなぜこれが滅茶苦茶役に立つのかということ"
+"を、\n"
 "その時が来たときに探索することにしましょう。"
 
 #. type: Title ###
@@ -20361,10 +20661,12 @@ msgid ""
 "verify that the function in question is indeed total."
 msgstr ""
 "Idrisには全域性検査器が組込まれています。\n"
-"この検査器により、書いた関数が証明によって全域であることを検証することができます。\n"
+"この検査器により、書いた関数が証明によって全域であることを検証することができ"
+"ます。\n"
 "Idrisにおける全域性はオプションで有効にするものです。\n"
 "一般に、任意のコンピュータプログラムの全域性を確認できるかは、\n"
-"決定できません（[停止性問題](https://en.wikipedia.org/wiki/Halting_problem)も参照のこと）。\n"
+"決定できません（[停止性問題](https://en.wikipedia.org/wiki/Halting_problem)も"
+"参照のこと）。\n"
 "しかし、関数に `total` キーワードの註釈を付けたときに、\n"
 "全域性検査器がその関数をたしかに全域かどうか検証できなければ、\n"
 "Idrisは型エラーとして失敗させます。"
@@ -20404,7 +20706,8 @@ msgid ""
 "be available for most Linux distributions.)"
 msgstr ""
 "（コマンドラインユーティリティである `rlwrap` はあってもなくてもよいです。\n"
-"`rlwrap` があれば、過去に入力したコマンドや式を上下の矢印キーで遡れるので、もっといい感じに使えます。\n"
+"`rlwrap` があれば、過去に入力したコマンドや式を上下の矢印キーで遡れるので、"
+"もっといい感じに使えます。\n"
 "ほとんどのLinuxディストリビューションで利用できるはずです。）"
 
 #. type: Plain text
@@ -20482,7 +20785,8 @@ msgid ""
 "Here `:t` is a command of the Idris REPL (it is not part of the Idris "
 "programming language), and it is used to inspect the type of an expression."
 msgstr ""
-"ここで `:t` はIdris REPLのコマンド（プログラミング言語Idrisには含まれません）です。\n"
+"ここで `:t` はIdris REPLのコマンド（プログラミング言語Idrisには含まれません）"
+"です。\n"
 "このコマンドは式の型を調べるのに使えます。"
 
 #. type: Fenced code block (repl)
@@ -20513,7 +20817,8 @@ msgstr ""
 "`Integer` は任意精度の符号付き整数型です。\n"
 "`Integer` は言語に組込まれている *原始型* の1つです。\n"
 "他の原始型には、\n"
-"固定精度で符号付きないし符号なしの整数型 (`Bits8`, `Bits16`, `Bits32`, `Bits64`, `Int8`, `Int16`, `Int32`, `Int64`)、\n"
+"固定精度で符号付きないし符号なしの整数型 (`Bits8`, `Bits16`, `Bits32`, "
+"`Bits64`, `Int8`, `Int16`, `Int32`, `Int64`)、\n"
 "倍精度 (64 bit) 浮動小数点小数 (`Double`)、\n"
 "Unicode文字 (`Char`)、\n"
 "そしてUnicode文字の連なり (`String`) があります。\n"
@@ -20533,7 +20838,8 @@ msgid ""
 "an Idris module, but now we will write a minimal Idris program to get "
 "started with the language. Here comes the mandatory *Hello World*:"
 msgstr ""
-"この入門ではIdris言語の一部分を触ってみるのにREPLを立ち上げることが多いです。\n"
+"この入門ではIdris言語の一部分を触ってみるのにREPLを立ち上げることが多いで"
+"す。\n"
 "REPLでは文書を読んだり、Idrisのモジュールの中身を調べたりできます。\n"
 "しかしまずは言語を学び始める上で最小のIdrisのプログラムを書いてみましょう。\n"
 "なにはともあれ *Hello World* から。"
@@ -20572,7 +20878,8 @@ msgid ""
 "invoked from the command-line like so (without the dollar prefix; this is "
 "used here to distinguish the terminal command from its output):"
 msgstr ""
-"こうすることで実行可能ファイル `hello` がディレクトリ `build/exec` に作られます。\n"
+"こうすることで実行可能ファイル `hello` がディレクトリ `build/exec` に作られま"
+"す。\n"
 "これはコマンドラインで次のようにして実行できます。\n"
 "（行頭のドル記号の有無で端末のコマンドとその出力を区別します。）"
 
@@ -20595,10 +20902,13 @@ msgid ""
 "option gives the name of the executable to be generated. Type `idris2 --"
 "help` for a list of available command-line options and environment variables."
 msgstr ""
-"`--find-ipkg` オプションは現在のディレクトリかそれより上位ディレクトリのいずれかにある `.ipkg` ファイルを探します。\n"
-"そこからIdrisは使用するソースディレクトリ（ここでは `src` です）のような他の設定を取得します。\n"
+"`--find-ipkg` オプションは現在のディレクトリかそれより上位ディレクトリのいず"
+"れかにある `.ipkg` ファイルを探します。\n"
+"そこからIdrisは使用するソースディレクトリ（ここでは `src` です）のような他の"
+"設定を取得します。\n"
 "`-o` オプションは生成される実行可能ファイルに名前を付けます。\n"
-"`idris2 --help` とすると使えるコマンドラインオプションと環境変数が一覧になります。"
+"`idris2 --help` とすると使えるコマンドラインオプションと環境変数が一覧になり"
+"ます。"
 
 #. type: Plain text
 #: src/Tutorial/Intro.md:222
@@ -20704,7 +21014,8 @@ msgstr ""
 "与えられた名前と型を持つ関数があることを宣言するのです。\n"
 "2行目はこんな感じに読めます。\n"
 "「`maxBits8` を呼び出した結果は `255` です。」\n"
-"（整数リテラルは `Integer` 以外の他の数値の型でも使えることが見てとれます。）\n"
+"（整数リテラルは `Integer` 以外の他の数値の型でも使えることが見てとれま"
+"す。）\n"
 "これは *関数定義* と呼ばれます。\n"
 "`maxBits8` 関数は評価されるときにここに記述されたように振舞います。"
 
@@ -20835,7 +21146,8 @@ msgstr ""
 "ここでIdrisにおけるプログラミングのとても大切な側面を学びましょう。\n"
 "Idrisは *静的型付け* プログラミング言語です。\n"
 "好き勝手に型をごちゃ混ぜにすることはできません。\n"
-"それをすると型検査器がエラーメッセージが出ます（型検査器はIdrisのコンパイル過程の一部です）。\n"
+"それをすると型検査器がエラーメッセージが出ます（型検査器はIdrisのコンパイル過"
+"程の一部です）。\n"
 "例えば、以下をREPLに打ち込むと、\n"
 "型エラーが出ます。"
 
@@ -20859,7 +21171,8 @@ msgid ""
 msgstr ""
 "その理由は、 `square` が `Integer` 型の引数を期待しているのに、\n"
 "`maxBits8` は型が `Bits8` だからです。\n"
-"多くの原始型は `cast` 関数（詳細は後述）を使って相互に変換できます（精度が落ちる組み合わせもあります）。"
+"多くの原始型は `cast` 関数（詳細は後述）を使って相互に変換できます（精度が落"
+"ちる組み合わせもあります）。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Intro.md:337
@@ -20918,7 +21231,9 @@ msgstr ""
 msgid ""
 "[Type-Driven Development with Idris](https://www.manning.com/books/type-"
 "driven-development-with-idris)"
-msgstr "[Type-Driven Development with Idris](https://www.manning.com/books/type-driven-development-with-idris)"
+msgstr ""
+"[Type-Driven Development with Idris](https://www.manning.com/books/type-"
+"driven-development-with-idris)"
 
 #. type: Plain text
 #: src/Tutorial/Intro.md:368
@@ -20942,7 +21257,9 @@ msgstr ""
 msgid ""
 "[A Crash Course in Idris 2](https://idris2.readthedocs.io/en/latest/tutorial/"
 "index.html)"
-msgstr "[A Crash Course in Idris 2](https://idris2.readthedocs.io/en/latest/tutorial/index.html)"
+msgstr ""
+"[A Crash Course in Idris 2](https://idris2.readthedocs.io/en/latest/tutorial/"
+"index.html)"
 
 #. type: Plain text
 #: src/Tutorial/Intro.md:375
@@ -21060,7 +21377,8 @@ msgstr ""
 "`:doc` でドキュメントにアクセスできます。\n"
 "トップレベルの関数（`:doc the`）、\n"
 "データ型とその型の構築子と使えるヒント（`:doc Bool`）、\n"
-"言語の特徴（`:doc case`, `:doc let`, `:doc interface`, `:doc record`, `:doc ?` まで）、\n"
+"言語の特徴（`:doc case`, `:doc let`, `:doc interface`, `:doc record`, `:doc ?"
+"` まで）、\n"
 "それからインターフェース（`:doc Uninhabited`）が対象です。"
 
 #. type: Bullet: '  * '
@@ -21078,7 +21396,8 @@ msgid ""
 "use `:browse` to list the names and types of all functions exported by a "
 "loaded module: `:browse Data.Vect`,"
 msgstr ""
-"`:browse` で読み込むモジュールが提供している全ての関数の名前と型の一覧が出てきます。\n"
+"`:browse` で読み込むモジュールが提供している全ての関数の名前と型の一覧が出て"
+"きます。\n"
 "例えば `:browse Data.Vect` とします。"
 
 #. type: Bullet: '  * '
@@ -21129,7 +21448,8 @@ msgstr ""
 "実際のIdrisでのプログラミングを始めます。\n"
 "自分で純粋な関数を書くやりかたや、\n"
 "関数を組み合わせる方法、\n"
-"そして関数を他の値と同じように扱ったり他の関数の引数として渡したりする方法を学びます。"
+"そして関数を他の値と同じように扱ったり他の関数の引数として渡したりする方法を"
+"学びます。"
 
 #. type: Title #
 #: src/Tutorial/Predicates.md:1
@@ -27329,3 +27649,499 @@ msgid ""
 "will have to wait a bit longer, because we need to first make our brains "
 "smoke with some more type-level wizardry."
 msgstr ""
+
+#. type: Title #
+#: README.md:1
+#, fuzzy, no-wrap
+msgid "Functional Programming in Idris 2"
+msgstr "関数型プログラミングをIdris 2で"
+
+#. type: Plain text
+#: README.md:7
+msgid ""
+"The goal of this project is quickly explained: To become a more or less "
+"comprehensive guide to the Idris programming language, with a lot of "
+"introductory material targeted at newcomers to functional programming."
+msgstr ""
+"この企画の目標を手短かに説明すると、\n"
+"関数型プログラミングの入門者を対称とした導入例をちりばめつつ、\n"
+"Idrisプログラミング言語の多少なりとも網羅的な手引きとなることです。"
+
+#. type: Plain text
+#: README.md:15
+msgid ""
+"The content will be organized in several parts, with the part about the core "
+"language features being the main guide to functional programming in Idris. "
+"Every part consists of several chapters, each trying to cover in depth a "
+"certain aspect of the Idris programming language and its core libraries. "
+"Most chapters come with (sometimes lots of) exercises, with solutions "
+"available in directory `src/Solutions`."
+msgstr ""
+"内容はいくつかの部にまとまっており、\n"
+"中核となる言語の特徴についての部はIdrisでの関数型プログラミングのための手引きの眼目です。\n"
+"各部はいくつかの章からなり、\n"
+"それぞれの章ではIdrisプログラミング言語や中核にあるライブラリの一側面を踏み込んで扱います。\n"
+"ほとんどの章は（しばしば多くの）演習が付録しており、\n"
+"ディレクトリ`src/Solutions`から解法が見られます。"
+
+#. type: Plain text
+#: README.md:20
+msgid ""
+"Right now, even the part about core language features is not yet finished, "
+"but is being actively developed and tried on several of my own students, "
+"some of which are completely new to functional programming."
+msgstr ""
+"現状、言語中核の特徴の部分でさえまだ安定化を終えておらず、\n"
+"活発に開発されているところです。\n"
+"筆者の生徒にも関数型プログラミングを初めたばかりで開発しようとしている者がいます。"
+
+#. type: Title ##
+#: README.md:21
+#, no-wrap
+msgid "Table of Contents"
+msgstr "目次"
+
+#. type: Title ###
+#: README.md:23
+#, no-wrap
+msgid "Part 1: Core Language Features"
+msgstr "第1部：中核にある言語の特徴"
+
+#. type: Plain text
+#: README.md:29
+msgid ""
+"This part tries to give a solid introduction to the Idris programming "
+"language. If you are new to functional programming, make sure to follow "
+"these chapters in order and *solve all the exercises*."
+msgstr ""
+"この部ではIdrisプログラミング言語への導入を地道に一歩ずつ進めることを試みます。\n"
+"もし関数型プログラミングが初めてであれば、必ず順番にこの部の章にしたがい、また*全ての演習を解いてください*。"
+
+#. type: Plain text
+#: README.md:34
+msgid ""
+"If you already used other pure functional programming languages like "
+"Haskell, you might go through the introductory material (Functions Part 1, "
+"Algebraic Data Types, and Interfaces) pretty quickly, as most of this stuff "
+"will already be familiar to you."
+msgstr ""
+"Haskellのような他の純粋関数型プログラミング言語を使ったことがあるなら、\n"
+"導入的な内容（関数 その1、代数的データ型、インターフェース）に素早く目を通すのでもよいでしょう。\n"
+"ほとんどは既に馴染みのある事柄でしょうから。"
+
+#. type: Bullet: '1. '
+#: README.md:103
+msgid "[Introduction](src/Tutorial/Intro.md)"
+msgstr "[導入](src/Tutorial/Intro.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid ""
+"[About the Idris Programming Language](src/Tutorial/Intro.md#about-the-idris-"
+"programming-language)"
+msgstr "[プログラミング言語Idrisについて](src/Tutorial/Intro.md#about-the-idris-programming-language)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid "[Using the REPL](src/Tutorial/Intro.md#using-the-repl)"
+msgstr "[REPLを使う](src/Tutorial/Intro.md#using-the-repl)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid "[A First Idris Program](src/Tutorial/Intro.md#a-first-idris-program)"
+msgstr "[最初のIdrisプログラム](src/Tutorial/Intro.md#a-first-idris-program)"
+
+#. type: Bullet: '   4. '
+#: README.md:103
+msgid ""
+"[The Shape of an Idris Definition](src/Tutorial/Intro.md#the-shape-of-an-"
+"idris-definition)"
+msgstr "[Idrisの定義の形](src/Tutorial/Intro.md#the-shape-of-an-idris-definition)"
+
+#. type: Bullet: '   5. '
+#: README.md:103
+msgid "[Where to get Help](src/Tutorial/Intro.md#where-to-get-help)"
+msgstr "[困ったときは](src/Tutorial/Intro.md#where-to-get-help)"
+
+#. type: Bullet: '2. '
+#: README.md:103
+msgid "[Functions Part 1](src/Tutorial/Functions1.md)"
+msgstr "[関数 その1](src/Tutorial/Functions1.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid ""
+"[Functions with more that one Argument](src/Tutorial/Functions1.md#functions-"
+"with-more-that-one-argument)"
+msgstr "[1つ以上の引数を持つ関数](src/Tutorial/Functions1.md#functions-with-more-that-one-argument)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid "[Function Composition](src/Tutorial/Functions1.md#function-composition)"
+msgstr "[関数結合](src/Tutorial/Functions1.md#function-composition)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid ""
+"[Higher-order Functions](src/Tutorial/Functions1.md#higher-order-functions)"
+msgstr "[高階関数](src/Tutorial/Functions1.md#higher-order-functions)"
+
+#. type: Bullet: '   4. '
+#: README.md:103
+msgid "[Currying](src/Tutorial/Functions1.md#currying)"
+msgstr "[カリー化](src/Tutorial/Functions1.md#currying)"
+
+#. type: Bullet: '   5. '
+#: README.md:103
+msgid "[Anonymous Functions](src/Tutorial/Functions1.md#anonymous-functions)"
+msgstr "[匿名関数](src/Tutorial/Functions1.md#anonymous-functions)"
+
+#. type: Bullet: '   6. '
+#: README.md:103
+msgid "[Operators](src/Tutorial/Functions1.md#operators)"
+msgstr "[演算子](src/Tutorial/Functions1.md#operators)"
+
+#. type: Bullet: '3. '
+#: README.md:103
+msgid "[Algebraic Data Types](src/Tutorial/DataTypes.md)"
+msgstr "[代数的データ型](src/Tutorial/DataTypes.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid "[Enumerations](src/Tutorial/DataTypes.md#enumerations)"
+msgstr "[列挙型](src/Tutorial/DataTypes.md#enumerations)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid "[Sum Types](src/Tutorial/DataTypes.md#sum-types)"
+msgstr "[直和型](src/Tutorial/DataTypes.md#sum-types)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid "[Records](src/Tutorial/DataTypes.md#records)"
+msgstr "[レコード](src/Tutorial/DataTypes.md#records)"
+
+#. type: Bullet: '   4. '
+#: README.md:103
+msgid "[Generic Data Types](src/Tutorial/DataTypes.md#generic-data-types)"
+msgstr "[汎化データ型](src/Tutorial/DataTypes.md#generic-data-types)"
+
+#. type: Bullet: '   5. '
+#: README.md:103
+msgid ""
+"[Alternative Syntax for Data Definitions](src/Tutorial/DataTypes."
+"md#alternative-syntax-for-data-definitions)"
+msgstr "[データ定義の別の文法](src/Tutorial/DataTypes.md#alternative-syntax-for-data-definitions)"
+
+#. type: Bullet: '4. '
+#: README.md:103
+msgid "[Interfaces](src/Tutorial/Interfaces.md)"
+msgstr "[インターフェース](src/Tutorial/Interfaces.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid "[Interface Basics](src/Tutorial/Interfaces.md#interface-basics)"
+msgstr "[インターフェースの基本](src/Tutorial/Interfaces.md#interface-basics)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid ""
+"[More about Interfaces](src/Tutorial/Interfaces.md#more-about-interfaces)"
+msgstr "[もっとインターフェース](src/Tutorial/Interfaces.md#more-about-interfaces)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid ""
+"[Interfaces in the Prelude](src/Tutorial/Interfaces.md#interfaces-in-the-"
+"prelude)"
+msgstr "[Preludeにあるインターフェース](src/Tutorial/Interfaces.md#interfaces-in-the-prelude)"
+
+#. type: Bullet: '5. '
+#: README.md:103
+msgid "[Functions Part 2](src/Tutorial/Functions2.md)"
+msgstr "[関数 その2](src/Tutorial/Functions2.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid ""
+"[Let Bindings and Local Definitions](src/Tutorial/Functions2.md#let-bindings-"
+"and-local-definitions)"
+msgstr "[let束縛と局所定義](src/Tutorial/Functions2.md#let-bindings-and-local-definitions)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid ""
+"[The Truth about Function Arguments](src/Tutorial/Functions2.md#the-truth-"
+"about-function-arguments)"
+msgstr "[関数引数の真実](src/Tutorial/Functions2.md#the-truth-about-function-arguments)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid ""
+"[Programming with Holes](src/Tutorial/Functions2.md#programming-with-holes)"
+msgstr "[穴開きプログラミング](src/Tutorial/Functions2.md#programming-with-holes)"
+
+#. type: Bullet: '6. '
+#: README.md:103
+msgid "[Dependent Types](src/Tutorial/Dependent.md)"
+msgstr "[依存型](src/Tutorial/Dependent.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid "[Length-Indexed Lists](src/Tutorial/Dependent.md#length-indexed-lists)"
+msgstr "[長さ指標付きリスト](src/Tutorial/Dependent.md#length-indexed-lists)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid ""
+"[Fin: Safe Indexing into Vectors](src/Tutorial/Dependent.md#fin-safe-"
+"indexing-into-vectors)"
+msgstr "[Fin: ベクタから安全に指標で引く](src/Tutorial/Dependent.md#fin-safe-indexing-into-vectors)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid ""
+"[Compile-Time Computations](src/Tutorial/Dependent.md#compile-time-"
+"computations)"
+msgstr "[コンパイル時計算](src/Tutorial/Dependent.md#compile-time-computations)"
+
+#. type: Bullet: '7. '
+#: README.md:103
+msgid "[IO: Programming with Side Effects](src/Tutorial/IO.md)"
+msgstr "[IO: 副作用のあるプログラミング](src/Tutorial/IO.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid "[Pure Side Effects?](src/Tutorial/IO.md#pure-side-effects)"
+msgstr "[純粋な副作用？](src/Tutorial/IO.md#pure-side-effects)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid "[Do Blocks, Desugared](src/Tutorial/IO.md#do-blocks-desugared)"
+msgstr "[doブロックとその脱糖](src/Tutorial/IO.md#do-blocks-desugared)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid "[Working with Files](src/Tutorial/IO.md#working-with-files)"
+msgstr "[ファイルを取り回す](src/Tutorial/IO.md#working-with-files)"
+
+#. type: Bullet: '   4. '
+#: README.md:103
+msgid "[How IO is Implemented](src/Tutorial/IO.md#how-io-is-implemented)"
+msgstr "[どうIOが実装されているか](src/Tutorial/IO.md#how-io-is-implemented)"
+
+#. type: Bullet: '8. '
+#: README.md:103
+msgid "[Functor and Friends](src/Tutorial/Functor.md)"
+msgstr "[関手と仲間達](src/Tutorial/Functor.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid "[Functor](src/Tutorial/Functor.md#functor)"
+msgstr "[関手](src/Tutorial/Functor.md#functor)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid "[Applicative](src/Tutorial/Functor.md#applicative)"
+msgstr "[アプリカティブ](src/Tutorial/Functor.md#applicative)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid "[Monad](src/Tutorial/Functor.md#monad)"
+msgstr "[モナド](src/Tutorial/Functor.md#monad)"
+
+#. type: Bullet: '   4. '
+#: README.md:103
+msgid ""
+"[Background and further Reading](src/Tutorial/Functor.md#background-and-"
+"further-reading)"
+msgstr "[背景とその先へ](src/Tutorial/Functor.md#background-and-further-reading)"
+
+#. type: Bullet: '9. '
+#: README.md:103
+msgid "[Recursion and Folds](src/Tutorial/Folds.md)"
+msgstr "[再帰と畳み込み](src/Tutorial/Folds.md)"
+
+#. type: Bullet: '   1. '
+#: README.md:103
+msgid "[Recursion](src/Tutorial/Folds.md#recursion)"
+msgstr "[再帰](src/Tutorial/Folds.md#recursion)"
+
+#. type: Bullet: '   2. '
+#: README.md:103
+msgid ""
+"[A few Notes on Totality Checking](src/Tutorial/Folds.md#a-few-notes-on-"
+"totality-checking)"
+msgstr "[全域性検査についての注意](src/Tutorial/Folds.md#a-few-notes-on-totality-checking)"
+
+#. type: Bullet: '   3. '
+#: README.md:103
+msgid "[Interface Foldable](src/Tutorial/Folds.md#interface-foldable)"
+msgstr "[Foldableインターフェース](src/Tutorial/Folds.md#interface-foldable)"
+
+#. type: Bullet: '10. '
+#: README.md:103
+msgid "[Effectful Traversals](src/Tutorial/Traverse.md)"
+msgstr "[作用付き巡回](src/Tutorial/Traverse.md)"
+
+#. type: Bullet: '    1. '
+#: README.md:103
+msgid "[Reading CSV Tables](src/Tutorial/Traverse.md#reading-csv-tables)"
+msgstr "[CSVの表を読む](src/Tutorial/Traverse.md#reading-csv-tables)"
+
+#. type: Bullet: '    2. '
+#: README.md:103
+msgid ""
+"[Programming with State](src/Tutorial/Traverse.md#programming-with-state)"
+msgstr "[状態付きプログラミング](src/Tutorial/Traverse.md#programming-with-state)"
+
+#. type: Bullet: '    3. '
+#: README.md:103
+msgid ""
+"[The Power of Composition](src/Tutorial/Traverse.md#the-power-of-composition)"
+msgstr "[組み立ての強力さ](src/Tutorial/Traverse.md#the-power-of-composition)"
+
+#. type: Bullet: '11. '
+#: README.md:103
+msgid "[Sigma Types](src/Tutorial/DPair.md)"
+msgstr "[シグマ型](src/Tutorial/DPair.md)"
+
+#. type: Bullet: '    1. '
+#: README.md:103
+msgid "[Dependent Pairs](src/Tutorial/DPair.md#dependent-pairs)"
+msgstr "[依存対](src/Tutorial/DPair.md#dependent-pairs)"
+
+#. type: Bullet: '    2. '
+#: README.md:103
+msgid "[Use Case: Nucleic Acids](src/Tutorial/DPair.md#use-case-nucleic-acids)"
+msgstr "[用例：核酸](src/Tutorial/DPair.md#use-case-nucleic-acids)"
+
+#. type: Bullet: '    3. '
+#: README.md:103
+msgid ""
+"[Use Case: CSV Files with a Schema](src/Tutorial/DPair.md#use-case-csv-files-"
+"with-a-schema)"
+msgstr "[用例：スキーマに基づくCSVファイル](src/Tutorial/DPair.md#use-case-csv-files-with-a-schema)"
+
+#. type: Bullet: '12. '
+#: README.md:103
+msgid "[Propositional Equality](src/Tutorial/Eq.md)"
+msgstr "[命題の等値性](src/Tutorial/Eq.md)"
+
+#. type: Bullet: '    1. '
+#: README.md:103
+msgid "[Equality as a Type](src/Tutorial/Eq.md#equality-as-a-type)"
+msgstr "[型としての等値性](src/Tutorial/Eq.md#equality-as-a-type)"
+
+#. type: Bullet: '    2. '
+#: README.md:103
+msgid "[Programs as Proofs](src/Tutorial/Eq.md#programs-as-proofs)"
+msgstr "[証明としてのプログラム](src/Tutorial/Eq.md#programs-as-proofs)"
+
+#. type: Bullet: '    3. '
+#: README.md:103
+msgid "[Into the Void](src/Tutorial/Eq.md#into-the-void)"
+msgstr "[Voidへ](src/Tutorial/Eq.md#into-the-void)"
+
+#. type: Bullet: '    4. '
+#: README.md:103
+msgid "[Rewrite Rules](src/Tutorial/Eq.md#rewrite-rules)"
+msgstr "[規則を書き換える](src/Tutorial/Eq.md#rewrite-rules)"
+
+#. type: Bullet: '13. '
+#: README.md:103
+msgid "[Predicates and Proof Search](src/Tutorial/Predicates.md)"
+msgstr "[前提と証明検索](src/Tutorial/Predicates.md)"
+
+#. type: Bullet: '    1. '
+#: README.md:103
+msgid "[Preconditions](src/Tutorial/Predicates.md#preconditions)"
+msgstr "[前提条件](src/Tutorial/Predicates.md#preconditions)"
+
+#. type: Bullet: '    2. '
+#: README.md:103
+msgid ""
+"[Contracts between Values](src/Tutorial/Predicates.md#contracts-between-"
+"values)"
+msgstr "[値同士の契約](src/Tutorial/Predicates.md#contracts-between-values)"
+
+#. type: Bullet: '    3. '
+#: README.md:103
+msgid ""
+"[Use Case: Flexible Error Handling](src/Tutorial/Predicates.md#use-case-"
+"flexible-error-handling)"
+msgstr "[用例：柔軟なエラー制御](src/Tutorial/Predicates.md#use-case-flexible-error-handling)"
+
+#. type: Bullet: '    4. '
+#: README.md:103
+msgid ""
+"[The Truth about Interfaces](src/Tutorial/Predicates.md#the-truth-about-"
+"interfaces)"
+msgstr "[インターフェースの真実](src/Tutorial/Predicates.md#the-truth-about-interfaces)"
+
+#. type: Bullet: '14. '
+#: README.md:103
+msgid "[Primitives](src/Tutorial/Prim.md)"
+msgstr "[原始型](src/Tutorial/Prim.md)"
+
+#. type: Bullet: '    1. '
+#: README.md:103
+msgid ""
+"[How Primitives are Implemented](src/Tutorial/Prim.md#how-primitives-are-"
+"implemented)"
+msgstr "[どのように原始型が実装されているか](src/Tutorial/Prim.md#how-primitives-are-implemented)"
+
+#. type: Bullet: '    2. '
+#: README.md:103
+msgid "[Working with Strings](src/Tutorial/Prim.md#working-with-strings)"
+msgstr "[文字列を取り回す](src/Tutorial/Prim.md#working-with-strings)"
+
+#. type: Bullet: '    3. '
+#: README.md:103
+msgid "[Integers](src/Tutorial/Prim.md#integers)"
+msgstr "[整数](src/Tutorial/Prim.md#integers)"
+
+#. type: Bullet: '    4. '
+#: README.md:103
+msgid "[Refined Primitives](src/Tutorial/Prim.md#refined-primitives)"
+msgstr "[精錬後の原始型](src/Tutorial/Prim.md#refined-primitives)"
+
+#. type: Title ###
+#: README.md:104
+#, no-wrap
+msgid "Part 2: Appendices"
+msgstr "第2部：補遺"
+
+#. type: Plain text
+#: README.md:110
+msgid ""
+"The appendices can be used as references for the topics at hand. I plan to "
+"eventually have a concise reference on Idris syntax, typical error messages, "
+"the module system, interactive editing and possibly others."
+msgstr ""
+"補遺は卑近な話題の参考書として使えます。\n"
+"最終的には、Idrisの文法、典型的なエラー文言、モジュールシステム、対話的編集などについての簡潔な参考情報にしようと模索しています。"
+
+#. type: Bullet: '1. '
+#: README.md:112
+msgid "[Interactive Editing in Neovim](src/Appendices/Neovim.md)"
+msgstr "[Neovimでの対話的編集](src/Appendices/Neovim.md)"
+
+#. type: Title ##
+#: README.md:113
+#, no-wrap
+msgid "Prerequisites"
+msgstr "予め必要なもの"
+
+#. type: Plain text
+#: README.md:119
+msgid ""
+"At the moment, this project is being actively developed and evolved against "
+"the main branch of the Idris 2 repository.  It is being tested nightly on "
+"GitHub and built against the latest commit of the Idris 2 main branch as "
+"well as the Idris 2 commit listed in file `.idris-version`."
+msgstr ""
+"現時点でこの企画は活発に開発中で、\n"
+"Idris 2リポジトリのmainブランチとともに進展し続けています。\n"
+"GitHubでnightlyにテストされており、\n"
+"Idris 2のmainブランチの最新コミットとファイル`.idris-version`にあるIdris 2のコミット時点でビルドしています。"

@@ -1,6 +1,0 @@
-[book]
-authors = ["gemmaro"]
-language = "ja"
-multilingual = false
-src = "src"
-title = "Idris 2で関数型プログラミング"

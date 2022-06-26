@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-06-05 18:08+0900\n"
+"POT-Creation-Date: 2022-06-26 20:00+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25780,4 +25780,550 @@ msgid ""
 "least - `Traversable`.  There's one still missing - `Alternative` - but this "
 "will have to wait a bit longer, because we need to first make our brains "
 "smoke with some more type-level wizardry."
+msgstr ""
+
+#. type: Title #
+#: README.md:1
+#, markdown-text, no-wrap
+msgid "Functional Programming in Idris 2"
+msgstr ""
+
+#. type: Plain text
+#: README.md:7
+#, markdown-text
+msgid ""
+"The goal of this project is quickly explained: To become a more or less "
+"comprehensive guide to the Idris programming language, with a lot of "
+"introductory material targeted at newcomers to functional programming."
+msgstr ""
+
+#. type: Plain text
+#: README.md:15
+#, markdown-text
+msgid ""
+"The content will be organized in several parts, with the part about the core "
+"language features being the main guide to functional programming in "
+"Idris. Every part consists of several chapters, each trying to cover in "
+"depth a certain aspect of the Idris programming language and its core "
+"libraries. Most chapters come with (sometimes lots of) exercises, with "
+"solutions available in directory `src/Solutions`."
+msgstr ""
+
+#. type: Plain text
+#: README.md:20
+#, markdown-text
+msgid ""
+"Right now, even the part about core language features is not yet finished, "
+"but is being actively developed and tried on several of my own students, "
+"some of which are completely new to functional programming."
+msgstr ""
+
+#. type: Title ##
+#: README.md:21
+#, markdown-text, no-wrap
+msgid "Table of Contents"
+msgstr ""
+
+#. type: Title ###
+#: README.md:23
+#, markdown-text, no-wrap
+msgid "Part 1: Core Language Features"
+msgstr ""
+
+#. type: Plain text
+#: README.md:29
+#, markdown-text
+msgid ""
+"This part tries to give a solid introduction to the Idris programming "
+"language. If you are new to functional programming, make sure to follow "
+"these chapters in order and *solve all the exercises*."
+msgstr ""
+
+#. type: Plain text
+#: README.md:34
+#, markdown-text
+msgid ""
+"If you already used other pure functional programming languages like "
+"Haskell, you might go through the introductory material (Functions Part 1, "
+"Algebraic Data Types, and Interfaces) pretty quickly, as most of this stuff "
+"will already be familiar to you."
+msgstr ""
+
+#. type: Bullet: '1. '
+#: README.md:103
+#, markdown-text
+msgid "[Introduction](src/Tutorial/Intro.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[About the Idris Programming "
+"Language](src/Tutorial/Intro.md#about-the-idris-programming-language)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid "[Using the REPL](src/Tutorial/Intro.md#using-the-repl)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[A First Idris Program](src/Tutorial/Intro.md#a-first-idris-program)"
+msgstr ""
+
+#. type: Bullet: '   4. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[The Shape of an Idris "
+"Definition](src/Tutorial/Intro.md#the-shape-of-an-idris-definition)"
+msgstr ""
+
+#. type: Bullet: '   5. '
+#: README.md:103
+#, markdown-text
+msgid "[Where to get Help](src/Tutorial/Intro.md#where-to-get-help)"
+msgstr ""
+
+#. type: Bullet: '2. '
+#: README.md:103
+#, markdown-text
+msgid "[Functions Part 1](src/Tutorial/Functions1.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Functions with more that one "
+"Argument](src/Tutorial/Functions1.md#functions-with-more-that-one-argument)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid "[Function Composition](src/Tutorial/Functions1.md#function-composition)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[Higher-order Functions](src/Tutorial/Functions1.md#higher-order-functions)"
+msgstr ""
+
+#. type: Bullet: '   4. '
+#: README.md:103
+#, markdown-text
+msgid "[Currying](src/Tutorial/Functions1.md#currying)"
+msgstr ""
+
+#. type: Bullet: '   5. '
+#: README.md:103
+#, markdown-text
+msgid "[Anonymous Functions](src/Tutorial/Functions1.md#anonymous-functions)"
+msgstr ""
+
+#. type: Bullet: '   6. '
+#: README.md:103
+#, markdown-text
+msgid "[Operators](src/Tutorial/Functions1.md#operators)"
+msgstr ""
+
+#. type: Bullet: '3. '
+#: README.md:103
+#, markdown-text
+msgid "[Algebraic Data Types](src/Tutorial/DataTypes.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid "[Enumerations](src/Tutorial/DataTypes.md#enumerations)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid "[Sum Types](src/Tutorial/DataTypes.md#sum-types)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[Records](src/Tutorial/DataTypes.md#records)"
+msgstr ""
+
+#. type: Bullet: '   4. '
+#: README.md:103
+#, markdown-text
+msgid "[Generic Data Types](src/Tutorial/DataTypes.md#generic-data-types)"
+msgstr ""
+
+#. type: Bullet: '   5. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Alternative Syntax for Data "
+"Definitions](src/Tutorial/DataTypes.md#alternative-syntax-for-data-definitions)"
+msgstr ""
+
+#. type: Bullet: '4. '
+#: README.md:103
+#, markdown-text
+msgid "[Interfaces](src/Tutorial/Interfaces.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid "[Interface Basics](src/Tutorial/Interfaces.md#interface-basics)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid "[More about Interfaces](src/Tutorial/Interfaces.md#more-about-interfaces)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Interfaces in the "
+"Prelude](src/Tutorial/Interfaces.md#interfaces-in-the-prelude)"
+msgstr ""
+
+#. type: Bullet: '5. '
+#: README.md:103
+#, markdown-text
+msgid "[Functions Part 2](src/Tutorial/Functions2.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Let Bindings and Local "
+"Definitions](src/Tutorial/Functions2.md#let-bindings-and-local-definitions)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[The Truth about Function "
+"Arguments](src/Tutorial/Functions2.md#the-truth-about-function-arguments)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[Programming with Holes](src/Tutorial/Functions2.md#programming-with-holes)"
+msgstr ""
+
+#. type: Bullet: '6. '
+#: README.md:103
+#, markdown-text
+msgid "[Dependent Types](src/Tutorial/Dependent.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid "[Length-Indexed Lists](src/Tutorial/Dependent.md#length-indexed-lists)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Fin: Safe Indexing into "
+"Vectors](src/Tutorial/Dependent.md#fin-safe-indexing-into-vectors)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Compile-Time "
+"Computations](src/Tutorial/Dependent.md#compile-time-computations)"
+msgstr ""
+
+#. type: Bullet: '7. '
+#: README.md:103
+#, markdown-text
+msgid "[IO: Programming with Side Effects](src/Tutorial/IO.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid "[Pure Side Effects?](src/Tutorial/IO.md#pure-side-effects)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid "[Do Blocks, Desugared](src/Tutorial/IO.md#do-blocks-desugared)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[Working with Files](src/Tutorial/IO.md#working-with-files)"
+msgstr ""
+
+#. type: Bullet: '   4. '
+#: README.md:103
+#, markdown-text
+msgid "[How IO is Implemented](src/Tutorial/IO.md#how-io-is-implemented)"
+msgstr ""
+
+#. type: Bullet: '8. '
+#: README.md:103
+#, markdown-text
+msgid "[Functor and Friends](src/Tutorial/Functor.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid "[Functor](src/Tutorial/Functor.md#functor)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid "[Applicative](src/Tutorial/Functor.md#applicative)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[Monad](src/Tutorial/Functor.md#monad)"
+msgstr ""
+
+#. type: Bullet: '   4. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Background and further "
+"Reading](src/Tutorial/Functor.md#background-and-further-reading)"
+msgstr ""
+
+#. type: Bullet: '9. '
+#: README.md:103
+#, markdown-text
+msgid "[Recursion and Folds](src/Tutorial/Folds.md)"
+msgstr ""
+
+#. type: Bullet: '   1. '
+#: README.md:103
+#, markdown-text
+msgid "[Recursion](src/Tutorial/Folds.md#recursion)"
+msgstr ""
+
+#. type: Bullet: '   2. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[A few Notes on Totality "
+"Checking](src/Tutorial/Folds.md#a-few-notes-on-totality-checking)"
+msgstr ""
+
+#. type: Bullet: '   3. '
+#: README.md:103
+#, markdown-text
+msgid "[Interface Foldable](src/Tutorial/Folds.md#interface-foldable)"
+msgstr ""
+
+#. type: Bullet: '10. '
+#: README.md:103
+#, markdown-text
+msgid "[Effectful Traversals](src/Tutorial/Traverse.md)"
+msgstr ""
+
+#. type: Bullet: '    1. '
+#: README.md:103
+#, markdown-text
+msgid "[Reading CSV Tables](src/Tutorial/Traverse.md#reading-csv-tables)"
+msgstr ""
+
+#. type: Bullet: '    2. '
+#: README.md:103
+#, markdown-text
+msgid "[Programming with State](src/Tutorial/Traverse.md#programming-with-state)"
+msgstr ""
+
+#. type: Bullet: '    3. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[The Power of "
+"Composition](src/Tutorial/Traverse.md#the-power-of-composition)"
+msgstr ""
+
+#. type: Bullet: '11. '
+#: README.md:103
+#, markdown-text
+msgid "[Sigma Types](src/Tutorial/DPair.md)"
+msgstr ""
+
+#. type: Bullet: '    1. '
+#: README.md:103
+#, markdown-text
+msgid "[Dependent Pairs](src/Tutorial/DPair.md#dependent-pairs)"
+msgstr ""
+
+#. type: Bullet: '    2. '
+#: README.md:103
+#, markdown-text
+msgid "[Use Case: Nucleic Acids](src/Tutorial/DPair.md#use-case-nucleic-acids)"
+msgstr ""
+
+#. type: Bullet: '    3. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Use Case: CSV Files with a "
+"Schema](src/Tutorial/DPair.md#use-case-csv-files-with-a-schema)"
+msgstr ""
+
+#. type: Bullet: '12. '
+#: README.md:103
+#, markdown-text
+msgid "[Propositional Equality](src/Tutorial/Eq.md)"
+msgstr ""
+
+#. type: Bullet: '    1. '
+#: README.md:103
+#, markdown-text
+msgid "[Equality as a Type](src/Tutorial/Eq.md#equality-as-a-type)"
+msgstr ""
+
+#. type: Bullet: '    2. '
+#: README.md:103
+#, markdown-text
+msgid "[Programs as Proofs](src/Tutorial/Eq.md#programs-as-proofs)"
+msgstr ""
+
+#. type: Bullet: '    3. '
+#: README.md:103
+#, markdown-text
+msgid "[Into the Void](src/Tutorial/Eq.md#into-the-void)"
+msgstr ""
+
+#. type: Bullet: '    4. '
+#: README.md:103
+#, markdown-text
+msgid "[Rewrite Rules](src/Tutorial/Eq.md#rewrite-rules)"
+msgstr ""
+
+#. type: Bullet: '13. '
+#: README.md:103
+#, markdown-text
+msgid "[Predicates and Proof Search](src/Tutorial/Predicates.md)"
+msgstr ""
+
+#. type: Bullet: '    1. '
+#: README.md:103
+#, markdown-text
+msgid "[Preconditions](src/Tutorial/Predicates.md#preconditions)"
+msgstr ""
+
+#. type: Bullet: '    2. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Contracts between "
+"Values](src/Tutorial/Predicates.md#contracts-between-values)"
+msgstr ""
+
+#. type: Bullet: '    3. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[Use Case: Flexible Error "
+"Handling](src/Tutorial/Predicates.md#use-case-flexible-error-handling)"
+msgstr ""
+
+#. type: Bullet: '    4. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[The Truth about "
+"Interfaces](src/Tutorial/Predicates.md#the-truth-about-interfaces)"
+msgstr ""
+
+#. type: Bullet: '14. '
+#: README.md:103
+#, markdown-text
+msgid "[Primitives](src/Tutorial/Prim.md)"
+msgstr ""
+
+#. type: Bullet: '    1. '
+#: README.md:103
+#, markdown-text
+msgid ""
+"[How Primitives are "
+"Implemented](src/Tutorial/Prim.md#how-primitives-are-implemented)"
+msgstr ""
+
+#. type: Bullet: '    2. '
+#: README.md:103
+#, markdown-text
+msgid "[Working with Strings](src/Tutorial/Prim.md#working-with-strings)"
+msgstr ""
+
+#. type: Bullet: '    3. '
+#: README.md:103
+#, markdown-text
+msgid "[Integers](src/Tutorial/Prim.md#integers)"
+msgstr ""
+
+#. type: Bullet: '    4. '
+#: README.md:103
+#, markdown-text
+msgid "[Refined Primitives](src/Tutorial/Prim.md#refined-primitives)"
+msgstr ""
+
+#. type: Title ###
+#: README.md:104
+#, markdown-text, no-wrap
+msgid "Part 2: Appendices"
+msgstr ""
+
+#. type: Plain text
+#: README.md:110
+#, markdown-text
+msgid ""
+"The appendices can be used as references for the topics at hand. I plan to "
+"eventually have a concise reference on Idris syntax, typical error messages, "
+"the module system, interactive editing and possibly others."
+msgstr ""
+
+#. type: Bullet: '1. '
+#: README.md:112
+#, markdown-text
+msgid "[Interactive Editing in Neovim](src/Appendices/Neovim.md)"
+msgstr ""
+
+#. type: Title ##
+#: README.md:113
+#, markdown-text, no-wrap
+msgid "Prerequisites"
+msgstr ""
+
+#. type: Plain text
+#: README.md:119
+#, markdown-text
+msgid ""
+"At the moment, this project is being actively developed and evolved against "
+"the main branch of the Idris 2 repository.  It is being tested nightly on "
+"GitHub and built against the latest commit of the Idris 2 main branch as "
+"well as the Idris 2 commit listed in file `.idris-version`."
 msgstr ""
