@@ -2,7 +2,7 @@
 
 echo '[po_directory] po/'
 
-for markdown in src/**/*.md; do
+for markdown in {src/**/*.md,README.md}; do
   cat << END_OF_CFG
 
 [type: text] \\
