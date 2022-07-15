@@ -1,4 +1,4 @@
-# Idris 2 入門
+# 関数型プログラミングをIdris 2で
 # Copyright (C) 2021 Stefan Höck (original).
 # Copyright (C) 2022 gemmaro (translate).
 # This file is distributed under the same license as the original document.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: idris 2-tutorial\n"
 "POT-Creation-Date: 2022-06-26 20:00+0900\n"
-"PO-Revision-Date: 2022-07-10 18:35+0900\n"
+"PO-Revision-Date: 2022-07-15 10:59+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: src/Appendices/Neovim.md:1
 #, no-wrap
 msgid "Interactive Editing in Neovim"
-msgstr ""
+msgstr "対話的編集をNeovimで"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:10
@@ -33,6 +33,11 @@ msgid ""
 "editors.  Since I am a Neovim user, I explain the Idris related parts of my "
 "own setup in detail here."
 msgstr ""
+"Idrisには多岐にわたる機能があり、\n"
+"プログラム中の値や式の型を対話的に分析したり、\n"
+"実装の骨子、ときには与えられた型に基づいて全体のプログラムさえも、書き込んだりしてくれます。\n"
+"これらの対話的な編集機能はそれぞれのエディタのプラグインを介して使うことができます。\n"
+"筆者はNeovim利用者なので自分の設定のうちIdrisに関係する部分をここで詳細に述べます。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:20
@@ -45,6 +50,13 @@ msgid ""
 "the language server protocol (LSP). This communication is setup through the "
 "[idris2-nvim](https://github.com/ShinKage/idris2-nvim)  plugin."
 msgstr ""
+"Neovimでこれら全ての機能を走らせるために必要な主要素は\n"
+"[idris2-lsp](https://github.com/idris-community/idris2-lsp)\n"
+"プロジェクトで提供されている実行プログラムです。\n"
+"この実行プログラムは内部でIdrisのコンパイラAPI (application programming interface) を活用して\n"
+"編集中のソースコードの構文や型を検査することができます。\n"
+"idris2-lspはlanguage server protocol (LSP) を介してNeovimと通信しています。\n"
+"この通信は[idris2-nvim](https://github.com/ShinKage/idris2-nvim)プラグインを通じて立ち上がります。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:31
@@ -60,6 +72,15 @@ msgid ""
 "name of a top level function, although syntactically these are both just "
 "identifiers."
 msgstr ""
+"このチュートリアルで見ていきますが、`idris2-lsp`実行プログラムは構文と型の検査を行えるようにするだけではなく、\n"
+"追加の対話的編集機能も備えています。\n"
+"最後にIdrisコンパイラAPIはIdrisのソースコードの意味論的彩色をサポートしています。\n"
+"つまり、識別子やキーワードの彩色は、\n"
+"言語の構文に基づくだけではなく（これは*構文彩色*であり、\n"
+"あらゆる現代的なプログラミング環境やエディタにあるであろう機能です）、\n"
+"その*意味論*にも基づいているのです。\n"
+"例えば関数実装の局所変数と最上位関数の名前は、\n"
+"どちらも構文的にはただの識別子ですが、それぞれ違うように彩色されます。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:32
@@ -81,7 +102,7 @@ msgstr ""
 #: src/Appendices/Neovim.md:40
 #, no-wrap
 msgid "Setup"
-msgstr ""
+msgstr "立ち上げ"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:44
@@ -89,16 +110,18 @@ msgid ""
 "In order to make full use of interactive Idris editing in Neovim, at least "
 "the following tools need to be installed:"
 msgstr ""
+"Neovimでの対話的なIdrisの編集方法を全部活用するには、\n"
+"少なくとも以下のツールがインストールされている必要があります。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:52
 msgid "A recent version of Neovim (version 0.5 or later)."
-msgstr ""
+msgstr "新しめのバージョンのNeovim（バージョン0.5以降）"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:52
 msgid "A recent version of the Idris compiler (at least version 0.5.1)."
-msgstr ""
+msgstr "新しめのバージョンのIdrisコンパイラ（最低でもバージョン0.5.1）"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:52
@@ -114,7 +137,7 @@ msgstr "[idris2-lsp](https://github.com/idris-community/idris2-lsp)パッケー�
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:52
 msgid "The following Neovim plugins:"
-msgstr ""
+msgstr "以下のNeovimプラグイン"
 
 #. type: Bullet: '  * '
 #: src/Appendices/Neovim.md:52
@@ -124,7 +147,7 @@ msgstr "[idris2-nvim](https://github.com/ShinKage/idris2-nvim)"
 #. type: Bullet: '  * '
 #: src/Appendices/Neovim.md:52
 msgid "[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)"
-msgstr "[idris2-nvim](https://github.com/ShinKage/idris2-nvim)"
+msgstr "[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:57
@@ -134,6 +157,8 @@ msgid ""
 "follow these instructions so that your compiler and `idris2-lsp` executable "
 "are in sync."
 msgstr ""
+"`idris2-lsp`プロジェクトにはIdris 2や標準ライブラリ、コンパイラAPIのインストール方法の詳細な説明があります。\n"
+"この説明に従い、コンパイラと`idris2-lsp`実行プログラムが協調するようにしてください。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:67
@@ -147,12 +172,19 @@ msgid ""
 "setting up your `init.vim` file, restart Neovim and run `:PlugUpdate` to "
 "install the necessary plugins."
 msgstr ""
+"Neovimが初めてであれば、`resources`フォルダにある`init.vim`ファイルを使うとよいかもしれません。\n"
+"その場合必要なNeovimプラグインは既に含まれていますが、\n"
+"[vim-plug](https://github.com/junegunn/vim-plug)というプラグイン管理をインストールする必要があります。\n"
+"そのあとで自分の`iniv.vim`ファイルに`resources/init.vim`の全部または一部をコピーしてください。\n"
+"（Neovim内で`:help init.vim`とするとどこでこのファイルを見つけられるのかがわかります。）\n"
+"`init.vim`ファイルを設定したあとはNeovimを再起動し\n"
+"`:PlugUpdate`を走らせて必要なプラグインをインストールしてください。"
 
 #. type: Title ##
 #: src/Appendices/Neovim.md:68
 #, no-wrap
 msgid "A Typical Workflow"
-msgstr ""
+msgstr "よくある作業の流れ"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:77
@@ -164,6 +196,10 @@ msgid ""
 "[Algebraic Data Types](../Tutorial/DataTypes.md), otherwise it will be hard "
 "to understand what's going on here."
 msgstr ""
+"使える対話的編集機能を試すために、*Prelude*からいくらかの小間物を再実装していきます。\n"
+"進めるにあたって既に[導入](../Tutorial/Intro.md)、[関数 その1](../Tutorial/Function1.md)、\n"
+"そして少なくとも[代数的データ型](../Tutorial/DataTypes.md)の一部を進めているとよいです。\n"
+"さもないとここで起こっていることが理解しづらいでしょう。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:83
@@ -174,17 +210,22 @@ msgid ""
 "things described here do not work, is to quickly safe the current file (`:"
 "w`)."
 msgstr ""
+"始める前に注意しておきますが、\n"
+"ソースファイルを編集してディスクに変更を書き込んでいなかったら、\n"
+"このチュートリアルでお見せするコマンドやアクションは正しく動かないかもしれません。\n"
+"したがって、ここに載っていることがうまくいかなかったら、\n"
+"最初に試すことは現在のファイルをささっと保存する (`:w`) ことです。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:85
 msgid "Let's start with negation of a boolean value:"
-msgstr ""
+msgstr "真偽値の否定から始めましょう。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:86
 #, no-wrap
 msgid "negate1 : Bool -> Bool\n"
-msgstr ""
+msgstr "negate1 : Bool -> Bool\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:102
@@ -200,6 +241,16 @@ msgid ""
 "function implementation as we do, so we probably should ask it for guidance "
 "instead of trying to do everything on our own."
 msgstr ""
+"Idrisのコードを書くときにつきものなのは「型第一」という真言に従うことです。\n"
+"何らかの機能の一部をどのように実装すればよいかのアイディアがもうあるかもしれませんが、\n"
+"それでも実装を書き始められる前に正確な型を提供する必要があります。\n"
+"つまり、Idrisでプログラミングするときは\n"
+"頭の中でアルゴリズムの実装と関連する型について同時に帳尻を合わせなくてはいけず、\n"
+"両方ともどこまでも複雑になりうるものなのです。\n"
+"それでも実装からやります？\n"
+"覚えておいてほしいのですが、\n"
+"Idrisは私達と同じように少なくとも関数実装の現在の文脈で使える変数とその型の多くを知っているので、\n"
+"全部自分で試す代わりに道しるべを乞うとよいでしょう。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:112
@@ -215,11 +266,19 @@ msgid ""
 "consists of a comma quickly followed by the lowercase letter \"a\".\n"
 "See also `:help leader` and `:help localleader` in Neovim\n"
 msgstr ""
+"で、話を続けるために、Idrisに関数本体の骨子について尋ねます。\n"
+"通常の編集モードで`negate`が宣言されている行にカーソルを持っていき、\n"
+"`<LocalLeader>a`を素早く連続で入力してください。\n"
+"`<LocalLeader>`は特別なキーで`init.vim`ファイル中で指定することができます。\n"
+"`resources`フォルダの`init.vim`を使っていたら、\n"
+"コンマ文字 (`,`) に設定されています。\n"
+"その場合上のコマンドは、コンマとそのすぐあとに小文字の \"a\" が続きます。\n"
+"Neovimで`:help leader`と`:help localleader`もご参照ください。\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:115
 msgid "Idris will generate a skeleton implementation similar to the following:"
-msgstr ""
+msgstr "Idrisは以下のような実装の骨子を生成するでしょう。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:116
@@ -228,6 +287,8 @@ msgid ""
 "negate2 : Bool -> Bool\n"
 "negate2 x = ?negate2_rhs\n"
 msgstr ""
+"negate2 : Bool -> Bool\n"
+"negate2 x = ?negate2_rhs\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:139
@@ -252,6 +313,18 @@ msgid ""
 "this window again. Go ahead and checkout the type and\n"
 "context of `?negate2_rhs`.\n"
 msgstr ""
+"左側に`x`という名前の新しい変数が導入され、\n"
+"右側にはIdrisが*メタ変数*（*穴開き*とも呼ばれます）を加えましたね。\n"
+"後者は疑問符が前置された識別子です。\n"
+"関数のこの部分をあとで実装するつもりがあることを、Idrisに合図しているのです。\n"
+"穴開きの素晴しいところは、その上に*かざして*型や周囲の文脈の値の型を調べられることです。\n"
+"そうするにはカーソルを穴開きの識別子の上に置いて通常モードで`K`（大文字）を入力します。\n"
+"これでポップアップが開いてカーソルの下の変数の型に加えて周囲の文脈の変数の型と数量子が表示されます。\n"
+"この表示された情報を分離した窓に移すこともできます。\n"
+"`<LocalLeader>so`と入力するとこの窓を開きつつカーソルをかざしたままになります。\n"
+"情報が新しい窓に現れますが、これには意味論的彩色される利点もあります。\n"
+"`<LocalLeader>sc`と入力するとこの窓を閉じて元に戻ります。\n"
+"さあ、`?negate2_rhs`の型と文脈を見てみましょう。\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:148
@@ -266,6 +339,13 @@ msgid ""
 "`<LocalLeader>c` in normal mode. The result will look as\n"
 "follows:\n"
 msgstr ""
+"Idrisのほとんどの関数は1つ以上の引数についてのパターン照合によって実装されています。\n"
+"Idrisは全ての原始的でないデータ型のデータ構築子を知っており、\n"
+"その通りにパターン照合を書いてくれます。\n"
+"（この工程は*場合分割*とも呼ばれます。）\n"
+"カーソルを`negate2`の実装の骨子中にある`x`の上に移動させて、\n"
+"通常モードで`<LocalLeader>c`を入力してください。\n"
+"結果は以下のようになるでしょう。\n"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:149
@@ -275,6 +355,9 @@ msgid ""
 "negate3 False = ?negate3_rhs_0\n"
 "negate3 True = ?negate3_rhs_1\n"
 msgstr ""
+"negate3 : Bool -> Bool\n"
+"negate3 False = ?negate3_rhs_0\n"
+"negate3 True = ?negate3_rhs_1\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:158
@@ -283,6 +366,9 @@ msgid ""
 "hand side. We can again inspect their types or replace them with a proper "
 "implementation directly."
 msgstr ""
+"見てとれるようにIdrisは右側のそれぞれの場合に穴開きを挿入しました。\n"
+"再度それぞれの型を調べることもできますし、\n"
+"直接適切な実装で置き換えることもできます。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:164
@@ -292,6 +378,9 @@ msgid ""
 "implementations, and case splitting (which also works in case blocks and for "
 "nested pattern matches). You should start using these all the time *now*!"
 msgstr ""
+"これが対話的編集の（筆者にとっての）中核の機能への入口だという結論になります。\n"
+"メタ変数にかざし、関数の実装の骨子を加え、場合分割する（これはcaseブロックと入れ子のパターン照合でも動きます）。\n"
+"これらを*今*この瞬間から使い始めるべきです！"
 
 #. type: Title ##
 #: src/Appendices/Neovim.md:165
@@ -308,6 +397,10 @@ msgid ""
 "implementation, and case splitting on the `Either` argument, we arrive at "
 "something similar to the following:"
 msgstr ""
+"時々Idrisが充分関係する型について知っていて、自力で関数の実装を思い付けることがあります。\n"
+"例えば*Prelude*の関数`either`を実装してみましょう。\n"
+"型を与えたあと、実装の骨子をつくり、`Either`引数で場合分割すると、\n"
+"以下のようなものに行き着きます。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:174
@@ -317,6 +410,9 @@ msgid ""
 "either2 f g (Left x) = ?either2_rhs_0\n"
 "either2 f g (Right x) = ?either2_rhs_1\n"
 msgstr ""
+"either2 : (a -> c) -> (b -> c) -> Either a b -> c\n"
+"either2 f g (Left x) = ?either2_rhs_0\n"
+"either2 f g (Right x) = ?either2_rhs_1\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:186
@@ -329,6 +425,12 @@ msgid ""
 "a selection of possible expressions (only one in this case),\n"
 "of which you can choose a fitting one (or abort with `q`).\n"
 msgstr ""
+"Idrisは自力で2つのメタ変数の式を思い付くことができますが、\n"
+"これは型が充分に限定されているからです。\n"
+"カーソルをメタ変数の1つの上に移動させ、\n"
+"通常モードで`<LocalLeader>o`を入力してください。\n"
+"すると可能な式の骨子（今回の場合は1つのみ）が得られ、\n"
+"この中から合うものを選べます（もしくは`q`で中断）。\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:190
@@ -337,6 +439,8 @@ msgid ""
 "an expression search on `?maybe2_rhs1`, you will get a larger list of "
 "choices."
 msgstr ""
+"以下は別の例で、関数`maybe`の再実装です。\n"
+"`?maybe2_rhs1`で式検索を走らせるともっと選択肢が多くなります。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:191
@@ -346,6 +450,9 @@ msgid ""
 "maybe2 x f Nothing = x\n"
 "maybe2 x f (Just y) = ?maybe2_rhs_1\n"
 msgstr ""
+"maybe2 : b -> (a -> b) -> Maybe a -> b\n"
+"maybe2 x f Nothing = x\n"
+"maybe2 x f (Just y) = ?maybe2_rhs_1\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:208
@@ -363,12 +470,21 @@ msgid ""
 "This will automatically generate the whole function body including\n"
 "case splits and implementations.\n"
 msgstr ""
+"Idrisは時々関数の型に基づいて完全な関数の実装を思い付けることもあります。\n"
+"これが実際にうまくいくのは型検査を満足する可能な実装が充分に少なくなければいけません。\n"
+"例として以下は関数`zipWith`のベクタ用のものです。\n"
+"ベクタについてまだ聞いたことがないかもしれませんが、\n"
+"これは[依存型](../Tutorial/Dependent.md)についての章で紹介されます。\n"
+"それでも式検索の効果を確認するために試してみることはできます。\n"
+"`zipWithV`を宣言している行にカーソルを移動させ、\n"
+"`<LocalLeader>gd`を入力して最初の選択肢を選ぶ、それだけです。\n"
+"こうすると自動的に場合分割と実装を含む関数全体が生成されます。\n"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:209
 #, no-wrap
 msgid "zipWithV : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c\n"
-msgstr ""
+msgstr "zipWithV : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:218
@@ -380,12 +496,17 @@ msgid ""
 "a metavariable, or by trying `<LocalLeader>gd` on a\n"
 "function declaration.\n"
 msgstr ""
+"式検索は充分に特化された型のときにのみうまくいきます。\n"
+"今がそのときだと思ったら、\n"
+"`<LocalLeader>o`をメタ変数の上で走らせるか、\n"
+"`<LocalLeader>gd`を関数制限の上で試してみるか、\n"
+"どちらかをぜひやってみてください。\n"
 
 #. type: Title ##
 #: src/Appendices/Neovim.md:219
 #, no-wrap
 msgid "More Code Actions"
-msgstr ""
+msgstr "もっとコードアクション"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:223
@@ -393,6 +514,8 @@ msgid ""
 "There are other shortcuts available for generating part of your code, two of "
 "which I'll explain here."
 msgstr ""
+"他にもコードの一部を生成することができるショートカットがあり、\n"
+"そのうち2つをここで述べます。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:231
@@ -406,6 +529,10 @@ msgid ""
 "generate a skeleton implementation followed by a case split\n"
 "and an expression search on the first metavariable:\n"
 msgstr ""
+"1つ目として、通常モードのときにメタ変数上で`<LocalLeader>mc`を入力することで新しいcaseブロックを加えられます。\n"
+"例えば以下は代数的データ型についての章の中の演習で登場する`filterList`の実装の一部です。\n"
+"ここまで辿り着くのに、Idrisに実装の骨子の生成、\n"
+"場合分割、最初のメタ変数での式検索をしてもらったところです。\n"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:232
@@ -415,6 +542,9 @@ msgid ""
 "filterList f [] = []\n"
 "filterList f (x :: xs) = ?filterList_rhs_1\n"
 msgstr ""
+"filterList : (a -> Bool) -> List a -> List a\n"
+"filterList f [] = []\n"
+"filterList f (x :: xs) = ?filterList_rhs_1\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:247
@@ -430,6 +560,14 @@ msgid ""
 "This will lead us to an implementation similar to the following\n"
 "(I had to fix the indentation, though):\n"
 msgstr ""
+"次に`x`を`f`に適用した結果をパターン照合しなければいけません。\n"
+"カーソルをメタ変数`?filterList_rhs_1`の上に持っていき、\n"
+"通常モードで`<LocalLeader>mc`と入力すれば、\n"
+"Idrisは新しいcaseブロックを導入してくれます。\n"
+"それから、まず式 (`f x`) をcaseブロックで使えるように与えて、\n"
+"次にcaseブロック中の新しい変数上で場合分割して実装を続けられます。\n"
+"これにより以下のような実装になります。\n"
+"（ただし字下げは修正せねばなりませんでしたが。）\n"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:248
@@ -441,6 +579,11 @@ msgid ""
 "  False => ?filterList2_rhs_2\n"
 "  True => ?filterList2_rhs_3\n"
 msgstr ""
+"filterList2 : (a -> Bool) -> List a -> List a\n"
+"filterList2 f [] = []\n"
+"filterList2 f (x :: xs) = case f x of\n"
+"  False => ?filterList2_rhs_2\n"
+"  True => ?filterList2_rhs_3\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:266
@@ -457,6 +600,13 @@ msgid ""
 "in a regular Idris source file instead of the literate\n"
 "file I use for this tutorial):\n"
 msgstr ""
+"時々、作業中の実装から小間物関数を取り出したいことがあります。\n"
+"例えばこれは、コードについての証明を書くときに、よく便利だったり果ては必要だったりします。\n"
+"（[命題の等価性](../Tutorial/Eq.md)や[前提条件](../Tutorial/Predicates.md)などの章を見てください。）\n"
+"そうするためにはカーソルをメタ変数の上に移動させて`<LocalLeader>ml`と入力すればできます。\n"
+"以下の例の`?whatNow`で試してみてください。\n"
+"（これは通常のIdrisのソースファイルのほうが、\n"
+"私がこのチュートリアルで使用している文芸的ファイルよりもうまくいくでしょう。）\n"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:267
@@ -466,6 +616,9 @@ msgid ""
 "traverseEither f [] = Right []\n"
 "traverseEither f (x :: xs) = ?whatNow x xs f (f x) (traverseEither f xs)\n"
 msgstr ""
+"traverseEither : (a -> Either e b) -> List a -> Either e (List b)\n"
+"traverseEither f [] = Right []\n"
+"traverseEither f (x :: xs) = ?whatNow x xs f (f x) (traverseEither f xs)\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:279
@@ -476,6 +629,11 @@ msgid ""
 "Typically, you will have to manually remove unneeded arguments afterwards. "
 "This led me to the following version:"
 msgstr ""
+"Idrisは`?whatNow`の型と名前を持つ新しい関数宣言を作ります。\n"
+"作られた関数は現在範疇にある全ての変数を引数として取ります。\n"
+"また、`traverseEither`中の穴開きをこの新しい関数の呼び出しで置き換えます。\n"
+"大抵はその後に手ずから不要な引数を削除しなければいけないでしょう。\n"
+"こうすると以下の版に行き着きます。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:280
@@ -487,12 +645,17 @@ msgid ""
 "traverseEither2 f [] = Right []\n"
 "traverseEither2 f (x :: xs) = whatNow2 (f x) (traverseEither f xs)\n"
 msgstr ""
+"whatNow2 : Either e b -> Either e (List b) -> Either e (List b)\n"
+"\n"
+"traverseEither2 : (a -> Either e b) -> List a -> Either e (List b)\n"
+"traverseEither2 f [] = Right []\n"
+"traverseEither2 f (x :: xs) = whatNow2 (f x) (traverseEither f xs)\n"
 
 #. type: Title ##
 #: src/Appendices/Neovim.md:288
 #, no-wrap
 msgid "Getting Information"
-msgstr ""
+msgstr "情報を得る"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:294
@@ -502,6 +665,10 @@ msgid ""
 "list of other capabilities. I suggest you try out each of them from within "
 "this source file."
 msgstr ""
+"`idris2-lsp`実行プログラムと介在する`idris2-nvim`プラグインがサポートしているのは、\n"
+"上で述べたコードアクションだけではありません。\n"
+"以下は他の機能の非網羅的な一覧です。\n"
+"それぞれをこのソースファイルの中で試してみてください。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
@@ -514,6 +681,11 @@ msgid ""
 "window where this information is displayed and semantically highlighted "
 "instead."
 msgstr ""
+"識別子や演算子の上にいるとき通常モードで`K`と打つと（もしあれば）型と名前空間が出ます。\n"
+"メタ変数の場合は現在の文脈も型と数量子とともに表示されます。\n"
+"（数量子は[関数 その2](../Tutorial/Functions2.md)で説明されます。）\n"
+"ポップアップが好きでなければ、`<LocalLeader>so`とすると代わりに新しい窓が開き、\n"
+"この情報が意味論的彩色されて表示されます。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
@@ -523,6 +695,9 @@ msgid ""
 "works only if the module in question has been installed together with its "
 "source code (by using the `idris2 --install-with-src` command)."
 msgstr ""
+"通常モードで、関数、演算子、データ構築子、型構築子の上にいるとき`gd`と打つと、その定義に飛びます。\n"
+"外部モジュールの場合、これは対象のモジュールがソースコードと一緒にインストールされているときにのみ機能します。\n"
+"（ソースコードのインストールには`idris2 --install-with-src`コマンドを使います。）"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
@@ -531,13 +706,15 @@ msgid ""
 "the current module. You can place the cursor on an entry and jump to its "
 "location by pressing `<Enter>`."
 msgstr ""
+"`<LocalLeader>mm`と打つと、ポップアップ窓を開いて現在のモジュール中の全てのメタ変数を一覧にします。\n"
+"カーソルを項目の上に置いて`<Enter>`を押せばその場所に飛ぶことができます。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
 msgid ""
 "Typing `<LocalLeader>mn` (or `<LocalLeader>mp`) jumps to the next (or "
 "previous) metavariable in the current module."
-msgstr ""
+msgstr "`<LocalLeader>mn` (`<LocalLeader>mp`) と打つと現在のモジュール中の次（前）のメタ変数に飛びます。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
@@ -548,6 +725,10 @@ msgid ""
 "pressing enter on one of the entries. Note: The module in question must be "
 "imported in the current source file."
 msgstr ""
+"`<LocalLeader>br`と打つとポップアップが開き、そこに名前空間を入力できます。\n"
+"そうするとIdrisはポップアップ窓の中にその名前空間から輸出されている全ての関数（とその型）を出し、\n"
+"項目のうち1つの上でエンターを押すと関数の定義に飛ぶことができます。\n"
+"なお、モジュールは現在のソースファイルでインポートされていなくてはいけません。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
@@ -557,6 +738,9 @@ msgid ""
 "Whenever REPL examples are shown in the main part of this guide, you can try "
 "them from within Neovim with this shortcut if you like."
 msgstr ""
+"`<LocalLeader>x`と打つと、ポップアップが開いてREPLコマンドやIdrisの式を入力でき、\n"
+"プラグインはREPLからの応答で返信します。\n"
+"この導入書の主部にあるREPLの例については、いつでもNeovimからこのショートカットをで試すことができますよ。"
 
 #. type: Bullet: '* '
 #: src/Appendices/Neovim.md:329
@@ -567,6 +751,10 @@ msgid ""
 "all error messages from the current buffer in a new window. You can then "
 "select an error message and jump to its origin by pressing `<Enter>`."
 msgstr ""
+"`<LocalLeader><LocalLeader>e`と打つと現在の行からのエラー文言をポップアップ窓に表示します。\n"
+"これはエラー文言が1行に収まらないほどに長すぎるときに大変便利です。\n"
+"同様に`<LocalLeader><LocalLeader>el`は新しい窓で現在のバッファからの全てのエラー文言を一覧にします。\n"
+"エラー文言を選択して`<Enter>`を押すとその出自に飛ぶことができます。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:332
@@ -574,12 +762,14 @@ msgid ""
 "Other use cases and examples are described on the GitHub page of the `idris2-"
 "nvim` plugin and can be included as described there."
 msgstr ""
+"他のユースケースや例は`idris2-nvim`プラグインのGitHubのページで記述されており、\n"
+"そちらで記述されているように設定に含められます。"
 
 #. type: Title ##
 #: src/Appendices/Neovim.md:333
 #, no-wrap
 msgid "The `%name` Pragma"
-msgstr ""
+msgstr "`%name`プラグマ"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:345
@@ -596,11 +786,17 @@ msgid ""
 "specifying a list of names to use for such occasions for any\n"
 "data type.\n"
 msgstr ""
+"Idrisに`<LocalLeader>a`で実装の骨子を尋ねたり`<LocalLeader>c`で場合分割したりしたとき、\n"
+"Idrisは導入する新しい変数にどの名前を使うべきかを決めなくてはなりません。\n"
+"もしこの変数が既に事前に定義された名前（関数の処方、レコードフィールド、名前付きのデータ構築子の引数）だったら、\n"
+"その名前が使われるでしょうが、そうでないときは既定で`x`、`y`、`z`や他の文字を使います。\n"
+"この既定の振舞いは変えることができ、\n"
+"どんなデータ型についてもそのような状況で使うべき名前の一覧を指定することができます。\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:347
 msgid "For instance:"
-msgstr ""
+msgstr "例えば以下です。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:348
@@ -610,6 +806,9 @@ msgid ""
 "\n"
 "%name Element e,f\n"
 msgstr ""
+"data Element = H | He | C | N | O | F | Ne\n"
+"\n"
+"%name Element e,f\n"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:358
@@ -619,6 +818,9 @@ msgid ""
 "type on its own. For instance, here is a test function and the result of "
 "adding a skeleton definition to it:"
 msgstr ""
+"そしてIdrisはこの型の変数名を自分で思い付かなければいけないときに、\n"
+"この名前（この名前に続いて適宜増加させた整数を後置します）を使います。\n"
+"例えば以下はお試しの関数で、定義の骨子を加えたものです。"
 
 #. type: Fenced code block (idris)
 #: src/Appendices/Neovim.md:359
@@ -627,6 +829,8 @@ msgid ""
 "test : Element -> Element -> Element -> Element -> Element -> Element\n"
 "test e f e1 f1 e2 = ?test_rhs\n"
 msgstr ""
+"test : Element -> Element -> Element -> Element -> Element -> Element\n"
+"test e f e1 f1 e2 = ?test_rhs\n"
 
 #. type: Title ##
 #: src/Appendices/Neovim.md:364 src/Tutorial/DPair.md:1191
@@ -649,6 +853,11 @@ msgid ""
 "editors, so feel free to ask what's available for your editor of choice, for "
 "instance on the [Idris 2 Discord channel](https://discord.gg/UX68fDs2jc)."
 msgstr ""
+"`idris2-lsp`実行プログラムと`idris2-nvim`エディタプラグインを備えたNeovimは、\n"
+"Idrisでのプログラミングをする際に対話的編集のための豊富な小間物を提供します。\n"
+"似た機能は別のエディタで利用できるので、\n"
+"読者の選んだエディタでどんなことができるのか\n"
+"[Idris 2 Discordチャンネル](https://discord.gg/UX68fDs2jc)で気軽に尋ねてください。"
 
 #. type: Plain text
 #: src/Appendices/Neovim.md:374 src/Tutorial/DPair.md:1206

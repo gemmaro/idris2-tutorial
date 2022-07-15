@@ -1,31 +1,28 @@
-# Interactive Editing in Neovim
+# 対話的編集をNeovimで
 
-Idris provides extensive capabilities to interactively analyze the types of
-values and expressions in our programs and fill out skeleton implementations
-and sometimes even whole programs for us based on the types provided. These
-interactive editing features are available via plugins in different
-editors.  Since I am a Neovim user, I explain the Idris related parts of my
-own setup in detail here.
+Idrisには多岐にわたる機能があり、
+プログラム中の値や式の型を対話的に分析したり、
+実装の骨子、ときには与えられた型に基づいて全体のプログラムさえも、書き込んだりしてくれます。
+これらの対話的な編集機能はそれぞれのエディタのプラグインを介して使うことができます。
+筆者はNeovim利用者なので自分の設定のうちIdrisに関係する部分をここで詳細に述べます。
 
-The main component required to get all these features to run in Neovim is an
-executable provided by the
-[idris2-lsp](https://github.com/idris-community/idris2-lsp) project.  This
-executable makes use of the Idris compiler API (application programming
-interface) internally and can check the syntax and types of the source code
-we are working on. It communicates with Neovim via the language server
-protocol (LSP). This communication is setup through the
-[idris2-nvim](https://github.com/ShinKage/idris2-nvim)  plugin.
+Neovimでこれら全ての機能を走らせるために必要な主要素は
+[idris2-lsp](https://github.com/idris-community/idris2-lsp)
+プロジェクトで提供されている実行プログラムです。
+この実行プログラムは内部でIdrisのコンパイラAPI (application programming interface) を活用して
+編集中のソースコードの構文や型を検査することができます。
+idris2-lspはlanguage server protocol (LSP) を介してNeovimと通信しています。
+この通信は[idris2-nvim](https://github.com/ShinKage/idris2-nvim)プラグインを通じて立ち上がります。
 
-As we will see in this tutorial, the `idris2-lsp` executable not only
-supports syntax and type checking, but comes also with additional
-interactive editing features. Finally, the Idris compiler API supports
-semantic highlighting of Idris source code: Identifiers and keywords are
-highlighted not only based on the language's syntax (that would be *syntax
-highlighting*, a feature expected from all modern programming environments
-and editors), but also based on their *semantics*. For instance, a local
-variable in a function implementation gets highlighted differently than the
-name of a top level function, although syntactically these are both just
-identifiers.
+このチュートリアルで見ていきますが、`idris2-lsp`実行プログラムは構文と型の検査を行えるようにするだけではなく、
+追加の対話的編集機能も備えています。
+最後にIdrisコンパイラAPIはIdrisのソースコードの意味論的彩色をサポートしています。
+つまり、識別子やキーワードの彩色は、
+言語の構文に基づくだけではなく（これは*構文彩色*であり、
+あらゆる現代的なプログラミング環境やエディタにあるであろう機能です）、
+その*意味論*にも基づいているのです。
+例えば関数実装の局所変数と最上位関数の名前は、
+どちらも構文的にはただの識別子ですが、それぞれ違うように彩色されます。
 
 ```idris
 module Appendices.Neovim
@@ -35,110 +32,96 @@ import Data.Vect
 %default total
 ```
 
-## Setup
+## 立ち上げ
 
-In order to make full use of interactive Idris editing in Neovim, at least
-the following tools need to be installed:
+Neovimでの対話的なIdrisの編集方法を全部活用するには、
+少なくとも以下のツールがインストールされている必要があります。
 
-* A recent version of Neovim (version 0.5 or later).
-* A recent version of the Idris compiler (at least version 0.5.1).
+* 新しめのバージョンのNeovim（バージョン0.5以降）
+* 新しめのバージョンのIdrisコンパイラ（最低でもバージョン0.5.1）
 * IdrisコンパイラのAPI
 * [idris2-lsp](https://github.com/idris-community/idris2-lsp)パッケージ
-* The following Neovim plugins:
+* 以下のNeovimプラグイン
   * [idris2-nvim](https://github.com/ShinKage/idris2-nvim)
-  * [idris2-nvim](https://github.com/ShinKage/idris2-nvim)
+  * [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 
-The `idris2-lsp` project gives detailed instructions about how to install
-Idris 2 together with its standard libraries and compiler API. Make sure to
-follow these instructions so that your compiler and `idris2-lsp` executable
-are in sync.
+`idris2-lsp`プロジェクトにはIdris 2や標準ライブラリ、コンパイラAPIのインストール方法の詳細な説明があります。
+この説明に従い、コンパイラと`idris2-lsp`実行プログラムが協調するようにしてください。
 
-If you are new to Neovim, you might want to use the `init.vim` file provided
-in the `resources` folder. In that case, the necessary Neovim plugins are
-already included, but you need to install
-[vim-plug](https://github.com/junegunn/vim-plug), a plugin manager.
-Afterwards, copy all or parts of `resources/init.vim` to your own `init.vim`
-file. (Use `:help init.vim` from within Neovim in order to find out where to
-look for this file.). After setting up your `init.vim` file, restart Neovim
-and run `:PlugUpdate` to install the necessary plugins.
+Neovimが初めてであれば、`resources`フォルダにある`init.vim`ファイルを使うとよいかもしれません。
+その場合必要なNeovimプラグインは既に含まれていますが、
+[vim-plug](https://github.com/junegunn/vim-plug)というプラグイン管理をインストールする必要があります。
+そのあとで自分の`iniv.vim`ファイルに`resources/init.vim`の全部または一部をコピーしてください。
+（Neovim内で`:help init.vim`とするとどこでこのファイルを見つけられるのかがわかります。）
+`init.vim`ファイルを設定したあとはNeovimを再起動し
+`:PlugUpdate`を走らせて必要なプラグインをインストールしてください。
 
-## A Typical Workflow
+## よくある作業の流れ
 
-In order to checkout the interactive editing features available to us, we
-will reimplement some small utilities from the *Prelude*. To follow along,
-you should have already worked through the
-[Introduction](../Tutorial/Intro.md), [Functions Part
-1](../Tutorial/Functions1.md), and at least parts of [Algebraic Data
-Types](../Tutorial/DataTypes.md), otherwise it will be hard to understand
-what's going on here.
+使える対話的編集機能を試すために、*Prelude*からいくらかの小間物を再実装していきます。
+進めるにあたって既に[導入](../Tutorial/Intro.md)、[関数 その1](../Tutorial/Function1.md)、
+そして少なくとも[代数的データ型](../Tutorial/DataTypes.md)の一部を進めているとよいです。
+さもないとここで起こっていることが理解しづらいでしょう。
 
-Before we begin, note that the commands and actions shown in this tutorial
-might not work correctly after you edited a source file but did not write
-your changes to disk. Therefore, the first thing you should try if the
-things described here do not work, is to quickly safe the current file
-(`:w`).
+始める前に注意しておきますが、
+ソースファイルを編集してディスクに変更を書き込んでいなかったら、
+このチュートリアルでお見せするコマンドやアクションは正しく動かないかもしれません。
+したがって、ここに載っていることがうまくいかなかったら、
+最初に試すことは現在のファイルをささっと保存する (`:w`) ことです。
 
-Let's start with negation of a boolean value:
+真偽値の否定から始めましょう。
 
 ```idris
 negate1 : Bool -> Bool
 ```
 
-Typically, when writing Idris code we follow the mantra "types
-first". Although you might already have an idea about how to implement a
-certain piece of functionality, you still need to provide an accurate type
-before you can start writing your implementation. This means, when
-programming in Idris, we have to mentally keep track of the implementation
-of an algorithm and the types involved at the same time, both of which can
-become arbitrarily complex. Or do we? Remember that Idris knows at least as
-much about the variables and their types available in the current context of
-a function implementation as we do, so we probably should ask it for
-guidance instead of trying to do everything on our own.
+Idrisのコードを書くときにつきものなのは「型第一」という真言に従うことです。
+何らかの機能の一部をどのように実装すればよいかのアイディアがもうあるかもしれませんが、
+それでも実装を書き始められる前に正確な型を提供する必要があります。
+つまり、Idrisでプログラミングするときは
+頭の中でアルゴリズムの実装と関連する型について同時に帳尻を合わせなくてはいけず、
+両方ともどこまでも複雑になりうるものなのです。
+それでも実装からやります？
+覚えておいてほしいのですが、
+Idrisは私達と同じように少なくとも関数実装の現在の文脈で使える変数とその型の多くを知っているので、
+全部自分で試す代わりに道しるべを乞うとよいでしょう。
 
-So, in order to proceed, we ask Idris for a skeleton function
-body: In normal editor mode, move your cursor on the line where
-`negate1` is declared and enter `<LocalLeader>a` in quick
-succession. `<LocalLeader>` is a special key that can be specified
-in the `init.vim` file. If you
-use the `init.vim` from the `resources` folder, it is set to
-the comma character (`,`), in which case the above command
-consists of a comma quickly followed by the lowercase letter "a".
-See also `:help leader` and `:help localleader` in Neovim
+で、話を続けるために、Idrisに関数本体の骨子について尋ねます。
+通常の編集モードで`negate`が宣言されている行にカーソルを持っていき、
+`<LocalLeader>a`を素早く連続で入力してください。
+`<LocalLeader>`は特別なキーで`init.vim`ファイル中で指定することができます。
+`resources`フォルダの`init.vim`を使っていたら、
+コンマ文字 (`,`) に設定されています。
+その場合上のコマンドは、コンマとそのすぐあとに小文字の "a" が続きます。
+Neovimで`:help leader`と`:help localleader`もご参照ください。
 
-Idris will generate a skeleton implementation similar to the following:
+Idrisは以下のような実装の骨子を生成するでしょう。
 
 ```idris
 negate2 : Bool -> Bool
 negate2 x = ?negate2_rhs
 ```
 
-Note, that on the left hand side a new variable with name
-`x` was introduced, while on the right hand side Idris
-added a *metavariable* (also called a *hole*). This is an
-identifier prefixed with a question mark. It signals to Idris,
-that we will implement this part of the function at a later time.
-The great thing about holes is, that we can *hover* over them
-and inspect their types and the types of values in the
-surrounding context. You can do so by placing the cursor
-on the identifier of a hole and entering `K` (the uppercase letter) in
-normal mode. This will open a popup displaying the type of
-the variable under the cursor plus the types and quantities of the variables
-in the surrounding context. You can also have this information
-displayed in a separate window: Enter `<LocalLeader>so` to
-open this window and repeat the hovering. The information will
-appear in the new window and as an additional benefit, it will
-be semantically highlighted. Enter `<LocalLeader>sc` to close
-this window again. Go ahead and checkout the type and
-context of `?negate2_rhs`.
+左側に`x`という名前の新しい変数が導入され、
+右側にはIdrisが*メタ変数*（*穴開き*とも呼ばれます）を加えましたね。
+後者は疑問符が前置された識別子です。
+関数のこの部分をあとで実装するつもりがあることを、Idrisに合図しているのです。
+穴開きの素晴しいところは、その上に*かざして*型や周囲の文脈の値の型を調べられることです。
+そうするにはカーソルを穴開きの識別子の上に置いて通常モードで`K`（大文字）を入力します。
+これでポップアップが開いてカーソルの下の変数の型に加えて周囲の文脈の変数の型と数量子が表示されます。
+この表示された情報を分離した窓に移すこともできます。
+`<LocalLeader>so`と入力するとこの窓を開きつつカーソルをかざしたままになります。
+情報が新しい窓に現れますが、これには意味論的彩色される利点もあります。
+`<LocalLeader>sc`と入力するとこの窓を閉じて元に戻ります。
+さあ、`?negate2_rhs`の型と文脈を見てみましょう。
 
-Most functions in Idris are implemented by pattern matching
-on one or more of the arguments. Idris,
-knowing the data constructors of all non-primitive data types,
-can write such pattern matches for us (a process also called
-*case splitting*). To give this a try, move the cursor onto the `x`
-in the skeleton implementation of `negate2`, and enter
-`<LocalLeader>c` in normal mode. The result will look as
-follows:
+Idrisのほとんどの関数は1つ以上の引数についてのパターン照合によって実装されています。
+Idrisは全ての原始的でないデータ型のデータ構築子を知っており、
+その通りにパターン照合を書いてくれます。
+（この工程は*場合分割*とも呼ばれます。）
+カーソルを`negate2`の実装の骨子中にある`x`の上に移動させて、
+通常モードで`<LocalLeader>c`を入力してください。
+結果は以下のようになるでしょう。
 
 ```idris
 negate3 : Bool -> Bool
@@ -146,22 +129,20 @@ negate3 False = ?negate3_rhs_0
 negate3 True = ?negate3_rhs_1
 ```
 
-As you can see, Idris inserted a hole for each of the cases on the right
-hand side. We can again inspect their types or replace them with a proper
-implementation directly.
+見てとれるようにIdrisは右側のそれぞれの場合に穴開きを挿入しました。
+再度それぞれの型を調べることもできますし、
+直接適切な実装で置き換えることもできます。
 
-This concludes the introduction of the (in my opinion) core features of
-interactive editing: Hovering on metavariables, adding skeleton function
-implementations, and case splitting (which also works in case blocks and for
-nested pattern matches). You should start using these all the time *now*!
+これが対話的編集の（筆者にとっての）中核の機能への入口だという結論になります。
+メタ変数にかざし、関数の実装の骨子を加え、場合分割する（これはcaseブロックと入れ子のパターン照合でも動きます）。
+これらを*今*この瞬間から使い始めるべきです！
 
 ## 式検索
 
-Sometimes, Idris knows enough about the types involved to come up with a
-function implementation on its own. For instance, let us implement function
-`either` from the *Prelude*.  After giving its type, creating a skeleton
-implementation, and case splitting on the `Either` argument, we arrive at
-something similar to the following:
+時々Idrisが充分関係する型について知っていて、自力で関数の実装を思い付けることがあります。
+例えば*Prelude*の関数`either`を実装してみましょう。
+型を与えたあと、実装の骨子をつくり、`Either`引数で場合分割すると、
+以下のようなものに行き着きます。
 
 ```idris
 either2 : (a -> c) -> (b -> c) -> Either a b -> c
@@ -169,16 +150,15 @@ either2 f g (Left x) = ?either2_rhs_0
 either2 f g (Right x) = ?either2_rhs_1
 ```
 
-Idris can come up with expressions for the two metavariables
-on its own, because the types are specific enough. Move
-the cursor onto one of the metavariables and enter
-`<LocalLeader>o` in normal mode. You will be given
-a selection of possible expressions (only one in this case),
-of which you can choose a fitting one (or abort with `q`).
+Idrisは自力で2つのメタ変数の式を思い付くことができますが、
+これは型が充分に限定されているからです。
+カーソルをメタ変数の1つの上に移動させ、
+通常モードで`<LocalLeader>o`を入力してください。
+すると可能な式の骨子（今回の場合は1つのみ）が得られ、
+この中から合うものを選べます（もしくは`q`で中断）。
 
-Here is another example: A reimplementation of function `maybe`.  If you run
-an expression search on `?maybe2_rhs1`, you will get a larger list of
-choices.
+以下は別の例で、関数`maybe`の再実装です。
+`?maybe2_rhs1`で式検索を走らせるともっと選択肢が多くなります。
 
 ```idris
 maybe2 : b -> (a -> b) -> Maybe a -> b
@@ -186,40 +166,35 @@ maybe2 x f Nothing = x
 maybe2 x f (Just y) = ?maybe2_rhs_1
 ```
 
-Idris is also sometimes capable of coming up with complete function
-implementations based on a function's type. For this to work well
-in practice, the number of possible implementations satisfying
-the type checker must be pretty small. As an example, here is
-function `zipWith` for vectors. You might not have heard
-about vectors yet: They will be introduced in the chapter about
-[dependent types](../Tutorial/Dependent.md). You can still give
-this a go to check out its effect. Just move the cursor on the
-line declaring `zipWithV`, enter `<LocalLeader>gd` and select the first option.
-This will automatically generate the whole function body including
-case splits and implementations.
+Idrisは時々関数の型に基づいて完全な関数の実装を思い付けることもあります。
+これが実際にうまくいくのは型検査を満足する可能な実装が充分に少なくなければいけません。
+例として以下は関数`zipWith`のベクタ用のものです。
+ベクタについてまだ聞いたことがないかもしれませんが、
+これは[依存型](../Tutorial/Dependent.md)についての章で紹介されます。
+それでも式検索の効果を確認するために試してみることはできます。
+`zipWithV`を宣言している行にカーソルを移動させ、
+`<LocalLeader>gd`を入力して最初の選択肢を選ぶ、それだけです。
+こうすると自動的に場合分割と実装を含む関数全体が生成されます。
 
 ```idris
 zipWithV : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c
 ```
 
-Expression search only works well if the types are specific
-enough. If you feel like that might be the case, go ahead
-and give it a go, either by running `<LocalLeader>o` on
-a metavariable, or by trying `<LocalLeader>gd` on a
-function declaration.
+式検索は充分に特化された型のときにのみうまくいきます。
+今がそのときだと思ったら、
+`<LocalLeader>o`をメタ変数の上で走らせるか、
+`<LocalLeader>gd`を関数制限の上で試してみるか、
+どちらかをぜひやってみてください。
 
-## More Code Actions
+## もっとコードアクション
 
-There are other shortcuts available for generating part of your code, two of
-which I'll explain here.
+他にもコードの一部を生成することができるショートカットがあり、
+そのうち2つをここで述べます。
 
-First, it is possible to add a new case block by entering
-`<LocalLeader>mc` in normal mode when on a metavariable.
-For instance, here is part of an implementation of `filterList`,
-which appears in an exercise in the chapter about
-algebraic data types. I arrived at this by letting Idris
-generate a skeleton implementation followed by a case split
-and an expression search on the first metavariable:
+1つ目として、通常モードのときにメタ変数上で`<LocalLeader>mc`を入力することで新しいcaseブロックを加えられます。
+例えば以下は代数的データ型についての章の中の演習で登場する`filterList`の実装の一部です。
+ここまで辿り着くのに、Idrisに実装の骨子の生成、
+場合分割、最初のメタ変数での式検索をしてもらったところです。
 
 ```idris
 filterList : (a -> Bool) -> List a -> List a
@@ -227,15 +202,14 @@ filterList f [] = []
 filterList f (x :: xs) = ?filterList_rhs_1
 ```
 
-We will next have to pattern match on the result of applying
-`x` to `f`. Idris can introduce a new case block for us,
-if we move the cursor onto metavariable `?filterList_rhs_1`
-and enter `<LocalLeader>mc` in normal mode. We can then
-continue with our implementation by first giving the
-expression to use in the case block (`f x`) followed by a
-case split on the new variable in the case block.
-This will lead us to an implementation similar to the following
-(I had to fix the indentation, though):
+次に`x`を`f`に適用した結果をパターン照合しなければいけません。
+カーソルをメタ変数`?filterList_rhs_1`の上に持っていき、
+通常モードで`<LocalLeader>mc`と入力すれば、
+Idrisは新しいcaseブロックを導入してくれます。
+それから、まず式 (`f x`) をcaseブロックで使えるように与えて、
+次にcaseブロック中の新しい変数上で場合分割して実装を続けられます。
+これにより以下のような実装になります。
+（ただし字下げは修正せねばなりませんでしたが。）
 
 ```idris
 filterList2 : (a -> Bool) -> List a -> List a
@@ -245,16 +219,13 @@ filterList2 f (x :: xs) = case f x of
   True => ?filterList2_rhs_3
 ```
 
-Sometimes, we want to extract a utility function from
-an implementation we are working on. For instance, this is often
-useful or even necessary when we write proofs about our code
-(see chapters [Propositional Equality](../Tutorial/Eq.md)
-and [Predicates](../Tutorial/Predicates.md), for instance).
-In order to do so, we can move the cursor on a metavariable,
-and enter `<LocalLeader>ml`. Give this a try with
-`?whatNow` in the following example (this will work better
-in a regular Idris source file instead of the literate
-file I use for this tutorial):
+時々、作業中の実装から小間物関数を取り出したいことがあります。
+例えばこれは、コードについての証明を書くときに、よく便利だったり果ては必要だったりします。
+（[命題の等価性](../Tutorial/Eq.md)や[前提条件](../Tutorial/Predicates.md)などの章を見てください。）
+そうするためにはカーソルをメタ変数の上に移動させて`<LocalLeader>ml`と入力すればできます。
+以下の例の`?whatNow`で試してみてください。
+（これは通常のIdrisのソースファイルのほうが、
+私がこのチュートリアルで使用している文芸的ファイルよりもうまくいくでしょう。）
 
 ```idris
 traverseEither : (a -> Either e b) -> List a -> Either e (List b)
@@ -262,11 +233,11 @@ traverseEither f [] = Right []
 traverseEither f (x :: xs) = ?whatNow x xs f (f x) (traverseEither f xs)
 ```
 
-Idris will create a new function declaration with the type and name of
-`?whatNow`, which takes as arguments all variables currently in scope. It
-also replaces the hole in `traverseEither` with a call to this new
-function. Typically, you will have to manually remove unneeded arguments
-afterwards. This led me to the following version:
+Idrisは`?whatNow`の型と名前を持つ新しい関数宣言を作ります。
+作られた関数は現在範疇にある全ての変数を引数として取ります。
+また、`traverseEither`中の穴開きをこの新しい関数の呼び出しで置き換えます。
+大抵はその後に手ずから不要な引数を削除しなければいけないでしょう。
+こうすると以下の版に行き着きます。
 
 ```idris
 whatNow2 : Either e b -> Either e (List b) -> Either e (List b)
@@ -276,62 +247,49 @@ traverseEither2 f [] = Right []
 traverseEither2 f (x :: xs) = whatNow2 (f x) (traverseEither f xs)
 ```
 
-## Getting Information
+## 情報を得る
 
-The `idris2-lsp` executable and through it, the `idris2-nvim` plugin, not
-only supports the code actions described above. Here is a non-comprehensive
-list of other capabilities. I suggest you try out each of them from within
-this source file.
+`idris2-lsp`実行プログラムと介在する`idris2-nvim`プラグインがサポートしているのは、
+上で述べたコードアクションだけではありません。
+以下は他の機能の非網羅的な一覧です。
+それぞれをこのソースファイルの中で試してみてください。
 
-* Typing `K` when on an identifier or operator in normal mode shows its type
-  and namespace (if any). In case of a metavariable, variables in the
-  current context are displayed as well together with their types and
-  quantities (quantities will be explained in [Functions Part
-  2](../Tutorial/Functions2.md)).  If you don't like popups, enter
-  `<LocalLeader>so` to open a new window where this information is displayed
-  and semantically highlighted instead.
-* Typing `gd` on a function, operator, data constructor or type constructor
-  in normal mode jumps to the item's definition.  For external modules, this
-  works only if the module in question has been installed together with its
-  source code (by using the `idris2 --install-with-src` command).
-* Typing `<LocalLeader>mm` opens a popup window listing all metavariables in
-  the current module. You can place the cursor on an entry and jump to its
-  location by pressing `<Enter>`.
-* Typing `<LocalLeader>mn` (or `<LocalLeader>mp`) jumps to the next (or
-  previous) metavariable in the current module.
-* Typing `<LocalLeader>br` opens a popup where you can enter a
-  namespace. Idris will then show all functions (plus their types)  exported
-  from that namespace in a popup window, and you can jump to a function's
-  definition by pressing enter on one of the entries. Note: The module in
-  question must be imported in the current source file.
-* Typing `<LocalLeader>x` opens a popup where you can enter a REPL command
-  or Idris expression, and the plugin will reply with a response from the
-  REPL. Whenever REPL examples are shown in the main part of this guide, you
-  can try them from within Neovim with this shortcut if you like.
-* Typing `<LocalLeader><LocalLeader>e` will display the error message from
-  the current line in a popup window. This can be highly useful, if error
-  messages are too long to fit on a single line. Likewise, `<LocalLeader>el`
-  will list all error messages from the current buffer in a new window. You
-  can then select an error message and jump to its origin by pressing
-  `<Enter>`.
+* 識別子や演算子の上にいるとき通常モードで`K`と打つと（もしあれば）型と名前空間が出ます。
+  メタ変数の場合は現在の文脈も型と数量子とともに表示されます。
+  （数量子は[関数 その2](../Tutorial/Functions2.md)で説明されます。）
+  ポップアップが好きでなければ、`<LocalLeader>so`とすると代わりに新しい窓が開き、
+  この情報が意味論的彩色されて表示されます。
+* 通常モードで、関数、演算子、データ構築子、型構築子の上にいるとき`gd`と打つと、その定義に飛びます。
+  外部モジュールの場合、これは対象のモジュールがソースコードと一緒にインストールされているときにのみ機能します。
+  （ソースコードのインストールには`idris2 --install-with-src`コマンドを使います。）
+* `<LocalLeader>mm`と打つと、ポップアップ窓を開いて現在のモジュール中の全てのメタ変数を一覧にします。
+  カーソルを項目の上に置いて`<Enter>`を押せばその場所に飛ぶことができます。
+* `<LocalLeader>mn` (`<LocalLeader>mp`) と打つと現在のモジュール中の次（前）のメタ変数に飛びます。
+* `<LocalLeader>br`と打つとポップアップが開き、そこに名前空間を入力できます。
+  そうするとIdrisはポップアップ窓の中にその名前空間から輸出されている全ての関数（とその型）を出し、
+  項目のうち1つの上でエンターを押すと関数の定義に飛ぶことができます。
+  なお、モジュールは現在のソースファイルでインポートされていなくてはいけません。
+* `<LocalLeader>x`と打つと、ポップアップが開いてREPLコマンドやIdrisの式を入力でき、
+  プラグインはREPLからの応答で返信します。
+  この導入書の主部にあるREPLの例については、いつでもNeovimからこのショートカットをで試すことができますよ。
+* `<LocalLeader><LocalLeader>e`と打つと現在の行からのエラー文言をポップアップ窓に表示します。
+  これはエラー文言が1行に収まらないほどに長すぎるときに大変便利です。
+  同様に`<LocalLeader><LocalLeader>el`は新しい窓で現在のバッファからの全てのエラー文言を一覧にします。
+  エラー文言を選択して`<Enter>`を押すとその出自に飛ぶことができます。
 
-Other use cases and examples are described on the GitHub page of the
-`idris2-nvim` plugin and can be included as described there.
+他のユースケースや例は`idris2-nvim`プラグインのGitHubのページで記述されており、
+そちらで記述されているように設定に含められます。
 
-## The `%name` Pragma
+## `%name`プラグマ
 
-When you ask Idris for a skeleton implementation with `<LocalLeader>a`
-or a case split with `<LocalLeader>c`,
-it has to decide on what names to use for the new variables it introduces.
-If these variables already have predefined names (from the function's
-signature, record fields, or named data constructor arguments),
-those names will be used, but
-otherwise Idris will as a default use names `x`, `y`, and `z`, followed
-by other letters. You can change this default behavior by
-specifying a list of names to use for such occasions for any
-data type.
+Idrisに`<LocalLeader>a`で実装の骨子を尋ねたり`<LocalLeader>c`で場合分割したりしたとき、
+Idrisは導入する新しい変数にどの名前を使うべきかを決めなくてはなりません。
+もしこの変数が既に事前に定義された名前（関数の処方、レコードフィールド、名前付きのデータ構築子の引数）だったら、
+その名前が使われるでしょうが、そうでないときは既定で`x`、`y`、`z`や他の文字を使います。
+この既定の振舞いは変えることができ、
+どんなデータ型についてもそのような状況で使うべき名前の一覧を指定することができます。
 
-For instance:
+例えば以下です。
 
 ```idris
 data Element = H | He | C | N | O | F | Ne
@@ -339,10 +297,9 @@ data Element = H | He | C | N | O | F | Ne
 %name Element e,f
 ```
 
-Idris will then use these names (followed by these names postfixed with
-increasing integers), when it has to come up with variable names of this
-type on its own. For instance, here is a test function and the result of
-adding a skeleton definition to it:
+そしてIdrisはこの型の変数名を自分で思い付かなければいけないときに、
+この名前（この名前に続いて適宜増加させた整数を後置します）を使います。
+例えば以下はお試しの関数で、定義の骨子を加えたものです。
 
 ```idris
 test : Element -> Element -> Element -> Element -> Element -> Element
@@ -351,11 +308,11 @@ test e f e1 f1 e2 = ?test_rhs
 
 ## まとめ
 
-Neovim, together with the `idris2-lsp` executable and the `idris2-nvim`
-editor plugin, provides extensive utilities for interactive editing when
-programming in Idris. Similar functionality is available for some other
-editors, so feel free to ask what's available for your editor of choice, for
-instance on the [Idris 2 Discord channel](https://discord.gg/UX68fDs2jc).
+`idris2-lsp`実行プログラムと`idris2-nvim`エディタプラグインを備えたNeovimは、
+Idrisでのプログラミングをする際に対話的編集のための豊富な小間物を提供します。
+似た機能は別のエディタで利用できるので、
+読者の選んだエディタでどんなことができるのか
+[Idris 2 Discordチャンネル](https://discord.gg/UX68fDs2jc)で気軽に尋ねてください。
 
 <!-- vi: filetype=idris2
 -->
