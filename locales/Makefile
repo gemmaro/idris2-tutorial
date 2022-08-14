@@ -1,14 +1,11 @@
 po4a = po4a.cfg
 
-.PHONY: watch
-watch: log
-	./watch
-
-log:
-	mkdir $@
+.PHONY: start
+start:
+	foreman start
 
 translate: ${po4a}
 	po4a $<
 
-${po4a}: po4a.sh ../src/**/*.md
+${po4a}: po4a-cfg ../src/**/*.md
 	./$< > $@

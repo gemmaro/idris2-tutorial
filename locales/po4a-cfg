@@ -1,0 +1,19 @@
+#!/bin/sh
+
+cat << CFG
+[po_directory] .
+[options] --master-charset UTF-8 \\
+  --localized-charset UTF-8 \\
+  --addendum-charset UTF-8 \\
+  --master-language en
+CFG
+
+for markdown in ../src/**/*.md ../README.md; do
+  cat << CFG
+
+[type:text] \\
+  $markdown \\
+  \$lang:\$lang/${markdown#../} \\
+  opt:"--option markdown --keep 0"
+CFG
+done

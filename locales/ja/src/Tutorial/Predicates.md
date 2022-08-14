@@ -528,7 +528,7 @@ We can now define a type alias for CSV rows representing employees:
 Employee = Row EmployeeSchema
 
 hock : Employee
-hock = [ "Stefan", "HÃ¶ck", "hock@foo.com", 46, 5443.2, False ]
+hock = [ "Stefan", "Höck", "hock@foo.com", 46, 5443.2, False ]
 ```
 
 Note, how I gave `Employee` a zero quantity. This means, we are only ever
