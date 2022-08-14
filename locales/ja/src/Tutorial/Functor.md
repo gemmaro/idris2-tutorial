@@ -219,11 +219,13 @@ tailShowReverse xs = reverse . show <$> tail xs
 
 ### 1つ以上の型変数がある関手
 
-これまで見てきた型構築子は全て型が`Type -> Type`でした。
-しかし`Functor`を他の型構築子に実装することもできます。
-唯一の事前要件は、関数`map`で変化させたい型変数が引数リストの最後になければいけないことです。
-例えば以下が`Either e`のための`Functor`の実装です。
-（なお、`Either e`はもちろん必要とされている型`Type -> Type`を持ちます。）
+The type constructors we looked at so far were all
+of type `Type -> Type`. However, we can also implement `Functor`
+for other type constructors. The only prerequisite is that
+the type parameter we'd like to change with function `map` must
+be the last in the argument list. For instance, here is the
+`Functor` implementation for `Either e` (note, that `Either e`
+has of course type `Type -> Type` as required):
 
 ```idris
 implementation Functor' (Either e) where
@@ -1088,10 +1090,9 @@ Left (FieldError 1 2 "jon@doe.ch")
 
   これら2つの法則は`pure`が*束縛*に対して中立にはたらくべきだと主張しています。
 
-* `(m >>= f) >>= g = m >>= (f >=> g)`。
-  これはモナドの結合性の法則です。
-  2つ目の演算子`(>=>)`を見掛けたことがないかもしれません。
-  これは作用付き計算を連接するのに使え、以下の型を持ちます。
+* `(m >>= f) >>= g = m >>= (f >=> g)`.  This is the law of associativity for
+  monad.  You might not have seen the second operator `(>=>)`.  It can be
+  used to sequence effectful computations and has the following type:
 
   ```repl
   Tutorial.Functor> :t (>=>)
@@ -1114,9 +1115,9 @@ Left (FieldError 1 2 "jon@doe.ch")
 2. あらゆる`Monad`は`Applicative`でもあるので、`Monad`は`Applicative`の拡張です。
    このことを`(<*>)`を`(>>=)`と`pure`を使って実装することで証明してください。
 
-3. `(>>=)`を`join`と`Monad`にある他の関数を使って階層的に実装してください。
+3. `(>>=)`を`join`と`Monad`に階層的に含まれる他の関数を使って実装してください。
 
-4. `join`を`(>>=)`と`Monad`にある他の関数を使って階層的に実装してください。
+4. `join`を`(>>=)`と`Monad`に階層的に含まれる他の関数を使って実装してください。
 
 5. `Validated e`への合法な`Monad`実装はありません。
    なぜですか？
@@ -1182,10 +1183,10 @@ Left (FieldError 1 2 "jon@doe.ch")
 
       getUsers : Prog (List (Nat,User))
 
-      -- 項目数の上限をを検査してください！
+      -- 項目数の上限を検査してください！
       putUsers : List (Nat,User) -> Prog ()
 
-      -- `getUsers`と`putUsers`を使ってこれを実装してください。
+      -- `getUsers`と`putUsers`を使って実装してください。
       modifyDB : (List (Nat,User) -> List (Nat,User)) -> Prog ()
       ```
 
@@ -1226,7 +1227,7 @@ Left (FieldError 1 2 "jon@doe.ch")
 
       ```idris
       record Prog' env err a where
-        constructor MkProg
+        constructor MkProg'
         runProg' : env -> IO (Either err a)
       ```
 

@@ -650,8 +650,8 @@ necessary.
 
 5. Adjust `readRNA` and `readDNA` in such a way that the *sense* of a
    sequence is read from the input string.  Sense strands are encoded like
-   so: "5Â´-CGGTAG-3Â´". Antisense strands are encoded like so:
-   "3Â´-CGGTAG-5Â´".
+   so: "5´-CGGTAG-3´". Antisense strands are encoded like so:
+   "3´-CGGTAG-5´".
 
 6. Adjust `encode` in such a way that it includes the sense in its output.
 

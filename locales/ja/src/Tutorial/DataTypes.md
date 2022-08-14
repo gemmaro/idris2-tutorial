@@ -369,8 +369,8 @@ greet t name = "Hello, " ++ showTitle t ++ " " ++ name ++ "!"
 REPLで次のようにしてみましょう。
 
 ```repl
-Tutorial.DataTypes> greet dr "HÃ¶ck"
-"Hello, Dr. HÃ¶ck!"
+Tutorial.DataTypes> greet dr "Höck"
+"Hello, Dr. Höck!"
 Tutorial.DataTypes> greet Mrs "Smith"
 "Hello, Mrs. Smith!"
 ```

@@ -1,20 +1,18 @@
-# Recursion and Folds
+# 再帰と畳み込み
 
-In this chapter, we are going to have a closer look at the computations we
-typically perform with *container types*: Parameterized data types like
-`List`, `Maybe`, or `Identity`, holding zero or more values of the
-parameter's type. Many of these functions are recursive in nature, so we
-start with a discourse about recursion in general, and tail recursion as an
-important optimization technique in particular. Most recursive functions in
-this part will describe pure iterations over lists.
+この章では*容器型*を扱う際の典型的な計算について迫ります。
+容器型とは`List`、`Maybe`、あるいは`Identity`といった引数を取るデータ型で、
+引数の型の値をゼロ個以上保有するものです。
+これらの機能は再帰に根差しているため、一般的な再帰についての議論、
+特に重要な最適化技法としての末尾再帰の議論から始めます。
+この部にあるほとんどの再帰関数はリスト上の純粋な繰り返しを記述します。
 
-It is recursive functions, for which totality is hard to determine, so we
-will next have a quick look at the totality checker and learn, when it will
-refuse to accept a function as being total and what to do about this.
+再帰関数というものはその全域性が決定しづらいものなので、
+次に全域性検査器を軽く見ていきます。
+そして、いつ関数の全域性の承諾が拒まれるのか、そんなときどうすればよいのかについて学びます。
 
-Finally, we will start looking for common patterns in the recursive
-functions from the first part and will eventually introduce a new interface
-for consuming container types: Interface `Foldable`.
+最後に再帰関数においてよくある様式を見ていきます。
+最初の部分から始まり、最終的には容器型を消費する新しいインターフェース`Foldable`を導入します。
 
 ```idris
 module Tutorial.Folds
@@ -27,20 +25,18 @@ import Debug.Trace
 %default total
 ```
 
-## Recursion
+## 再帰
 
-In this section, we are going to have a closer look at recursion in general
-and at tail recursion in particular.
+この節で一般的な再帰と特に末尾再帰に迫ります。
 
-Recursive functions are functions, which call themselves to repeat a task or
-calculation until a certain aborting condition (called the *base case*)
-holds.  Please note, that it is recursive functions, which make it hard to
-verify totality: Non-recursive functions, which are *covering* (they cover
-all possible cases in their pattern matches) are automatically total if they
-only invoke other total functions.
+再帰関数とは、何らかの中断条件（*既定場合*と呼ばれます）が満たされる手前まで、
+自分自身を呼び出してタスクや計算を繰り返す関数です。
+注意していただきたいのですが、再帰関数が全域性を確証しづらくするものだということです。
+*網羅的*な（パターン照合で全ての可能な場合を押さえているような）非再帰関数は、
+他の全域関数を呼び出すときだけ、自動的に全域になります。
 
-Here is an example of a recursive function: It generates a list of the given
-length filling it with identical values:
+以下は再帰関数の一例です。
+同じ値でもって、与えられた長さのリストを生成します。
 
 ```idris
 replicateList : Nat -> a -> List a
@@ -48,12 +44,12 @@ replicateList 0     _ = []
 replicateList (S k) x = x :: replicateList k x
 ```
 
-As you can see (this module has the `%default total` pragma at the top),
-this function is provably total. Idris verifies, that the `Nat` argument
-gets *strictly smaller* in each recursive call, and that therefore, the
-function *must* eventually come to an end. Of course, we can do the same
-thing for `Vect`, where we can even show that the length of the resulting
-vector matches the given natural number:
+見てみると（このモジュールの一番上に`%default total`がありますが）この関数は全域であることが証明されています。
+`Nat`引数がそれぞれの再帰呼び出しで*厳密に小さく*なることを、
+そして関数が最終的に終わりに向かう*はず*だということを、
+Idrisは確証しています。
+もちろん同じことを`Vect`についても行えますが、
+こちらについては結果のベクタの長さが与えられた自然数に合致することさえ示すことができます。
 
 ```idris
 replicateVect : (n : Nat) -> a -> Vect n a
@@ -61,9 +57,9 @@ replicateVect 0     _ = []
 replicateVect (S k) x = x :: replicateVect k x
 ```
 
-While we often use recursion to *create* values of data types like `List` or
-`Vect`, we also use recursion, when we *consume* such values.  For instance,
-here is a function for calculating the length of a list:
+よく再帰を使って`List`や`Vect`のようなデータ型の値を*つくり*ますが、
+そのような値を*消費*するときにも再帰は使います。
+例えば以下はリストの長さを計算する関数です。
 
 ```idris
 len : List a -> Nat
@@ -71,14 +67,13 @@ len []        = 0
 len (_ :: xs) = 1 + len xs
 ```
 
-Again, Idris can verify that `len` is total, as the list we pass in the
-recursive case is strictly smaller than the original list argument.
+またもやIdrisは`len`が全域であると確証できますが、
+これは再帰場合に渡したリストが元のリスト引数より厳密に小さくなるためです。
 
-But when is a recursive function non-total? Here is an example: The
-following function creates a sequence of values until the given generation
-function (`gen`) returns a `Nothing`. Note, how we use a *state* value (of
-generic type `s`) and use `gen` to calculate a value together with the next
-state:
+しかしいつ再帰関数は非全域なのでしょうか。
+こちらがその一例です。
+以下の関数は与えられた生成関数 (`gen`) が`Nothing`を返す手前まで値の並びをつくります。
+（汎化型`s`の）*状態*値や次の状態とともに値を計算するための`gen`の使われかたに注目してください。
 
 ```idris
 covering
@@ -88,11 +83,11 @@ unfold gen vs = case gen vs of
   Nothing       => []
 ```
 
-With `unfold`, Idris can't verify that any of its arguments is converging
-towards the base case. It therefore rightfully refuses to accept that
-`unfold` is total. And indeed, the following function produces an infinite
-list (so please, don't try to inspect this at the REPL, as doing so will
-consume all your computer's memory):
+`unfold`については、任意の引数が既定場合に向かっていくかどうか、Idrisは確証できません。
+したがって当然`unfold`が全域であると認めることを拒みます。
+そしてもちろん以下の関数は無尽蔵のリストを生成します。
+（ですからどうかこれをREPLで調べようとしないでください。
+そうしてしまうとコンピュータの全てのメモリを消費してしまうでしょうから。）
 
 ```idris
 fiboHelper : (Nat,Nat) -> ((Nat,Nat),Nat)
@@ -103,9 +98,9 @@ fibonacci : List Nat
 fibonacci = unfold (Just . fiboHelper) (1,1)
 ```
 
-In order to safely create a (finite) sequence of Fibonacci numbers, we need
-to make sure the function generating the sequence will stop after a finite
-number of steps, for instance by limiting the length of the list:
+安全に（終端のある）フィボナッチ数の並びをつくるためには、
+終端となる過程の数のあとに関数が並びの生成を停止することが確実でなくてはいけません。
+例えばリストの長さを制限すればよいです。
 
 ```idris
 unfoldTot : Nat -> (gen : s -> Maybe (s,a)) -> s -> List a
@@ -118,58 +113,60 @@ fibonacciN : Nat -> List Nat
 fibonacciN n = unfoldTot n (Just . fiboHelper) (1,1)
 ```
 
-### The Call Stack
+### 呼び出しスタック
 
-In order to demonstrate what tail recursion is about, we require the
-following `main` function:
+末尾再帰がどんなものか実演するためには、以下の`main`関数が要ります。
 
 ```idris
 main : IO ()
 main = printLn . len $ replicateList 10000 10
 ```
 
-If you have [Node.js](https://nodejs.org/en/) installed on your system, you
-might try the following experiment. Compile and run this module using the
-*Node.js* backend of Idris instead of the default *Chez Scheme* backend and
-run the resulting JavaScript source file with the Node.js binary:
+[Node.js](https://nodejs.org/en/)がシステムにインストールされていれば、
+以下の実験をやってみることができます。
+Idrisの既定の*Chez Schema*バックエンドの代わりに*Node.js*バックエンドを使ってこのモジュールをコンパイルして走らせてください。
+実行するには結果的に得られるJavaScriptソースファイルをNode.jsバイナリで走らせます。
 
 ```sh
 idris2 --cg node -o test.js --find-ipkg -src/Tutorial/Folds.md
 node build/exec/test.js
 ```
 
-Node.js will fail with the following error message and a lengthy stack
-trace: `RangeError: Maximum call stack size exceeded`.  What's going on
-here? How can it be that `main` fails with an exception although it is
-provably total?
+Node.jsは以下のエラー文言と長々としたスタックトレース`RangeError: Maximum call stack size
+exceeded`とともに失敗するでしょう。
+ここで何が起こっているのでしょうか。
+全域なことが証明されているのに、どうして`main`が例外で落ちることがありえるのでしょうか。
 
-First, remember that a function being total means that it will eventually
-produce a value of the given type in a finite amount of time, *given enough
-resources like computer memory*. Here, `main` hasn't been given enough
-resources as Node.js has a very small size limit on its call stack. The
-*call stack* can be thought of as a stack data structure (first in, last
-out), where nested function calls are put. In case of recursive functions,
-the stack size increases by one with every recursive function call. In case
-of our `main` function, we create and consume a list of length 10'000, so
-the call stack will hold at least 10'000 function calls before they are
-being invoked and the stack's size is reduced again. This exceeds Node.js's
-stack size limit by far, hence the overflow error.
+まず覚えておいてほしいことは、関数が全域であるということの意味は、
+その関数が最終的に有限の時間量で与えられた型の値を生成することですが、
+それは*コンピュータメモリのような充分な資源あってこそです*。
+ここで`main`は充分なリソースを与えられていませんでしたが、
+これはNode.jsが呼び出しスタックにとても小さい量での上限を設けているからです。
+*呼び出しスタック*はスタックのデータ構造（先入れ後出し）のように考えられます。
+この構造では入れ子の関数呼び出しが置かれます。
+再帰関数の場合、スタックの大きさは再帰関数呼び出しのたびに1つ増えます。
+ここでの`main`関数の場合、長さ10,000のリストを作って消費しているので、
+コールスタックは呼び出される前に少なくとも10,000個の関数呼び出しを保有しており、
+そこからスタックの大きさは減少に転じていきます。
+これがNode.jsのスタックの大きさ上限を遥かに越えてしまっているので、オーバーフローエラーになったのです。
 
-Now, before we look at a solution how to circumvent this issue, please note
-that this is a very serious and limiting source of bugs when using the
-JavaScript backends of Idris. In Idris, having no access to control
-structures like `for` or `while` loops, we *always* have to resort to
-recursion in order to describe iterative computations. Luckily (or should I
-say "unfortunately", since otherwise this issue would already have been
-addressed with all seriousness), the Scheme backends don't have this issue,
-as their stack size limit is much larger and they perform all kinds of
-optimizations internally to prevent the call stack from overflowing.
+さて、この問題をどのように回避するかの解法を見る前に、
+これがIdrisのJavaScriptバックエンドを使うときに、とても深刻でありつつも、
+バグの温床を抑えていることを覚えておいてください。
+Idrisでは`for`や`while`の繰返しのような制御構造を使うことができず、
+反復計算を記述するためには*常に*再帰を使わざるを得ないのです。
+幸運にも（あるいは「不運にも」と言うべきでしょうか、
+というのもこの問題は既に全ての深刻性について対処されているためです）、
+Schemeバックエンドにはこの問題を抱えておらず、
+それはスタックの大きさ上限が遥かに大きく、
+呼び出しスタックのオーバーフローを防ぐためにあらゆる類の内部的な最適化を施すためです。
 
-### Tail Recursion
+### 末尾再帰
 
-A recursive function is said to be *tail recursive*, if all recursive calls
-occur at *tail position*: The last function call in a (sub)expression. For
-instance, the following version of `len` is tail recursive:
+再帰関数の中には*末尾再帰*であると言われるものがありますが、
+これは全ての再帰呼び出しが*末尾位置*で起こるときに指します。
+末尾位置とは（部分）式中の最後の関数です。
+例えば以下の`len`のバージョンは末尾再帰です。
 
 ```idris
 lenOnto : Nat -> List a -> Nat
@@ -177,26 +174,25 @@ lenOnto k []        = k
 lenOnto k (_ :: xs) = lenOnto (k + 1) xs
 ```
 
-Compare this to `len` as defined above: There, the last function call is an
-invocation of operator `(+)`, and the recursive call happens in one of its
-arguments:
+これを前に定義した`len`と比較してください。
+`len`では最後の関数呼び出しが演算子`(+)`の呼び出しであり、
+再帰呼び出しは引数のうちの1つで起こっていました。
 
 ```repl
 len (_ :: xs) = 1 + len xs
 ```
 
-We can use `lenOnto` as a utility to implement a tail recursive version of
-`len` without the additional `Nat` argument:
+`lenOnto`から余分な`Nat`引数をなくし、`len`の末尾再帰版を実装するための小間物として使えます。
 
 ```idris
 lenTR : List a -> Nat
 lenTR = lenOnto 0
 ```
 
-This is a common pattern when writing tail recursive functions: We typically
-add an additional function argument for accumulating intermediary results,
-which is then passed on explicitly at each recursive call. For instance,
-here is a tail recursive version of `replicateList`:
+これは末尾再帰関数を書くときによくある様式です。
+つまり、追加の関数引数を中間結果に累積するために追加するのが典型的です。
+この引数はそれぞれの再帰呼び出しで明示的に渡されます。
+例えば以下は`replicateList`の末尾再帰版です。
 
 ```idris
 replicateListTR : Nat -> a -> List a
@@ -207,7 +203,7 @@ replicateListTR n v = go Nil n
 ```
 
 The big advantage of tail recursive functions is, that they can be easily
-converted to efficient, imperative loops by the Idris compiler, an are thus
+converted to efficient, imperative loops by the Idris compiler, and are thus
 *stack safe*: Recursive function calls are *not* added to the call stack,
 thus avoiding the dreaded stack overflow errors.
 
@@ -216,22 +212,21 @@ main1 : IO ()
 main1 = printLn . lenTR $ replicateListTR 10000 10
 ```
 
-We can again run `main1` using the *Node.js* backend. This time, we use
-slightly different syntax to execute a function other than `main` (Remember:
-The dollar prefix is only there to distinghish a terminal command from its
-output. It is not part of the command you enter in a terminal sesssion.):
+改めてを*Node.js*バックエンドを使って`main1`を走らせます。
+今回は僅かに異なる構文を使って`main`以外の関数を実行しています。
+（いいですか。ドル記号の前置は端末のコマンドとその結果を区別するためだけにありますよ。
+ドル記号は端末のセッションで入力するコマンドの一部ではありません。）
 
 ```sh
 $ idris2 --cg node --exec main1 --find-ipkg src/Tutorial/Folds.md
 10000
 ```
 
-As you can see, this time the computation finished without overflowing the
-call stack.
+見てとれるように今回は計算が呼び出しスタックが溢れることなしに終了しました。
 
-Tail recursive functions are allowed to consist of (possibly nested) pattern
-matches, with recursive calls at tail position in several of the branches.
-Here is an example:
+末尾再帰関数を（入れ子になりうる）パターン照合で構成することも可能です。
+パターン照合の複数の分岐それぞれで末尾位置での再帰呼び出しがあります。
+以下は一例です。
 
 ```idris
 countTR : (a -> Bool) -> List a -> Nat
@@ -243,20 +238,18 @@ countTR p = go 0
           False => go k xs
 ```
 
-Note, how each invocation of `go` is in tail position in its branch of the
-case expression.
+それぞれの`go`の呼び出しがcase式の分岐の末尾位置にあることに着目してください。
 
-### Mutual Recursion
+### 相互再帰
 
-It is sometimes convenient to implement several related functions, which
-call each other recursively. In Idris, unlike in many other programming
-languages, a function must be declared in a source file *before* it can be
-called by other functions, as in general a function's implementation must be
-available during type checking (because Idris has dependent types). There
-are two ways around this, which actually result in the same internal
-representation in the compiler. Our first option is to write down the
-functions' declarations first with the implementations following
-after. Here's a silly example:
+複数の関連する、すなわちお互いに再帰的に呼び出す関数を実装すると便利なときがあります。
+Idrisでは他の多くのプログラミング言語とは異なり、
+関数は他の関数に呼び出されるより*前*にソースファイルで定義されなくてはいけません。
+というのも一般的に関数の実装が型検査中に利用できなくてはいけないからです。
+（Idrisが依存型であるためです。）
+これには2つの方法があり、実際にはコンパイラ中で同じ内部表現に落ち着きます。
+最初の選択肢は関数の宣言を最初に書き下し、そのあとに実装が続くようにすることです。
+以下は他愛ない例です。
 
 ```idris
 even : Nat -> Bool
@@ -270,14 +263,13 @@ odd 0     = False
 odd (S k) = even k
 ```
 
-As you can see, function `even` is allowed to call function `odd` in its
-implementation, since `odd` has already been declared (but not yet
-implemented).
+見ての通り、関数`even`は実装で関数`add`を呼ぶことができていますが、
+これは`odd`が既に宣言されている（でも実装はまだ）からです。
 
-If you're like me and want to keep declarations and implementations next to
-each other, you can introduce a `mutual` block, which has the same
-effect. Like with other code blocks, functions in a `mutual` block must all
-be indented by the same amount of whitespace:
+宣言と実装がお互いに隣り合っている状態を維持したければ、
+`mutual`ブロックを導入することができます。
+このブロックには上と同じ効果があります。
+他のコードブロックと同様に`mutual`ブロック中の関数は全て同量の空白で字下げされていなくてはなりません。
 
 ```idris
 mutual
@@ -290,10 +282,10 @@ mutual
   odd' (S k) = even' k
 ```
 
-Just like with single recursive functions, mutually recursive functions can
-be optimized to imperative loops if all recursive calls occur at tail
-position. This is the case with functions `even` and `odd`, as can again be
-verified at the *Node.js* backend:
+ちょうど単一再帰関数と同じように、
+相互再帰関数は再帰呼び出しが末尾位置で起こっているときに命令的な繰返しに最適化することができます。
+これは関数`even`や`odd`についても言え、
+そのためここでも*Node.js*バックエンドで確かめることができます。
 
 ```idris
 main2 : IO ()
@@ -307,53 +299,44 @@ True
 False
 ```
 
-### Final Remarks
+### 総括
 
-In this section, we learned about several important aspects of recursion and
-totality checking, which are summarized here:
+この節ではいくつかの重要な再帰と全域性検査の側面について学びました。
+以下に要約します。
 
-* In pure functional programming, recursion is the way to implement
-  iterative procedures.
+* 純粋関数型プログラミングでは再帰は繰返し手順を実装する手段である。
 
-* Recursive functions pass the totality checker, if it can verify that one
-  of the arguments is getting strictly smaller in every recursive function
-  call.
+* 再帰関数が全域性検査器を通るのは、引数の1つが各再帰関数呼び出しで厳密に小さくなることが確かめられるときである
 
-* Arbitrary recursion can lead to stack overflow exceptions on backends with
-  small stack size limits.
+* 小さいスタックの大きさ上限を持つバックエンドでは、任意の再帰はスタックオーバーフロー例外に繋がりうる。
 
-* The JavaScript backends of Idris perform mutual tail call optimization:
-  Tail recursive functions are converted to stack safe, imperative loops.
+* IdrisのJavaScriptバックエンドは相互末尾呼び出し最適化を実施する。
+  末尾再帰関数はスタック安全で命令的な繰返しに変換される。
 
-Note, that not all Idris backends you will come across in the wild will
-perform tail call optimization. Please check the corresponding
-documentation.
+なお、巷で遭遇する全てのIdrisバックエンドが末尾呼び出し最適化を施すとは限りません。
+対応するドキュメントを確認してください。
 
-Note also, that most recursive functions in the core libraries (*prelude*
-and *base*) do not yet make use of tail recursion. There is an important
-reason for this: In many cases, non-tail recursive functions are easier to
-use in compile-time proofs, as they unify more naturally than their tail
-recursive counterparts.  Compile-time proofs are an important aspect of
-programming in Idris (as we will see in later chapters), so there is a
-compromise to be made between what performs well at runtime and what works
-well at compile time. Eventually, the way to go might be to provide two
-implementations for most recursive functions with a *transform rule* telling
-the compiler to use the optimized version at runtime whenever programmers
-use the non-optimized version in their code.  Such transform rules have -
-for instance - already been written for functions `pack` and `unpack` (which
-use `fastPack` and `fastUnpack` at runtime; see the corresponding rules in
-[the following source
-file](https://github.com/idris-lang/Idris2/blob/main/libs/prelude/Prelude/Types.idr)).
+これも注意ですが、中核ライブラリ（*prelude*と*base*）のほとんどの再帰関数はまだ末尾再帰を活用していません。
+これには大切な理由があります。
+多くの場合、非末尾再帰関数はコンパイル時証明で使いやすいのですが、
+これは末尾再帰で対応するものより自然に統合が行えるからです。
+コンパイル時証明は（後の章で見ていくように）Idrisでプログラミングする上での重要な側面であり、
+実行時にいい感じに動くこととコンパイル時にいい感じに動くことの間には折り合いがあります。
+ゆくゆく行き着くところは2つの実装を提供することでしょう。
+ほとんどの再帰関数には*転轍規則*がついており、
+コンパイラに実行時には最適化された版を使うように指示します。
+これはプログラマがコードで最適化されていないバージョンを使うときは常に有効です。
+そのような転轍規則は、例えば既に関数`pack`と`unpack`に書かれています。
+（これらの関数では実行時に`fastPack`と`fastUnpack`を使います。
+[リンク先のソースファイル](https://github.com/idris-lang/Idris2/blob/main/libs/prelude/Prelude/Types.idr)中の対応する規則をご参照ください。）
 
 ### 演習 その1
 
-In these exercises you are going to implement several recursive
-functions. Make sure to use tail recursion whenever possible and quickly
-verify the correct behavior of all functions at the REPL.
+この演習ではいくつかの再帰関数を実装していきます。
+できる限り末尾再帰を使うようにし、REPLで全ての関数について正しい振舞いをすることを簡単に確かめてください。
 
-1. Implement functions `anyList` and `allList`, which return `True` if any
-   element (or all elements in case of `allList`) in a list fulfills the
-   given predicate:
+1. 関数`anyList`と`allList`を実装してください。
+   この関数はリスト中のどれか1つの要素（`allList`の場合は全ての要素）が所与の条件を満足するとき`True`を返します。
 
    ```idris
    anyList : (a -> Bool) -> List a -> Bool
@@ -361,74 +344,72 @@ verify the correct behavior of all functions at the REPL.
    allList : (a -> Bool) -> List a -> Bool
    ```
 
-2. Implement function `findList`, which returns the first value (if any)
-   fulfilling the given predicate:
+2. 関数`findList`を実装してください。
+   この関数は（もしあれば）所与の条件を満足する最初の値を返します。
 
    ```idris
    findList : (a -> Bool) -> List a -> Maybe a
    ```
 
-3. Implement function `collectList`, which returns the first value (if any),
-   for which the given function returns a `Just`:
+3. 関数`collectList`を実装してください。
+   この関数は（もしあれば）所与の関数が`Just`を返すような最初の値を返します。
 
    ```idris
    collectList : (a -> Maybe b) -> List a -> Maybe b
    ```
 
-   Implement `lookupList` in terms of `collectList`:
+   `collectList`を使って`lookupList`を実装してください。
 
    ```idris
    lookupList : Eq a => a -> List (a,b) -> Maybe b
    ```
 
-4. For functions like `map` or `filter`, which must loop over a list without
-   affecting the order of elements, it is harder to write a tail recursive
-   implementation.  The safest way to do so is by using a `SnocList` (a
-   *reverse* kind of list that's built from head to tail instead of from
-   tail to head) to accumulate intermediate results. Its two constructors
-   are `Lin` and `(:<)` (called the *snoc* operator).  Module
-   `Data.SnocList` exports two tail recursive operators called *fish* and
-   *chips* (`(<><)` and `(<>>)`) for going from `SnocList` to `List` and
-   vice versa. Have a look at the types of all new data constructors and
-   operators before continuing with the exercise.
+4. `map`や`filter`のような関数は要素の順番に影響を与えることなくリストを巡回しますが、
+   末尾再帰実装を書くことは難しいです。
+   末尾再帰にする最も安全な方法は`SnocList`
+   （リストの*逆*の類であり、尾鰭から先頭に向かって構築されるのではなく先頭から尾鰭に向かって構築されます。）
+   を使うことで中間結果を累積することです。
+   この型の2つの構築子は`Lin`と`(:<)`（*snoc*演算子と呼ばれます）です。
+   モジュール`Data.SnocList`は*フィッシュ*と*チップス*（`(<><)`と`(<>>)`）
+   と呼ばれる2つの末尾再帰演算子を輸出します。
+   これは`SnocList`と`List`とを行き来するためのものです。
+   演習を続ける前に、全ての新しいデータ構築子と演算子の型を眺めてください。
 
-   Implement a tail recursive version of `map` for `List`
-   by using a `SnocList` to reassemble the mapped list. Use then
-   the *chips* operator with a `Nil` argument to
-   in the end convert the `SnocList` back to a `List`.
+   `SnocList`を使って写されたリストを再編成することで、`List`に`map`の末尾再帰版を実装してください。
+   それから最後に`Nil`引数つきの*チップス*演算子を使って`SnocList`を`List`に変換して戻してください。
 
    ```idris
    mapTR : (a -> b) -> List a -> List b
    ```
 
-5. Implement a tail recursive version of `filter`, which only keeps those
-   values in a list, which fulfill the given predicate. Use the same
-   technique as described in exercise 4.
+5. 末尾再帰版の`filter`を実装してください。
+   この関数は、リスト中の所与の条件を満足する値だけを保持します。
+   演習4で記載したのと同じ技法を使ってください。
 
    ```idris
    filterTR : (a -> Bool) -> List a -> List a
    ```
 
-6. Implement a tail recursive version of `mapMaybe`, which only keeps those
-   values in a list, for which the given function argument returns a `Just`:
+6. `mapMaybe`の末尾再帰版を実装してください。
+   この関数はリスト中の、所与の関数引数が`Just`を返すような値のみを保持します。
 
    ```idris
    mapMaybeTR : (a -> Maybe b) -> List a -> List b
    ```
 
-   Implement `catMaybesTR` in terms of `mapMaybeTR`:
+   `mapMaybeTR`を使って`catMaybesTR`を実装してください。
 
    ```idris
    catMaybesTR : List (Maybe a) -> List a
    ```
 
-7. Implement a tail recursive version of list concatenation:
+7. リスト連結の末尾再帰版を実装してください。
 
    ```idris
    concatTR : List a -> List a -> List a
    ```
 
-8. Implement tail recursive versions of *bind* and `join` for `List`:
+8. リストの*束縛*と`join`の末尾再帰版を実装してください。
 
    ```idris
    bindTR : List a -> (a -> List b) -> List b
@@ -436,26 +417,24 @@ verify the correct behavior of all functions at the REPL.
    joinTR : List (List a) -> List a
    ```
 
-## A few Notes on Totality Checking
+## 全域性検査について少々補足
 
-The totality checker in Idris verifies, that at least one (possibly erased!)
-argument in a recursive call converges towards a base case. For instance,
-with natural numbers, if the base case is zero (corresponding to data
-constructor `Z`), and we continue with `k` after pattern matching on `S k`,
-Idris can derive from `Nat`'s constructors, that `k` is strictly smaller
-than `S k` and therefore the recursive call must converge towards a base
-case.  Exactly the same reasoning is used when pattern matching on a list
-and continuing only with its tail in the recursive call.
+Idrisの全域性検査器が確証しているのは、
+再帰呼び出しでの少なくとも1つの引数（消去されうるものです！）が、基底の場合に向かって収束することです。
+例えば自然数があったとき、基底の場合がゼロ（データ構築子`Z`に対応）であり、
+`S k`でパターン照合したあとは`k`で続いているとします。
+このときIdrisは`Nat`の構築子を以って、`k`が`S k`より厳密に小さいため、
+再帰呼び出しは基底の場合に向かって収束するはずだと導出できるのです。
+ちょうど同じ論拠が再帰呼び出しで尾鰭だけで続けるリストのパターン照合で用いられます。
 
-While this works in many cases, it doesn't always go as expected.  Below,
-I'll show you a couple of examples where totality checking fails, although
-*we* know, that the functions in question are definitely total.
+これは多くの場合で機能しますが、常に期待通りにいくわけではありません。
+以下では、*私達は*問題の関数が間違いなく全域だとわかるものの、
+全域性検査が失敗する例をいくつかお見せします。
 
-### Case 1: Recursion over a Primitive
+### 事例1：原始型での再帰
 
-Idris doesn't know anything about the internal structure of primitive data
-types. So the following function, although being obviously total, will not
-be accepted by the totality checker:
+Idrisは原始的なデータ型の内部構造について何も知りません。
+なので以下の関数は明らかに全域ですが、全域性検査が受けつけようとしません。
 
 ```idris
 covering
@@ -464,22 +443,19 @@ replicatePrim 0 v = []
 replicatePrim x v = v :: replicatePrim (x - 1) v
 ```
 
-Unlike with natural numbers (`Nat`), which are defined as an inductive data
-type and are only converted to integer primitives during compilation, Idris
-can't tell that `x - 1` is strictly smaller than `x`, and so it fails to
-verify that this must converge towards the base case.  (The reason is, that
-`x - 1` is implemented in terms of primitive function `prim__sub_Bits32`,
-which is built into the compiler and must be implemented by each backend
-individually. The totality checker knows about data types, constructors, and
-functions defined in Idris, but not about (primitive) functions and foreign
-functions implemented at the backends. While it is theoretically possible to
-also define and use laws for primitive and foreign functions, this hasn't
-yet been done for most of them.)
+自然数 (`Nat`) は帰納的データ型として定義されコンパイル時にのみ整数の原始型に変換されます。
+これとは違い、Idrisには`x - 1`が厳密に`x`よりも小さいかがわからず、
+そのためこれが基底の場合に向かって収束するはずだと確証するのに失敗するのです。
+（その理由は、`x - 1`が原始関数`prim__sub_Bits32`を使って実装されているからです。
+この関数はコンパイラに備わっており、それぞれ個別のバックエンドで実装されていなくてはなりません。）
+全域性検査器はIdrisで定義されたデータ型、構築子、関数について知っていますが、
+バックエンドで実装された（原始）関数や異邦関数についてはその限りではありません。
+理論的には原始型や異邦関数に法則を定義して使うこともできるのですが、
+これはまだほとんどのものについて完了していません。
 
-Since non-totality is highly contagious (all functions invoking a partial
-function are themselves considered to be partial by the totality checker),
-there is utility function `assert_smaller`, which we can use to convince the
-totality checker and still annotate our functions with the `total` keyword:
+非全域性はかなり感染力が高いため（部分関数を呼び出す全ての関数は全域性検査器によって部分的だと見なされます）、
+小間物関数`assert_smaller`があります。
+この関数を使えば全域性検査器を説得し、さらに`total`キーワードを関数に註釈付けることができます。
 
 ```idris
 replicatePrim' : Bits32 -> a -> List a
@@ -487,84 +463,80 @@ replicatePrim' 0 v = []
 replicatePrim' x v = v :: replicatePrim' (assert_smaller x $ x - 1) v
 ```
 
-Please note, though, that whenever you use `assert_smaller` to silence the
-totality checker, the burden of proving totality rests on your
-shoulders. Failing to do so can lead to arbitrary and unpredictable program
-behavior (which is the default with most other programming languages).
+ただし、全域性検査器を静かにさせるために`assert_smaller`を使うときは、
+全域性を証明する責任が自分の肩にのしかかっていることに注意してください。
+それをし損なうとありとあらゆる予期しないプログラムの振舞いに繋がる可能性があります。
+（これはほとんどの他のプログラミング言語でも言えます。）
 
 #### Ex Falso Quodlibet
 
-Below - as a demonstration - is a simple proof of `Void`.  `Void` is an
-*uninhabited type*: a type with no values.  *Proofing `Void`* means, that we
-implement a function accepted by the totality checker, which returns a value
-of type `Void`, although this is supposed to be impossible as there is no
-such value. Doing so allows us to completely disable the type system
-together with all the guarantees it provides.  Here's the code and its dire
-consequences:
+以下はとある実演で、素朴な`Void`の証明です。
+`Void`は*傍若無人型*、つまりは値のない型です。
+*`Void`を証明する*ことが意味するのは、全域性検査器に受け入れられる関数を実装することであり、
+そんな値はないので不可能でなくてはいけないにも関わらず、この関数は型`Void`の値を返します。
+そうすることで型システムと提供されていた全ての保証諸共、完全に無効にすることができます。
+以下はコードとその惨憺たる結果です。
 
 ```idris
--- In order to proof `Void`, we just loop forever, using
--- `assert_smaller` to silence the totality checker.
+-- `Void`を証明するためには、ただ無限ループさせればよいです。
+-- `assert_smaller`を使って全域性検査器を大人しくさせます。
 proofOfVoid : Bits8 -> Void
 proofOfVoid n = proofOfVoid (assert_smaller n n)
 
--- From a value of type `Void`, anything follows!
--- This function is safe and total, as there is no
--- value of type `Void`!
+-- 型`Void`の値からはどんなことも従います！
+-- 型`Void`の値はないので、この関数は安全で全域なのです！
 exFalsoQuodlibet : Void -> a
 exFalsoQuodlibet _ impossible
 
--- By passing our proof of void to `exFalsoQuodlibet`
--- (exported by the *Prelude* by the name of `void`), we
--- can coerce any value to a value of any other type.
--- This renders type checking completely useless, as
--- we can freely convert between values of different
--- types.
+-- voidの証明を`exFalsoQuodlibet`（`void`の名前で*Prelude*から輸出されています）に通すことで、
+-- どんな値も別の型の値に押し込むことができます。
+-- 異なる型の値に自由に変換できてしまっては、
+-- 型検査が全くの役立たずになってしまいました。
 coerce : a -> b
 coerce _ = exFalsoQuodlibet (proofOfVoid 0)
 
--- Finally, we invoke `putStrLn` with a number instead
--- of a string. `coerce` allows us to do just that.
+-- 最後に文字列の代わりに数字で`putStrLn`を呼び出します。
+-- `coerce`があればそれさえできてしまいます。
 pain : IO ()
 pain = putStrLn $ coerce 0
 ```
 
-Please take a moment to marvel at provably total function `coerce`: It
-claims to convert *any* value to a value of *any* other type.  And it is
-completely safe, as it only uses total functions in its implementation. The
-problem is - of course - that `proofOfVoid` should never ever have been a
-total function.
+しばし証明的に全域な関数`coerce`に嘆じましょう。
+この関数は*いかなる*値も*いかなる*他の型の値に変換することができると主張しているのです。
+そしてそれは完全に安全で、なぜなら実装で全域関数のみを使っているからです。
+問題があるとすれば……もちろん……`proofOfVoid`はどんなことがあろうと全域関数ではないことです。
 
-In `pain` we use `coerce` to conjure a string from an integer.  In the end,
-we get what we deserve: The program crashes with an error.  While things
-could have been much worse, it can still be quite time consuming and
-annoying to localize the source of such an error.
+`pain`で`coerce`を使って整数から文字列をでっち上げました。
+最終的には自業自得となります。
+要はプログラムがエラーでクラッシュするのです。
+事態がこれよりさらに悪くなることもありえたでしょう。
+実行にかなりの時間が費された挙句そのようなエラーの発生箇所を見つけ出すのが厄介になる可能性がありますから。
 
 ```sh
 $ idris2 --cg node --exec pain --find-ipkg src/Tutorial/Folds.md
 ERROR: No clauses
 ```
 
-So, with a single thoughtless placement of `assert_smaller` we wrought havoc
-within our pure and total codebase sacrificing totality and type safety in
-one fell swoop. Therefore: Use at your own risk!
+というわけで、たった1つでも無考えに`assert_smaller`を置くと、
+全域性と型安全性が犠牲にされた純粋で全域なコードベースの裡で一挙に大惨事に見舞われるのです。
+したがって、自己責任で使ってください！
 
-Note: I do not expect you to understand all the dark magic at work in the
-code above. I'll explain the details in due time in another chapter.
+補足：上のコード中で動いている全ての暗黒魔法を理解することは期待していません。
+別の章でその時がきたら詳細をご説明しましょう。
 
-Second note: *Ex falso quodlibet*, also called [the principle of
-explosion](https://en.wikipedia.org/wiki/Principle_of_explosion)  is a law
-in classical logic: From a contradiction, any statement can be proven.  In
-our case, the contradiction was our proof of `Void`: The claim that we wrote
-a total function producing such a value, although `Void` is an uninhabited
-type.  You can verify this by inspecting `Void` at the REPL with `:doc
-Void`: It has no data constructors.
+2つめの補足：*Ex falso
+quodlibet*、またの名を[爆発の原理](https://en.wikipedia.org/wiki/Principle_of_explosion)は古典論理の法則の1つです。
+矛盾からはいかなる記述も証明されたものにできるというものです。
+今回の場合、矛盾は`Void`の証明にありました。
+`Void`は傍若無人型なのに、そのような値を生み出す全域関数を書いたと主張することがこれにあたるのです。
+このことは`Void`をREPLで`:doc Void`で調べれば確かめることができます。
+これにはデータ構築子がないのです。
 
-### Case 2: Recursion via Function Calls
+### 事例2：関数呼び出しを介した再帰
 
-Below is an implementation of a [*rose
-tree*](https://en.wikipedia.org/wiki/Rose_tree).  Rose trees can represent
-search paths in computer algorithms, for instance in graph theory.
+以下は[*木薔薇*](https://en.wikipedia.org/wiki/Rose_tree)の実装です。
+木薔薇はコンピュータアルゴリズムにおける探索経路を表現することができます。
+グラフ理論がその一例です。
 
 ```idris
 record Tree a where
@@ -576,7 +548,7 @@ Forest : Type -> Type
 Forest = List . Tree
 ```
 
-We could try and compute the size of such a tree as follows:
+以下のようにそのような木の大きさの計算を試みることができます。
 
 ```idris
 covering
@@ -584,16 +556,16 @@ size : Tree a -> Nat
 size (Node _ forest) = S . sum $ map size forest
 ```
 
-In the code above, the recursive call happens within `map`. *We* know that
-we are using only subtrees in the recursive calls (since we know how `map`
-is implemented for `List`), but Idris can't know this (teaching a totality
-checker how to figure this out on its own seems to be an open research
-question). So it will refuse to accept the function as being total.
+上のコードでは再帰呼び出しは`map`の内側で起こっており、
+*私達は*再帰呼び出しで副木しか使っていないことがわかります。
+（どのように`map`が`List`に実装されているか知っているからです。）
+でもIdrisはこのことを知らないのです。
+（全域性検査器に自力でこれを調べさせることは研究の余地がある問題のようです。）
+だから関数が全域であるとして認めることを拒みます。
 
-There are two ways to handle the case above. If we don't mind writing a bit
-of otherwise unneeded boilerplate code, we can use explicit recursion.  In
-fact, since we often also work with search *forests*, this is the preferable
-way here.
+上記の場合に対処するには2つの方法があります。
+少々の余計な紋切り型のコードを書くのが気にならなければ、明示的な再帰を使うことができます。
+実際*森*の探索に取り組むこともよくあるので、ここではより好ましい手段です。
 
 ```idris
 mutual
@@ -605,13 +577,13 @@ mutual
   forestSize (x :: xs) = treeSize x + forestSize xs
 ```
 
-In the case above, Idris can verify that we don't blow up our trees behind
-its back as we are explicit about what happens in each recursive step.  This
-is the safe, preferable way of going about this, especially if you are new
-to the language and totality checking in general.
+上の場合、それぞれの再帰の工程で何が起こるのか明示しているので、
+Idrisは陰で木が膨れ上がらないことを確かめられます。
+本事例に向き合う上ではこれが安全で、より好ましい方法です。
+この言語や全域性検査を始めたばかりなら特にそうです。
 
-However, sometimes the solution presented above is just too cumbersome to
-write. For instance, here is an implementation of `Show` for rose trees:
+しかし時には上で示した解法を書くのがあまりにも億劫すぎることがあります。
+例えば以下は木薔薇への`Show`の実装です。
 
 ```idris
 Show a => Show (Tree a) where
@@ -619,59 +591,52 @@ Show a => Show (Tree a) where
     assert_total $ showCon p "Node" (showArg v ++ showArg ts)
 ```
 
-In this case, we'd have to manually reimplement `Show` for lists of trees: A
-tedious task - and error-prone on its own. Instead, we resort to using the
-mighty sledgehammer of totality checking: `assert_total`. Needless to say
-that this comes with the same risks as `assert_smaller`, so be very careful.
+この場合、木のリストに`Show`を手作業で再実装しなくてはなりません。
+退屈な仕事であり……それ自体がエラーの温床になります。
+代わりに全域性検査器を木っ端微塵にする手段を行使できます。
+それが`assert_total`です。
+言うまでもなくこれには`assert_smaller`と同じ危険性が付き纏うので、充分注意してください。
 
 ### 演習 その2
 
-Implement the following functions in a provably total way without
-"cheating". Note: It is not necessary to implement these in a tail recursive
-way.
+以下の関数を「ズル」せずに証明的に全域な風に実装してください。
+補足：末尾再帰の方法で実装する必要はありません。
 
 <!-- textlint-disable terminology -->
-1. Implement function `depth` for rose trees. This
-   should return the maximal number of `Node` constructors
-   from the current node to the farthest child node.
-   For instance, the current node should be at depth one,
-   all its direct child nodes are at depth two, their
-   immediate child nodes at depth three and so on.
+1. 木薔薇に関数`depth`を実装してください。
+   これは現在のノードから最も遠くにある小ノードまでの`Node`構築子の最大数を返します。
+   例えば現在のノードが深さ1のとき、全ての直接の小ノードは深さが2であり、
+   それらの直接の子ノードは深さ3にある、などといった具合です。
 <!-- textlint-enable -->
 
-2. Implement interface `Eq` for rose trees.
+2. インスタンス`Eq`を木薔薇に実装してください。
 
-3. Implement interface `Functor` for rose trees.
+3. インターフェース`Functor`を木薔薇に実装してください。
 
-4. For the fun of it: Implement interface `Show` for rose trees.
+4. インターフェース`Show`を木薔薇に実装しましょう。お楽しみください。
 
-5. In order not to forget how to program with dependent types, implement
-   function `treeToVect` for converting a rose tree to a vector of the
-   correct size.
+5. 依存型でプログラムする方法を忘れないよう、
+   木薔薇を正しい大きさのベクタに変換する関数`treeToVect`を実装してください。
 
-   Hint: Make sure to follow the same recursion scheme as in
-   the implementation of `treeSize`. Otherwise, this might be
-   very hard to get to work.
+   ヒント：`treeSize`の実装と同じ再帰構造に従うようにしてください。
+   さもないと取り掛かるのがとても難しいでしょうから。
 
-## Interface Foldable
+## インターフェースFoldable
 
 When looking back at all the exercises we solved in the section about
-recursion, most tail recursive functions on lists where of the following
+recursion, most tail recursive functions on lists were of the following
 pattern: Iterate over all list elements from head to tail while passing
 along some state for accumulating intermediate results. At the end of the
 list, return the final state or convert it with an additional function call.
 
-### Left Folds
+### 左畳み込み
 
-This is functional programming, and we'd like to abstract
-over such reoccurring patterns. In order to tail recursively
-iterate over a list, all we need is an accumulator function
-and some initial state. But what should be the type of
-the accumulator? Well, it combines the current state
-with the list's next element and returns an updated
-state: `state -> elem -> state`. Surely, we can come
-up with a higher-order function to encapsulate this
-behavior:
+ここでは関数型プログラミングをしており、そのような反復される様式は抽象化したいところです。
+リストで末尾再帰的に巡回するためになくてはならないのは、
+累積関数と何らかの初期状態だけです。
+でも累積器の型はどうすべきなのでしょう？
+そうですね、現在の状態とリストの次の要素をまとめて更新された状態を返すもの、つまり`state -> elem -> state`です。
+もちろんこの振舞いを内蔵化する高階関数が頭に浮かびます。
 
 ```idris
 leftFold : (acc : state -> el -> state) -> (st : state) -> List el -> state
@@ -679,15 +644,15 @@ leftFold _   st []        = st
 leftFold acc st (x :: xs) = leftFold acc (acc st x) xs
 ```
 
-We call this function a *left fold*, as it iterates over the list from left
-to right (head to tail), collapsing (or *folding*) the list until just a
-single value remains.  This new value might still be a list or other
-container type, but the original list has been consumed from head to tail.
-Note how `leftFold` is tail recursive, and therefore all functions
-implemented in terms of `leftFold` are tail recursive (and thus, stack
-safe!) as well.
+この関数を*左畳み込み*と呼びますが、
+それはリストを左から右（先頭から尾鰭へ）巡回し、
+たった1つの値が残るまでリストを押し潰す（あるいは*畳み込む*）からです。
+この新しい値はリストのままでも他の容器型でもよいのですが、
+元のリストは徹頭徹尾消費されます。
+`leftFold`が末尾再帰なことに注目してください。
+したがって`leftFold`を利用して実装された全ての関数もまた末尾再帰（なのでスタック安全！）なのです。
 
-以下はREPLでの例です。
+以下はいくつかの例です。
 
 ```idris
 sumLF : Num a => List a -> a
@@ -701,19 +666,19 @@ toSnocListLF : List a -> SnocList a
 toSnocListLF = leftFold (:<) Lin
 ```
 
-### Right Folds
+### 右畳み込み
 
-The example functions we implemented in terms of `leftFold` had to always
-completely traverse the whole list, as every single element was required to
-compute the result. This is not always necessary, however. For instance, if
-you look at `findList` from the exercises, we could abort iterating over the
-list as soon as our search was successful. It is *not* possible to implement
-this more efficient behavior in terms of `leftFold`: There, the result will
-only be returned when our pattern match reaches the `Nil` case.
+`leftFold`を利用して実装した関数の例では常にリスト全体を完璧に巡回する必要がありましたが、
+それは結果を計算するのに全ての要素1つ1つが必要だからです。
+しかし私達にとっていつも必要とは限りません。
+例えば演習の`findList`を見ると探索が成功するやいなやリストの巡回を中断できました。
+`leftFold`を使っていてはより効率的な振舞いを実装することは*不*可能です。
+というのも、結果が返されるおはパターン照合が`Nil`の場合に到達したときだけだからです。
 
-Interestingly, there is another, non-tail recursive fold, which reflects the
-list structure more naturally, we can use for breaking out early from an
-iteration. We call this a *right fold*. Here is its implementation:
+興味深いことに別の非末尾再帰な再帰畳み込みがあります。
+より自然にリストの構造を反映しており、
+これを使えば巡回中に早い時点で中断することができます。
+*右畳み込み*と呼ばれるもので、以下がその実装です。
 
 ```idris
 rightFold : (acc : el -> state -> state) -> state -> List el -> state
@@ -721,50 +686,46 @@ rightFold acc st []        = st
 rightFold acc st (x :: xs) = acc x (rightFold acc st xs)
 ```
 
-Now, it might not immediately be obvious how this differs from `leftFold`.
-In order to see this, we will have to talk about lazy evaluation first.
+さて、すぐにはこれが`leftFold`とどう違うのかはっきりしないでしょう。
+それを知るにはまず、遅延評価についてお話ししなくてはなりません。
 
-#### Lazy Evaluation in Idris
+#### Idrisでの遅延評価
 
-For some computations, it is not necessary to evaluate all function
-arguments in order to return a result. For instance, consider boolean
-operator `(&&)`: If the first argument evaluates to `False`, we already know
-that the result is `False` without even looking at the second argument. In
-such a case, we don't want to unnecessarily evaluate the second argument, as
-this might include a lengthy computation.
+計算の中には、結果を返すために全ての関数の引数を評価する必要がないものもあります。
+例えば真偽値演算子`(&&)`を考えましょう。
+最初の引数が`False`に評価されたら、もう2つの引数を見向きもせず結果が`False`なのがわかります。
+そのような場合、不要な2つ目の引数の評価はしたくありません。
+長い計算が含まれているかもしれないからです。
 
-以下のわざとらしい例について考えましょう。
+以下のREPLセッションについて考えましょう。
 
 ```repl
 Tutorial.Folds> False && (length [1..10000000000] > 100)
 False
 ```
 
-If the second argument were evaluated, this computation would most certainly
-blow up your computer's memory, or at least take a very long time to run to
-completion. However, in this case, the result `False` is printed
-immediately. If you look at the type of `(&&)`, you'll see the following:
+2つ目の引数が評価されるなら、この計算はきっとコンピュータのメモリを吹っ飛ばしてしまうか、
+少なくとも計算を走らせるのにとても長い時間が掛かるでしょう。
+しかしこの場合、結果の`False`が直ちに印字されます。
+`(&&)`の方を見ると以下とあることがわかります。
 
 ```repl
 Tutorial.Folds> :t (&&)
 Prelude.&& : Bool -> Lazy Bool -> Bool
 ```
 
-As you can see, the second argument is wrapped in a `Lazy` type
-constructor. This is a built-in type, and the details are handled by Idris
-automatically most of the time. For instance, when passing arguments to
-`(&&)`, we don't have to manually wrap the values in some data constructor.
-A lazy function argument will only be evaluated at the moment it is
-*required* in the function's implementation, for instance, because it is
-being pattern matched on, or it is being passed as a strict argument to
-another function. In the implementation of `(&&)`, the pattern match happens
-on the first argument, so the second will only be evaluated if the first
-argument is `True` and the second is returned as the function's (strict)
-result.
+見てとれるように、2つ目の引数は`Lazy`型構築子に包まれています。
+これは組み込み型で、ほとんどの場合はIdrisが自動的に細々としたことを制御します。
+例えば引数を`(&&)`に渡したとき、値を何らかのデータ構築子に手作業で包む必要はありません。
+遅延関数引数は関数の実装で*必要とされる*瞬間にのみ評価されます。
+例えばパターン照合されたり他の関数の厳密な引数に渡されたりするときです。
+`(&&)`の実装では最初の引数でパターン照合が起こっているので、
+2つ目の引数が評価されるのは最初の引数が`True`のときだけで、
+関数の（正格な）結果として返されます。
 
 There are two utility functions for working with lazy evaluation: Function
 `delay` wraps a value in the `Lazy` data type. Note, that the argument of
-`lazy` is strict, so the following might take several seconds to print its
+`delay` is strict, so the following might take several seconds to print its
 result:
 
 ```repl
@@ -772,24 +733,20 @@ Tutorial.Folds> False && (delay $ length [1..10000] > 100)
 False
 ```
 
-In addition, there is function `force`, which forces evaluation of a `Lazy`
-value.
+加えて関数`force`があり、これは`Lazy`値の評価を強制します。
 
-#### Lazy Evaluation and Right Folds
+#### 遅延評価と右畳み込み
 
-We will now learn how to make use of `rightFold` and lazy evaluation to
-implement folds, which can break out from iteration early.  Note, that in
-the implementation of `rightFold` the result of folding over the remainder
-of the list is passed as an argument to the accumulator (instead of the
-result of invoking the accumulator being used in the recursive call):
+これで繰返しから早期に中断できる畳み込みを実装するための`rightFold`と遅延評価の使いかたがわかりました。
+なお`rightFold`の実装では残りのリストを畳み込む結果が累積器に渡されています。
+（再帰呼び出しで使われる累積器を呼び出した結果ではありません。）
 
 ```repl
 rightFold acc st (x :: xs) = acc x (rightFold acc st xs)
 ```
 
-If the second argument of `acc` were lazily evaluated, it would be possible
-to abort the computation of `acc`'s result without having to iterate till
-the end of the list:
+`acc`の2つ目の引数が遅延評価されるなら、
+リストの終端まで繰り返すことなく`acc`の結果の計算を中断することが可能です。
 
 ```idris
 foldHead : List a -> Maybe a
@@ -798,21 +755,18 @@ foldHead = force . rightFold first Nothing
         first v _ = Just v
 ```
 
-Note, how Idris takes care of the bookkeeping of laziness most of the
-time. (It doesn't handle the curried invocation of `rightFold` correctly,
-though, so we either must pass on the list argument of `foldHead`
-explicitly, or compose the curried function with `force` to get the types
-right.)
+Idrisがほとんどの場合で遅延の予約を取り付けているところに注目してください。
+（ただ`rightFold`のカリー化された呼び出しを正しく扱ってはいません。
+なので`foldHead`のリスト引数に明示的に渡すか、
+カリー化された関数に`force`をくっつけて型を正しくするかしないといけません。）
 
-In order to verify that this works correctly, we need a debugging utility
-called `trace` from module `Debug.Trace`. This "function" allows us to print
-debugging messages to the console at certain points in our pure code. Please
-note, that this is for debugging purposes only and should never be left
-lying around in production code, as, strictly speaking, printing stuff to
-the console breaks referential transparency.
+これが正しく動いていることを確かめるにはモジュール`Debug.trace`の`trace`と呼ばれるデバッグ用の小間物が必要です。
+この「関数」があれば純粋なコード中のどこかの時点で端末にデバッグ文言を印字させられます。
+ただしこれはデバッグ用途でのみのものであり、製品コードには決してあるべきではありません。
+というのも、厳密に言えば端末に何か印字することは参照透過性を壊しているからです。
 
-Here is an adjusted version of `foldHead`, which prints "folded" to standard
-output every time utility function `first` is being invoked:
+以下は`foldHead`を調整した版です。
+これは小間物関数`first`が呼び出されたときに毎回 "folded" と標準出力に印字します。
 
 ```idris
 foldHeadTraced : List a -> Maybe a
@@ -821,10 +775,9 @@ foldHeadTraced = force . rightFold first Nothing
         first v _ = trace "folded" (Just v)
 ```
 
-In order to test this at the REPL, we need to know that `trace` uses
-`unsafePerformIO` internally and therefore will not reduce during
-evaluation. We have to resort to the `:exec` command to see this in action
-at the REPL:
+これをREPLで試すには、`trace`が内部的に`unsafePerformIO`を使っており、
+したがって評価の最中は簡約されることがないことを知っておかねばなりません。
+この動作をREPLで見るには`:exec`コマンドを行使する必要があります。
 
 ```repl
 Tutorial.Folds> :exec printLn $ foldHeadTraced [1..10]
@@ -832,11 +785,10 @@ folded
 Just 1
 ```
 
-As you can see, although the list holds ten elements, `first` is only called
-once resulting in a considerable increase of efficiency.
+見てわかるようにリストには10個の要素がありますが、`first`は1度しか呼ばれておらず、
+結果としてかなりの効率性の向上となっています。
 
-Let's see what happens, if we change the implementation of `first` to use
-strict evaluation:
+`first`の実装を正格評価を使うように変えると何が起こるのか見てみましょう。
 
 ```idris
 foldHeadTracedStrict : List a -> Maybe a
@@ -845,10 +797,10 @@ foldHeadTracedStrict = rightFold first Nothing
         first v _ = trace "folded" (Just v)
 ```
 
-Although we don't use the second argument in the implementation of `first`,
-it is still being evaluated before evaluating the body of `first`, because
-Idris - unlike Haskell! - defaults to use strict semantics. Here's how this
-behaves at the REPL:
+2つ目の引数を`first`の実装で使っていませんが、
+`frst`本体を評価する前にこの引数が評価されてしまっています。
+これはIdrisが……Haskellとは違って！……既定で正格な意味論を使っているからです。
+以下はこれのREPLでの振舞いです。
 
 ```repl
 Tutorial.Folds> :exec printLn $ foldHeadTracedStrict [1..10]
@@ -865,81 +817,76 @@ folded
 Just 1
 ```
 
-While this technique can sometimes lead to very elegant code, always
-remember that `rightFold` is not stack safe in the general case. So, unless
-your accumulator is not guaranteed to return a result after not too many
-iterations, consider implementing your function tail recursively with an
-explicit pattern match. Your code will be slightly more verbose, but with
-the guaranteed benefit of stack safety.
+この技法はときに大変流麗なコードに導いてくれますが、
+`rightFold`が一般的な場合ではスタック安全でないことをいつも頭の片隅に置いておいてください。
+なので、累積器がそれほど多くない反復の末に結果を返す保証がない、といったことがない限りは、
+関数を明示的なパターン照合で末尾再帰に実装するよう検討してください。
+コードは僅かにより冗長になるでしょうが、スタック安全という保証された利点が付いてきます。
 
-### Folds and Monoids
+### 畳み込みとモノイド
 
-Left and right folds share a common pattern: In both cases, we start with an
-initial *state* value and use an accumulator function for combining the
-current state with the current element. This principle of *combining values*
-after starting from an *initial value* lies at the heart of an interface
-we've already learned about: `Monoid`.  It therefore makes sense to fold a
-list over a monoid:
+左右の畳み込みはよくある様式を共有しています。
+両方とも初期*状態*値から始まり累積器関数を使って現在の状態に現在の要素を組み合わせるのです。
+この*初期値*から開始したあとに*値を組み合わせ*る*原理*は既に学んだインターフェースの核心をついています。
+それは`Monoid`です。
+したがってモノイド上でリストを畳み込むことは納得がいきます。
 
 ```idris
 foldMapList : Monoid m => (a -> m) -> List a -> m
 foldMapList f = leftFold (\vm,va => vm <+> f va) neutral
 ```
 
-Note how, with `foldMapList`, we no longer need to pass an accumulator
-function. All we need is a conversion from the element type to a type with
-an implementation of `Monoid`. As we have already seen in the chapter about
-[interfaces](Interfaces.md), there are *many* monoids in functional
-programming, and therefore, `foldMapList` is an incredibly useful function.
+なお、`foldMapList`ではもはや累積器関数を渡す必要がないようになっています。
+しなければいけないことは要素の型から`Monoid`の実装された型への変換だけです。
+[インターフェース](Interfaces.md)の章で既に見たように、関数型プログラミングには*数多くの*モノイドがあります。
+したがって`foldMapList`はもの凄く便利な関数です。
 
-We could make this even shorter: If the elements in our list already are of
-a type with a monoid implementation, we don't even need a conversion
-function to collapse the list:
+これをもっと短くできます。
+もしリストの要素の型がモノイドの実装を持っていたら、リストを押し潰すのに変換関数さえも必要ではなくなります。
 
 ```idris
 concatList : Monoid m => List m -> m
 concatList = foldMapList id
 ```
 
-### Stop Using `List` for Everything
+### どこでも`List`を使うのは止めよう
 
-And here we are, finally, looking at a large pile of utility functions all
-dealing in some way with the concept of collapsing (or folding)  a list of
-values into a single result. But all of these folding functions are just as
-useful when working with vectors, with non-empty lists, with rose trees,
-even with single-value containers like `Maybe`, `Either e`, or
-`Identity`. Heck, for the sake of completeness, they are even useful when
-working with zero-value containers like `Control.Applicative.Const e`! And
-since there are so many of these functions, we'd better look out for an
-essential set of them in terms of which we can implement all the others, and
-wrap up the whole bunch in an interface. This interface is called
-`Foldable`, and is available from the `Prelude`. When you look at its
-definition in the REPL (`:doc Foldable`), you'll see that it consists of six
-essential functions:
+ついにここまで来ました。
+山程の小間物関数を見てきました。
+これらには全て何らかの方法で値のリストを単一の結果に押し潰す（または折り畳む）着想がありました。
+しかしこれら全ての折り畳み関数はリスト以外の型に取り組む際も同じように便利なのです。
+ベクタ、非空のリスト、木薔薇、
+果ては`Maybe`、`Either e`、`Identity`といった単一値の容器がそうです。
+まあ完全を期すなら、
+`Control.Applicative.Const e`のようなゼロ個の値の容器に取り組むときさえも便利なんですけどね！
+そしてとても多くのこうした関数があるため、
+それらの中から必要不可欠な集合を考えたほうがいいかもしれません。
+それを使えば他の全てを実装でき、全体を1つのインターフェースに包むのに使えます。
+このインターフェースは`Foldable`と呼ばれており、
+`Prelude`で手に入ります。
+REPLで定義を見ると (`:doc Foldable`) 6つの必須の関数が含まれていることがわかります。
 
-* `foldr`, for folds from the right
-* `foldl`, for folds from the left
-* `null`, for testing if the container is empty or not
-* `foldM`, for effectful folds in a monad
-* `toList`, for converting the container to a list of values
-* `foldMap`, for folding over a monoid
+* `foldr`: 右からの畳み込み用
+* `foldl`: 左からの畳み込み用
+* `null`: 容器が空かどうかの確認用
+* `foldlM`, for effectful folds in a monad
+* `toList`: 容器から値のリストへの変換用
+* `foldMap`: モノイド上での畳み込み用
 
-For a minimal implementation of `Foldable`, it is sufficient to only
-implement `foldr`. However, consider implementing all six functions
-manually, because folds over container types are often performance critical
-operations, and each of them should be optimized accordingly.  For instance,
-implementing `toList` in terms of `foldr` for `List` just makes no sense, as
-this is a non-tail recursive function running in linear time complexity,
-while a hand-written implementation can just return its argument without any
-modifications.
+`Foldable`の最小の実装としては`foldr`を実装するだけで充分です。
+しかし6つの関数を手作業で実装することを検討してください。
+なぜなら容器型を折り畳むことはよく効率上致命的な操作となり、
+それぞれ最適化されているべきだからです。
+例えば`List`に`foldr`を使って`toList`を実装するのは単純に無意味です。
+というのはこれが線形時間の複雑度で走る非末尾再帰関数だからです。
+一方で手で書いた実装では引数を変更することなく返すだけでよいのです。
 
 ### 演習 その3
 
-In these exercises, you are going to implement `Foldable` for different data
-types. Make sure to try and manually implement all six functions of the
-interface.
+この演習では`Foldable`を様々のデータ型で実装してきます。
+インターフェースの6つの関数全てを手作業で頑張って実装してください。
 
-1. Implement `Foldable` for `Crud i`:
+1. `Foldable`を`Crud i`に実装してください。
 
    ```idris
    data Crud : (i : Type) -> (a : Type) -> Type where
@@ -949,7 +896,7 @@ interface.
      Delete : (id : i) -> Crud i a
    ```
 
-2. Implement `Foldable` for `Response e i`:
+2. `Foldable`を`Response e i`に実装してください。
 
    ```idris
    data Response : (e, i, a : Type) -> Type where
@@ -960,8 +907,8 @@ interface.
      Error   : (err : e) -> Response e i a
    ```
 
-3. Implement `Foldable` for `List01`. Use tail recursion in the
-   implementations of `toList`, `foldMap`, and `foldl`.
+3. `List01`に`Foldable`を実装してください。
+   `toList`、`foldMap`、`foldl`の実装では末尾再帰を使ってください。
 
    ```idris
    data List01 : (nonEmpty : Bool) -> Type -> Type where
@@ -969,18 +916,17 @@ interface.
      (::) : a -> List01 False a -> List01 ne a
    ```
 
-4. Implement `Foldable` for `Tree`. There is no need to use tail recursion
-   in your implementations, but your functions must be accepted by the
-   totality checker, and you are not allowed to cheat by using
-   `assert_smaller` or `assert_total`.
+4. `Foldable`を`Tree`に実装してください。
+   実装では末尾再帰を使う必要はありませんが、
+   関数は全域性検査器が受け付けるものでなくてはいけません。
+   また`assert_smaller`や`assert_total`を使ってズルすることも許しません。
 
-   Hint: You can test the correct behavior of your implementations
-   by running the same folds on the result of `treeToVect` and
-   verify that the outcome is the same.
+   ヒント：実装が正しく振る舞うか試すには、
+   同じ畳み込みを`treeToVect`の結果に走らせて出力が同じことを確かめればよいです。
 
-5. Like `Functor` and `Applicative`, `Foldable` composes: The product and
-   composition of two foldable container types are again foldable container
-   types. Proof this by implementing `Foldable` for `Comp` and `Product`:
+5. `Functor`や`Applicative`と同様に、`Foldable`は組み合わさります。
+   つまり、2つの折り畳みできる容器型の積や合成もまた折り畳みできる容器型なのです。
+   これを、`Foldable`を`Comp`と`Product`に実装することで証明してください。
 
    ```idris
    record Comp (f,g : Type -> Type) (a : Type) where
@@ -995,14 +941,12 @@ interface.
 
 ## まとめ
 
-We learned a lot about recursion, totality checking, and folds in this
-chapter, all of which are important concepts in pure functional programming
-in general. Wrapping one's head around recursion takes time and
-experience. Therefore - as usual - try to solve as many exercises as you
-can.
+この章で再帰、全域性検査、そして畳み込みについて多くのことを学びました。
+これら全ては一般に純粋関数型プログラミングで重要です。
+再帰を会得するには時間と経験を要すものです。
+したがって……いつも通り……できるだけ多くの演習を解いてみてください。
 
-In the next chapter, we are taking the concept of iterating over container
-types one step further and look at effectful data traversals.
+次の章では容器型を反復する上での概念についてもう一歩踏み込み、作用つきデータの巡回についても見ていきます。
 
 <!-- vi: filetype=idris2
 -->
