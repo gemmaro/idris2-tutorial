@@ -63,11 +63,11 @@ Neovimが初めてであれば、`resources`フォルダにある`init.vim`フ�
 そして少なくとも[代数的データ型](../Tutorial/DataTypes.md)の一部を進めているとよいです。
 さもないとここで起こっていることが理解しづらいでしょう。
 
-Before we begin, note that the commands and actions shown in this tutorial
-might not work correctly after you edited a source file but did not write
-your changes to disk. Therefore, the first thing you should try if the
-things described here do not work, is to quickly save the current file
-(`:w`).
+始める前に注意しておきますが、
+ソースファイルを編集してディスクに変更を書き込んでいなかったら、
+このチュートリアルでお見せするコマンドやアクションは正しく動かないかもしれません。
+したがって、ここに載っていることがうまくいかなかったら、
+最初に試すことは現在のファイルをささっと保存する (`:w`) ことです。
 
 真偽値の否定から始めましょう。
 
@@ -272,12 +272,10 @@ traverseEither2 f (x :: xs) = whatNow2 (f x) (traverseEither f xs)
 * `<LocalLeader>x`と打つと、ポップアップが開いてREPLコマンドやIdrisの式を入力でき、
   プラグインはREPLからの応答で返信します。
   この導入書の主部にあるREPLの例については、いつでもNeovimからこのショートカットをで試すことができますよ。
-* Typing `<LocalLeader><LocalLeader>e` will display the error message from
-  the current line in a popup window. This can be highly useful, if error
-  messages are too long to fit on a single line. Likewise,
-  `<LocalLeader><LocalLeader>el` will list all error messages from the
-  current buffer in a new window. You can then select an error message and
-  jump to its origin by pressing `<Enter>`.
+* `<LocalLeader><LocalLeader>e`と打つと現在の行からのエラー文言をポップアップ窓に表示します。
+  これはエラー文言が1行に収まらないほどに長すぎるときに大変便利です。
+  同様に`<LocalLeader><LocalLeader>el`は新しい窓で現在のバッファからの全てのエラー文言を一覧にします。
+  エラー文言を選択して`<Enter>`を押すとその出自に飛ぶことができます。
 
 他のユースケースや例は`idris2-nvim`プラグインのGitHubのページで記述されており、
 そちらで記述されているように設定に含められます。

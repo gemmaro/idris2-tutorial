@@ -202,10 +202,10 @@ replicateListTR n v = go Nil n
         go xs (S k) = go (v :: xs) k
 ```
 
-The big advantage of tail recursive functions is, that they can be easily
-converted to efficient, imperative loops by the Idris compiler, and are thus
-*stack safe*: Recursive function calls are *not* added to the call stack,
-thus avoiding the dreaded stack overflow errors.
+末尾再帰関数の大きな利点は、Idrisコンパイラによって効率的で命令的な、
+すなわち*スタック安全*な繰返しに簡単に変換できることです。
+再帰関数呼び出しは呼び出しスタックに加えられ*ません*ので、
+悪夢のようなスタックオーバーフローエラーを避けられるのです。
 
 ```idris
 main1 : IO ()
@@ -623,11 +623,9 @@ Show a => Show (Tree a) where
 
 ## インターフェースFoldable
 
-When looking back at all the exercises we solved in the section about
-recursion, most tail recursive functions on lists were of the following
-pattern: Iterate over all list elements from head to tail while passing
-along some state for accumulating intermediate results. At the end of the
-list, return the final state or convert it with an additional function call.
+再帰についての節で解いた全演習を振り返ると、リストにおけるほとんどの末尾再帰関数が次の様式になっています。
+つまり、先頭から尾鰭までの全てのリストの要素を巡回しつつ、中間結果を累積する何らかの状態を渡すというものです。
+リストの終端では最終的な状態を返すか追加の関数呼び出しにより変換するかします。
 
 ### 左畳み込み
 
@@ -723,10 +721,9 @@ Prelude.&& : Bool -> Lazy Bool -> Bool
 2つ目の引数が評価されるのは最初の引数が`True`のときだけで、
 関数の（正格な）結果として返されます。
 
-There are two utility functions for working with lazy evaluation: Function
-`delay` wraps a value in the `Lazy` data type. Note, that the argument of
-`delay` is strict, so the following might take several seconds to print its
-result:
+遅延評価に取り組む上で2つの小間物関数があります。
+関数`delay`は値を`Lazy`データ型に包みます。
+なお、`lazy`の引数は正格なので、以下は結果を印字するのに数秒掛かるかもしれません。
 
 ```repl
 Tutorial.Folds> False && (delay $ length [1..10000] > 100)
@@ -869,7 +866,7 @@ REPLで定義を見ると (`:doc Foldable`) 6つの必須の関数が含まれ�
 * `foldr`: 右からの畳み込み用
 * `foldl`: 左からの畳み込み用
 * `null`: 容器が空かどうかの確認用
-* `foldlM`, for effectful folds in a monad
+* `foldM`: モナドでの作用付き畳み込み用
 * `toList`: 容器から値のリストへの変換用
 * `foldMap`: モノイド上での畳み込み用
 

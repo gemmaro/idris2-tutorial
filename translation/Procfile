@@ -1,0 +1,2 @@
+serve: mdstart ja
+watch: ls po/**/*.po | entr make translate

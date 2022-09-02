@@ -1,0 +1,2454 @@
+# Japanese translations for PACKAGE package
+# Copyright (C) 2022 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"PO-Revision-Date: 2022-08-17 09:17+0900\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. type: Title ##
+#: ../src/Appendices/Neovim.md:364 ../src/Tutorial/DPair.md:1191
+#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
+#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
+#: ../src/Tutorial/Traverse.md:1109
+#, no-wrap
+msgid "Conclusion"
+msgstr "まとめ"
+
+#. type: Plain text
+#: ../src/Appendices/Neovim.md:374 ../src/Tutorial/DPair.md:1206
+#: ../src/Tutorial/DataTypes.md:1368 ../src/Tutorial/Dependent.md:910
+#: ../src/Tutorial/Eq.md:1098 ../src/Tutorial/Folds.md:1064
+#: ../src/Tutorial/Functions1.md:583 ../src/Tutorial/Functions2.md:964
+#: ../src/Tutorial/Functor.md:1427 ../src/Tutorial/IO.md:1125
+#: ../src/Tutorial/Interfaces.md:821 ../src/Tutorial/Predicates.md:1369
+#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#, no-wrap
+msgid ""
+"<!-- vi: filetype=idris2\n"
+"-->\n"
+msgstr ""
+"<!-- vi: filetype=idris2\n"
+"-->\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DPair.md:348 ../src/Tutorial/DataTypes.md:261
+#: ../src/Tutorial/Dependent.md:444 ../src/Tutorial/Eq.md:279
+#: ../src/Tutorial/Folds.md:373 ../src/Tutorial/Functor.md:381
+#: ../src/Tutorial/IO.md:317 ../src/Tutorial/Interfaces.md:189
+#: ../src/Tutorial/Predicates.md:305 ../src/Tutorial/Prim.md:448
+#: ../src/Tutorial/Traverse.md:247
+#, no-wrap
+msgid "Exercises part 1"
+msgstr "演習 その1"
+
+#. type: Title ###
+#: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
+#: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Traverse.md:574
+#, no-wrap
+msgid "Exercises part 2"
+msgstr "演習 その2"
+
+#. type: Title ###
+#: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
+#: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Traverse.md:1016
+#, no-wrap
+msgid "Exercises part 3"
+msgstr "演習 その3"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Eq.md:842 ../src/Tutorial/Folds.md:996
+#: ../src/Tutorial/Functor.md:417 ../src/Tutorial/Traverse.md:285
+#, no-wrap
+msgid ""
+"   data Crud : (i : Type) -> (a : Type) -> Type where\n"
+"     Create : (value : a) -> Crud i a\n"
+"     Update : (id : i) -> (value : a) -> Crud i a\n"
+"     Read   : (id : i) -> Crud i a\n"
+"     Delete : (id : i) -> Crud i a\n"
+msgstr ""
+"   data Crud : (i : Type) -> (a : Type) -> Type where\n"
+"     Create : (value : a) -> Crud i a\n"
+"     Update : (id : i) -> (value : a) -> Crud i a\n"
+"     Read   : (id : i) -> Crud i a\n"
+"     Delete : (id : i) -> Crud i a\n"
+
+#. type: Title #
+#: ../src/Tutorial/Folds.md:1
+#, no-wrap
+msgid "Recursion and Folds"
+msgstr "再帰と畳み込み"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:12
+msgid ""
+"In this chapter, we are going to have a closer look at the computations we "
+"typically perform with *container types*: Parameterized data types like "
+"`List`, `Maybe`, or `Identity`, holding zero or more values of the "
+"parameter's type. Many of these functions are recursive in nature, so we "
+"start with a discourse about recursion in general, and tail recursion as an "
+"important optimization technique in particular. Most recursive functions in "
+"this part will describe pure iterations over lists."
+msgstr ""
+"この章では*容器型*を扱う際の典型的な計算について迫ります。\n"
+"容器型とは`List`、`Maybe`、あるいは`Identity`といった引数を取るデータ型で、\n"
+"引数の型の値をゼロ個以上保有するものです。\n"
+"これらの機能は再帰に根差しているため、一般的な再帰についての議論、\n"
+"特に重要な最適化技法としての末尾再帰の議論から始めます。\n"
+"この部にあるほとんどの再帰関数はリスト上の純粋な繰り返しを記述します。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:17
+msgid ""
+"It is recursive functions, for which totality is hard to determine, so we "
+"will next have a quick look at the totality checker and learn, when it will "
+"refuse to accept a function as being total and what to do about this."
+msgstr ""
+"再帰関数というものはその全域性が決定しづらいものなので、\n"
+"次に全域性検査器を軽く見ていきます。\n"
+"そして、いつ関数の全域性の承諾が拒まれるのか、そんなときどうすればよいのかに"
+"ついて学びます。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:22
+msgid ""
+"Finally, we will start looking for common patterns in the recursive "
+"functions from the first part and will eventually introduce a new interface "
+"for consuming container types: Interface `Foldable`."
+msgstr ""
+"最後に再帰関数においてよくある様式を見ていきます。\n"
+"最初の部分から始まり、最終的には容器型を消費する新しいインターフェース"
+"`Foldable`を導入します。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:23
+#, no-wrap
+msgid ""
+"module Tutorial.Folds\n"
+"\n"
+"import Data.List1\n"
+"import Data.Maybe\n"
+"import Data.Vect\n"
+"import Debug.Trace\n"
+"\n"
+"%default total\n"
+msgstr ""
+"module Tutorial.Folds\n"
+"\n"
+"import Data.List1\n"
+"import Data.Maybe\n"
+"import Data.Vect\n"
+"import Debug.Trace\n"
+"\n"
+"%default total\n"
+
+#. type: Title ##
+#: ../src/Tutorial/Folds.md:34
+#, no-wrap
+msgid "Recursion"
+msgstr "再帰"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:38
+msgid ""
+"In this section, we are going to have a closer look at recursion in general "
+"and at tail recursion in particular."
+msgstr "この節で一般的な再帰と特に末尾再帰に迫ります。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:47
+msgid ""
+"Recursive functions are functions, which call themselves to repeat a task or "
+"calculation until a certain aborting condition (called the *base case*) "
+"holds.  Please note, that it is recursive functions, which make it hard to "
+"verify totality: Non-recursive functions, which are *covering* (they cover "
+"all possible cases in their pattern matches) are automatically total if they "
+"only invoke other total functions."
+msgstr ""
+"再帰関数とは、何らかの中断条件（*既定場合*と呼ばれます）が満たされる手前ま"
+"で、\n"
+"自分自身を呼び出してタスクや計算を繰り返す関数です。\n"
+"注意していただきたいのですが、再帰関数が全域性を確証しづらくするものだという"
+"ことです。\n"
+"*網羅的*な（パターン照合で全ての可能な場合を押さえているような）非再帰関数"
+"は、\n"
+"他の全域関数を呼び出すときだけ、自動的に全域になります。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:50
+msgid ""
+"Here is an example of a recursive function: It generates a list of the given "
+"length filling it with identical values:"
+msgstr ""
+"以下は再帰関数の一例です。\n"
+"同じ値でもって、与えられた長さのリストを生成します。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:51
+#, no-wrap
+msgid ""
+"replicateList : Nat -> a -> List a\n"
+"replicateList 0     _ = []\n"
+"replicateList (S k) x = x :: replicateList k x\n"
+msgstr ""
+"replicateList : Nat -> a -> List a\n"
+"replicateList 0     _ = []\n"
+"replicateList (S k) x = x :: replicateList k x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:63
+msgid ""
+"As you can see (this module has the `%default total` pragma at the top), "
+"this function is provably total. Idris verifies, that the `Nat` argument "
+"gets *strictly smaller* in each recursive call, and that therefore, the "
+"function *must* eventually come to an end. Of course, we can do the same "
+"thing for `Vect`, where we can even show that the length of the resulting "
+"vector matches the given natural number:"
+msgstr ""
+"見てみると（このモジュールの一番上に`%default total`がありますが）この関数は"
+"全域であることが証明されています。\n"
+"`Nat`引数がそれぞれの再帰呼び出しで*厳密に小さく*なることを、\n"
+"そして関数が最終的に終わりに向かう*はず*だということを、\n"
+"Idrisは確証しています。\n"
+"もちろん同じことを`Vect`についても行えますが、\n"
+"こちらについては結果のベクタの長さが与えられた自然数に合致することさえ示すこ"
+"とができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:64
+#, no-wrap
+msgid ""
+"replicateVect : (n : Nat) -> a -> Vect n a\n"
+"replicateVect 0     _ = []\n"
+"replicateVect (S k) x = x :: replicateVect k x\n"
+msgstr ""
+"replicateVect : (n : Nat) -> a -> Vect n a\n"
+"replicateVect 0     _ = []\n"
+"replicateVect (S k) x = x :: replicateVect k x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:73
+msgid ""
+"While we often use recursion to *create* values of data types like `List` or "
+"`Vect`, we also use recursion, when we *consume* such values.  For instance, "
+"here is a function for calculating the length of a list:"
+msgstr ""
+"よく再帰を使って`List`や`Vect`のようなデータ型の値を*つくり*ますが、\n"
+"そのような値を*消費*するときにも再帰は使います。\n"
+"例えば以下はリストの長さを計算する関数です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:74
+#, no-wrap
+msgid ""
+"len : List a -> Nat\n"
+"len []        = 0\n"
+"len (_ :: xs) = 1 + len xs\n"
+msgstr ""
+"len : List a -> Nat\n"
+"len []        = 0\n"
+"len (_ :: xs) = 1 + len xs\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:82
+msgid ""
+"Again, Idris can verify that `len` is total, as the list we pass in the "
+"recursive case is strictly smaller than the original list argument."
+msgstr ""
+"またもやIdrisは`len`が全域であると確証できますが、\n"
+"これは再帰場合に渡したリストが元のリスト引数より厳密に小さくなるためです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:88
+msgid ""
+"But when is a recursive function non-total? Here is an example: The "
+"following function creates a sequence of values until the given generation "
+"function (`gen`) returns a `Nothing`. Note, how we use a *state* value (of "
+"generic type `s`) and use `gen` to calculate a value together with the next "
+"state:"
+msgstr ""
+"しかしいつ再帰関数は非全域なのでしょうか。\n"
+"こちらがその一例です。\n"
+"以下の関数は与えられた生成関数 (`gen`) が`Nothing`を返す手前まで値の並びをつ"
+"くります。\n"
+"（汎化型`s`の）*状態*値や次の状態とともに値を計算するための`gen`の使われかた"
+"に注目してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:89
+#, no-wrap
+msgid ""
+"covering\n"
+"unfold : (gen : s -> Maybe (s,a)) -> s -> List a\n"
+"unfold gen vs = case gen vs of\n"
+"  Just (vs',va) => va :: unfold gen vs'\n"
+"  Nothing       => []\n"
+msgstr ""
+"covering\n"
+"unfold : (gen : s -> Maybe (s,a)) -> s -> List a\n"
+"unfold gen vs = case gen vs of\n"
+"  Just (vs',va) => va :: unfold gen vs'\n"
+"  Nothing       => []\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:103
+msgid ""
+"With `unfold`, Idris can't verify that any of its arguments is converging "
+"towards the base case. It therefore rightfully refuses to accept that "
+"`unfold` is total. And indeed, the following function produces an infinite "
+"list (so please, don't try to inspect this at the REPL, as doing so will "
+"consume all your computer's memory):"
+msgstr ""
+"`unfold`については、任意の引数が既定場合に向かっていくかどうか、Idrisは確証で"
+"きません。\n"
+"したがって当然`unfold`が全域であると認めることを拒みます。\n"
+"そしてもちろん以下の関数は無尽蔵のリストを生成します。\n"
+"（ですからどうかこれをREPLで調べようとしないでください。\n"
+"そうしてしまうとコンピュータの全てのメモリを消費してしまうでしょうから。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:104
+#, no-wrap
+msgid ""
+"fiboHelper : (Nat,Nat) -> ((Nat,Nat),Nat)\n"
+"fiboHelper (f0,f1) = ((f1, f0 + f1), f0)\n"
+"\n"
+"covering\n"
+"fibonacci : List Nat\n"
+"fibonacci = unfold (Just . fiboHelper) (1,1)\n"
+msgstr ""
+"fiboHelper : (Nat,Nat) -> ((Nat,Nat),Nat)\n"
+"fiboHelper (f0,f1) = ((f1, f0 + f1), f0)\n"
+"\n"
+"covering\n"
+"fibonacci : List Nat\n"
+"fibonacci = unfold (Just . fiboHelper) (1,1)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:117
+msgid ""
+"In order to safely create a (finite) sequence of Fibonacci numbers, we need "
+"to make sure the function generating the sequence will stop after a finite "
+"number of steps, for instance by limiting the length of the list:"
+msgstr ""
+"安全に（終端のある）フィボナッチ数の並びをつくるためには、\n"
+"終端となる過程の数のあとに関数が並びの生成を停止することが確実でなくてはいけ"
+"ません。\n"
+"例えばリストの長さを制限すればよいです。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:118
+#, no-wrap
+msgid ""
+"unfoldTot : Nat -> (gen : s -> Maybe (s,a)) -> s -> List a\n"
+"unfoldTot 0     _   _  = []\n"
+"unfoldTot (S k) gen vs = case gen vs of\n"
+"  Just (vs',va) => va :: unfoldTot k gen vs'\n"
+"  Nothing       => []\n"
+"\n"
+"fibonacciN : Nat -> List Nat\n"
+"fibonacciN n = unfoldTot n (Just . fiboHelper) (1,1)\n"
+msgstr ""
+"unfoldTot : Nat -> (gen : s -> Maybe (s,a)) -> s -> List a\n"
+"unfoldTot 0     _   _  = []\n"
+"unfoldTot (S k) gen vs = case gen vs of\n"
+"  Just (vs',va) => va :: unfoldTot k gen vs'\n"
+"  Nothing       => []\n"
+"\n"
+"fibonacciN : Nat -> List Nat\n"
+"fibonacciN n = unfoldTot n (Just . fiboHelper) (1,1)\n"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:129
+#, no-wrap
+msgid "The Call Stack"
+msgstr "呼び出しスタック"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:133
+msgid ""
+"In order to demonstrate what tail recursion is about, we require the "
+"following `main` function:"
+msgstr "末尾再帰がどんなものか実演するためには、以下の`main`関数が要ります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:134
+#, no-wrap
+msgid ""
+"main : IO ()\n"
+"main = printLn . len $ replicateList 10000 10\n"
+msgstr ""
+"main : IO ()\n"
+"main = printLn . len $ replicateList 10000 10\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:144
+msgid ""
+"If you have [Node.js](https://nodejs.org/en/) installed on your system, you "
+"might try the following experiment. Compile and run this module using the "
+"*Node.js* backend of Idris instead of the default *Chez Scheme* backend and "
+"run the resulting JavaScript source file with the Node.js binary:"
+msgstr ""
+"[Node.js](https://nodejs.org/en/)がシステムにインストールされていれば、\n"
+"以下の実験をやってみることができます。\n"
+"Idrisの既定の*Chez Schema*バックエンドの代わりに*Node.js*バックエンドを使って"
+"このモジュールをコンパイルして走らせてください。\n"
+"実行するには結果的に得られるJavaScriptソースファイルをNode.jsバイナリで走らせ"
+"ます。"
+
+#. type: Fenced code block (sh)
+#: ../src/Tutorial/Folds.md:145
+#, no-wrap
+msgid ""
+"idris2 --cg node -o test.js --find-ipkg -src/Tutorial/Folds.md\n"
+"node build/exec/test.js\n"
+msgstr ""
+"idris2 --cg node -o test.js --find-ipkg -src/Tutorial/Folds.md\n"
+"node build/exec/test.js\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:154
+msgid ""
+"Node.js will fail with the following error message and a lengthy stack "
+"trace: `RangeError: Maximum call stack size exceeded`.  What's going on "
+"here? How can it be that `main` fails with an exception although it is "
+"provably total?"
+msgstr ""
+"Node.jsは以下のエラー文言と長々としたスタックトレース`RangeError: Maximum "
+"call stack size exceeded`とともに失敗するでしょう。\n"
+"ここで何が起こっているのでしょうか。\n"
+"全域なことが証明されているのに、どうして`main`が例外で落ちることがありえるの"
+"でしょうか。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:169
+msgid ""
+"First, remember that a function being total means that it will eventually "
+"produce a value of the given type in a finite amount of time, *given enough "
+"resources like computer memory*. Here, `main` hasn't been given enough "
+"resources as Node.js has a very small size limit on its call stack. The "
+"*call stack* can be thought of as a stack data structure (first in, last "
+"out), where nested function calls are put. In case of recursive functions, "
+"the stack size increases by one with every recursive function call. In case "
+"of our `main` function, we create and consume a list of length 10'000, so "
+"the call stack will hold at least 10'000 function calls before they are "
+"being invoked and the stack's size is reduced again. This exceeds Node.js's "
+"stack size limit by far, hence the overflow error."
+msgstr ""
+"まず覚えておいてほしいことは、関数が全域であるということの意味は、\n"
+"その関数が最終的に有限の時間量で与えられた型の値を生成することですが、\n"
+"それは*コンピュータメモリのような充分な資源あってこそです*。\n"
+"ここで`main`は充分なリソースを与えられていませんでしたが、\n"
+"これはNode.jsが呼び出しスタックにとても小さい量での上限を設けているからで"
+"す。\n"
+"*呼び出しスタック*はスタックのデータ構造（先入れ後出し）のように考えられま"
+"す。\n"
+"この構造では入れ子の関数呼び出しが置かれます。\n"
+"再帰関数の場合、スタックの大きさは再帰関数呼び出しのたびに1つ増えます。\n"
+"ここでの`main`関数の場合、長さ10,000のリストを作って消費しているので、\n"
+"コールスタックは呼び出される前に少なくとも10,000個の関数呼び出しを保有してお"
+"り、\n"
+"そこからスタックの大きさは減少に転じていきます。\n"
+"これがNode.jsのスタックの大きさ上限を遥かに越えてしまっているので、オーバーフ"
+"ローエラーになったのです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:180
+msgid ""
+"Now, before we look at a solution how to circumvent this issue, please note "
+"that this is a very serious and limiting source of bugs when using the "
+"JavaScript backends of Idris. In Idris, having no access to control "
+"structures like `for` or `while` loops, we *always* have to resort to "
+"recursion in order to describe iterative computations. Luckily (or should I "
+"say \"unfortunately\", since otherwise this issue would already have been "
+"addressed with all seriousness), the Scheme backends don't have this issue, "
+"as their stack size limit is much larger and they perform all kinds of "
+"optimizations internally to prevent the call stack from overflowing."
+msgstr ""
+"さて、この問題をどのように回避するかの解法を見る前に、\n"
+"これがIdrisのJavaScriptバックエンドを使うときに、とても深刻でありつつも、\n"
+"バグの温床を抑えていることを覚えておいてください。\n"
+"Idrisでは`for`や`while`の繰返しのような制御構造を使うことができず、\n"
+"反復計算を記述するためには*常に*再帰を使わざるを得ないのです。\n"
+"幸運にも（あるいは「不運にも」と言うべきでしょうか、\n"
+"というのもこの問題は既に全ての深刻性について対処されているためです）、\n"
+"Schemeバックエンドにはこの問題を抱えておらず、\n"
+"それはスタックの大きさ上限が遥かに大きく、\n"
+"呼び出しスタックのオーバーフローを防ぐためにあらゆる類の内部的な最適化を施す"
+"ためです。"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:181
+#, no-wrap
+msgid "Tail Recursion"
+msgstr "末尾再帰"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:187
+msgid ""
+"A recursive function is said to be *tail recursive*, if all recursive calls "
+"occur at *tail position*: The last function call in a (sub)expression. For "
+"instance, the following version of `len` is tail recursive:"
+msgstr ""
+"再帰関数の中には*末尾再帰*であると言われるものがありますが、\n"
+"これは全ての再帰呼び出しが*末尾位置*で起こるときに指します。\n"
+"末尾位置とは（部分）式中の最後の関数です。\n"
+"例えば以下の`len`のバージョンは末尾再帰です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:188
+#, no-wrap
+msgid ""
+"lenOnto : Nat -> List a -> Nat\n"
+"lenOnto k []        = k\n"
+"lenOnto k (_ :: xs) = lenOnto (k + 1) xs\n"
+msgstr ""
+"lenOnto : Nat -> List a -> Nat\n"
+"lenOnto k []        = k\n"
+"lenOnto k (_ :: xs) = lenOnto (k + 1) xs\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:197
+msgid ""
+"Compare this to `len` as defined above: There, the last function call is an "
+"invocation of operator `(+)`, and the recursive call happens in one of its "
+"arguments:"
+msgstr ""
+"これを前に定義した`len`と比較してください。\n"
+"`len`では最後の関数呼び出しが演算子`(+)`の呼び出しであり、\n"
+"再帰呼び出しは引数のうちの1つで起こっていました。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:198
+#, no-wrap
+msgid "len (_ :: xs) = 1 + len xs\n"
+msgstr "len (_ :: xs) = 1 + len xs\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:204
+msgid ""
+"We can use `lenOnto` as a utility to implement a tail recursive version of "
+"`len` without the additional `Nat` argument:"
+msgstr ""
+"`lenOnto`から余分な`Nat`引数をなくし、`len`の末尾再帰版を実装するための小間物"
+"として使えます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:205
+#, no-wrap
+msgid ""
+"lenTR : List a -> Nat\n"
+"lenTR = lenOnto 0\n"
+msgstr ""
+"lenTR : List a -> Nat\n"
+"lenTR = lenOnto 0\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:215
+msgid ""
+"This is a common pattern when writing tail recursive functions: We typically "
+"add an additional function argument for accumulating intermediary results, "
+"which is then passed on explicitly at each recursive call. For instance, "
+"here is a tail recursive version of `replicateList`:"
+msgstr ""
+"これは末尾再帰関数を書くときによくある様式です。\n"
+"つまり、追加の関数引数を中間結果に累積するために追加するのが典型的です。\n"
+"この引数はそれぞれの再帰呼び出しで明示的に渡されます。\n"
+"例えば以下は`replicateList`の末尾再帰版です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:216
+#, no-wrap
+msgid ""
+"replicateListTR : Nat -> a -> List a\n"
+"replicateListTR n v = go Nil n\n"
+"  where go : List a -> Nat -> List a\n"
+"        go xs 0     = xs\n"
+"        go xs (S k) = go (v :: xs) k\n"
+msgstr ""
+"replicateListTR : Nat -> a -> List a\n"
+"replicateListTR n v = go Nil n\n"
+"  where go : List a -> Nat -> List a\n"
+"        go xs 0     = xs\n"
+"        go xs (S k) = go (v :: xs) k\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:229
+msgid ""
+"The big advantage of tail recursive functions is, that they can be easily "
+"converted to efficient, imperative loops by the Idris compiler, and are thus "
+"*stack safe*: Recursive function calls are *not* added to the call stack, "
+"thus avoiding the dreaded stack overflow errors."
+msgstr ""
+"末尾再帰関数の大きな利点は、Idrisコンパイラによって効率的で命令的な、\n"
+"すなわち*スタック安全*な繰返しに簡単に変換できることです。\n"
+"再帰関数呼び出しは呼び出しスタックに加えられ*ません*ので、\n"
+"悪夢のようなスタックオーバーフローエラーを避けられるのです。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:230
+#, no-wrap
+msgid ""
+"main1 : IO ()\n"
+"main1 = printLn . lenTR $ replicateListTR 10000 10\n"
+msgstr ""
+"main1 : IO ()\n"
+"main1 = printLn . lenTR $ replicateListTR 10000 10\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:240
+msgid ""
+"We can again run `main1` using the *Node.js* backend. This time, we use "
+"slightly different syntax to execute a function other than `main` (Remember: "
+"The dollar prefix is only there to distinghish a terminal command from its "
+"output. It is not part of the command you enter in a terminal sesssion.):"
+msgstr ""
+"改めてを*Node.js*バックエンドを使って`main1`を走らせます。\n"
+"今回は僅かに異なる構文を使って`main`以外の関数を実行しています。\n"
+"（いいですか。ドル記号の前置は端末のコマンドとその結果を区別するためだけにあ"
+"りますよ。\n"
+"ドル記号は端末のセッションで入力するコマンドの一部ではありません。）"
+
+#. type: Fenced code block (sh)
+#: ../src/Tutorial/Folds.md:241
+#, no-wrap
+msgid ""
+"$ idris2 --cg node --exec main1 --find-ipkg src/Tutorial/Folds.md\n"
+"10000\n"
+msgstr ""
+"$ idris2 --cg node --exec main1 --find-ipkg src/Tutorial/Folds.md\n"
+"10000\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:248
+msgid ""
+"As you can see, this time the computation finished without overflowing the "
+"call stack."
+msgstr ""
+"見てとれるように今回は計算が呼び出しスタックが溢れることなしに終了しました。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:253
+msgid ""
+"Tail recursive functions are allowed to consist of (possibly nested) pattern "
+"matches, with recursive calls at tail position in several of the branches.  "
+"Here is an example:"
+msgstr ""
+"末尾再帰関数を（入れ子になりうる）パターン照合で構成することも可能です。\n"
+"パターン照合の複数の分岐それぞれで末尾位置での再帰呼び出しがあります。\n"
+"以下は一例です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:254
+#, no-wrap
+msgid ""
+"countTR : (a -> Bool) -> List a -> Nat\n"
+"countTR p = go 0\n"
+"  where go : Nat -> List a -> Nat\n"
+"        go k []        = k\n"
+"        go k (x :: xs) = case p x of\n"
+"          True  => go (S k) xs\n"
+"          False => go k xs\n"
+msgstr ""
+"countTR : (a -> Bool) -> List a -> Nat\n"
+"countTR p = go 0\n"
+"  where go : Nat -> List a -> Nat\n"
+"        go k []        = k\n"
+"        go k (x :: xs) = case p x of\n"
+"          True  => go (S k) xs\n"
+"          False => go k xs\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:266
+msgid ""
+"Note, how each invocation of `go` is in tail position in its branch of the "
+"case expression."
+msgstr ""
+"それぞれの`go`の呼び出しがcase式の分岐の末尾位置にあることに着目してくださ"
+"い。"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:267
+#, no-wrap
+msgid "Mutual Recursion"
+msgstr "相互再帰"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:281
+msgid ""
+"It is sometimes convenient to implement several related functions, which "
+"call each other recursively. In Idris, unlike in many other programming "
+"languages, a function must be declared in a source file *before* it can be "
+"called by other functions, as in general a function's implementation must be "
+"available during type checking (because Idris has dependent types). There "
+"are two ways around this, which actually result in the same internal "
+"representation in the compiler. Our first option is to write down the "
+"functions' declarations first with the implementations following after. "
+"Here's a silly example:"
+msgstr ""
+"複数の関連する、すなわちお互いに再帰的に呼び出す関数を実装すると便利なときが"
+"あります。\n"
+"Idrisでは他の多くのプログラミング言語とは異なり、\n"
+"関数は他の関数に呼び出されるより*前*にソースファイルで定義されなくてはいけま"
+"せん。\n"
+"というのも一般的に関数の実装が型検査中に利用できなくてはいけないからです。\n"
+"（Idrisが依存型であるためです。）\n"
+"これには2つの方法があり、実際にはコンパイラ中で同じ内部表現に落ち着きます。\n"
+"最初の選択肢は関数の宣言を最初に書き下し、そのあとに実装が続くようにすること"
+"です。\n"
+"以下は他愛ない例です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:282
+#, no-wrap
+msgid ""
+"even : Nat -> Bool\n"
+"\n"
+"odd : Nat -> Bool\n"
+"\n"
+"even 0     = True\n"
+"even (S k) = odd k\n"
+"\n"
+"odd 0     = False\n"
+"odd (S k) = even k\n"
+msgstr ""
+"even : Nat -> Bool\n"
+"\n"
+"odd : Nat -> Bool\n"
+"\n"
+"even 0     = True\n"
+"even (S k) = odd k\n"
+"\n"
+"odd 0     = False\n"
+"odd (S k) = even k\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:297
+msgid ""
+"As you can see, function `even` is allowed to call function `odd` in its "
+"implementation, since `odd` has already been declared (but not yet "
+"implemented)."
+msgstr ""
+"見ての通り、関数`even`は実装で関数`add`を呼ぶことができていますが、\n"
+"これは`odd`が既に宣言されている（でも実装はまだ）からです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:302
+msgid ""
+"If you're like me and want to keep declarations and implementations next to "
+"each other, you can introduce a `mutual` block, which has the same effect. "
+"Like with other code blocks, functions in a `mutual` block must all be "
+"indented by the same amount of whitespace:"
+msgstr ""
+"宣言と実装がお互いに隣り合っている状態を維持したければ、\n"
+"`mutual`ブロックを導入することができます。\n"
+"このブロックには上と同じ効果があります。\n"
+"他のコードブロックと同様に`mutual`ブロック中の関数は全て同量の空白で字下げさ"
+"れていなくてはなりません。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:303
+#, no-wrap
+msgid ""
+"mutual\n"
+"  even' : Nat -> Bool\n"
+"  even' 0     = True\n"
+"  even' (S k) = odd' k\n"
+"\n"
+"  odd' : Nat -> Bool\n"
+"  odd' 0     = False\n"
+"  odd' (S k) = even' k\n"
+msgstr ""
+"mutual\n"
+"  even' : Nat -> Bool\n"
+"  even' 0     = True\n"
+"  even' (S k) = odd' k\n"
+"\n"
+"  odd' : Nat -> Bool\n"
+"  odd' 0     = False\n"
+"  odd' (S k) = even' k\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:319
+msgid ""
+"Just like with single recursive functions, mutually recursive functions can "
+"be optimized to imperative loops if all recursive calls occur at tail "
+"position. This is the case with functions `even` and `odd`, as can again be "
+"verified at the *Node.js* backend:"
+msgstr ""
+"ちょうど単一再帰関数と同じように、\n"
+"相互再帰関数は再帰呼び出しが末尾位置で起こっているときに命令的な繰返しに最適"
+"化することができます。\n"
+"これは関数`even`や`odd`についても言え、\n"
+"そのためここでも*Node.js*バックエンドで確かめることができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:320
+#, no-wrap
+msgid ""
+"main2 : IO ()\n"
+"main2 =  printLn (even 100000)\n"
+"      >> printLn (odd 100000)\n"
+msgstr ""
+"main2 : IO ()\n"
+"main2 =  printLn (even 100000)\n"
+"      >> printLn (odd 100000)\n"
+
+#. type: Fenced code block (sh)
+#: ../src/Tutorial/Folds.md:326
+#, no-wrap
+msgid ""
+"$ idris2 --cg node --exec main2 --find-ipkg src/Tutorial/Folds.md\n"
+"True\n"
+"False\n"
+msgstr ""
+"$ idris2 --cg node --exec main2 --find-ipkg src/Tutorial/Folds.md\n"
+"True\n"
+"False\n"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:332
+#, no-wrap
+msgid "Final Remarks"
+msgstr "総括"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:336
+msgid ""
+"In this section, we learned about several important aspects of recursion and "
+"totality checking, which are summarized here:"
+msgstr ""
+"この節ではいくつかの重要な再帰と全域性検査の側面について学びました。\n"
+"以下に要約します。"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:339
+msgid ""
+"In pure functional programming, recursion is the way to implement iterative "
+"procedures."
+msgstr "純粋関数型プログラミングでは再帰は繰返し手順を実装する手段である。"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:343
+msgid ""
+"Recursive functions pass the totality checker, if it can verify that one of "
+"the arguments is getting strictly smaller in every recursive function call."
+msgstr ""
+"再帰関数が全域性検査器を通るのは、引数の1つが各再帰関数呼び出しで厳密に小さく"
+"なることが確かめられるときである"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:346
+msgid ""
+"Arbitrary recursion can lead to stack overflow exceptions on backends with "
+"small stack size limits."
+msgstr ""
+"小さいスタックの大きさ上限を持つバックエンドでは、任意の再帰はスタックオー"
+"バーフロー例外に繋がりうる。"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:350
+msgid ""
+"The JavaScript backends of Idris perform mutual tail call optimization: Tail "
+"recursive functions are converted to stack safe, imperative loops."
+msgstr ""
+"IdrisのJavaScriptバックエンドは相互末尾呼び出し最適化を実施する。\n"
+"末尾再帰関数はスタック安全で命令的な繰返しに変換される。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:354
+msgid ""
+"Note, that not all Idris backends you will come across in the wild will "
+"perform tail call optimization. Please check the corresponding documentation."
+msgstr ""
+"なお、巷で遭遇する全てのIdrisバックエンドが末尾呼び出し最適化を施すとは限りま"
+"せん。\n"
+"対応するドキュメントを確認してください。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:372
+msgid ""
+"Note also, that most recursive functions in the core libraries (*prelude* "
+"and *base*) do not yet make use of tail recursion. There is an important "
+"reason for this: In many cases, non-tail recursive functions are easier to "
+"use in compile-time proofs, as they unify more naturally than their tail "
+"recursive counterparts.  Compile-time proofs are an important aspect of "
+"programming in Idris (as we will see in later chapters), so there is a "
+"compromise to be made between what performs well at runtime and what works "
+"well at compile time. Eventually, the way to go might be to provide two "
+"implementations for most recursive functions with a *transform rule* telling "
+"the compiler to use the optimized version at runtime whenever programmers "
+"use the non-optimized version in their code.  Such transform rules have - "
+"for instance - already been written for functions `pack` and `unpack` (which "
+"use `fastPack` and `fastUnpack` at runtime; see the corresponding rules in "
+"[the following source file](https://github.com/idris-lang/Idris2/blob/main/"
+"libs/prelude/Prelude/Types.idr))."
+msgstr ""
+"これも注意ですが、中核ライブラリ（*prelude*と*base*）のほとんどの再帰関数はま"
+"だ末尾再帰を活用していません。\n"
+"これには大切な理由があります。\n"
+"多くの場合、非末尾再帰関数はコンパイル時証明で使いやすいのですが、\n"
+"これは末尾再帰で対応するものより自然に統合が行えるからです。\n"
+"コンパイル時証明は（後の章で見ていくように）Idrisでプログラミングする上での重"
+"要な側面であり、\n"
+"実行時にいい感じに動くこととコンパイル時にいい感じに動くことの間には折り合い"
+"があります。\n"
+"ゆくゆく行き着くところは2つの実装を提供することでしょう。\n"
+"ほとんどの再帰関数には*転轍規則*がついており、\n"
+"コンパイラに実行時には最適化された版を使うように指示します。\n"
+"これはプログラマがコードで最適化されていないバージョンを使うときは常に有効で"
+"す。\n"
+"そのような転轍規則は、例えば既に関数`pack`と`unpack`に書かれています。\n"
+"（これらの関数では実行時に`fastPack`と`fastUnpack`を使います。\n"
+"[リンク先のソースファイル](https://github.com/idris-lang/Idris2/blob/main/"
+"libs/prelude/Prelude/Types.idr)中の対応する規則をご参照ください。）"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:379
+msgid ""
+"In these exercises you are going to implement several recursive functions. "
+"Make sure to use tail recursion whenever possible and quickly verify the "
+"correct behavior of all functions at the REPL."
+msgstr ""
+"この演習ではいくつかの再帰関数を実装していきます。\n"
+"できる限り末尾再帰を使うようにし、REPLで全ての関数について正しい振舞いをする"
+"ことを簡単に確かめてください。"
+
+#. type: Bullet: '1. '
+#: ../src/Tutorial/Folds.md:383
+msgid ""
+"Implement functions `anyList` and `allList`, which return `True` if any "
+"element (or all elements in case of `allList`) in a list fulfills the given "
+"predicate:"
+msgstr ""
+"関数`anyList`と`allList`を実装してください。\n"
+"この関数はリスト中のどれか1つの要素（`allList`の場合は全ての要素）が所与の条"
+"件を満足するとき`True`を返します。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:384
+#, no-wrap
+msgid ""
+"   anyList : (a -> Bool) -> List a -> Bool\n"
+"\n"
+"   allList : (a -> Bool) -> List a -> Bool\n"
+msgstr ""
+"   anyList : (a -> Bool) -> List a -> Bool\n"
+"\n"
+"   allList : (a -> Bool) -> List a -> Bool\n"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/Folds.md:392
+msgid ""
+"Implement function `findList`, which returns the first value (if any) "
+"fulfilling the given predicate:"
+msgstr ""
+"関数`findList`を実装してください。\n"
+"この関数は（もしあれば）所与の条件を満足する最初の値を返します。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:393
+#, no-wrap
+msgid "   findList : (a -> Bool) -> List a -> Maybe a\n"
+msgstr "   findList : (a -> Bool) -> List a -> Maybe a\n"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/Folds.md:399
+msgid ""
+"Implement function `collectList`, which returns the first value (if any), "
+"for which the given function returns a `Just`:"
+msgstr ""
+"関数`collectList`を実装してください。\n"
+"この関数は（もしあれば）所与の関数が`Just`を返すような最初の値を返します。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:400
+#, no-wrap
+msgid "   collectList : (a -> Maybe b) -> List a -> Maybe b\n"
+msgstr "   collectList : (a -> Maybe b) -> List a -> Maybe b\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:405
+#, no-wrap
+msgid "   Implement `lookupList` in terms of `collectList`:\n"
+msgstr "   `collectList`を使って`lookupList`を実装してください。\n"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:406
+#, no-wrap
+msgid "   lookupList : Eq a => a -> List (a,b) -> Maybe b\n"
+msgstr "   lookupList : Eq a => a -> List (a,b) -> Maybe b\n"
+
+#. type: Bullet: '4. '
+#: ../src/Tutorial/Folds.md:423
+msgid ""
+"For functions like `map` or `filter`, which must loop over a list without "
+"affecting the order of elements, it is harder to write a tail recursive "
+"implementation.  The safest way to do so is by using a `SnocList` (a "
+"*reverse* kind of list that's built from head to tail instead of from tail "
+"to head) to accumulate intermediate results. Its two constructors are `Lin` "
+"and `(:<)` (called the *snoc* operator).  Module `Data.SnocList` exports two "
+"tail recursive operators called *fish* and *chips* (`(<><)` and `(<>>)`) for "
+"going from `SnocList` to `List` and vice versa. Have a look at the types of "
+"all new data constructors and operators before continuing with the exercise."
+msgstr ""
+"`map`や`filter`のような関数は要素の順番に影響を与えることなくリストを巡回しま"
+"すが、\n"
+"末尾再帰実装を書くことは難しいです。\n"
+"末尾再帰にする最も安全な方法は`SnocList`\n"
+"（リストの*逆*の類であり、尾鰭から先頭に向かって構築されるのではなく先頭から"
+"尾鰭に向かって構築されます。）\n"
+"を使うことで中間結果を累積することです。\n"
+"この型の2つの構築子は`Lin`と`(:<)`（*snoc*演算子と呼ばれます）です。\n"
+"モジュール`Data.SnocList`は*フィッシュ*と*チップス*（`(<><)`と`(<>>)`）\n"
+"と呼ばれる2つの末尾再帰演算子を輸出します。\n"
+"これは`SnocList`と`List`とを行き来するためのものです。\n"
+"演習を続ける前に、全ての新しいデータ構築子と演算子の型を眺めてください。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:428
+#, no-wrap
+msgid ""
+"   Implement a tail recursive version of `map` for `List`\n"
+"   by using a `SnocList` to reassemble the mapped list. Use then\n"
+"   the *chips* operator with a `Nil` argument to\n"
+"   in the end convert the `SnocList` back to a `List`.\n"
+msgstr ""
+"   `SnocList`を使って写されたリストを再編成することで、`List`に`map`の末尾再帰版を実装してください。\n"
+"   それから最後に`Nil`引数つきの*チップス*演算子を使って`SnocList`を`List`に変換して戻してください。\n"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:429
+#, no-wrap
+msgid "   mapTR : (a -> b) -> List a -> List b\n"
+msgstr "   mapTR : (a -> b) -> List a -> List b\n"
+
+#. type: Bullet: '5. '
+#: ../src/Tutorial/Folds.md:437
+msgid ""
+"Implement a tail recursive version of `filter`, which only keeps those "
+"values in a list, which fulfill the given predicate. Use the same technique "
+"as described in exercise 4."
+msgstr ""
+"末尾再帰版の`filter`を実装してください。\n"
+"この関数は、リスト中の所与の条件を満足する値だけを保持します。\n"
+"演習4で記載したのと同じ技法を使ってください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:438
+#, no-wrap
+msgid "   filterTR : (a -> Bool) -> List a -> List a\n"
+msgstr "   filterTR : (a -> Bool) -> List a -> List a\n"
+
+#. type: Bullet: '6. '
+#: ../src/Tutorial/Folds.md:445
+msgid ""
+"Implement a tail recursive version of `mapMaybe`, which only keeps those "
+"values in a list, for which the given function argument returns a `Just`:"
+msgstr ""
+"`mapMaybe`の末尾再帰版を実装してください。\n"
+"この関数はリスト中の、所与の関数引数が`Just`を返すような値のみを保持します。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:446
+#, no-wrap
+msgid "   mapMaybeTR : (a -> Maybe b) -> List a -> List b\n"
+msgstr "   mapMaybeTR : (a -> Maybe b) -> List a -> List b\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:451
+#, no-wrap
+msgid "   Implement `catMaybesTR` in terms of `mapMaybeTR`:\n"
+msgstr "   `mapMaybeTR`を使って`catMaybesTR`を実装してください。\n"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:452
+#, no-wrap
+msgid "   catMaybesTR : List (Maybe a) -> List a\n"
+msgstr "   catMaybesTR : List (Maybe a) -> List a\n"
+
+#. type: Bullet: '7. '
+#: ../src/Tutorial/Folds.md:457
+msgid "Implement a tail recursive version of list concatenation:"
+msgstr "リスト連結の末尾再帰版を実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:458
+#, no-wrap
+msgid "   concatTR : List a -> List a -> List a\n"
+msgstr "   concatTR : List a -> List a -> List a\n"
+
+#. type: Bullet: '8. '
+#: ../src/Tutorial/Folds.md:464
+msgid "Implement tail recursive versions of *bind* and `join` for `List`:"
+msgstr "リストの*束縛*と`join`の末尾再帰版を実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:465
+#, no-wrap
+msgid ""
+"   bindTR : List a -> (a -> List b) -> List b\n"
+"\n"
+"   joinTR : List (List a) -> List a\n"
+msgstr ""
+"   bindTR : List a -> (a -> List b) -> List b\n"
+"\n"
+"   joinTR : List (List a) -> List a\n"
+
+#. type: Title ##
+#: ../src/Tutorial/Folds.md:471
+#, no-wrap
+msgid "A few Notes on Totality Checking"
+msgstr "全域性検査について少々補足"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:482
+msgid ""
+"The totality checker in Idris verifies, that at least one (possibly erased!) "
+"argument in a recursive call converges towards a base case. For instance, "
+"with natural numbers, if the base case is zero (corresponding to data "
+"constructor `Z`), and we continue with `k` after pattern matching on `S k`, "
+"Idris can derive from `Nat`'s constructors, that `k` is strictly smaller "
+"than `S k` and therefore the recursive call must converge towards a base "
+"case.  Exactly the same reasoning is used when pattern matching on a list "
+"and continuing only with its tail in the recursive call."
+msgstr ""
+"Idrisの全域性検査器が確証しているのは、\n"
+"再帰呼び出しでの少なくとも1つの引数（消去されうるものです！）が、基底の場合に"
+"向かって収束することです。\n"
+"例えば自然数があったとき、基底の場合がゼロ（データ構築子`Z`に対応）であり、\n"
+"`S k`でパターン照合したあとは`k`で続いているとします。\n"
+"このときIdrisは`Nat`の構築子を以って、`k`が`S k`より厳密に小さいため、\n"
+"再帰呼び出しは基底の場合に向かって収束するはずだと導出できるのです。\n"
+"ちょうど同じ論拠が再帰呼び出しで尾鰭だけで続けるリストのパターン照合で用いら"
+"れます。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:487
+msgid ""
+"While this works in many cases, it doesn't always go as expected.  Below, "
+"I'll show you a couple of examples where totality checking fails, although "
+"*we* know, that the functions in question are definitely total."
+msgstr ""
+"これは多くの場合で機能しますが、常に期待通りにいくわけではありません。\n"
+"以下では、*私達は*問題の関数が間違いなく全域だとわかるものの、\n"
+"全域性検査が失敗する例をいくつかお見せします。"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:488
+#, no-wrap
+msgid "Case 1: Recursion over a Primitive"
+msgstr "事例1：原始型での再帰"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:494
+msgid ""
+"Idris doesn't know anything about the internal structure of primitive data "
+"types. So the following function, although being obviously total, will not "
+"be accepted by the totality checker:"
+msgstr ""
+"Idrisは原始的なデータ型の内部構造について何も知りません。\n"
+"なので以下の関数は明らかに全域ですが、全域性検査が受けつけようとしません。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:495
+#, no-wrap
+msgid ""
+"covering\n"
+"replicatePrim : Bits32 -> a -> List a\n"
+"replicatePrim 0 v = []\n"
+"replicatePrim x v = v :: replicatePrim (x - 1) v\n"
+msgstr ""
+"covering\n"
+"replicatePrim : Bits32 -> a -> List a\n"
+"replicatePrim 0 v = []\n"
+"replicatePrim x v = v :: replicatePrim (x - 1) v\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:514
+msgid ""
+"Unlike with natural numbers (`Nat`), which are defined as an inductive data "
+"type and are only converted to integer primitives during compilation, Idris "
+"can't tell that `x - 1` is strictly smaller than `x`, and so it fails to "
+"verify that this must converge towards the base case.  (The reason is, that "
+"`x - 1` is implemented in terms of primitive function `prim__sub_Bits32`, "
+"which is built into the compiler and must be implemented by each backend "
+"individually. The totality checker knows about data types, constructors, and "
+"functions defined in Idris, but not about (primitive) functions and foreign "
+"functions implemented at the backends. While it is theoretically possible to "
+"also define and use laws for primitive and foreign functions, this hasn't "
+"yet been done for most of them.)"
+msgstr ""
+"自然数 (`Nat`) は帰納的データ型として定義されコンパイル時にのみ整数の原始型に"
+"変換されます。\n"
+"これとは違い、Idrisには`x - 1`が厳密に`x`よりも小さいかがわからず、\n"
+"そのためこれが基底の場合に向かって収束するはずだと確証するのに失敗するので"
+"す。\n"
+"（その理由は、`x - 1`が原始関数`prim__sub_Bits32`を使って実装されているからで"
+"す。\n"
+"この関数はコンパイラに備わっており、それぞれ個別のバックエンドで実装されてい"
+"なくてはなりません。）\n"
+"全域性検査器はIdrisで定義されたデータ型、構築子、関数について知っています"
+"が、\n"
+"バックエンドで実装された（原始）関数や異邦関数についてはその限りではありませ"
+"ん。\n"
+"理論的には原始型や異邦関数に法則を定義して使うこともできるのですが、\n"
+"これはまだほとんどのものについて完了していません。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:520
+msgid ""
+"Since non-totality is highly contagious (all functions invoking a partial "
+"function are themselves considered to be partial by the totality checker), "
+"there is utility function `assert_smaller`, which we can use to convince the "
+"totality checker and still annotate our functions with the `total` keyword:"
+msgstr ""
+"非全域性はかなり感染力が高いため（部分関数を呼び出す全ての関数は全域性検査器"
+"によって部分的だと見なされます）、\n"
+"小間物関数`assert_smaller`があります。\n"
+"この関数を使えば全域性検査器を説得し、さらに`total`キーワードを関数に註釈付け"
+"ることができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:521
+#, no-wrap
+msgid ""
+"replicatePrim' : Bits32 -> a -> List a\n"
+"replicatePrim' 0 v = []\n"
+"replicatePrim' x v = v :: replicatePrim' (assert_smaller x $ x - 1) v\n"
+msgstr ""
+"replicatePrim' : Bits32 -> a -> List a\n"
+"replicatePrim' 0 v = []\n"
+"replicatePrim' x v = v :: replicatePrim' (assert_smaller x $ x - 1) v\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:532
+msgid ""
+"Please note, though, that whenever you use `assert_smaller` to silence the "
+"totality checker, the burden of proving totality rests on your shoulders. "
+"Failing to do so can lead to arbitrary and unpredictable program behavior "
+"(which is the default with most other programming languages)."
+msgstr ""
+"ただし、全域性検査器を静かにさせるために`assert_smaller`を使うときは、\n"
+"全域性を証明する責任が自分の肩にのしかかっていることに注意してください。\n"
+"それをし損なうとありとあらゆる予期しないプログラムの振舞いに繋がる可能性があ"
+"ります。\n"
+"（これはほとんどの他のプログラミング言語でも言えます。）"
+
+#. type: Title ####
+#: ../src/Tutorial/Folds.md:533
+#, no-wrap
+msgid "Ex Falso Quodlibet"
+msgstr "Ex Falso Quodlibet"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:543
+msgid ""
+"Below - as a demonstration - is a simple proof of `Void`.  `Void` is an "
+"*uninhabited type*: a type with no values.  *Proofing `Void`* means, that we "
+"implement a function accepted by the totality checker, which returns a value "
+"of type `Void`, although this is supposed to be impossible as there is no "
+"such value. Doing so allows us to completely disable the type system "
+"together with all the guarantees it provides.  Here's the code and its dire "
+"consequences:"
+msgstr ""
+"以下はとある実演で、素朴な`Void`の証明です。\n"
+"`Void`は*傍若無人型*、つまりは値のない型です。\n"
+"*`Void`を証明する*ことが意味するのは、全域性検査器に受け入れられる関数を実装"
+"することであり、\n"
+"そんな値はないので不可能でなくてはいけないにも関わらず、この関数は型`Void`の"
+"値を返します。\n"
+"そうすることで型システムと提供されていた全ての保証諸共、完全に無効にすること"
+"ができます。\n"
+"以下はコードとその惨憺たる結果です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:544
+#, no-wrap
+msgid ""
+"-- In order to proof `Void`, we just loop forever, using\n"
+"-- `assert_smaller` to silence the totality checker.\n"
+"proofOfVoid : Bits8 -> Void\n"
+"proofOfVoid n = proofOfVoid (assert_smaller n n)\n"
+"\n"
+"-- From a value of type `Void`, anything follows!\n"
+"-- This function is safe and total, as there is no\n"
+"-- value of type `Void`!\n"
+"exFalsoQuodlibet : Void -> a\n"
+"exFalsoQuodlibet _ impossible\n"
+"\n"
+"-- By passing our proof of void to `exFalsoQuodlibet`\n"
+"-- (exported by the *Prelude* by the name of `void`), we\n"
+"-- can coerce any value to a value of any other type.\n"
+"-- This renders type checking completely useless, as\n"
+"-- we can freely convert between values of different\n"
+"-- types.\n"
+"coerce : a -> b\n"
+"coerce _ = exFalsoQuodlibet (proofOfVoid 0)\n"
+"\n"
+"-- Finally, we invoke `putStrLn` with a number instead\n"
+"-- of a string. `coerce` allows us to do just that.\n"
+"pain : IO ()\n"
+"pain = putStrLn $ coerce 0\n"
+msgstr ""
+"-- `Void`を証明するためには、ただ無限ループさせればよいです。\n"
+"-- `assert_smaller`を使って全域性検査器を大人しくさせます。\n"
+"proofOfVoid : Bits8 -> Void\n"
+"proofOfVoid n = proofOfVoid (assert_smaller n n)\n"
+"\n"
+"-- 型`Void`の値からはどんなことも従います！\n"
+"-- 型`Void`の値はないので、この関数は安全で全域なのです！\n"
+"exFalsoQuodlibet : Void -> a\n"
+"exFalsoQuodlibet _ impossible\n"
+"\n"
+"-- voidの証明を`exFalsoQuodlibet`（`void`の名前で*Prelude*から輸出されています）に通すことで、\n"
+"-- どんな値も別の型の値に押し込むことができます。\n"
+"-- 異なる型の値に自由に変換できてしまっては、\n"
+"-- 型検査が全くの役立たずになってしまいました。\n"
+"coerce : a -> b\n"
+"coerce _ = exFalsoQuodlibet (proofOfVoid 0)\n"
+"\n"
+"-- 最後に文字列の代わりに数字で`putStrLn`を呼び出します。\n"
+"-- `coerce`があればそれさえできてしまいます。\n"
+"pain : IO ()\n"
+"pain = putStrLn $ coerce 0\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:576
+msgid ""
+"Please take a moment to marvel at provably total function `coerce`: It "
+"claims to convert *any* value to a value of *any* other type.  And it is "
+"completely safe, as it only uses total functions in its implementation. The "
+"problem is - of course - that `proofOfVoid` should never ever have been a "
+"total function."
+msgstr ""
+"しばし証明的に全域な関数`coerce`に嘆じましょう。\n"
+"この関数は*いかなる*値も*いかなる*他の型の値に変換することができると主張して"
+"いるのです。\n"
+"そしてそれは完全に安全で、なぜなら実装で全域関数のみを使っているからです。\n"
+"問題があるとすれば……もちろん……`proofOfVoid`はどんなことがあろうと全域関数では"
+"ないことです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:581
+msgid ""
+"In `pain` we use `coerce` to conjure a string from an integer.  In the end, "
+"we get what we deserve: The program crashes with an error.  While things "
+"could have been much worse, it can still be quite time consuming and "
+"annoying to localize the source of such an error."
+msgstr ""
+"`pain`で`coerce`を使って整数から文字列をでっち上げました。\n"
+"最終的には自業自得となります。\n"
+"要はプログラムがエラーでクラッシュするのです。\n"
+"事態がこれよりさらに悪くなることもありえたでしょう。\n"
+"実行にかなりの時間が費された挙句そのようなエラーの発生箇所を見つけ出すのが厄"
+"介になる可能性がありますから。"
+
+#. type: Fenced code block (sh)
+#: ../src/Tutorial/Folds.md:582
+#, no-wrap
+msgid ""
+"$ idris2 --cg node --exec pain --find-ipkg src/Tutorial/Folds.md\n"
+"ERROR: No clauses\n"
+msgstr ""
+"$ idris2 --cg node --exec pain --find-ipkg src/Tutorial/Folds.md\n"
+"ERROR: No clauses\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:590
+msgid ""
+"So, with a single thoughtless placement of `assert_smaller` we wrought havoc "
+"within our pure and total codebase sacrificing totality and type safety in "
+"one fell swoop. Therefore: Use at your own risk!"
+msgstr ""
+"というわけで、たった1つでも無考えに`assert_smaller`を置くと、\n"
+"全域性と型安全性が犠牲にされた純粋で全域なコードベースの裡で一挙に大惨事に見"
+"舞われるのです。\n"
+"したがって、自己責任で使ってください！"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:594
+msgid ""
+"Note: I do not expect you to understand all the dark magic at work in the "
+"code above. I'll explain the details in due time in another chapter."
+msgstr ""
+"補足：上のコード中で動いている全ての暗黒魔法を理解することは期待していませ"
+"ん。\n"
+"別の章でその時がきたら詳細をご説明しましょう。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:602
+msgid ""
+"Second note: *Ex falso quodlibet*, also called [the principle of explosion]"
+"(https://en.wikipedia.org/wiki/Principle_of_explosion)  is a law in "
+"classical logic: From a contradiction, any statement can be proven.  In our "
+"case, the contradiction was our proof of `Void`: The claim that we wrote a "
+"total function producing such a value, although `Void` is an uninhabited "
+"type.  You can verify this by inspecting `Void` at the REPL with `:doc "
+"Void`: It has no data constructors."
+msgstr ""
+"2つめの補足：*Ex falso quodlibet*、またの名を[爆発の原理](https://en."
+"wikipedia.org/wiki/Principle_of_explosion)は古典論理の法則の1つです。\n"
+"矛盾からはいかなる記述も証明されたものにできるというものです。\n"
+"今回の場合、矛盾は`Void`の証明にありました。\n"
+"`Void`は傍若無人型なのに、そのような値を生み出す全域関数を書いたと主張するこ"
+"とがこれにあたるのです。\n"
+"このことは`Void`をREPLで`:doc Void`で調べれば確かめることができます。\n"
+"これにはデータ構築子がないのです。"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:603
+#, no-wrap
+msgid "Case 2: Recursion via Function Calls"
+msgstr "事例2：関数呼び出しを介した再帰"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:608
+msgid ""
+"Below is an implementation of a [*rose tree*](https://en.wikipedia.org/wiki/"
+"Rose_tree).  Rose trees can represent search paths in computer algorithms, "
+"for instance in graph theory."
+msgstr ""
+"以下は[*木薔薇*](https://en.wikipedia.org/wiki/Rose_tree)の実装です。\n"
+"木薔薇はコンピュータアルゴリズムにおける探索経路を表現することができます。\n"
+"グラフ理論がその一例です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:609
+#, no-wrap
+msgid ""
+"record Tree a where\n"
+"  constructor Node\n"
+"  value  : a\n"
+"  forest : List (Tree a)\n"
+"\n"
+"Forest : Type -> Type\n"
+"Forest = List . Tree\n"
+msgstr ""
+"record Tree a where\n"
+"  constructor Node\n"
+"  value  : a\n"
+"  forest : List (Tree a)\n"
+"\n"
+"Forest : Type -> Type\n"
+"Forest = List . Tree\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:620
+msgid "We could try and compute the size of such a tree as follows:"
+msgstr "以下のようにそのような木の大きさの計算を試みることができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:621
+#, no-wrap
+msgid ""
+"covering\n"
+"size : Tree a -> Nat\n"
+"size (Node _ forest) = S . sum $ map size forest\n"
+msgstr ""
+"covering\n"
+"size : Tree a -> Nat\n"
+"size (Node _ forest) = S . sum $ map size forest\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:632
+msgid ""
+"In the code above, the recursive call happens within `map`. *We* know that "
+"we are using only subtrees in the recursive calls (since we know how `map` "
+"is implemented for `List`), but Idris can't know this (teaching a totality "
+"checker how to figure this out on its own seems to be an open research "
+"question). So it will refuse to accept the function as being total."
+msgstr ""
+"上のコードでは再帰呼び出しは`map`の内側で起こっており、\n"
+"*私達は*再帰呼び出しで副木しか使っていないことがわかります。\n"
+"（どのように`map`が`List`に実装されているか知っているからです。）\n"
+"でもIdrisはこのことを知らないのです。\n"
+"（全域性検査器に自力でこれを調べさせることは研究の余地がある問題のようで"
+"す。）\n"
+"だから関数が全域であるとして認めることを拒みます。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:637
+msgid ""
+"There are two ways to handle the case above. If we don't mind writing a bit "
+"of otherwise unneeded boilerplate code, we can use explicit recursion.  In "
+"fact, since we often also work with search *forests*, this is the preferable "
+"way here."
+msgstr ""
+"上記の場合に対処するには2つの方法があります。\n"
+"少々の余計な紋切り型のコードを書くのが気にならなければ、明示的な再帰を使うこ"
+"とができます。\n"
+"実際*森*の探索に取り組むこともよくあるので、ここではより好ましい手段です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:638
+#, no-wrap
+msgid ""
+"mutual\n"
+"  treeSize : Tree a -> Nat\n"
+"  treeSize (Node _ forest) = S $ forestSize forest\n"
+"\n"
+"  forestSize : Forest a -> Nat\n"
+"  forestSize []        = 0\n"
+"  forestSize (x :: xs) = treeSize x + forestSize xs\n"
+msgstr ""
+"mutual\n"
+"  treeSize : Tree a -> Nat\n"
+"  treeSize (Node _ forest) = S $ forestSize forest\n"
+"\n"
+"  forestSize : Forest a -> Nat\n"
+"  forestSize []        = 0\n"
+"  forestSize (x :: xs) = treeSize x + forestSize xs\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:652
+msgid ""
+"In the case above, Idris can verify that we don't blow up our trees behind "
+"its back as we are explicit about what happens in each recursive step.  This "
+"is the safe, preferable way of going about this, especially if you are new "
+"to the language and totality checking in general."
+msgstr ""
+"上の場合、それぞれの再帰の工程で何が起こるのか明示しているので、\n"
+"Idrisは陰で木が膨れ上がらないことを確かめられます。\n"
+"本事例に向き合う上ではこれが安全で、より好ましい方法です。\n"
+"この言語や全域性検査を始めたばかりなら特にそうです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:655
+msgid ""
+"However, sometimes the solution presented above is just too cumbersome to "
+"write. For instance, here is an implementation of `Show` for rose trees:"
+msgstr ""
+"しかし時には上で示した解法を書くのがあまりにも億劫すぎることがあります。\n"
+"例えば以下は木薔薇への`Show`の実装です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:656
+#, no-wrap
+msgid ""
+"Show a => Show (Tree a) where\n"
+"  showPrec p (Node v ts) =\n"
+"    assert_total $ showCon p \"Node\" (showArg v ++ showArg ts)\n"
+msgstr ""
+"Show a => Show (Tree a) where\n"
+"  showPrec p (Node v ts) =\n"
+"    assert_total $ showCon p \"Node\" (showArg v ++ showArg ts)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:667
+msgid ""
+"In this case, we'd have to manually reimplement `Show` for lists of trees: A "
+"tedious task - and error-prone on its own. Instead, we resort to using the "
+"mighty sledgehammer of totality checking: `assert_total`. Needless to say "
+"that this comes with the same risks as `assert_smaller`, so be very careful."
+msgstr ""
+"この場合、木のリストに`Show`を手作業で再実装しなくてはなりません。\n"
+"退屈な仕事であり……それ自体がエラーの温床になります。\n"
+"代わりに全域性検査器を木っ端微塵にする手段を行使できます。\n"
+"それが`assert_total`です。\n"
+"言うまでもなくこれには`assert_smaller`と同じ危険性が付き纏うので、充分注意し"
+"てください。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:673
+msgid ""
+"Implement the following functions in a provably total way without \"cheating"
+"\". Note: It is not necessary to implement these in a tail recursive way."
+msgstr ""
+"以下の関数を「ズル」せずに証明的に全域な風に実装してください。\n"
+"補足：末尾再帰の方法で実装する必要はありません。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:682
+#, no-wrap
+msgid ""
+"<!-- textlint-disable terminology -->\n"
+"1. Implement function `depth` for rose trees. This\n"
+"   should return the maximal number of `Node` constructors\n"
+"   from the current node to the farthest child node.\n"
+"   For instance, the current node should be at depth one,\n"
+"   all its direct child nodes are at depth two, their\n"
+"   immediate child nodes at depth three and so on.\n"
+"<!-- textlint-enable -->\n"
+msgstr ""
+"<!-- textlint-disable terminology -->\n"
+"1. 木薔薇に関数`depth`を実装してください。\n"
+"   これは現在のノードから最も遠くにある小ノードまでの`Node`構築子の最大数を返します。\n"
+"   例えば現在のノードが深さ1のとき、全ての直接の小ノードは深さが2であり、\n"
+"   それらの直接の子ノードは深さ3にある、などといった具合です。\n"
+"<!-- textlint-enable -->\n"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/Folds.md:684
+msgid "Implement interface `Eq` for rose trees."
+msgstr "インスタンス`Eq`を木薔薇に実装してください。"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/Folds.md:686
+msgid "Implement interface `Functor` for rose trees."
+msgstr "インターフェース`Functor`を木薔薇に実装してください。"
+
+#. type: Bullet: '4. '
+#: ../src/Tutorial/Folds.md:688
+msgid "For the fun of it: Implement interface `Show` for rose trees."
+msgstr "インターフェース`Show`を木薔薇に実装しましょう。お楽しみください。"
+
+#. type: Bullet: '5. '
+#: ../src/Tutorial/Folds.md:692
+msgid ""
+"In order not to forget how to program with dependent types, implement "
+"function `treeToVect` for converting a rose tree to a vector of the correct "
+"size."
+msgstr ""
+"依存型でプログラムする方法を忘れないよう、\n"
+"木薔薇を正しい大きさのベクタに変換する関数`treeToVect`を実装してください。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:696
+#, no-wrap
+msgid ""
+"   Hint: Make sure to follow the same recursion scheme as in\n"
+"   the implementation of `treeSize`. Otherwise, this might be\n"
+"   very hard to get to work.\n"
+msgstr ""
+"   ヒント：`treeSize`の実装と同じ再帰構造に従うようにしてください。\n"
+"   さもないと取り掛かるのがとても難しいでしょうから。\n"
+
+#. type: Title ##
+#: ../src/Tutorial/Folds.md:697
+#, no-wrap
+msgid "Interface Foldable"
+msgstr "インターフェースFoldable"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:707
+msgid ""
+"When looking back at all the exercises we solved in the section about "
+"recursion, most tail recursive functions on lists were of the following "
+"pattern: Iterate over all list elements from head to tail while passing "
+"along some state for accumulating intermediate results. At the end of the "
+"list, return the final state or convert it with an additional function call."
+msgstr ""
+"再帰についての節で解いた全演習を振り返ると、リストにおけるほとんどの末尾再帰"
+"関数が次の様式になっています。\n"
+"つまり、先頭から尾鰭までの全てのリストの要素を巡回しつつ、中間結果を累積する"
+"何らかの状態を渡すというものです。\n"
+"リストの終端では最終的な状態を返すか追加の関数呼び出しにより変換するかしま"
+"す。"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:708
+#, no-wrap
+msgid "Left Folds"
+msgstr "左畳み込み"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:719
+#, no-wrap
+msgid ""
+"This is functional programming, and we'd like to abstract\n"
+"over such reoccurring patterns. In order to tail recursively\n"
+"iterate over a list, all we need is an accumulator function\n"
+"and some initial state. But what should be the type of\n"
+"the accumulator? Well, it combines the current state\n"
+"with the list's next element and returns an updated\n"
+"state: `state -> elem -> state`. Surely, we can come\n"
+"up with a higher-order function to encapsulate this\n"
+"behavior:\n"
+msgstr ""
+"ここでは関数型プログラミングをしており、そのような反復される様式は抽象化したいところです。\n"
+"リストで末尾再帰的に巡回するためになくてはならないのは、\n"
+"累積関数と何らかの初期状態だけです。\n"
+"でも累積器の型はどうすべきなのでしょう？\n"
+"そうですね、現在の状態とリストの次の要素をまとめて更新された状態を返すもの、つまり`state -> elem -> state`です。\n"
+"もちろんこの振舞いを内蔵化する高階関数が頭に浮かびます。\n"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:720
+#, no-wrap
+msgid ""
+"leftFold : (acc : state -> el -> state) -> (st : state) -> List el -> state\n"
+"leftFold _   st []        = st\n"
+"leftFold acc st (x :: xs) = leftFold acc (acc st x) xs\n"
+msgstr ""
+"leftFold : (acc : state -> el -> state) -> (st : state) -> List el -> state\n"
+"leftFold _   st []        = st\n"
+"leftFold acc st (x :: xs) = leftFold acc (acc st x) xs\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:734
+msgid ""
+"We call this function a *left fold*, as it iterates over the list from left "
+"to right (head to tail), collapsing (or *folding*) the list until just a "
+"single value remains.  This new value might still be a list or other "
+"container type, but the original list has been consumed from head to tail.  "
+"Note how `leftFold` is tail recursive, and therefore all functions "
+"implemented in terms of `leftFold` are tail recursive (and thus, stack "
+"safe!) as well."
+msgstr ""
+"この関数を*左畳み込み*と呼びますが、\n"
+"それはリストを左から右（先頭から尾鰭へ）巡回し、\n"
+"たった1つの値が残るまでリストを押し潰す（あるいは*畳み込む*）からです。\n"
+"この新しい値はリストのままでも他の容器型でもよいのですが、\n"
+"元のリストは徹頭徹尾消費されます。\n"
+"`leftFold`が末尾再帰なことに注目してください。\n"
+"したがって`leftFold`を利用して実装された全ての関数もまた末尾再帰（なのでス"
+"タック安全！）なのです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:736
+msgid "Here are a few examples:"
+msgstr "以下はいくつかの例です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:737
+#, no-wrap
+msgid ""
+"sumLF : Num a => List a -> a\n"
+"sumLF = leftFold (+) 0\n"
+"\n"
+"reverseLF : List a -> List a\n"
+"reverseLF = leftFold (flip (::)) Nil\n"
+"\n"
+"-- this is more natural than `reverseLF`!\n"
+"toSnocListLF : List a -> SnocList a\n"
+"toSnocListLF = leftFold (:<) Lin\n"
+msgstr ""
+"sumLF : Num a => List a -> a\n"
+"sumLF = leftFold (+) 0\n"
+"\n"
+"reverseLF : List a -> List a\n"
+"reverseLF = leftFold (flip (::)) Nil\n"
+"\n"
+"-- this is more natural than `reverseLF`!\n"
+"toSnocListLF : List a -> SnocList a\n"
+"toSnocListLF = leftFold (:<) Lin\n"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:749
+#, no-wrap
+msgid "Right Folds"
+msgstr "右畳み込み"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:760
+msgid ""
+"The example functions we implemented in terms of `leftFold` had to always "
+"completely traverse the whole list, as every single element was required to "
+"compute the result. This is not always necessary, however. For instance, if "
+"you look at `findList` from the exercises, we could abort iterating over the "
+"list as soon as our search was successful. It is *not* possible to implement "
+"this more efficient behavior in terms of `leftFold`: There, the result will "
+"only be returned when our pattern match reaches the `Nil` case."
+msgstr ""
+"`leftFold`を利用して実装した関数の例では常にリスト全体を完璧に巡回する必要が"
+"ありましたが、\n"
+"それは結果を計算するのに全ての要素1つ1つが必要だからです。\n"
+"しかし私達にとっていつも必要とは限りません。\n"
+"例えば演習の`findList`を見ると探索が成功するやいなやリストの巡回を中断できま"
+"した。\n"
+"`leftFold`を使っていてはより効率的な振舞いを実装することは*不*可能です。\n"
+"というのも、結果が返されるおはパターン照合が`Nil`の場合に到達したときだけだか"
+"らです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:765
+msgid ""
+"Interestingly, there is another, non-tail recursive fold, which reflects the "
+"list structure more naturally, we can use for breaking out early from an "
+"iteration. We call this a *right fold*. Here is its implementation:"
+msgstr ""
+"興味深いことに別の非末尾再帰な再帰畳み込みがあります。\n"
+"より自然にリストの構造を反映しており、\n"
+"これを使えば巡回中に早い時点で中断することができます。\n"
+"*右畳み込み*と呼ばれるもので、以下がその実装です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:766
+#, no-wrap
+msgid ""
+"rightFold : (acc : el -> state -> state) -> state -> List el -> state\n"
+"rightFold acc st []        = st\n"
+"rightFold acc st (x :: xs) = acc x (rightFold acc st xs)\n"
+msgstr ""
+"rightFold : (acc : el -> state -> state) -> state -> List el -> state\n"
+"rightFold acc st []        = st\n"
+"rightFold acc st (x :: xs) = acc x (rightFold acc st xs)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:775
+msgid ""
+"Now, it might not immediately be obvious how this differs from `leftFold`.  "
+"In order to see this, we will have to talk about lazy evaluation first."
+msgstr ""
+"さて、すぐにはこれが`leftFold`とどう違うのかはっきりしないでしょう。\n"
+"それを知るにはまず、遅延評価についてお話ししなくてはなりません。"
+
+#. type: Title ####
+#: ../src/Tutorial/Folds.md:776
+#, no-wrap
+msgid "Lazy Evaluation in Idris"
+msgstr "Idrisでの遅延評価"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:784
+msgid ""
+"For some computations, it is not necessary to evaluate all function "
+"arguments in order to return a result. For instance, consider boolean "
+"operator `(&&)`: If the first argument evaluates to `False`, we already know "
+"that the result is `False` without even looking at the second argument. In "
+"such a case, we don't want to unnecessarily evaluate the second argument, as "
+"this might include a lengthy computation."
+msgstr ""
+"計算の中には、結果を返すために全ての関数の引数を評価する必要がないものもあり"
+"ます。\n"
+"例えば真偽値演算子`(&&)`を考えましょう。\n"
+"最初の引数が`False`に評価されたら、もう2つの引数を見向きもせず結果が`False`な"
+"のがわかります。\n"
+"そのような場合、不要な2つ目の引数の評価はしたくありません。\n"
+"長い計算が含まれているかもしれないからです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:786
+msgid "Consider the following REPL session:"
+msgstr "以下のREPLセッションについて考えましょう。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:787
+#, no-wrap
+msgid ""
+"Tutorial.Folds> False && (length [1..10000000000] > 100)\n"
+"False\n"
+msgstr ""
+"Tutorial.Folds> False && (length [1..10000000000] > 100)\n"
+"False\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:797
+msgid ""
+"If the second argument were evaluated, this computation would most certainly "
+"blow up your computer's memory, or at least take a very long time to run to "
+"completion. However, in this case, the result `False` is printed "
+"immediately. If you look at the type of `(&&)`, you'll see the following:"
+msgstr ""
+"2つ目の引数が評価されるなら、この計算はきっとコンピュータのメモリを吹っ飛ばし"
+"てしまうか、\n"
+"少なくとも計算を走らせるのにとても長い時間が掛かるでしょう。\n"
+"しかしこの場合、結果の`False`が直ちに印字されます。\n"
+"`(&&)`の方を見ると以下とあることがわかります。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:798
+#, no-wrap
+msgid ""
+"Tutorial.Folds> :t (&&)\n"
+"Prelude.&& : Bool -> Lazy Bool -> Bool\n"
+msgstr ""
+"Tutorial.Folds> :t (&&)\n"
+"Prelude.&& : Bool -> Lazy Bool -> Bool\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:816
+msgid ""
+"As you can see, the second argument is wrapped in a `Lazy` type constructor. "
+"This is a built-in type, and the details are handled by Idris automatically "
+"most of the time. For instance, when passing arguments to `(&&)`, we don't "
+"have to manually wrap the values in some data constructor.  A lazy function "
+"argument will only be evaluated at the moment it is *required* in the "
+"function's implementation, for instance, because it is being pattern matched "
+"on, or it is being passed as a strict argument to another function. In the "
+"implementation of `(&&)`, the pattern match happens on the first argument, "
+"so the second will only be evaluated if the first argument is `True` and the "
+"second is returned as the function's (strict) result."
+msgstr ""
+"見てとれるように、2つ目の引数は`Lazy`型構築子に包まれています。\n"
+"これは組み込み型で、ほとんどの場合はIdrisが自動的に細々としたことを制御しま"
+"す。\n"
+"例えば引数を`(&&)`に渡したとき、値を何らかのデータ構築子に手作業で包む必要は"
+"ありません。\n"
+"遅延関数引数は関数の実装で*必要とされる*瞬間にのみ評価されます。\n"
+"例えばパターン照合されたり他の関数の厳密な引数に渡されたりするときです。\n"
+"`(&&)`の実装では最初の引数でパターン照合が起こっているので、\n"
+"2つ目の引数が評価されるのは最初の引数が`True`のときだけで、\n"
+"関数の（正格な）結果として返されます。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:821
+msgid ""
+"There are two utility functions for working with lazy evaluation: Function "
+"`delay` wraps a value in the `Lazy` data type. Note, that the argument of "
+"`delay` is strict, so the following might take several seconds to print its "
+"result:"
+msgstr ""
+"遅延評価に取り組む上で2つの小間物関数があります。\n"
+"関数`delay`は値を`Lazy`データ型に包みます。\n"
+"なお、`lazy`の引数は正格なので、以下は結果を印字するのに数秒掛かるかもしれま"
+"せん。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:822
+#, no-wrap
+msgid ""
+"Tutorial.Folds> False && (delay $ length [1..10000] > 100)\n"
+"False\n"
+msgstr ""
+"Tutorial.Folds> False && (delay $ length [1..10000] > 100)\n"
+"False\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:829
+msgid ""
+"In addition, there is function `force`, which forces evaluation of a `Lazy` "
+"value."
+msgstr "加えて関数`force`があり、これは`Lazy`値の評価を強制します。"
+
+#. type: Title ####
+#: ../src/Tutorial/Folds.md:830
+#, no-wrap
+msgid "Lazy Evaluation and Right Folds"
+msgstr "遅延評価と右畳み込み"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:838
+msgid ""
+"We will now learn how to make use of `rightFold` and lazy evaluation to "
+"implement folds, which can break out from iteration early.  Note, that in "
+"the implementation of `rightFold` the result of folding over the remainder "
+"of the list is passed as an argument to the accumulator (instead of the "
+"result of invoking the accumulator being used in the recursive call):"
+msgstr ""
+"これで繰返しから早期に中断できる畳み込みを実装するための`rightFold`と遅延評価"
+"の使いかたがわかりました。\n"
+"なお`rightFold`の実装では残りのリストを畳み込む結果が累積器に渡されていま"
+"す。\n"
+"（再帰呼び出しで使われる累積器を呼び出した結果ではありません。）"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:839
+#, no-wrap
+msgid "rightFold acc st (x :: xs) = acc x (rightFold acc st xs)\n"
+msgstr "rightFold acc st (x :: xs) = acc x (rightFold acc st xs)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:846
+msgid ""
+"If the second argument of `acc` were lazily evaluated, it would be possible "
+"to abort the computation of `acc`'s result without having to iterate till "
+"the end of the list:"
+msgstr ""
+"`acc`の2つ目の引数が遅延評価されるなら、\n"
+"リストの終端まで繰り返すことなく`acc`の結果の計算を中断することが可能です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:847
+#, no-wrap
+msgid ""
+"foldHead : List a -> Maybe a\n"
+"foldHead = force . rightFold first Nothing\n"
+"  where first : a -> Lazy (Maybe a) -> Lazy (Maybe a)\n"
+"        first v _ = Just v\n"
+msgstr ""
+"foldHead : List a -> Maybe a\n"
+"foldHead = force . rightFold first Nothing\n"
+"  where first : a -> Lazy (Maybe a) -> Lazy (Maybe a)\n"
+"        first v _ = Just v\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:858
+msgid ""
+"Note, how Idris takes care of the bookkeeping of laziness most of the time. "
+"(It doesn't handle the curried invocation of `rightFold` correctly, though, "
+"so we either must pass on the list argument of `foldHead` explicitly, or "
+"compose the curried function with `force` to get the types right.)"
+msgstr ""
+"Idrisがほとんどの場合で遅延の予約を取り付けているところに注目してください。\n"
+"（ただ`rightFold`のカリー化された呼び出しを正しく扱ってはいません。\n"
+"なので`foldHead`のリスト引数に明示的に渡すか、\n"
+"カリー化された関数に`force`をくっつけて型を正しくするかしないといけません。）"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:865
+msgid ""
+"In order to verify that this works correctly, we need a debugging utility "
+"called `trace` from module `Debug.Trace`. This \"function\" allows us to "
+"print debugging messages to the console at certain points in our pure code. "
+"Please note, that this is for debugging purposes only and should never be "
+"left lying around in production code, as, strictly speaking, printing stuff "
+"to the console breaks referential transparency."
+msgstr ""
+"これが正しく動いていることを確かめるにはモジュール`Debug.trace`の`trace`と呼"
+"ばれるデバッグ用の小間物が必要です。\n"
+"この「関数」があれば純粋なコード中のどこかの時点で端末にデバッグ文言を印字さ"
+"せられます。\n"
+"ただしこれはデバッグ用途でのみのものであり、製品コードには決してあるべきでは"
+"ありません。\n"
+"というのも、厳密に言えば端末に何か印字することは参照透過性を壊しているからで"
+"す。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:868
+msgid ""
+"Here is an adjusted version of `foldHead`, which prints \"folded\" to "
+"standard output every time utility function `first` is being invoked:"
+msgstr ""
+"以下は`foldHead`を調整した版です。\n"
+"これは小間物関数`first`が呼び出されたときに毎回 \"folded\" と標準出力に印字し"
+"ます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:869
+#, no-wrap
+msgid ""
+"foldHeadTraced : List a -> Maybe a\n"
+"foldHeadTraced = force . rightFold first Nothing\n"
+"  where first : a -> Lazy (Maybe a) -> Lazy (Maybe a)\n"
+"        first v _ = trace \"folded\" (Just v)\n"
+msgstr ""
+"foldHeadTraced : List a -> Maybe a\n"
+"foldHeadTraced = force . rightFold first Nothing\n"
+"  where first : a -> Lazy (Maybe a) -> Lazy (Maybe a)\n"
+"        first v _ = trace \"folded\" (Just v)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:879
+msgid ""
+"In order to test this at the REPL, we need to know that `trace` uses "
+"`unsafePerformIO` internally and therefore will not reduce during "
+"evaluation. We have to resort to the `:exec` command to see this in action "
+"at the REPL:"
+msgstr ""
+"これをREPLで試すには、`trace`が内部的に`unsafePerformIO`を使っており、\n"
+"したがって評価の最中は簡約されることがないことを知っておかねばなりません。\n"
+"この動作をREPLで見るには`:exec`コマンドを行使する必要があります。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:880
+#, no-wrap
+msgid ""
+"Tutorial.Folds> :exec printLn $ foldHeadTraced [1..10]\n"
+"folded\n"
+"Just 1\n"
+msgstr ""
+"Tutorial.Folds> :exec printLn $ foldHeadTraced [1..10]\n"
+"folded\n"
+"Just 1\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:888
+msgid ""
+"As you can see, although the list holds ten elements, `first` is only called "
+"once resulting in a considerable increase of efficiency."
+msgstr ""
+"見てわかるようにリストには10個の要素がありますが、`first`は1度しか呼ばれてお"
+"らず、\n"
+"結果としてかなりの効率性の向上となっています。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:891
+msgid ""
+"Let's see what happens, if we change the implementation of `first` to use "
+"strict evaluation:"
+msgstr ""
+"`first`の実装を正格評価を使うように変えると何が起こるのか見てみましょう。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:892
+#, no-wrap
+msgid ""
+"foldHeadTracedStrict : List a -> Maybe a\n"
+"foldHeadTracedStrict = rightFold first Nothing\n"
+"  where first : a -> Maybe a -> Maybe a\n"
+"        first v _ = trace \"folded\" (Just v)\n"
+msgstr ""
+"foldHeadTracedStrict : List a -> Maybe a\n"
+"foldHeadTracedStrict = rightFold first Nothing\n"
+"  where first : a -> Maybe a -> Maybe a\n"
+"        first v _ = trace \"folded\" (Just v)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:903
+msgid ""
+"Although we don't use the second argument in the implementation of `first`, "
+"it is still being evaluated before evaluating the body of `first`, because "
+"Idris - unlike Haskell! - defaults to use strict semantics. Here's how this "
+"behaves at the REPL:"
+msgstr ""
+"2つ目の引数を`first`の実装で使っていませんが、\n"
+"`frst`本体を評価する前にこの引数が評価されてしまっています。\n"
+"これはIdrisが……Haskellとは違って！……既定で正格な意味論を使っているからで"
+"す。\n"
+"以下はこれのREPLでの振舞いです。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/Folds.md:904
+#, no-wrap
+msgid ""
+"Tutorial.Folds> :exec printLn $ foldHeadTracedStrict [1..10]\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"Just 1\n"
+msgstr ""
+"Tutorial.Folds> :exec printLn $ foldHeadTracedStrict [1..10]\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"folded\n"
+"Just 1\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:925
+msgid ""
+"While this technique can sometimes lead to very elegant code, always "
+"remember that `rightFold` is not stack safe in the general case. So, unless "
+"your accumulator is not guaranteed to return a result after not too many "
+"iterations, consider implementing your function tail recursively with an "
+"explicit pattern match. Your code will be slightly more verbose, but with "
+"the guaranteed benefit of stack safety."
+msgstr ""
+"この技法はときに大変流麗なコードに導いてくれますが、\n"
+"`rightFold`が一般的な場合ではスタック安全でないことをいつも頭の片隅に置いてお"
+"いてください。\n"
+"なので、累積器がそれほど多くない反復の末に結果を返す保証がない、といったこと"
+"がない限りは、\n"
+"関数を明示的なパターン照合で末尾再帰に実装するよう検討してください。\n"
+"コードは僅かにより冗長になるでしょうが、スタック安全という保証された利点が付"
+"いてきます。"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:926
+#, no-wrap
+msgid "Folds and Monoids"
+msgstr "畳み込みとモノイド"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:934
+msgid ""
+"Left and right folds share a common pattern: In both cases, we start with an "
+"initial *state* value and use an accumulator function for combining the "
+"current state with the current element. This principle of *combining values* "
+"after starting from an *initial value* lies at the heart of an interface "
+"we've already learned about: `Monoid`.  It therefore makes sense to fold a "
+"list over a monoid:"
+msgstr ""
+"左右の畳み込みはよくある様式を共有しています。\n"
+"両方とも初期*状態*値から始まり累積器関数を使って現在の状態に現在の要素を組み"
+"合わせるのです。\n"
+"この*初期値*から開始したあとに*値を組み合わせ*る*原理*は既に学んだインター"
+"フェースの核心をついています。\n"
+"それは`Monoid`です。\n"
+"したがってモノイド上でリストを畳み込むことは納得がいきます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:935
+#, no-wrap
+msgid ""
+"foldMapList : Monoid m => (a -> m) -> List a -> m\n"
+"foldMapList f = leftFold (\\vm,va => vm <+> f va) neutral\n"
+msgstr ""
+"foldMapList : Monoid m => (a -> m) -> List a -> m\n"
+"foldMapList f = leftFold (\\vm,va => vm <+> f va) neutral\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:946
+msgid ""
+"Note how, with `foldMapList`, we no longer need to pass an accumulator "
+"function. All we need is a conversion from the element type to a type with "
+"an implementation of `Monoid`. As we have already seen in the chapter about "
+"[interfaces](Interfaces.md), there are *many* monoids in functional "
+"programming, and therefore, `foldMapList` is an incredibly useful function."
+msgstr ""
+"なお、`foldMapList`ではもはや累積器関数を渡す必要がないようになっています。\n"
+"しなければいけないことは要素の型から`Monoid`の実装された型への変換だけで"
+"す。\n"
+"[インターフェース](Interfaces.md)の章で既に見たように、関数型プログラミングに"
+"は*数多くの*モノイドがあります。\n"
+"したがって`foldMapList`はもの凄く便利な関数です。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:950
+msgid ""
+"We could make this even shorter: If the elements in our list already are of "
+"a type with a monoid implementation, we don't even need a conversion "
+"function to collapse the list:"
+msgstr ""
+"これをもっと短くできます。\n"
+"もしリストの要素の型がモノイドの実装を持っていたら、リストを押し潰すのに変換"
+"関数さえも必要ではなくなります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:951
+#, no-wrap
+msgid ""
+"concatList : Monoid m => List m -> m\n"
+"concatList = foldMapList id\n"
+msgstr ""
+"concatList : Monoid m => List m -> m\n"
+"concatList = foldMapList id\n"
+
+#. type: Title ###
+#: ../src/Tutorial/Folds.md:956
+#, no-wrap
+msgid "Stop Using `List` for Everything"
+msgstr "どこでも`List`を使うのは止めよう"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:971
+msgid ""
+"And here we are, finally, looking at a large pile of utility functions all "
+"dealing in some way with the concept of collapsing (or folding)  a list of "
+"values into a single result. But all of these folding functions are just as "
+"useful when working with vectors, with non-empty lists, with rose trees, "
+"even with single-value containers like `Maybe`, `Either e`, or `Identity`. "
+"Heck, for the sake of completeness, they are even useful when working with "
+"zero-value containers like `Control.Applicative.Const e`! And since there "
+"are so many of these functions, we'd better look out for an essential set of "
+"them in terms of which we can implement all the others, and wrap up the "
+"whole bunch in an interface. This interface is called `Foldable`, and is "
+"available from the `Prelude`. When you look at its definition in the REPL (`:"
+"doc Foldable`), you'll see that it consists of six essential functions:"
+msgstr ""
+"ついにここまで来ました。\n"
+"山程の小間物関数を見てきました。\n"
+"これらには全て何らかの方法で値のリストを単一の結果に押し潰す（または折り畳"
+"む）着想がありました。\n"
+"しかしこれら全ての折り畳み関数はリスト以外の型に取り組む際も同じように便利な"
+"のです。\n"
+"ベクタ、非空のリスト、木薔薇、\n"
+"果ては`Maybe`、`Either e`、`Identity`といった単一値の容器がそうです。\n"
+"まあ完全を期すなら、\n"
+"`Control.Applicative.Const e`のようなゼロ個の値の容器に取り組むときさえも便利"
+"なんですけどね！\n"
+"そしてとても多くのこうした関数があるため、\n"
+"それらの中から必要不可欠な集合を考えたほうがいいかもしれません。\n"
+"それを使えば他の全てを実装でき、全体を1つのインターフェースに包むのに使えま"
+"す。\n"
+"このインターフェースは`Foldable`と呼ばれており、\n"
+"`Prelude`で手に入ります。\n"
+"REPLで定義を見ると (`:doc Foldable`) 6つの必須の関数が含まれていることがわか"
+"ります。"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:978
+msgid "`foldr`, for folds from the right"
+msgstr "`foldr`: 右からの畳み込み用"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:978
+msgid "`foldl`, for folds from the left"
+msgstr "`foldl`: 左からの畳み込み用"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:978
+msgid "`null`, for testing if the container is empty or not"
+msgstr "`null`: 容器が空かどうかの確認用"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:978
+msgid "`foldlM`, for effectful folds in a monad"
+msgstr "`foldM`: モナドでの作用付き畳み込み用"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:978
+msgid "`toList`, for converting the container to a list of values"
+msgstr "`toList`: 容器から値のリストへの変換用"
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Folds.md:978
+msgid "`foldMap`, for folding over a monoid"
+msgstr "`foldMap`: モノイド上での畳み込み用"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:987
+msgid ""
+"For a minimal implementation of `Foldable`, it is sufficient to only "
+"implement `foldr`. However, consider implementing all six functions "
+"manually, because folds over container types are often performance critical "
+"operations, and each of them should be optimized accordingly.  For instance, "
+"implementing `toList` in terms of `foldr` for `List` just makes no sense, as "
+"this is a non-tail recursive function running in linear time complexity, "
+"while a hand-written implementation can just return its argument without any "
+"modifications."
+msgstr ""
+"`Foldable`の最小の実装としては`foldr`を実装するだけで充分です。\n"
+"しかし6つの関数を手作業で実装することを検討してください。\n"
+"なぜなら容器型を折り畳むことはよく効率上致命的な操作となり、\n"
+"それぞれ最適化されているべきだからです。\n"
+"例えば`List`に`foldr`を使って`toList`を実装するのは単純に無意味です。\n"
+"というのはこれが線形時間の複雑度で走る非末尾再帰関数だからです。\n"
+"一方で手で書いた実装では引数を変更することなく返すだけでよいのです。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:993
+msgid ""
+"In these exercises, you are going to implement `Foldable` for different data "
+"types. Make sure to try and manually implement all six functions of the "
+"interface."
+msgstr ""
+"この演習では`Foldable`を様々のデータ型で実装してきます。\n"
+"インターフェースの6つの関数全てを手作業で頑張って実装してください。"
+
+#. type: Bullet: '1. '
+#: ../src/Tutorial/Folds.md:995
+msgid "Implement `Foldable` for `Crud i`:"
+msgstr "`Foldable`を`Crud i`に実装してください。"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/Folds.md:1005
+msgid "Implement `Foldable` for `Response e i`:"
+msgstr "`Foldable`を`Response e i`に実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:1006 ../src/Tutorial/Functor.md:429
+#: ../src/Tutorial/Traverse.md:295
+#, no-wrap
+msgid ""
+"   data Response : (e, i, a : Type) -> Type where\n"
+"     Created : (id : i) -> (value : a) -> Response e i a\n"
+"     Updated : (id : i) -> (value : a) -> Response e i a\n"
+"     Found   : (values : List a) -> Response e i a\n"
+"     Deleted : (id : i) -> Response e i a\n"
+"     Error   : (err : e) -> Response e i a\n"
+msgstr ""
+"   data Response : (e, i, a : Type) -> Type where\n"
+"     Created : (id : i) -> (value : a) -> Response e i a\n"
+"     Updated : (id : i) -> (value : a) -> Response e i a\n"
+"     Found   : (values : List a) -> Response e i a\n"
+"     Deleted : (id : i) -> Response e i a\n"
+"     Error   : (err : e) -> Response e i a\n"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/Folds.md:1018
+msgid ""
+"Implement `Foldable` for `List01`. Use tail recursion in the implementations "
+"of `toList`, `foldMap`, and `foldl`."
+msgstr ""
+"`List01`に`Foldable`を実装してください。\n"
+"`toList`、`foldMap`、`foldl`の実装では末尾再帰を使ってください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:1019 ../src/Tutorial/IO.md:753
+#: ../src/Tutorial/Traverse.md:267
+#, no-wrap
+msgid ""
+"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
+"     Nil  : List01 False a\n"
+"     (::) : a -> List01 False a -> List01 ne a\n"
+msgstr ""
+"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
+"     Nil  : List01 False a\n"
+"     (::) : a -> List01 False a -> List01 ne a\n"
+
+#. type: Bullet: '4. '
+#: ../src/Tutorial/Folds.md:1030
+msgid ""
+"Implement `Foldable` for `Tree`. There is no need to use tail recursion in "
+"your implementations, but your functions must be accepted by the totality "
+"checker, and you are not allowed to cheat by using `assert_smaller` or "
+"`assert_total`."
+msgstr ""
+"`Foldable`を`Tree`に実装してください。\n"
+"実装では末尾再帰を使う必要はありませんが、\n"
+"関数は全域性検査器が受け付けるものでなくてはいけません。\n"
+"また`assert_smaller`や`assert_total`を使ってズルすることも許しません。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:1034
+#, no-wrap
+msgid ""
+"   Hint: You can test the correct behavior of your implementations\n"
+"   by running the same folds on the result of `treeToVect` and\n"
+"   verify that the outcome is the same.\n"
+msgstr ""
+"   ヒント：実装が正しく振る舞うか試すには、\n"
+"   同じ畳み込みを`treeToVect`の結果に走らせて出力が同じことを確かめればよいです。\n"
+
+#. type: Bullet: '5. '
+#: ../src/Tutorial/Folds.md:1039
+msgid ""
+"Like `Functor` and `Applicative`, `Foldable` composes: The product and "
+"composition of two foldable container types are again foldable container "
+"types. Proof this by implementing `Foldable` for `Comp` and `Product`:"
+msgstr ""
+"`Functor`や`Applicative`と同様に、`Foldable`は組み合わさります。\n"
+"つまり、2つの折り畳みできる容器型の積や合成もまた折り畳みできる容器型なので"
+"す。\n"
+"これを、`Foldable`を`Comp`と`Product`に実装することで証明してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Folds.md:1040 ../src/Tutorial/Traverse.md:308
+#, no-wrap
+msgid ""
+"   record Comp (f,g : Type -> Type) (a : Type) where\n"
+"     constructor MkComp\n"
+"     unComp  : f (g a)\n"
+"\n"
+"   record Product (f,g : Type -> Type) (a : Type) where\n"
+"     constructor MkProduct\n"
+"     fst : f a\n"
+"     snd : g a\n"
+msgstr ""
+"   record Comp (f,g : Type -> Type) (a : Type) where\n"
+"     constructor MkComp\n"
+"     unComp  : f (g a)\n"
+"\n"
+"   record Product (f,g : Type -> Type) (a : Type) where\n"
+"     constructor MkProduct\n"
+"     fst : f a\n"
+"     snd : g a\n"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:1058
+msgid ""
+"We learned a lot about recursion, totality checking, and folds in this "
+"chapter, all of which are important concepts in pure functional programming "
+"in general. Wrapping one's head around recursion takes time and experience. "
+"Therefore - as usual - try to solve as many exercises as you can."
+msgstr ""
+"この章で再帰、全域性検査、そして畳み込みについて多くのことを学びました。\n"
+"これら全ては一般に純粋関数型プログラミングで重要です。\n"
+"再帰を会得するには時間と経験を要すものです。\n"
+"したがって……いつも通り……できるだけ多くの演習を解いてみてください。"
+
+#. type: Plain text
+#: ../src/Tutorial/Folds.md:1062
+msgid ""
+"In the next chapter, we are taking the concept of iterating over container "
+"types one step further and look at effectful data traversals."
+msgstr ""
+"次の章では容器型を反復する上での概念についてもう一歩踏み込み、作用つきデータ"
+"の巡回についても見ていきます。"
