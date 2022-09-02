@@ -1,19 +1,20 @@
 #!/bin/sh
 
-cat << CFG
-[po_directory] .
-[options] --master-charset UTF-8 \\
+cat << EOS
+[options] \\
+  --master-charset UTF-8 \\
   --localized-charset UTF-8 \\
   --addendum-charset UTF-8 \\
   --master-language en
-CFG
+[po4a_langs] ja
+[po4a_paths] pot/\$master.pot \$lang:po/\$lang/\$master.po
+EOS
 
 for markdown in ../src/**/*.md ../README.md; do
-  cat << CFG
-
+  cat << EOS
 [type:text] \\
   $markdown \\
   \$lang:\$lang/${markdown#../} \\
   opt:"--option markdown --keep 0"
-CFG
+EOS
 done

@@ -219,13 +219,11 @@ tailShowReverse xs = reverse . show <$> tail xs
 
 ### 1つ以上の型変数がある関手
 
-The type constructors we looked at so far were all
-of type `Type -> Type`. However, we can also implement `Functor`
-for other type constructors. The only prerequisite is that
-the type parameter we'd like to change with function `map` must
-be the last in the argument list. For instance, here is the
-`Functor` implementation for `Either e` (note, that `Either e`
-has of course type `Type -> Type` as required):
+これまで見てきた型構築子は全て型が`Type -> Type`でした。
+しかし`Functor`を他の型構築子に実装することもできます。
+唯一の事前要件は、関数`map`で変化させたい型変数が引数リストの最後になければいけないことです。
+例えば以下が`Either e`のための`Functor`の実装です。
+（なお、`Either e`はもちろん必要とされている型`Type -> Type`を持ちます。）
 
 ```idris
 implementation Functor' (Either e) where
@@ -1090,9 +1088,10 @@ Left (FieldError 1 2 "jon@doe.ch")
 
   これら2つの法則は`pure`が*束縛*に対して中立にはたらくべきだと主張しています。
 
-* `(m >>= f) >>= g = m >>= (f >=> g)`.  This is the law of associativity for
-  monad.  You might not have seen the second operator `(>=>)`.  It can be
-  used to sequence effectful computations and has the following type:
+* `(m >>= f) >>= g = m >>= (f >=> g)`。
+  これはモナドの結合性の法則です。
+  2つ目の演算子`(>=>)`を見掛けたことがないかもしれません。
+  これは作用付き計算を連接するのに使え、以下の型を持ちます。
 
   ```repl
   Tutorial.Functor> :t (>=>)

@@ -1,0 +1,3116 @@
+# Japanese translations for PACKAGE package
+# Copyright (C) 2022 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. type: Title ##
+#: ../src/Appendices/Neovim.md:364 ../src/Tutorial/DPair.md:1191
+#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
+#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
+#: ../src/Tutorial/Traverse.md:1109
+#, no-wrap
+msgid "Conclusion"
+msgstr "まとめ"
+
+#. type: Plain text
+#: ../src/Appendices/Neovim.md:374 ../src/Tutorial/DPair.md:1206
+#: ../src/Tutorial/DataTypes.md:1368 ../src/Tutorial/Dependent.md:910
+#: ../src/Tutorial/Eq.md:1098 ../src/Tutorial/Folds.md:1064
+#: ../src/Tutorial/Functions1.md:583 ../src/Tutorial/Functions2.md:964
+#: ../src/Tutorial/Functor.md:1427 ../src/Tutorial/IO.md:1125
+#: ../src/Tutorial/Interfaces.md:821 ../src/Tutorial/Predicates.md:1369
+#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#, no-wrap
+msgid ""
+"<!-- vi: filetype=idris2\n"
+"-->\n"
+msgstr ""
+"<!-- vi: filetype=idris2\n"
+"-->\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DPair.md:348 ../src/Tutorial/DataTypes.md:261
+#: ../src/Tutorial/Dependent.md:444 ../src/Tutorial/Eq.md:279
+#: ../src/Tutorial/Folds.md:373 ../src/Tutorial/Functor.md:381
+#: ../src/Tutorial/IO.md:317 ../src/Tutorial/Interfaces.md:189
+#: ../src/Tutorial/Predicates.md:305 ../src/Tutorial/Prim.md:448
+#: ../src/Tutorial/Traverse.md:247
+#, no-wrap
+msgid "Exercises part 1"
+msgstr "演習 その1"
+
+#. type: Title ###
+#: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
+#: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Traverse.md:574
+#, no-wrap
+msgid "Exercises part 2"
+msgstr "演習 その2"
+
+#. type: Title ###
+#: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
+#: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Traverse.md:1016
+#, no-wrap
+msgid "Exercises part 3"
+msgstr "演習 その3"
+
+#. type: Title #
+#: ../src/Tutorial/DataTypes.md:1
+#, no-wrap
+msgid "Algebraic Data Types"
+msgstr "代数的データ型"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:8
+msgid ""
+"In the [previous chapter](Functions1.md), we learned how to write our own "
+"functions and combine them to create more complex functionality. Of equal "
+"importance is the ability to define our own data types and use them as "
+"arguments and results in functions."
+msgstr ""
+"[前の節](Functions1.md)では自前の関数を書いたり、関数同士を組み合わせてより複"
+"雑な機能をつくったりしました。\n"
+"関数と同じくらい大事なのは、自前のデータ型を定義できたり、関数の引数や返り値"
+"に使えたりすることです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:15
+msgid ""
+"This is a lengthy chapter, densely packed with information.  If you are new "
+"to Idris and functional programming, make sure to follow along slowly, "
+"experimenting with the examples, and possibly coming up with your own. Make "
+"sure to try and solve *all* exercises. The solutions to the exercises can be "
+"found [here](../Solutions/DataTypes.idr)."
+msgstr ""
+"この章は分量が多く、情報が密に詰まっています。\n"
+"Idrisや関数型プログラミングが初見でしたら、\n"
+"ゆっくりと読み進めたり、\n"
+"例で実験したり、\n"
+"できれば自分で色々試してみてくださいね。\n"
+"是非 *全ての* 演習を解いてみてください。\n"
+"演習の解答は[ここ](../Solutions/DataTypes.idr)にあります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:16
+#, no-wrap
+msgid "module Tutorial.DataTypes\n"
+msgstr "module Tutorial.DataTypes\n"
+
+#. type: Title ##
+#: ../src/Tutorial/DataTypes.md:20
+#, no-wrap
+msgid "Enumerations"
+msgstr "列挙型"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:24
+msgid "Let's start with a data type for the days of the week as an example."
+msgstr "例として曜日のデータ型から始めましょう。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:25
+#, no-wrap
+msgid ""
+"data Weekday = Monday\n"
+"             | Tuesday\n"
+"             | Wednesday\n"
+"             | Thursday\n"
+"             | Friday\n"
+"             | Saturday\n"
+"             | Sunday\n"
+msgstr ""
+"data Weekday = Monday\n"
+"             | Tuesday\n"
+"             | Wednesday\n"
+"             | Thursday\n"
+"             | Friday\n"
+"             | Saturday\n"
+"             | Sunday\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:38
+msgid ""
+"The declaration above defines a new *type* (`Weekday`) and several new "
+"*values* (`Monday` to `Sunday`) of the given type. Go ahead, and verify this "
+"at the REPL:"
+msgstr ""
+"上記の宣言は新しい *型* （`Weekday`）と、\n"
+"この型のいくつかの新しい *値* （`Monday`から`Sunday`まで）を定義していま"
+"す。\n"
+"さあ、REPLで確かめてみてください。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:39
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> :t Monday\n"
+"Tutorial.DataTypes.Monday : Weekday\n"
+"Tutorial.DataTypes> :t Weekday\n"
+"Tutorial.DataTypes.Weekday : Type\n"
+msgstr ""
+"Tutorial.DataTypes> :t Monday\n"
+"Tutorial.DataTypes.Monday : Weekday\n"
+"Tutorial.DataTypes> :t Weekday\n"
+"Tutorial.DataTypes.Weekday : Type\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:48
+msgid ""
+"So, `Monday` is of type `Weekday`, while `Weekday` itself is of type `Type`."
+msgstr ""
+"つまり、`Monday`は`Weekday`の型で、\n"
+"`Weekday`自体の型は`Type`です。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:52
+msgid ""
+"It is important to note, that a value of type `Weekday` can only ever be one "
+"of the values listed above. It is a *type error* to use anything else where "
+"a `Weekday` is expected."
+msgstr ""
+"これは大事なことなのですが、\n"
+"型`Weekday`の値は必ず上に挙げた値のうち、どれか1つでなければいけません。\n"
+"`Weekday`とされているのに他の値を使うと *型エラー* になります。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:53
+#, no-wrap
+msgid "Pattern Matching"
+msgstr "パターン照合"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:59
+msgid ""
+"In order to use our new data type as a function argument, we need to learn "
+"about an important concept in functional programming languages: Pattern "
+"matching. Let's implement a function, which calculates the successor of a "
+"weekday:"
+msgstr ""
+"新しいデータ型を関数の引数で使うためには、\n"
+"関数型プログラミング言語の重要な概念、パターン照合について学ばねばなりませ"
+"ん。\n"
+"次の曜日を計算する関数を実装してみましょう。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:60
+#, no-wrap
+msgid ""
+"total\n"
+"next : Weekday -> Weekday\n"
+"next Monday    = Tuesday\n"
+"next Tuesday   = Wednesday\n"
+"next Wednesday = Thursday\n"
+"next Thursday  = Friday\n"
+"next Friday    = Saturday\n"
+"next Saturday  = Sunday\n"
+"next Sunday    = Monday\n"
+msgstr ""
+"total\n"
+"next : Weekday -> Weekday\n"
+"next Monday    = Tuesday\n"
+"next Tuesday   = Wednesday\n"
+"next Wednesday = Thursday\n"
+"next Thursday  = Friday\n"
+"next Friday    = Saturday\n"
+"next Saturday  = Sunday\n"
+"next Sunday    = Monday\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:81
+msgid ""
+"In order to inspect a `Weekday` argument, we match on the different possible "
+"values and return a result for each of them.  This is a very powerful "
+"concept, as it allows us to match on and extract values from deeply nested "
+"data structures.  The different cases in a pattern match are inspected from "
+"top to bottom, each being compared against the current function argument. "
+"Once a matching pattern is found, the computation on the right hand side of "
+"this pattern is evaluated. Later patterns are then ignored."
+msgstr ""
+"`Weekday`な引数の正体を調べるために、\n"
+"ありうる値を照合して対応する結果を返しています。\n"
+"この照合という概念はとても強力で、\n"
+"深く入れ子になった構造体のデータから値を抜き出すことができるのです。\n"
+"パターン照合のそれぞれの場合は上から下に順番に調べられ、\n"
+"関数の引数に対して比較されます。\n"
+"最初に照合するパターンが見つかったら、\n"
+"そのパターンの右側にある計算が実行されます。\n"
+"それ以降のパターンは無視されます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:89
+msgid ""
+"For instance, if we invoke `next` with argument `Thursday`, the first three "
+"patterns (`Monaday`, `Tuesday`, and `Wednesday`)  will be checked against "
+"the argument, but they do not match.  The fourth pattern is a match, and "
+"result `Friday` is being returned. Later patterns are then ignored, even if "
+"they would also match the input (this becomes relevant with catch-all "
+"patterns, which we will talk about in a moment)."
+msgstr ""
+"例えば、`next`を引数`Thursday`で呼び出したら、\n"
+"最初の3つの引数（`Monday`, `Tuesday`, `Wednesday`）は引数と比較されるもの"
+"の、\n"
+"照合に失敗します。\n"
+"4つ目のパターンには合致し、結果である`Friday`が返されます。\n"
+"それ以降のパターンは無視されます。\n"
+"たとえ引数と照合したとしてもダメです。\n"
+"（これは全部受け止めるパターンと関係してきますが、\n"
+"これについては少しあとで話します。）"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:98
+msgid ""
+"The function above is provably total. Idris knows about the possible values "
+"of type `Weekday`, and can therefore figure out that our pattern match "
+"covers all possible cases. We can therefore annotate the function with the "
+"`total` keyword, and Idris will answer with a type error, if it can't verify "
+"the function's totality. (Go ahead, and try removing one of the clauses in "
+"`next` to get an idea about how an error message from the coverage checker "
+"looks like.)"
+msgstr ""
+"上記の関数は全域であることが証明されています。\n"
+"Idrisは`Weekday`のとりうる値を知っており、\n"
+"したがってパターン照合が全ての可能性を網羅していることを突き止めます。\n"
+"この場合さらに関数を`total`キーワードで註釈することができます。\n"
+"こうするとIdrisはその関数の全域性を検証できなかったときに型エラーを出すように"
+"なります。\n"
+"（さあさあ、`next`から節を1つ消してみてください。\n"
+"網羅性検査器はどんなエラー文言を出しましたか。）"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:105
+msgid ""
+"Please remember, that these are very strong guarantees from the type "
+"checker: Given enough resources, a provably total function will *always* "
+"return a result of the given type in a finite amount of time (*resources* "
+"here meaning computational resources like memory or, in case of recursive "
+"functions, stack space)."
+msgstr ""
+"覚えておいてほしいのですが、\n"
+"全域であるということは型検査器による大変強力な保証がなされているということで"
+"す。\n"
+"充分なリソースがあれば、\n"
+"全域であると証明された関数は *常に* 有限時間内で正しい型の結果を返します。\n"
+"（ここでの*リソース*とは、計算機の資源を指します。\n"
+"例えばメモリや、再帰的な関数でのスタック空間のことです。）"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:106
+#, no-wrap
+msgid "Catch-all Patterns"
+msgstr "全部受け止めるパターン"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:111
+msgid ""
+"Sometimes, it is convenient to only match on a subset of the possible values "
+"and collect the remaining possibilities in a catch-all clause:"
+msgstr ""
+"ときどき、ありうる値のうち一部のみを照合し、\n"
+"残りの可能性を全部受け止める節で回収すると便利なときもあります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:112
+#, no-wrap
+msgid ""
+"total\n"
+"isWeekend : Weekday -> Bool\n"
+"isWeekend Saturday = True\n"
+"isWeekend Sunday   = True\n"
+"isWeekend _        = False\n"
+msgstr ""
+"total\n"
+"isWeekend : Weekday -> Bool\n"
+"isWeekend Saturday = True\n"
+"isWeekend Sunday   = True\n"
+"isWeekend _        = False\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:125
+msgid ""
+"The final line with the catch-all pattern is only invoked, if the argument "
+"is not equal to `Saturday` or `Sunday`.  Remember: Patterns in a pattern "
+"match are matched against the input from top to bottom and the first match "
+"decides, which path on the right hand side will be taken."
+msgstr ""
+"全部受けとめるパターンである最後の行が呼び出されるのは、\n"
+"引数が`Saturday`でも`Sunday`でもないときだけです。\n"
+"ただし、パターン照合中のパターンは入力に対して上から下に照合が試みられ、\n"
+"最初に合致したものによって右側のどれが使われるのかが決められます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:129
+msgid ""
+"We can use catch-all patterns to implement an equality test for `Weekday` "
+"(we will not yet use the `==` operator for this; this will have to wait "
+"until we learn about *interfaces*):"
+msgstr ""
+"全部受け止めるパターンがあれば、\n"
+"`Weekday`の等価性検査を実装できます。\n"
+"（これにはまだ`==`は使えません。\n"
+"*インターフェース*を学んでからにしましょう。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:130
+#, no-wrap
+msgid ""
+"total\n"
+"eqWeekday : Weekday -> Weekday -> Bool\n"
+"eqWeekday Monday Monday        = True\n"
+"eqWeekday Tuesday Tuesday      = True\n"
+"eqWeekday Wednesday Wednesday  = True\n"
+"eqWeekday Thursday Thursday    = True\n"
+"eqWeekday Friday Friday        = True\n"
+"eqWeekday Saturday Saturday    = True\n"
+"eqWeekday Sunday Sunday        = True\n"
+"eqWeekday _ _                  = False\n"
+msgstr ""
+"total\n"
+"eqWeekday : Weekday -> Weekday -> Bool\n"
+"eqWeekday Monday Monday        = True\n"
+"eqWeekday Tuesday Tuesday      = True\n"
+"eqWeekday Wednesday Wednesday  = True\n"
+"eqWeekday Thursday Thursday    = True\n"
+"eqWeekday Friday Friday        = True\n"
+"eqWeekday Saturday Saturday    = True\n"
+"eqWeekday Sunday Sunday        = True\n"
+"eqWeekday _ _                  = False\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:143
+#, no-wrap
+msgid "Enumeration Types in the Prelude"
+msgstr "Preludeにある列挙型"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:151
+msgid ""
+"Data types like `Weekday` consisting of a finite set of values are sometimes "
+"called *enumerations*. The Idris *Prelude* defines some common enumerations "
+"for us, for instance `Bool` and `Ordering`. As with `Weekday`, we can use "
+"pattern matching when implementing functions on these types:"
+msgstr ""
+"`Weekday`のようなデータ型は限られた数の値からなっており、\n"
+"しばしば*列挙*と呼ばれます。\n"
+"Idrisの*Prelude*では一般によくある列挙型が定義されています。\n"
+"例えば`Bool`や`Ordering`です。\n"
+"`Weekday`と同様に、\n"
+"これらの型を扱う関数を実装するときにはパターン照合が使えます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:152
+#, no-wrap
+msgid ""
+"-- this is how `not` is implemented in the *Prelude*\n"
+"total\n"
+"negate : Bool -> Bool\n"
+"negate False = True\n"
+"negate True  = False\n"
+msgstr ""
+"-- `not`の*Prelude*での実装\n"
+"total\n"
+"negate : Bool -> Bool\n"
+"negate False = True\n"
+"negate True  = False\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:162
+msgid ""
+"The `Ordering` data type describes an ordering relation between two values. "
+"For instance:"
+msgstr ""
+"`Ordering`データ型は2つの値の序列を表現します。\n"
+"例えば次のように。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:163
+#, no-wrap
+msgid ""
+"total\n"
+"compareBool : Bool -> Bool -> Ordering\n"
+"compareBool False False = EQ\n"
+"compareBool False True  = LT\n"
+"compareBool True True   = EQ\n"
+"compareBool True False  = GT\n"
+msgstr ""
+"total\n"
+"compareBool : Bool -> Bool -> Ordering\n"
+"compareBool False False = EQ\n"
+"compareBool False True  = LT\n"
+"compareBool True True   = EQ\n"
+"compareBool True False  = GT\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:176
+msgid ""
+"Here, `LT` means that the first argument is *less than* the second, `EQ` "
+"means that the two arguments are *equal* and `GT` means, that the first "
+"argument is *greater than* the second."
+msgstr ""
+"ここで、`LT`は最初の引数が2つ目*よりも小さい*ということを、\n"
+"`EQ`は2つの引数が互いに*等しい*ことを、\n"
+"そして`GT`は最初の引数が2つ目*よりも大きい*ということを、\n"
+"それぞれ意味しています。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:177
+#, no-wrap
+msgid "Case Expressions"
+msgstr "case式"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:183
+msgid ""
+"Sometimes we need to perform a computation with one of the arguments and "
+"want to pattern match on the result of this computation. We can use *case "
+"expressions* in this situation:"
+msgstr ""
+"ときどき、引数を使った計算を行って、\n"
+"その結果をパターン照合したいときがあります。\n"
+"こんなときは*case式*が使えます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:184
+#, no-wrap
+msgid ""
+"-- returns the larger of the two arguments\n"
+"total\n"
+"maxBits8 : Bits8 -> Bits8 -> Bits8\n"
+"maxBits8 x y =\n"
+"  case compare x y of\n"
+"    LT => y\n"
+"    _  => x\n"
+msgstr ""
+"-- 2つの引数のうち、より大きい方を返す\n"
+"total\n"
+"maxBits8 : Bits8 -> Bits8 -> Bits8\n"
+"maxBits8 x y =\n"
+"  case compare x y of\n"
+"    LT => y\n"
+"    _  => x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:202
+msgid ""
+"The first line of the case expression (`case compare x y of`)  will invoke "
+"function `compare` with arguments `x` and `y`. On the following (indented) "
+"lines, we pattern match on the result of this computation. This is of type "
+"`Ordering`, so we expect one of the three constructors `LT`, `EQ`, or `GT` "
+"as the result.  On the first line, we handle the `LT` case explicitly, while "
+"the other two cases are handled with an underscore as a catch-all pattern."
+msgstr ""
+"case式の最初の行（`case compare x y of`）では、\n"
+"関数`compare`を引数`x`と`y`に対して呼び出しています。\n"
+"次の（字下げされた）行ではこの計算結果に対してパターン照合しています。\n"
+"この計算結果の型は`Ordering`なので、\n"
+"3つの構築子`LT`, `EQ`, `GT`のうちのいずれかです。\n"
+"最初の行で明示的に`LT`の場合を扱っており、\n"
+"他の2つの行は全部を受け止めるパターンである下線文字で扱っています。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:206
+msgid ""
+"Note, that indentation matters here: The case block as a whole must be "
+"indented (if it starts on a new line), and the different cases must also be "
+"indented by the same amount of whitespace."
+msgstr ""
+"ここでの字下げは大事ですよ。\n"
+"caseブロック全体は（新しい行から始まる場合）字下げされていなければいけませ"
+"ん。\n"
+"そして、それぞれの場合は空白文字で同じ字下げが必要です。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:209
+msgid ""
+"Function `compare` is overloaded for many data types. We will learn how this "
+"works when we talk about interfaces."
+msgstr ""
+"関数`compare`は多くのデータ型でオーバーロードされています。\n"
+"この仕組みについてはインターフェースのところでお話しします。"
+
+#. type: Title ####
+#: ../src/Tutorial/DataTypes.md:210
+#, no-wrap
+msgid "If Then Else"
+msgstr "もし、そうなら、でないなら"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:214
+msgid ""
+"When working with `Bool`, there is an alternative to pattern matching common "
+"to most programming languages:"
+msgstr ""
+"`Bool`で何かするときは、パターン照合の代わりにほとんどのプログラミング言語で"
+"もよくあるアレがあります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:215
+#, no-wrap
+msgid ""
+"total\n"
+"maxBits8' : Bits8 -> Bits8 -> Bits8\n"
+"maxBits8' x y = if compare x y == LT then y else x\n"
+msgstr ""
+"total\n"
+"maxBits8' : Bits8 -> Bits8 -> Bits8\n"
+"maxBits8' x y = if compare x y == LT then y else x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:225
+msgid ""
+"Note, that the `if then else` expression always returns a value and "
+"therefore, the `else` branch cannot be dropped. This is different from the "
+"behavior in typical imperative languages, where `if` is a statement with "
+"possible side effects."
+msgstr ""
+"ただし、`if then else`式は常に値を返します。\n"
+"したがって、`else`の分枝は省けません。\n"
+"これは典型的な命令型言語の振舞いとは違います。\n"
+"命令型言語では`if`は文で副作用がありうるためです。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:226
+#, no-wrap
+msgid "Naming Conventions: Identifiers"
+msgstr "命名慣習：識別子"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:233
+msgid ""
+"While we are free to use lower-case and upper-case identifiers for function "
+"names, type- and data constructors must be given upper-case identifiers in "
+"order not to confuse Idris (operators are also fine).  For instance, the "
+"following data definition is not valid, and Idris will complain that it "
+"expected upper-case identifiers:"
+msgstr ""
+"関数名には小文字始まりの識別子も大文字始まりの識別子も両方使えますが、\n"
+"型構築子とデータ構築子は大文字始まりの識別子でなければいけません。\n"
+"でなければIdrisが困惑します。\n"
+"（ちなみに演算子は大文字でもOKです。）\n"
+"たとえば以下のデータ定義は妥当ではなく、Idrisは大文字の識別子ではないことに小"
+"言を言います。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:234
+#, no-wrap
+msgid "data foo = bar | baz\n"
+msgstr "data foo = bar | baz\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:240
+msgid ""
+"The same goes for similar data definitions like records and sum types (both "
+"will be explained below):"
+msgstr ""
+"同じことはレコードや直和型のデータ定義についても言えます。\n"
+"（これらについては後述します。）"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:241
+#, no-wrap
+msgid ""
+"-- not valid Idris\n"
+"record Foo where\n"
+"  constructor mkfoo\n"
+msgstr ""
+"-- not valid Idris\n"
+"record Foo where\n"
+"  constructor mkfoo\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:252
+msgid ""
+"On the other hand, we typically use lower-case identifiers for function "
+"names, unless we plan to use them mostly during type checking (more on this "
+"later). This is not enforced by Idris, however, so if you are working in a "
+"domain where upper-case identifiers are preferable, feel free to use those:"
+msgstr ""
+"他方で、ほぼ型検査で使うつもりでない限り（詳細はのちほど）、関数名には大抵小"
+"文字始まりの識別子を使います。\n"
+"とはいえこれはIdrisが何か後押しするわけではないので、\n"
+"大文字始まりの識別子が好ましいような状況では自由に使ってください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:253
+#, no-wrap
+msgid ""
+"foo : Bits32 -> Bits32\n"
+"foo = (* 2)\n"
+"\n"
+"Bar : Bits32 -> Bits32\n"
+"Bar = foo\n"
+msgstr ""
+"foo : Bits32 -> Bits32\n"
+"foo = (* 2)\n"
+"\n"
+"Bar : Bits32 -> Bits32\n"
+"Bar = foo\n"
+
+#. type: Bullet: '1. '
+#: ../src/Tutorial/DataTypes.md:267
+msgid ""
+"Use pattern matching to implement your own versions of boolean operators "
+"`(&&)` and `(||)` calling them `and` and `or` respectively."
+msgstr ""
+"パターン照合を使って自前の真偽値演算子`(&&)`と`(||)`を実装してください。\n"
+"それぞれの関数名は`and`と`or`にしてください。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:274
+#, no-wrap
+msgid ""
+"   Note: One way to go about this is to enumerate\n"
+"   all four possible combinations of two boolean\n"
+"   values and give the result for each. However, there\n"
+"   is a shorter, more clever way,\n"
+"   requiring only two pattern matches for each of the\n"
+"   two functions.\n"
+msgstr ""
+"   附記：1つの解決策としては、\n"
+"   2つの真偽値のありうるあらゆる組み合わせを列挙して、\n"
+"   それぞれの結果を与える、というのがあります。\n"
+"   しかし、もっと短かくてもっと賢いやりかたがあります。\n"
+"   その方法だとそれぞれの関数の実装に、\n"
+"   パターン照合の分岐の数が2つだけで済みます。\n"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/DataTypes.md:282
+msgid ""
+"Define your own data type representing different units of time (seconds, "
+"minutes, hours, days, weeks), and implement the following functions for "
+"converting between time spans using different units. Hint: Use integer "
+"division (`div`)  when going from seconds to some larger unit like hours)."
+msgstr ""
+"異なる時間の単位（秒 (second)、分 (minute)、時 (hour)、日 (day)、週 (week)）"
+"を表す自前のデータ型を定義してください。\n"
+"そして、単位間で期間を変換する以下の関数を実装してください。\n"
+"解決の糸口：秒から時のようなより大きい単位に変換するには、\n"
+"整数の除算(`div`)を使ってください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:283
+#, no-wrap
+msgid ""
+"   data UnitOfTime = Second -- add additional values\n"
+"\n"
+"   -- calculate the number of seconds from a\n"
+"   -- number of steps in the given unit of time\n"
+"   total\n"
+"   toSeconds : UnitOfTime -> Integer -> Integer\n"
+"\n"
+"   -- Given a number of seconds, calculate the\n"
+"   -- number of steps in the given unit of time\n"
+"   total\n"
+"   fromSeconds : UnitOfTime -> Integer -> Integer\n"
+"\n"
+"   -- convert the number of steps in a given unit of time\n"
+"   -- to the number of steps in another unit of time.\n"
+"   -- use `fromSeconds` and `toSeconds` in your implementation\n"
+"   total\n"
+"   convert : UnitOfTime -> Integer -> UnitOfTime -> Integer\n"
+msgstr ""
+"   data UnitOfTime = Second -- 残りの値を追加してください\n"
+"\n"
+"   -- 与えられた時間の単位での長さから、\n"
+"   -- その秒数を計算してください\n"
+"   total\n"
+"   toSeconds : UnitOfTime -> Integer -> Integer\n"
+"\n"
+"   -- 秒数がわかっているとき、\n"
+"   -- 与えられた時間の単位での長さを計算してください\n"
+"   total\n"
+"   fromSeconds : UnitOfTime -> Integer -> Integer\n"
+"\n"
+"   -- 与えられた時間の単位とその長さを、\n"
+"   -- 他の時間の単位での長さに変換してください。\n"
+"   -- 実装では`fromSeconds`と`toSeconds`を使ってください\n"
+"   total\n"
+"   convert : UnitOfTime -> Integer -> UnitOfTime -> Integer\n"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/DataTypes.md:306
+msgid ""
+"Define a data type for representing a subset of the chemical elements: "
+"Hydrogen (H), Carbon (C), Nitrogen (N), Oxygen (O), and Fluorine (F)."
+msgstr ""
+"化学の原子の一部を表すデータ型を定義してください。\n"
+"水素 (H)、炭素 (C)、窒素 (N)、酸素 (O)、そしてフッ素 (F) だけでよいです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:309
+#, no-wrap
+msgid ""
+"   Declare and implement function `atomicMass`, which for each element\n"
+"   returns its atomic mass in dalton:\n"
+msgstr ""
+"   `atomicMass`を宣言して実装してください。\n"
+"   この関数は、それぞれの原子に対して、\n"
+"   dalton単位（統一原子質量単位）での粒子の質量を返します。\n"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:310
+#, no-wrap
+msgid ""
+"   Hydrogen : 1.008\n"
+"   Carbon : 12.011\n"
+"   Nitrogen : 14.007\n"
+"   Oxygen : 15.999\n"
+"   Fluorine : 18.9984\n"
+msgstr ""
+"   Hydrogen : 1.008\n"
+"   Carbon : 12.011\n"
+"   Nitrogen : 14.007\n"
+"   Oxygen : 15.999\n"
+"   Fluorine : 18.9984\n"
+
+#. type: Title ##
+#: ../src/Tutorial/DataTypes.md:318
+#, no-wrap
+msgid "Sum Types"
+msgstr "直和型"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:326
+msgid ""
+"Assume we'd like to write some web form, where users of our web application "
+"can decide how they like to be addressed.  We give them a choice between two "
+"common predefined forms of address (Mr and Mrs), but also allow them to "
+"decide on a customized form. The possible choices can be encapsulated in an "
+"Idris data type:"
+msgstr ""
+"なんらかのWebフォームを書くとします。\n"
+"このフォームでは、Webアプリケーションのユーザーがどう呼ばれてほしいかを決めら"
+"れます。\n"
+"2つのよくある事前に定義された呼び方（MrとMrs）だけではなく、\n"
+"自前で決められる形式にもできるとします。\n"
+"取れる選択肢は、Idrisのデータ型で次のようにカプセル化できます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:327
+#, no-wrap
+msgid "data Title = Mr | Mrs | Other String\n"
+msgstr "data Title = Mr | Mrs | Other String\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:336
+msgid ""
+"This looks almost like an enumeration type, with the exception that there is "
+"a new thing, called a *data constructor*, which accepts a `String` argument "
+"(actually, the values in an enumeration are also called (nullary) data "
+"constructors).  If we inspect the types at the REPL, we learn the following:"
+msgstr ""
+"これは列挙型とそっくりですが、\n"
+"1つ新しい要素があります。\n"
+"これは*データ構築子*と呼ばれるもので、\n"
+"`String`な引数を受け付けます。\n"
+"（実は、列挙型での値は（引数のない）データ構築子とも呼ばれます。）\n"
+"REPLで型を調べると、以下がわかります。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:337
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> :t Mr\n"
+"Tutorial.DataTypes.Mr : Title\n"
+"Tutorial.DataTypes> :t Other\n"
+"Tutorial.DataTypes.Other : String -> Title\n"
+msgstr ""
+"Tutorial.DataTypes> :t Mr\n"
+"Tutorial.DataTypes.Mr : Title\n"
+"Tutorial.DataTypes> :t Other\n"
+"Tutorial.DataTypes.Other : String -> Title\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:347
+msgid ""
+"So, `Other` is a *function* from `String` to `Title`. This means, that we "
+"can pass `Other` a `String` argument and get a `Title` as the result:"
+msgstr ""
+"つまり、`Other`は`String`から`Type`への*関数*です。\n"
+"言い換えると、`Other`に`String`な引数を渡すと、結果として`Title`な値が得られ"
+"ます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:348
+#, no-wrap
+msgid ""
+"total\n"
+"dr : Title\n"
+"dr = Other \"Dr.\"\n"
+msgstr ""
+"total\n"
+"dr : Title\n"
+"dr = Other \"Dr.\"\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:358
+msgid ""
+"Again, a value of type `Title` can only consist of one of the three choices "
+"listed above, and again, we can use pattern matching to implement functions "
+"on the `Title` data type in a provably total way:"
+msgstr ""
+"繰り返しになりますが、\n"
+"型`Title`の値は前述した3つの選択肢のうちのいずれかです。\n"
+"さらに、パターン照合を使って`Title`データ型に関する関数を実装できるのも同じで"
+"す。\n"
+"この実装は全域であることが証明されています。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:359
+#, no-wrap
+msgid ""
+"total\n"
+"showTitle : Title -> String\n"
+"showTitle Mr        = \"Mr.\"\n"
+"showTitle Mrs       = \"Mrs.\"\n"
+"showTitle (Other x) = x\n"
+msgstr ""
+"total\n"
+"showTitle : Title -> String\n"
+"showTitle Mr        = \"Mr.\"\n"
+"showTitle Mrs       = \"Mrs.\"\n"
+"showTitle (Other x) = x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:372
+msgid ""
+"Note, how in the last pattern match, the string value stored in the `Other` "
+"data constructor is *bound* to local variable `x`.  Also, the `Other x` "
+"pattern has to be wrapped in parentheses, as otherwise Idris would think "
+"`Other` and `x` were to distinct function arguments."
+msgstr ""
+"パターン照合の最後の場合にご注目。\n"
+"`Other`データ構築子に格納された文字列の値がローカル変数`x`に*束縛*されていま"
+"す。\n"
+"また、`Other x`パターンは括弧でくるまれていなければいけません。\n"
+"そうしないとIdrisは`Other`と`x`が別個な関数の引数だと考えます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:377
+msgid ""
+"This is a very common way to extract the values from data constructors.  We "
+"can use `showTitle` to implement a function for creating a courteous "
+"greeting:"
+msgstr ""
+"これはデータ構築子から値を抽出する大変よくあるやりかたです。\n"
+"`showTitle`を使えば慇懃な挨拶をする関数を実装できます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:378
+#, no-wrap
+msgid ""
+"total\n"
+"greet : Title -> String -> String\n"
+"greet t name = \"Hello, \" ++ showTitle t ++ \" \" ++ name ++ \"!\"\n"
+msgstr ""
+"total\n"
+"greet : Title -> String -> String\n"
+"greet t name = \"Hello, \" ++ showTitle t ++ \" \" ++ name ++ \"!\"\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:387
+msgid ""
+"In the implementation of `greet`, we use string literals and the string "
+"concatenation operator `(++)` to assemble the greeting from its parts."
+msgstr ""
+"`greet`の実装では文字列リテラルと文字列結合演算子`(++)`を使っています。\n"
+"これにより部品から挨拶を組み立てられます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:389
+msgid "At the REPL:"
+msgstr "REPLで次のようにしてみましょう。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:390
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> greet dr \"Höck\"\n"
+"\"Hello, Dr. Höck!\"\n"
+"Tutorial.DataTypes> greet Mrs \"Smith\"\n"
+"\"Hello, Mrs. Smith!\"\n"
+msgstr ""
+"Tutorial.DataTypes> greet dr \"Höck\"\n"
+"\"Hello, Dr. Höck!\"\n"
+"Tutorial.DataTypes> greet Mrs \"Smith\"\n"
+"\"Hello, Mrs. Smith!\"\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:400
+msgid ""
+"Data types like `Title` are called *sum types* as they consist of the sum of "
+"their different parts: A value of type `Title` is either a `Mr`, a `Mrs`, or "
+"a `String` wrapped up in `Other`."
+msgstr ""
+"`Title`のようなデータ型は*直和型*と呼ばれます。\n"
+"なぜならこの型はそれぞれの場合の和からなっているためです。\n"
+"型`Title`の値は`Mr`か`Mrs`かそれとも`Other`にくるまれた`String`かのいずれかで"
+"す。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:407
+msgid ""
+"Here's another (drastically simplified) example of a sum type.  Assume we "
+"allow two forms of authentication in our web application: Either by entering "
+"a username plus a password (for which we'll use an unsigned 64 bit integer "
+"here), or by providing user name plus a (very complex) secret key.  Here's a "
+"data type to encapsulate this use case:"
+msgstr ""
+"また、以下は他の（劇的に簡素な）直和型の例です。\n"
+"Webアプリケーションで2つの形式の認証ができるとしましょう。\n"
+"利用者名とパスワード（ここでは符号なし64ビット整数）を入力するか、\n"
+"利用者名と（とても複雑な）秘密鍵を使うかのいずれかです。\n"
+"こちらがこの用例をカプセル化したデータ型です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:408
+#, no-wrap
+msgid "data Credentials = Password String Bits64 | Key String String\n"
+msgstr "data Credentials = Password String Bits64 | Key String String\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:414
+msgid ""
+"As an example of a very primitive login function, we can hard-code some "
+"known credentials:"
+msgstr ""
+"とても原始的なログイン関数の例として、\n"
+"既知の認証情報を埋め込むことにします。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:415
+#, no-wrap
+msgid ""
+"total\n"
+"login : Credentials -> String\n"
+"login (Password \"Anderson\" 6665443) = greet Mr \"Anderson\"\n"
+"login (Key \"Y\" \"xyz\")               = greet (Other \"Agent\") \"Y\"\n"
+"login _                             = \"Access denied!\"\n"
+msgstr ""
+"total\n"
+"login : Credentials -> String\n"
+"login (Password \"Anderson\" 6665443) = greet Mr \"Anderson\"\n"
+"login (Key \"Y\" \"xyz\")               = greet (Other \"Agent\") \"Y\"\n"
+"login _                             = \"Access denied!\"\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:426
+msgid ""
+"As can be seen in the example above, we can also pattern match against "
+"primitive values by using integer and string literals. Give `login` a go at "
+"the REPL:"
+msgstr ""
+"上の例からわかるように、\n"
+"整数と文字列のリテラルで原始的な値に対してパターン照合することもできます。\n"
+"REPLで`login`を試してみましょう。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:427
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> login (Password \"Anderson\" 6665443)\n"
+"\"Hello, Mr. Anderson!\"\n"
+"Tutorial.DataTypes> login (Key \"Y\" \"xyz\")\n"
+"\"Hello, Agent Y!\"\n"
+"Tutorial.DataTypes> login (Key \"Y\" \"foo\")\n"
+"\"Access denied!\"\n"
+msgstr ""
+"Tutorial.DataTypes> login (Password \"Anderson\" 6665443)\n"
+"\"Hello, Mr. Anderson!\"\n"
+"Tutorial.DataTypes> login (Key \"Y\" \"xyz\")\n"
+"\"Hello, Agent Y!\"\n"
+"Tutorial.DataTypes> login (Key \"Y\" \"foo\")\n"
+"\"Access denied!\"\n"
+
+#. type: Bullet: '1. '
+#: ../src/Tutorial/DataTypes.md:440
+msgid ""
+"Implement an equality test for `Title` (you can use the equality operator "
+"`(==)` for comparing two `String`s):"
+msgstr ""
+"`Title`の等価性検査を実装してください。\n"
+"（2つの`String`を比較するのに等価性演算子`(==)`が使えます。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:441
+#, no-wrap
+msgid ""
+"   total\n"
+"   eqTitle : Title -> Title -> Bool\n"
+msgstr ""
+"   total\n"
+"   eqTitle : Title -> Title -> Bool\n"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/DataTypes.md:448
+msgid ""
+"For `Title`, implement a simple test to check, whether a custom title is "
+"being used:"
+msgstr ""
+"`Title`について、\n"
+"自前の敬称が使われているかを確認する簡単な検査を実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:449
+#, no-wrap
+msgid ""
+"   total\n"
+"   isOther : Title -> Bool\n"
+msgstr ""
+"   total\n"
+"   isOther : Title -> Bool\n"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/DataTypes.md:456
+msgid ""
+"Given our simple `Credentials` type, there are three ways for authentication "
+"to fail:"
+msgstr ""
+"前述した簡素な`Credential`型についてだけでも、\n"
+"3つの認証失敗の場合があります。"
+
+#. type: Bullet: '   * '
+#: ../src/Tutorial/DataTypes.md:461
+msgid "An unknown username was used."
+msgstr "不明な利用者名が使われた。"
+
+#. type: Bullet: '   * '
+#: ../src/Tutorial/DataTypes.md:461
+msgid "The password given does not match the one associated with the username."
+msgstr "与えられたパスワードが利用者名に紐付くパスワードと一致しない。"
+
+#. type: Bullet: '   * '
+#: ../src/Tutorial/DataTypes.md:461
+msgid "An invalid key was used."
+msgstr "不正な鍵が使用された。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:467
+#, no-wrap
+msgid ""
+"   Encapsulate these three possibilities in a sum type\n"
+"   called `LoginError`,\n"
+"   but make sure not to disclose any confidential information:\n"
+"   An invalid username should be stored in the corresponding\n"
+"   error value, but an invalid password or key should not.\n"
+msgstr ""
+"   これら3つの可能性を`LoginError`という名前の直和型でカプセル化してください。\n"
+"   ただし、あらゆる機密情報を漏洩しないようにしてくださいね。\n"
+"   不正な利用者名は対応するエラー型に格納されますが、\n"
+"   不正なパスワードや鍵は格納されません。\n"
+
+#. type: Bullet: '4. '
+#: ../src/Tutorial/DataTypes.md:471
+msgid ""
+"Implement function `showError : LoginError -> String`, which can be used to "
+"display an error message to the user who unsuccessfully tried to login into "
+"our web application."
+msgstr ""
+"関数`showError : LoginError -> String`を実装してください。\n"
+"この関数はWebアプリケーションにログインしようとして失敗した利用者にエラー文言"
+"を表示するのに使えます。"
+
+#. type: Title ##
+#: ../src/Tutorial/DataTypes.md:472
+#, no-wrap
+msgid "Records"
+msgstr "レコード"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:481
+msgid ""
+"It is often useful to group together several values as a logical unit. For "
+"instance, in our web application we might want to group information about a "
+"user in a single data type. Such data types are often called *product types* "
+"(see below for an explanation).  The most common and convenient way to "
+"define them is the `record` construct:"
+msgstr ""
+"いくつかの値を論理的な単位として集めておくと便利なことがよくあります。\n"
+"たとえば、Webアプリケーションで利用者の情報を単一のデータ型に集めておきたいこ"
+"とがあるでしょう。\n"
+"そのようなデータ型はしばしば*直積型*と呼ばれます。\n"
+"（後述の説明を参照してください。）\n"
+"これを定義するもっとも一般的で便利な方法は*record*構築子を使うというもので"
+"す。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:482
+#, no-wrap
+msgid ""
+"record User where\n"
+"  constructor MkUser\n"
+"  name  : String\n"
+"  title : Title\n"
+"  age   : Bits8\n"
+msgstr ""
+"record User where\n"
+"  constructor MkUser\n"
+"  name  : String\n"
+"  title : Title\n"
+"  age   : Bits8\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:493
+msgid ""
+"The declaration above creates a new *type* called `User`, and a new *data "
+"constructor* called `MkUser`. As usual, have a look at their types in the "
+"REPL:"
+msgstr ""
+"上記の宣言は`User`という名前の新しい*型*と`MkUser`という名前の新しい*データ構"
+"築子*を作ります。\n"
+"いつものように、型をREPLでのぞいてみましょう。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:494
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> :t User\n"
+"Tutorial.DataTypes.User : Type\n"
+"Tutorial.DataTypes> :t MkUser\n"
+"Tutorial.DataTypes.MkUser : String -> Title -> Bits8 -> User\n"
+msgstr ""
+"Tutorial.DataTypes> :t User\n"
+"Tutorial.DataTypes.User : Type\n"
+"Tutorial.DataTypes> :t MkUser\n"
+"Tutorial.DataTypes.MkUser : String -> Title -> Bits8 -> User\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:504
+msgid ""
+"We can use `MkUser` (which is a function from `String` to `Title` to `Bits8` "
+"to `User`)  to create values of type `User`:"
+msgstr ""
+"`MkUser`（`String`と`Title`と`Bits8`から`User`を返す関数）は型`User`の値を作"
+"るのに使えます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:505
+#, no-wrap
+msgid ""
+"total\n"
+"agentY : User\n"
+"agentY = MkUser \"Y\" (Other \"Agent\") 51\n"
+"\n"
+"total\n"
+"drNo : User\n"
+"drNo = MkUser \"No\" dr 73\n"
+msgstr ""
+"total\n"
+"agentY : User\n"
+"agentY = MkUser \"Y\" (Other \"Agent\") 51\n"
+"\n"
+"total\n"
+"drNo : User\n"
+"drNo = MkUser \"No\" dr 73\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:517
+msgid ""
+"We can also use pattern matching to extract the fields from a `User` value "
+"(they can again be bound to local variables):"
+msgstr ""
+"パターン照合で`User`の値からフィールドを抽出することもできます。\n"
+"（ここでもパターン照合でローカル変数に束縛できます。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:518
+#, no-wrap
+msgid ""
+"total\n"
+"greetUser : User -> String\n"
+"greetUser (MkUser n t _) = greet t n\n"
+msgstr ""
+"total\n"
+"greetUser : User -> String\n"
+"greetUser (MkUser n t _) = greet t n\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:530
+msgid ""
+"In the example above, the `name` and `title` field are bound to two new "
+"local variables (`n` and `t` respectively), which can then be used on the "
+"right hand side of `greetUser`'s implementation. For the `age` field, which "
+"is not used on the right hand side, we can use an underscore as a catch-all "
+"pattern."
+msgstr ""
+"上の例では、`name`, `title`フィールドが\n"
+"2つの新しいローカル変数（それぞれ`n`と`t`）に束縛されています。\n"
+"これらのローカル変数は右側にある`greetUser`の実装で使うことができます。\n"
+"`age`フィールドについては右側で使われないので、\n"
+"その部分には全てを受け止めるパターンとしての下線文字を使うことができます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:545
+msgid ""
+"Note, how Idris will prevent us from making a common mistake: If we confuse "
+"the order of arguments, the implementation will no longer type check. We can "
+"verify this by putting the erroneous code in a `failing` block: This is an "
+"indented code block, which will lead to an error during elaboration (type "
+"checking). We can give part of the expected error message as an optional "
+"string argument to a failing block. If this does not match part of the error "
+"message (or the whole code block does not fail to type check) the `failing` "
+"block itself fails to type check. This is a useful tool to demonstrate that "
+"type safety works in two directions: We can show that valid code type checks "
+"but also that invalid code is rejected by the Idris elaborator:"
+msgstr ""
+"ここでIdrisがよくある間違いを防いでいることにご注目。\n"
+"引数の順序を混同したら実装は型検査を通りません。\n"
+"エラーを含むコードを`failing`ブロック内に置くことで、このことを確かめられま"
+"す。\n"
+"これは字下げされたブロックで、このブロックの中のコードは細密化（型検査）の段"
+"階でエラーになります。\n"
+"期待されるエラーメッセージの一部を失敗ブロックの引数に加えても構いません。\n"
+"これがエラーメッセージの一部と一致しないとき（もしくはコードブロック全体が型"
+"検査に失敗しなかったとき）は、\n"
+"`failing`ブロック自体が型検査に失敗します。\n"
+"これは型安全性が2つの方面で便利な道具であることを示しています。\n"
+"Idrisの細密化器によって、妥当なコードが型検査に通ることだけではなく、不当な"
+"コードが弾かれることがわかるのです。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:546
+#, no-wrap
+msgid ""
+"failing \"Mismatch between: String and Title\"\n"
+"  greetUser' : User -> String\n"
+"  greetUser' (MkUser n t _) = greet n t\n"
+msgstr ""
+"failing \"Mismatch between: String and Title\"\n"
+"  greetUser' : User -> String\n"
+"  greetUser' (MkUser n t _) = greet n t\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:558
+msgid ""
+"In addition, for every record field, Idris creates an extractor function of "
+"the same name. This can either be used as a regular function, or it can be "
+"used in postfix notation by appending it to a variable of the record type "
+"separated by a dot. Here are two examples for extracting the age from a user:"
+msgstr ""
+"加えて、全てのレコードのフィールドについて、\n"
+"Idrisはそれらと同名の抽出関数を作ります。\n"
+"この関数は通常の関数として使うこともできますし、\n"
+"レコード型の変数にドット区切りでフィールド名を後置する使い方もできます。\n"
+"こちらが利用者から年齢を抽出する2つの例です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:559
+#, no-wrap
+msgid ""
+"getAgeFunction : User -> Bits8\n"
+"getAgeFunction u = age u\n"
+"\n"
+"getAgePostfix : User -> Bits8\n"
+"getAgePostfix u = u.age\n"
+msgstr ""
+"getAgeFunction : User -> Bits8\n"
+"getAgeFunction u = age u\n"
+"\n"
+"getAgePostfix : User -> Bits8\n"
+"getAgePostfix u = u.age\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:567
+#, no-wrap
+msgid "Syntactic Sugar for Records"
+msgstr "レコードの糖衣構文"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:581
+msgid ""
+"As was already mentioned in the [intro](Intro.md), Idris is a *pure* "
+"functional programming language. In pure functions, we are not allowed to "
+"modify global mutable state. As such, if we want to modify a record value, "
+"we will always create a *new* value with the original value remaining "
+"unchanged: Records and other Idris values are *immutable*.  While this *can* "
+"have a slight impact on performance, it has the benefit that we can freely "
+"pass a record value to different functions, without fear of the functions "
+"modifying the value by in-place mutation. These are, again, very strong "
+"guarantees, which makes it drastically easier to reason about our code."
+msgstr ""
+"既に[導入](Intro.md)で言及したように、\n"
+"Idrisは*純粋*関数型プログラミング言語です。\n"
+"純粋な関数では、大域的な可変の状態に変更を加えることができません。\n"
+"そういうわけで、\n"
+"レコードの値を変更したければ、\n"
+"変更する部分以外の値は元のままに常に*新しい*値を作る必要があります。\n"
+"レコードやその他のIdrisでの値は*不変*なのです。\n"
+"このことはパフォーマンスに若干の影響が*ありうる*ものの、\n"
+"レコードの値を別々の関数に気ままに渡すことができるという利点があります。\n"
+"関数がその場で値に変更を加えるかもしれないと恐れる必要がありません。\n"
+"再三ですが、これはとても強力な保証です。\n"
+"これによりコードの検証が劇的に容易になるのです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:586
+msgid ""
+"There are several ways to modify a record, the most general being to pattern "
+"match on the record and adjust each field as desired. If, for instance, we'd "
+"like to increase the age of a `User` by one, we could do the following:"
+msgstr ""
+"レコードを変更するにはいくつかの方法があります。\n"
+"もっとも一般的なものとしては、\n"
+"レコードに対してパターン照合し、\n"
+"好きなようにそれぞれのフィールドを調整するというものです。\n"
+"たとえばもし`User`の年齢を1歳上げたかったら、以下のようにすればできます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:587
+#, no-wrap
+msgid ""
+"total\n"
+"incAge : User -> User\n"
+"incAge (MkUser name title age) = MkUser name title (age + 1)\n"
+msgstr ""
+"total\n"
+"incAge : User -> User\n"
+"incAge (MkUser name title age) = MkUser name title (age + 1)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:597
+msgid ""
+"That's a lot of code for such a simple thing, so Idris offers several "
+"syntactic conveniences for this. For instance, using *record* syntax, we can "
+"just access and update the `age` field of a value:"
+msgstr ""
+"こんな簡単なことなのに、コードを沢山書いています。\n"
+"なのでIdrisではこうした操作について、いくつかの文法的な便宜が図られていま"
+"す。\n"
+"たとえば、*record*文法を使えば、\n"
+"値の`age`フィールドにアクセスして更新することができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:598
+#, no-wrap
+msgid ""
+"total\n"
+"incAge2 : User -> User\n"
+"incAge2 u = { age := u.age + 1 } u\n"
+msgstr ""
+"total\n"
+"incAge2 : User -> User\n"
+"incAge2 u = { age := u.age + 1 } u\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:607
+msgid ""
+"Assignment operator `:=` assigns a new value to the `age` field in `u`. "
+"Remember, that this will create a new `User` value. The original value `u` "
+"remains unaffected by this."
+msgstr ""
+"代入演算子`:=`は`u`の`age`フィールドに新しい値を代入します。\n"
+"ただし、これは新しい`Usre`の値を作ります。\n"
+"`u`の値はこの影響を受けず元のままです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:613
+msgid ""
+"We can access a record field, either by using the field name as a projection "
+"function (`age u`; also have a look at `:t age` in the REPL), or by using "
+"dot syntax: `u.age`. This is special syntax and *not* related to the dot "
+"operator for function composition (`(.)`)."
+msgstr ""
+"レコードのフィールドは2つの方法で読み取れます。\n"
+"1つはフィールド名の射影関数（`age u`のように。REPLで`:t age`としてみてくださ"
+"い。）を使うことで、\n"
+"もう1つは`u.age`のようなドット文法を使うものです。\n"
+"ドット文法は特殊な文法であり、関数合成のためのドット演算子（`(.)`）とは関係*"
+"ありません*。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:616
+msgid ""
+"The use case of modifying a record field is so common that Idris provides "
+"special syntax for this as well:"
+msgstr ""
+"レコードのフィールドを変更する使用例はとてもよくあるので、\n"
+"Idrisはさらにこのための特別な文法を提供しています。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:617
+#, no-wrap
+msgid ""
+"total\n"
+"incAge3 : User -> User\n"
+"incAge3 u = { age $= (+ 1) } u\n"
+msgstr ""
+"total\n"
+"incAge3 : User -> User\n"
+"incAge3 u = { age $= (+ 1) } u\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:627
+msgid ""
+"Here, I used an *operator section* (`(+ 1)`) to make the code more concise.  "
+"As an alternative to an operator section, we could have used an anonymous "
+"function like so:"
+msgstr ""
+"ここではコードをもっと簡潔にするために*演算子節* (`(+ 1)`) を使いました。\n"
+"演算子節の代わりに匿名関数を使うこともできます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:628
+#, no-wrap
+msgid ""
+"total\n"
+"incAge4 : User -> User\n"
+"incAge4 u = { age $= \\x => x + 1 } u\n"
+msgstr ""
+"total\n"
+"incAge4 : User -> User\n"
+"incAge4 u = { age $= \\x => x + 1 } u\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:637
+msgid ""
+"Finally, since our function's argument `u` is only used once at the very "
+"end, we can drop it altogether, to get the following, highly concise version:"
+msgstr ""
+"最後に、上記の関数の引数`u`は末尾に1度だけしか使われていないので、\n"
+"引数と実装の両方から省略して以下の定義が得られます。\n"
+"とても簡潔になりました。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:638
+#, no-wrap
+msgid ""
+"total\n"
+"incAge5 : User -> User\n"
+"incAge5 = { age $= (+ 1) }\n"
+msgstr ""
+"total\n"
+"incAge5 : User -> User\n"
+"incAge5 = { age $= (+ 1) }\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:645
+msgid "As usual, we should have a look at the result at the REPL:"
+msgstr "いつも通りREPLで結果を確認してみましょう。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:646
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> incAge5 drNo\n"
+"MkUser \"No\" (Other \"Dr.\") 74\n"
+msgstr ""
+"Tutorial.DataTypes> incAge5 drNo\n"
+"MkUser \"No\" (Other \"Dr.\") 74\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:653
+msgid ""
+"It is possible to use this syntax to set and/or update several record fields "
+"at once:"
+msgstr ""
+"この文法では複数のレコードフィールドを一度に設定・更新することができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:654
+#, no-wrap
+msgid ""
+"total\n"
+"drNoJunior : User\n"
+"drNoJunior = { name $= (++ \" Jr.\"), title := Mr, age := 17 } drNo\n"
+msgstr ""
+"total\n"
+"drNoJunior : User\n"
+"drNoJunior = { name $= (++ \" Jr.\"), title := Mr, age := 17 } drNo\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:660
+#, no-wrap
+msgid "Tuples"
+msgstr "タプル"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:666
+msgid ""
+"I wrote above that a record is also called a *product type*.  This is quite "
+"obvious when we consider the number of possible values inhabiting a given "
+"type. For instance, consider the following custom record:"
+msgstr ""
+"レコードは*直積型*とも呼ばれていると書きました。\n"
+"これは与えられた型のありえる値の数を考えればかなり明らかです。\n"
+"たとえば、以下の自前のレコードについて考えてみてください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:667
+#, no-wrap
+msgid ""
+"record Foo where\n"
+"  constructor MkFoo\n"
+"  wd   : Weekday\n"
+"  bool : Bool\n"
+msgstr ""
+"record Foo where\n"
+"  constructor MkFoo\n"
+"  wd   : Weekday\n"
+"  bool : Bool\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:678
+msgid ""
+"How many possible values of type `Foo` are there? The answer is `7 * 2 = "
+"14`, as we can pair every possible `Weekday` (seven in total) with every "
+"possible `Bool` (two in total). So, the number of possible values of a "
+"record type is the *product* of the number of possible values for each field."
+msgstr ""
+"このとき、型`Foo`の取り得る値はいくつあるでしょうか。\n"
+"答えは`7 * 2 = 14`です。\n"
+"なぜなら`Monday`の全ての取り得るもの（計7つ）と\n"
+"`Bool`の全ての取り得るもの（計2つ）の組であると見なせるためです。\n"
+"ですから、レコード型で有り得る値の数はそれぞれのフィールドの有り得る値の数の*"
+"積*なのです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:680
+msgid ""
+"The canonical product type is the `Pair`, which is available from the "
+"*Prelude*:"
+msgstr ""
+"基本的な直積型は`Pair`です。\n"
+"これは*Prelude*から使うことができます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:681
+#, no-wrap
+msgid ""
+"total\n"
+"weekdayAndBool : Weekday -> Bool -> Pair Weekday Bool\n"
+"weekdayAndBool wd b = MkPair wd b\n"
+msgstr ""
+"total\n"
+"weekdayAndBool : Weekday -> Bool -> Pair Weekday Bool\n"
+"weekdayAndBool wd b = MkPair wd b\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:692
+msgid ""
+"Since it is quite common to return several values from a function wrapped in "
+"a `Pair` or larger tuple, Idris provides some syntactic sugar for working "
+"with these. Instead of `Pair Weekday Bool`, we can just write `(Weekday, "
+"Bool)`. Likewise, instead of `MkPair wd b`, we can just write `(wd, b)` (the "
+"space is optional):"
+msgstr ""
+"いくつかの値を関数から`Pair`やより大きなタプルにくるんで返すことはかなりよく"
+"あるので、\n"
+"Idrisはいくつかの糖衣構文を提供しています。\n"
+"`Pair Weekday Bool`とする代わりに、\n"
+"ただ`(Weekday, Bool)`と書けばよいです。\n"
+"そんな感じで`MkPair wd b`とする代わりに単に`(wd, b)`と書けばよいのです。\n"
+"（空白は任意です。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:693
+#, no-wrap
+msgid ""
+"total\n"
+"weekdayAndBool2 : Weekday -> Bool -> (Weekday, Bool)\n"
+"weekdayAndBool2 wd b = (wd, b)\n"
+msgstr ""
+"total\n"
+"weekdayAndBool2 : Weekday -> Bool -> (Weekday, Bool)\n"
+"weekdayAndBool2 wd b = (wd, b)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:700
+msgid "This works also for nested tuples:"
+msgstr "この糖衣構文は入れ子のタプルでも大丈夫。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:701
+#, no-wrap
+msgid ""
+"total\n"
+"triple : Pair Bool (Pair Weekday String)\n"
+"triple = MkPair False (Friday, \"foo\")\n"
+"\n"
+"total\n"
+"triple2 : (Bool, Weekday, String)\n"
+"triple2 = (False, Friday, \"foo\")\n"
+msgstr ""
+"total\n"
+"triple : Pair Bool (Pair Weekday String)\n"
+"triple = MkPair False (Friday, \"foo\")\n"
+"\n"
+"total\n"
+"triple2 : (Bool, Weekday, String)\n"
+"triple2 = (False, Friday, \"foo\")\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:713
+msgid ""
+"In the example above, `triple2` is converted to the form used in `triple` by "
+"the Idris compiler."
+msgstr ""
+"上の例での`triple2`はIdrisのコンパイラによって`triple`での形式に変換されま"
+"す。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:715
+msgid "We can even use tuple syntax in pattern matches:"
+msgstr "タプルの構文をパターン照合で使うことさえできます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:716
+#, no-wrap
+msgid ""
+"total\n"
+"bar : Bool\n"
+"bar = case triple of\n"
+"  (b,wd,_) => b && isWeekend wd\n"
+msgstr ""
+"total\n"
+"bar : Bool\n"
+"bar = case triple of\n"
+"  (b,wd,_) => b && isWeekend wd\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:723
+#, no-wrap
+msgid "As Patterns"
+msgstr "asパターン"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:728
+msgid ""
+"Sometimes, we'd like to take apart a value by pattern matching on it but "
+"still retain the value as a whole for using it in further computations:"
+msgstr ""
+"ときどき、値をパターン照合でばらしつつ、\n"
+"あとあとの計算で使うために元の全体の値をそのまま取っておきたいときがありま"
+"す。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:729
+#, no-wrap
+msgid ""
+"total\n"
+"baz : (Bool,Weekday,String) -> (Nat,Bool,Weekday,String)\n"
+"baz t@(_,_,s) = (length s, t)\n"
+msgstr ""
+"total\n"
+"baz : (Bool,Weekday,String) -> (Nat,Bool,Weekday,String)\n"
+"baz t@(_,_,s) = (length s, t)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:741
+msgid ""
+"In `baz`, variable `t` is *bound* to the triple as a whole, which is then "
+"reused to construct the resulting quadruple. Remember, that `(Nat,Bool,"
+"Weekday,String)` is just sugar for `Pair Nat (Bool,Weekday,String)`, and "
+"`(length s, t)` is just sugar for `MkPair (length s) t`. Hence, the "
+"implementation above is correct as is confirmed by the type checker."
+msgstr ""
+"`baz`では変数`t`はタプル全体に*束縛*されています。\n"
+"この変数は結果の3要素のタプルを構築するときに再利用されます。\n"
+"ここで、`(Nat,Bool,Weekday,String)`はただの糖衣で、\n"
+"`Pair Nat (Bool,Weekday,String)`と同じです。\n"
+"また、`(length s, t)`も糖衣で`MkPair (length s) t`と同じです。\n"
+"だから、上の実装は型検査器で確証される正しいものなのです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:748
+#, no-wrap
+msgid ""
+"1. Define a record type for time spans by pairing a `UnitOfTime`\n"
+"with an integer representing the duration of the time span in\n"
+"the given unit of time. Define also a function for converting\n"
+"a time span to an `Integer` representing the duration in seconds.\n"
+msgstr ""
+"1. 期間を表すレコード型を定義してください。\n"
+"このレコード型は`UnitOfTime`とその時間の単位での期間の幅を表す整数の対です。\n"
+"期間を秒数で表したときの`Integer`に変換する関数も定義してください。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:752
+#, no-wrap
+msgid ""
+"2. Implement an equality check for time spans: Two time spans\n"
+"should be considered equal, if and only if they correspond to\n"
+"the same number of seconds.\n"
+msgstr ""
+"2. 期間の等価性検査を実装してください。\n"
+"2つの期間が等しいのは、\n"
+"秒数に直したときに一致するときに限ります。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:757
+#, no-wrap
+msgid ""
+"3. Implement a function for pretty printing time spans:\n"
+"The resulting string should display the time span in its\n"
+"given unit, plus show the number of seconds in parentheses,\n"
+"if the unit is not already seconds.\n"
+msgstr ""
+"3. 期間を綺麗に表示する関数を実装してください。\n"
+"結果の文字列は与えられた単位での期間を表示し、\n"
+"なおかつ単位が秒でないときは括弧内に秒数を表示するようにしてください。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:761
+#, no-wrap
+msgid ""
+"4. Implement a function for adding two time spans. If the\n"
+"two time spans use different units of time, use the smaller\n"
+"unit of time to ensure a lossless conversion.\n"
+msgstr ""
+"4. 2つの期間を加算する関数を実装してください。\n"
+"もし2つの期間が異なる時間の単位を使っていたら、\n"
+"小さいほうの時間の単位を使うようにしてください。\n"
+"これは損失のない変換を実現するためです。\n"
+
+#. type: Title ##
+#: ../src/Tutorial/DataTypes.md:762
+#, no-wrap
+msgid "Generic Data Types"
+msgstr "汎化データ型"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:772
+msgid ""
+"Sometimes, a concept is general enough that we'd like to apply it not only "
+"to a single type, but to all kinds of types. For instance, we might not want "
+"to define data types for lists of integers, lists of strings, and lists of "
+"booleans, as this would lead to a lot of code duplication.  Instead, we'd "
+"like to have a single generic list type *parameterized* by the type of "
+"values it stores. This section explains how to define and use generic types."
+msgstr ""
+"ときどき、概念が充分に汎用的であるために、\n"
+"1つの型だけに適用するのではなく、\n"
+"ある種類の型全てに適用したいときがあります。\n"
+"たとえば、整数型のリストと文字列型のリストと真偽値型のリストを定義したくはあ"
+"りません。\n"
+"どうしてかっていうと、これをやると沢山コードに重複が生まれるためです。\n"
+"その代わりに、1つの汎化されたリスト型でもって、\n"
+"そのリストが持つ値の型を*変数に取る*ようにしたいのです。\n"
+"この節では汎化型をどう定義しどう使うかを説明します。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:773
+#, no-wrap
+msgid "Maybe"
+msgstr "Maybe"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:786
+msgid ""
+"Consider the case of parsing a `Weekday` from user input. Surely, such a "
+"function should return `Saturday`, if the string input was `\"Saturday\"`, "
+"but what if the input was `\"sdfkl332\"`? We have several options here.  For "
+"instance, we could just return a default result (`Sunday` perhaps?). But is "
+"this the behavior programmers expect when using our library? Maybe not. To "
+"silently continue with a default value in the face of invalid user input is "
+"hardly ever the best choice and may lead to a lot of confusion."
+msgstr ""
+"`Weekday`をユーザーの入力からパースする場合を考えましょう。\n"
+"当然、文字列の入力が`\"Saturday\"`なら、関数が返すのは`Saturday`です。\n"
+"でも入力が`\"sdfkl332\"`だったらどうなるでしょうか。\n"
+"ここでいくつか選択肢があります。\n"
+"たとえば、デフォルト値を返すというもの。\n"
+"（`Sunday`とか？）\n"
+"でもこれはライブラリを使うプログラマが期待する振舞いなのでしょうか。\n"
+"そうではないでしょう。\n"
+"不正な利用者の入力を目の前にして、\n"
+"何事もなかったかのようにデフォルト値で続行するのはめったに最善の選択ではない"
+"ですし、\n"
+"多大な混乱のもとになるでしょう。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:792
+msgid ""
+"In an imperative language, our function would probably throw an exception. "
+"We could do this in Idris as well (there is function `idris_crash` in the "
+"*Prelude* for this), but doing so, we would abandon totality! A high price "
+"to pay for such a common thing as a parsing error."
+msgstr ""
+"命令型言語では関数は例外を投げるのかもしれません。\n"
+"Idrisでもそれはできます\n"
+"（このために*Prelude*に`idris_crash`という関数があります）、\n"
+"がしかし、そうすると全域性を放棄することになります！\n"
+"パースエラーのようなよくあることのために、全域性を捨てるのはコスパが悪いで"
+"す。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:803
+msgid ""
+"In languages like Java, our function might also return some kind of `null` "
+"value (leading to the dreaded `NullPointerException`s if not handled "
+"properly in client code). Our solution will be similar, but instead of "
+"silently returning `null`, we will make the possibility of failure visible "
+"in the types! We define a custom data type, which encapsulates the "
+"possibility of failure. Defining new data types in Idris is very cheap (in "
+"terms of the amount of code needed), therefore this is often the way to go "
+"in order to increase type safety.  Here's an example how to do this:"
+msgstr ""
+"Javaのような言語では関数は`null`値の類を返すこともあります。\n"
+"（各々のコードで適切に対処されていないと、恐るべき`NullPointererException`"
+"に。）\n"
+"Idrisの解決策もこれに似ていますが、しれっと`null`を返すのではなく、\n"
+"型で失敗する可能性があることを目に見えるようにします！\n"
+"このために自前のデータ型を定義し、\n"
+"その型が失敗する可能性をカプセル化するようにします。\n"
+"Idrisで新しいデータ型を定義することは（必要なコードの量の意味で）とても安く済"
+"みます。\n"
+"なのでこれは型安全性を増すためにはよくあるやりかたです。\n"
+"例はこちら。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:804
+#, no-wrap
+msgid ""
+"data MaybeWeekday = WD Weekday | NoWeekday\n"
+"\n"
+"total\n"
+"readWeekday : String -> MaybeWeekday\n"
+"readWeekday \"Monday\"    = WD Monday\n"
+"readWeekday \"Tuesday\"   = WD Tuesday\n"
+"readWeekday \"Wednesday\" = WD Wednesday\n"
+"readWeekday \"Thursday\"  = WD Thursday\n"
+"readWeekday \"Friday\"    = WD Friday\n"
+"readWeekday \"Saturday\"  = WD Saturday\n"
+"readWeekday \"Sunday\"    = WD Sunday\n"
+"readWeekday _           = NoWeekday\n"
+msgstr ""
+"data MaybeWeekday = WD Weekday | NoWeekday\n"
+"\n"
+"total\n"
+"readWeekday : String -> MaybeWeekday\n"
+"readWeekday \"Monday\"    = WD Monday\n"
+"readWeekday \"Tuesday\"   = WD Tuesday\n"
+"readWeekday \"Wednesday\" = WD Wednesday\n"
+"readWeekday \"Thursday\"  = WD Thursday\n"
+"readWeekday \"Friday\"    = WD Friday\n"
+"readWeekday \"Saturday\"  = WD Saturday\n"
+"readWeekday \"Sunday\"    = WD Sunday\n"
+"readWeekday _           = NoWeekday\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:823
+msgid ""
+"But assume now, we'd also like to read `Bool` values from user input. We'd "
+"now have to write a custom data type `MaybeBool` and so on for all types "
+"we'd like to read from `String`, and the conversion of which might fail."
+msgstr ""
+"でもここで、`Bool`も利用者の入力から読めるようにしたいのだとします。\n"
+"そうしたら自前のデータ型`MaybeBool`を書くはめになり、\n"
+"`String`から読み取りたい全ての型と失敗するかもしれない変換に対して同じような"
+"ことをすることになります。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:827
+msgid ""
+"Idris, like many other programming languages, allows us to generalize this "
+"behavior by using *generic data types*. Here's an example:"
+msgstr ""
+"Idrisは他のプログラミング言語のようにこの振舞いを*汎化データ型*で汎化できま"
+"す。\n"
+"例はこんな感じ。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:828
+#, no-wrap
+msgid ""
+"data Option a = Some a | None\n"
+"\n"
+"total\n"
+"readBool : String -> Option Bool\n"
+"readBool \"True\"    = Some True\n"
+"readBool \"False\"   = Some False\n"
+"readBool _         = None\n"
+msgstr ""
+"data Option a = Some a | None\n"
+"\n"
+"total\n"
+"readBool : String -> Option Bool\n"
+"readBool \"True\"    = Some True\n"
+"readBool \"False\"   = Some False\n"
+"readBool _         = None\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:839
+msgid "It is important to go to the REPL and look at the types:"
+msgstr "REPLで型を見るのは大事です。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:840
+#, no-wrap
+msgid ""
+"Tutorial.DataTypes> :t Some\n"
+"Tutorial.DataTypes.Some : a -> Option a\n"
+"Tutorial.DataTypes> :t None\n"
+"Tutorial.DataTypes.None : Optin a\n"
+"Tutorial.DataTypes> :t Option\n"
+"Tutorial.DataTypes.Option : Type -> Type\n"
+msgstr ""
+"Tutorial.DataTypes> :t Some\n"
+"Tutorial.DataTypes.Some : a -> Option a\n"
+"Tutorial.DataTypes> :t None\n"
+"Tutorial.DataTypes.None : Optin a\n"
+"Tutorial.DataTypes> :t Option\n"
+"Tutorial.DataTypes.Option : Type -> Type\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:857
+msgid ""
+"We need to introduce some jargon here. `Option` is what we call a *type "
+"constructor*. It is not yet a saturated type: It is a function from `Type` "
+"to `Type`.  However, `Option Bool` is a type, as is `Option Weekday`.  Even "
+"`Option (Option Bool)` is a valid type. `Option` is a type constructor "
+"*parameterized* over a *parameter* of type `Type`.  `Some` and `None` are "
+"`Option`s *data constructors*: The functions used to create values of type "
+"`Option a` for a type `a`."
+msgstr ""
+"ここでいくつかの専門用語を紹介しなければいけません。\n"
+"`Option`は*型構築子*と呼ぶものです。\n"
+"これは完全な型ではなく、`Type`から`Type`への関数です。\n"
+"一方で`Option Bool`は型です。\n"
+"`Option Weekday`なんかがそうです。\n"
+"`Option (Option Bool)`さえ妥当な型です。\n"
+"`Option`は型構築子で、型が`Type`の*変数*を*引数に取る*ものなのです。\n"
+"`Some`と`None`は`Option`の*データ構築子*です。\n"
+"これは関数で、型`a`があったとして、型`Option a`の値をつくるのに使われます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:860
+msgid ""
+"Let's see some other use cases for `Option`. Below is a safe division "
+"operation:"
+msgstr ""
+"`Option`の他の使用例を見てみましょう。\n"
+"以下は安全な除算の操作です。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:861
+#, no-wrap
+msgid ""
+"total\n"
+"safeDiv : Integer -> Integer -> Option Integer\n"
+"safeDiv n 0 = None\n"
+"safeDiv n k = Some (n `div` k)\n"
+msgstr ""
+"total\n"
+"safeDiv : Integer -> Integer -> Option Integer\n"
+"safeDiv n 0 = None\n"
+"safeDiv n k = Some (n `div` k)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:872
+msgid ""
+"The possibility of returning some kind of *null* value in the face of "
+"invalid input is so common, that there is a data type like `Option` already "
+"in the *Prelude*: `Maybe`, with data constructors `Just` and `Nothing`."
+msgstr ""
+"不正な入力に直面したときに*null*のような類の値を返しうるというのはよくあるの"
+"で、\n"
+"*Prelude*には既に`Option`のようなデータ型があります。\n"
+"その名は`Maybe`。\n"
+"データ構築子は`Just`と`Nothing`です。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:884
+msgid ""
+"It is important to understand the difference between returning `Maybe "
+"Integer` in a function, which might fail, and returning `null` in languages "
+"like Java: In the former case, the possibility of failure is visible in the "
+"types. The type checker will force us to treat `Maybe Integer` differently "
+"than `Integer`: Idris will *not* allow us to forget to eventually handle the "
+"failure case.  Not so, if `null` is silently returned without adjusting the "
+"types. Programmers may (and often *will*) forget to handle the `null` case, "
+"leading to unexpected and sometimes hard to debug runtime exceptions."
+msgstr ""
+"失敗しうる関数で`Maybe Integer`を返すのと、\n"
+"Javaのような言語で`null`を返すのには違いがある、ということを理解するのは大事"
+"です。\n"
+"前者では失敗する可能性があることは型で見てとれます。\n"
+"型検査器によって`Maybe Integer`を`Integer`とは違う風に取り扱うようにしなくて"
+"はいけません。\n"
+"Idrisは決して失敗する場合の対処をするのを忘れさせ*ません*。\n"
+"`null`が何食わぬ顔で返されて、型に合わし損ねるのとは違います。\n"
+"プログラマはもしかすると（というかまあ*きっと*）\n"
+"`null`の場合の対処をするのを忘れるかもしれないので、\n"
+"予想していないような、ときに修復しにくい実行時例外に繋がるのです。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:885
+#, no-wrap
+msgid "Either"
+msgstr "Either"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:896
+msgid ""
+"While `Maybe` is very useful to quickly provide a default value to signal "
+"some kind of failure, this value (`Nothing`) is not very informative. It "
+"will not tell us *what exactly* went wrong. For instance, in case of our "
+"`Weekday` reading function, it might be interesting later on to know the "
+"value of the invalid input string. And just like with `Maybe` and `Option` "
+"above, this concept is general enough that we might encounter other types of "
+"invalid values.  Here's a data type to encapsulate this:"
+msgstr ""
+"`Maybe`がとても便利で、手っ取り早くなんらかの失敗を知らせるために既定値を返し"
+"てくれるとはいえ、\n"
+"この値 (`Nothing`) はそれほど有意味ではありません。\n"
+"*実際に何が*まずかったのかがわからないのです。\n"
+"たとえば、`Weekday`を読み取る関数の例でいうと、\n"
+"あとあとで不正な入力文字列の値を知りたくなることがあるかもしれません。\n"
+"そしてちょうど上記の`Maybe`と`Option`のように、\n"
+"この概念は充分に汎用的なので、\n"
+"不正な値のための型を文字列型以外に変えたいことがあるかもしれません。\n"
+"これをカプセル化するデータ型はこうなります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:897
+#, no-wrap
+msgid "data Validated e a = Invalid e | Valid a\n"
+msgstr "data Validated e a = Invalid e | Valid a\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:907
+msgid ""
+"`Validated` is a type constructor parameterized over two type parameters `e` "
+"and `a`. It's data constructors are `Invalid` and `Valid`, the former "
+"holding a value describing some error condition, the latter the result in "
+"case of a successful computation.  Let's see this in action:"
+msgstr ""
+"`Validated`は2つの型変数`e`と`a`を引数に取る型構築子です。\n"
+"データ構築子は`Invalid`と`Valid`で、\n"
+"前者は何らかのエラーの状態を、\n"
+"後者は成功した場合の計算の結果を表現します。\n"
+"実際に見てみましょう。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:908
+#, no-wrap
+msgid ""
+"total\n"
+"readWeekdayV : String -> Validated String Weekday\n"
+"readWeekdayV \"Monday\"    = Valid Monday\n"
+"readWeekdayV \"Tuesday\"   = Valid Tuesday\n"
+"readWeekdayV \"Wednesday\" = Valid Wednesday\n"
+"readWeekdayV \"Thursday\"  = Valid Thursday\n"
+"readWeekdayV \"Friday\"    = Valid Friday\n"
+"readWeekdayV \"Saturday\"  = Valid Saturday\n"
+"readWeekdayV \"Sunday\"    = Valid Sunday\n"
+"readWeekdayV s           = Invalid (\"Not a weekday: \" ++ s)\n"
+msgstr ""
+"total\n"
+"readWeekdayV : String -> Validated String Weekday\n"
+"readWeekdayV \"Monday\"    = Valid Monday\n"
+"readWeekdayV \"Tuesday\"   = Valid Tuesday\n"
+"readWeekdayV \"Wednesday\" = Valid Wednesday\n"
+"readWeekdayV \"Thursday\"  = Valid Thursday\n"
+"readWeekdayV \"Friday\"    = Valid Friday\n"
+"readWeekdayV \"Saturday\"  = Valid Saturday\n"
+"readWeekdayV \"Sunday\"    = Valid Sunday\n"
+"readWeekdayV s           = Invalid (\"Not a weekday: \" ++ s)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:929
+msgid ""
+"Again, this is such a general concept that a data type similar to "
+"`Validated` is already available from the *Prelude*: `Either` with data "
+"constructors `Left` and `Right`.  It is very common for functions to "
+"encapsulate the possibility of failure by returning an `Either err val`, "
+"where `err` is the error type and `val` is the desired return type. This is "
+"the type safe (and total!) alternative to throwing a catchable exception in "
+"an imperative language."
+msgstr ""
+"繰り返しますが、これは汎用的な概念なので`Validated`に似たデータ型が既に"
+"*Prelude*にあります。\n"
+"それは`Either`で、データ構築子は`Left`と`Right`です。\n"
+"関数が失敗する可能性をカプセル化して`Either err val`として返すことはとてもよ"
+"くあります。\n"
+"ここで`err`はエラーの型で`val`は求める結果の型です。\n"
+"これは型安全であり（加えて全域です！）、\n"
+"命令型言語で例外を投げたり捕えたりするものに代わるものです。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:934
+msgid ""
+"Note, however, that the semantics of `Either` are not always \"`Left` is an "
+"error and `Right` a success\". A function returning an `Either` just means "
+"that it can have to different types of results, each of which are *tagged* "
+"with the corresponding data constructor."
+msgstr ""
+"ただしかし、`Either`の意味論は必ずしも「`Left`が失敗で`Right`が成功を表す」も"
+"のとは限りません。\n"
+"関数が`Either`を返すということは、単に異なる型の結果を返すという意味であ"
+"り、\n"
+"それぞれが対応するデータ構築子に*タグ付けされている*だけなのです。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:935
+#, no-wrap
+msgid "List"
+msgstr "List"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:941
+msgid ""
+"One of the most important data structures in pure functional programming is "
+"the singly linked list. Here is its definition (called `Seq` in order for it "
+"not to collide with `List`, which is of course already available from the "
+"Prelude):"
+msgstr ""
+"純粋関数型プログラミングで最も重要なデータ構造の1つは単方向連結リストです。\n"
+"以下がその定義です。\n"
+"（`Seq`と呼び、`List`と衝突しないようにしています。\n"
+"`List`はもちろんPreludeで既にあります。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:942
+#, no-wrap
+msgid "data Seq a = Nil | (::) a (Seq a)\n"
+msgstr "data Seq a = Nil | (::) a (Seq a)\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:953
+msgid ""
+"This calls for some explanations. `Seq` consists of two *data constructors*: "
+"`Nil` (representing an empty sequence of values) and `(::)` (also called the "
+"*cons operator*), which prepends a new value of type `a` to an already "
+"existing list of values of the same type. As you can see, we can also use "
+"operators as data constructors, but please do not overuse this. Use clear "
+"names for your functions and data constructors and only introduce new "
+"operators when it truly helps readability!"
+msgstr ""
+"これには少々説明が必要です。\n"
+"`Seq`は2つの*データ構築子*からなります。\n"
+"`Nil`（値の連なりが空であることを表す）と`(::)`（またの名を*cons演算子*）で"
+"す。\n"
+"`(::)`は型`a`の新しい値を既存の同じ型の値からなるリストに後付けします。\n"
+"見てみると、演算子をデータ構築子としても使えることがわかります。\n"
+"しかし、乱用しないでください。\n"
+"関数とデータ構築子には明白な名前を使い、\n"
+"本当に可読性を向上させるときにだけ新しい演算子を導入すること！"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:956
+msgid ""
+"Here is an example of how to use the `List` constructors (I use `List` here, "
+"as this is what you should use in your own code):"
+msgstr ""
+"`List`の構築子を使う方法の例はこちらです。\n"
+"（ここでは`List`を使っています。\n"
+"今後、実際には`Seq`ではなく`List`を使うことになるからです。）"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:957
+#, no-wrap
+msgid ""
+"total\n"
+"ints : List Int64\n"
+"ints = 1 :: 2 :: -3 :: Nil\n"
+msgstr ""
+"total\n"
+"ints : List Int64\n"
+"ints = 1 :: 2 :: -3 :: Nil\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:966
+msgid ""
+"However, there is a more concise way of writing the above. Idris accepts "
+"special syntax for constructing data types consisting exactly of the two "
+"constructors `Nil` and `(::)`:"
+msgstr ""
+"しかし、上の書き方はもっと簡潔にできます。\n"
+"Idrisには特殊な文法があり、\n"
+"2つの構築子`Nil`と`(::)`からなるデータ型であれば、値の構築に使えます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:967
+#, no-wrap
+msgid ""
+"total\n"
+"ints2 : List Int64\n"
+"ints2 = [1, 2, -3]\n"
+"\n"
+"total\n"
+"ints3 : List Int64\n"
+"ints3 = []\n"
+msgstr ""
+"total\n"
+"ints2 : List Int64\n"
+"ints2 = [1, 2, -3]\n"
+"\n"
+"total\n"
+"ints3 : List Int64\n"
+"ints3 = []\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:980
+msgid ""
+"The two definitions `ints` and `ints2` are treated identically by the "
+"compiler.  Note, that list syntax can also be used in pattern matches."
+msgstr ""
+"2つの定義`ints`と`ints2`はコンパイラによって同一のものとして扱われます。\n"
+"なお、リストの文法はパターン照合でも使えます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:991
+msgid ""
+"There is another thing that's special about `Seq` and `List`: Each of them "
+"is defined in terms of itself (the cons operator accepts a value and another "
+"`Seq` as arguments). We call such data types *recursive* data types, and "
+"their recursive nature means, that in order to decompose or consume them, we "
+"typically require recursive functions. In an imperative language, we might "
+"use a for loop or similar construct to iterate over the values of a `List` "
+"or a `Seq`, but these things do not exist in a language without in-place "
+"mutation. Here's how to sum a list of integers:"
+msgstr ""
+"前述の`Seq`と`List`には他にも特別なことがあります。\n"
+"どちらも自分自身を使って定義されていることです。\n"
+"（cons演算子は値と別の`Seq`を引数に取ります。）\n"
+"このようなデータ型を*再帰的な*データ型と呼び、\n"
+"この再帰的な性質のために、\n"
+"この型の値を分解したり消費したりするためには再帰的な関数が必要になるのがお約"
+"束です。\n"
+"命令型言語ではforの繰返しのようなもので`List`や`Seq`の値を巡っていきます"
+"が、\n"
+"そのようなものはその場で値を変更することがない言語には存在しません。\n"
+"こちらが整数のリストの合計を求めるやりかたです。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:992
+#, no-wrap
+msgid ""
+"total\n"
+"intSum : List Integer -> Integer\n"
+"intSum Nil       = 0\n"
+"intSum (n :: ns) = n + intSum ns\n"
+msgstr ""
+"total\n"
+"intSum : List Integer -> Integer\n"
+"intSum Nil       = 0\n"
+"intSum (n :: ns) = n + intSum ns\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1004
+msgid ""
+"Recursive functions can be hard to grasp at first, so I'll break this down a "
+"bit. If we invoke `intSum` with the empty list, the first pattern matches "
+"and the function returns zero immediately.  If, however, we invoke `intSum` "
+"with a non-empty list - `[7,5,9]` for instance - the following happens:"
+msgstr ""
+"再帰的な関数は最初は取っ付きにくいかもしれませんから、\n"
+"少し分解してみましょう。\n"
+"空のリストに対して`intSum`を呼び出すと、\n"
+"最初のパターンが照合して関数は直ちにゼロを返します。\n"
+"一方で空ではないリスト、例えば`[7,5,9]`、に対して`intSum`を呼び出すと、\n"
+"以下のようなことが起こります。"
+
+#. type: Bullet: '1. '
+#: ../src/Tutorial/DataTypes.md:1008
+msgid ""
+"The second pattern matches and splits the list into two parts: Its head "
+"(`7`) is bound to variable `n` and its tail (`[5,9]`) is bound to `ns`:"
+msgstr ""
+"2つ目のパターンが照合し、リスト2つに分割します。\n"
+"頭部(`7`)は変数`n`に束縛し、\n"
+"尾部(`[5,9]`)は`ns`に束縛します。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:1009
+#, no-wrap
+msgid "   7 + intSum [5,9]\n"
+msgstr "   7 + intSum [5,9]\n"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/DataTypes.md:1015
+msgid ""
+"In a second invocation, `intSum` is called with a new list: `[5,9]`.  The "
+"second pattern matches and `n` is bound to `5` and `ns` is bound to `[9]`:"
+msgstr ""
+"2回目の呼び出しでは、`intSum`は新しいリスト`[5,9]`とともに呼ばれます。\n"
+"2つ目のパターンが照合し、`n`は`5`に束縛し、\n"
+"`ns`は`[9]`に束縛します。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:1016
+#, no-wrap
+msgid "   7 + (5 + intSum [9])\n"
+msgstr "   7 + (5 + intSum [9])\n"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/DataTypes.md:1023
+msgid ""
+"In a third invocation `intSum` is called with list `[9]`.  The second "
+"pattern matches and `n` is bound to `9` and `ns` is bound to `[]`:"
+msgstr ""
+"3回目の`intSum`の呼び出しではリスト`[9]`とともに呼ばれます。\n"
+"2つ目のパターンが照合し、`n`は`9`に束縛し、`ns`は`[]`に束縛します。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:1024
+#, no-wrap
+msgid "   7 + (5 + (9 + intSum [])\n"
+msgstr "   7 + (5 + (9 + intSum [])\n"
+
+#. type: Bullet: '4. '
+#: ../src/Tutorial/DataTypes.md:1030
+msgid ""
+"In a fourth invocation, `intSum` is called with list `[]` and returns `0` "
+"immediately:"
+msgstr ""
+"4回目の呼び出しでは`intSum`はリスト`[]`とともに呼ばれ、直ちに`0`を返します。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:1031
+#, no-wrap
+msgid "   7 + (5 + (9 + 0)\n"
+msgstr "   7 + (5 + (9 + 0)\n"
+
+#. type: Bullet: '5. '
+#: ../src/Tutorial/DataTypes.md:1037
+msgid "In the third invocation, `9` and `0` are added and `9` is returned:"
+msgstr "3回目の呼び出しの部分で、`9`と`0`は加算され、`9`が返ります。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:1038
+#, no-wrap
+msgid "   7 + (5 + 9)\n"
+msgstr "   7 + (5 + 9)\n"
+
+#. type: Bullet: '6. '
+#: ../src/Tutorial/DataTypes.md:1044
+msgid "In the second invocation, `5` and `9` are added and `14` is returned:"
+msgstr "2回目の呼び出しの部分で、`5`と`9`が加算され`14`が返ります。"
+
+#. type: Fenced code block (repl)
+#: ../src/Tutorial/DataTypes.md:1045
+#, no-wrap
+msgid "   7 + 14\n"
+msgstr "   7 + 14\n"
+
+#. type: Bullet: '7. '
+#: ../src/Tutorial/DataTypes.md:1051
+msgid ""
+"Finally, our initial invocation of `intSum` adds `7` and `14` and returns "
+"`21`."
+msgstr ""
+"最後に`intSum`の最初の呼び出しの部分で、`7`と`14`が加算されて`21`が返ります。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1055
+msgid ""
+"Thus, the recursive implementation of `intSum` leads to a sequence of nested "
+"calls to `intSum`, which terminates once the argument is the empty list."
+msgstr ""
+"なので、`intSum`の再帰的な実装によって、`intSum`の入れ子の呼び出しの連なりに"
+"なり、\n"
+"その連なりは引数が空リストになったときに終わります。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:1056
+#, no-wrap
+msgid "Generic Functions"
+msgstr "汎化関数"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1062
+msgid ""
+"In order to fully appreciate the versatility that comes with generic data "
+"types, we also need to talk about generic functions.  Like generic types, "
+"these are parameterized over one or more type parameters."
+msgstr ""
+"汎化データ型によりもたらされる多様性を十全に享受するためには、\n"
+"汎化関数についても語らねばなりません。\n"
+"汎化型のように汎化関数は1つ以上の型変数を変数に取ります。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1068
+msgid ""
+"Consider for instance the case of breaking out of the `Option` data type. In "
+"case of a `Some`, we'd like to return the stored value, while for the `None` "
+"case we provide a default value. Here's how to do this, specialized to "
+"`Integer`s:"
+msgstr ""
+"たとえば`Option`データ型の殻を破ることを考えてみましょう。\n"
+"`Some`の場合は保持している値を返し、\n"
+"`None`の場合はデフォルト値を提供します。\n"
+"これをする方法は以下で、ここでは`Integer`に特殊化しています。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1069
+#, no-wrap
+msgid ""
+"total\n"
+"integerFromOption : Integer -> Option Integer -> Integer\n"
+"integerFromOption _ (Some y) = y\n"
+"integerFromOption x None     = x\n"
+msgstr ""
+"total\n"
+"integerFromOption : Integer -> Option Integer -> Integer\n"
+"integerFromOption _ (Some y) = y\n"
+"integerFromOption x None     = x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1080
+msgid ""
+"It's pretty obvious that this, again, is not general enough.  Surely, we'd "
+"also like to break out of `Option Bool` or `Option String` in a similar "
+"fashion. That's exactly what the generic function `fromOption` does:"
+msgstr ""
+"これもまたかなり明らかなことですが、充分に汎用的ではありません。\n"
+"当然`Option Bool`や`Option String`を似たような様式で解体したくなるでしょ"
+"う。\n"
+"そしてこれを実現するのがまさに汎化関数`fromOption`なのです。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1081
+#, no-wrap
+msgid ""
+"total\n"
+"fromOption : a -> Option a -> a\n"
+"fromOption _ (Some y) = y\n"
+"fromOption x None     = x\n"
+msgstr ""
+"total\n"
+"fromOption : a -> Option a -> a\n"
+"fromOption _ (Some y) = y\n"
+"fromOption x None     = x\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1095
+msgid ""
+"The lower-case `a` is again a *type parameter*. You can read the type "
+"signature as follows: \"For any type `a`, given a *value* of type `a`, and "
+"an `Option a`, we can return a value of type `a`.\" Note, that `fromOption` "
+"knows nothing else about `a`, other than it being a type. It is therefore "
+"not possible, to conjure a value of type `a` out of thin air. We *must* have "
+"a value available to deal with the `None` case."
+msgstr ""
+"小文字`a`もまた*型変数*です。\n"
+"型シグネチャを以下のように読むことができます。\n"
+"「あらゆる型`a`について、型`a`と`Option a`の*値*があったら、\n"
+"型`a`の値を返すことができる。」\n"
+"ここで、`fromOption`は`a`について何も知りません。\n"
+"知っているのは`a`が型であることぐらいです。\n"
+"したがって、型`a`の値の中身を掻き回すことは不可能です。\n"
+"`None`の場合に対処できる値が*なくてはいけません*。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1098
+msgid ""
+"The pendant to `fromOption` for `Maybe` is called `fromMaybe` and is "
+"available from module `Data.Maybe` from the *base* library."
+msgstr ""
+"`Maybe`用の`fromOption`は`fromMaybe`と呼ばれ、\n"
+"モジュール`Data.Maybe`にあり、そのモジュールは*base*ライブラリにあります。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1104
+msgid ""
+"Sometimes, `fromOption` is not general enough. Assume we'd like to print the "
+"value of a freshly parsed `Bool`, giving some generic error message in case "
+"of a `None`. We can't use `fromOption` for this, as we have an `Option Bool` "
+"and we'd like to return a `String`. Here's how to do this:"
+msgstr ""
+"ときどき、`fromOption`では充分に汎用的でないときがあります。\n"
+"`Bool`をパースして文字で表示したいのだとしましょう。\n"
+"`None`の場合は何かの汎用的なエラーメッセージを出します。\n"
+"これには`fromOption`は使えません。\n"
+"`Option Bool`があって`String`を返したいからです。\n"
+"次のようにすればできます。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1105
+#, no-wrap
+msgid ""
+"total\n"
+"option : b -> (a -> b) -> Option a -> b\n"
+"option _ f (Some y) = f y\n"
+"option x _ None     = x\n"
+"\n"
+"total\n"
+"handleBool : Option Bool -> String\n"
+"handleBool = option \"Not a boolean value.\" show\n"
+msgstr ""
+"total\n"
+"option : b -> (a -> b) -> Option a -> b\n"
+"option _ f (Some y) = f y\n"
+"option x _ None     = x\n"
+"\n"
+"total\n"
+"handleBool : Option Bool -> String\n"
+"handleBool = option \"Not a boolean value.\" show\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1121
+#, no-wrap
+msgid ""
+"Function `option` is parameterized over *two* type parameters:\n"
+"`a` represents the type of values stored in the `Option`,\n"
+"while `b` is the return type. In case of a `Just`, we need\n"
+"a way to convert the stored `a` to a `b`, an that's done\n"
+"using the function argument of type `a -> b`.\n"
+msgstr ""
+"関数`option`は*2つの*型変数を引数に取ります。\n"
+"`a`は`Option`に保管されている値の型を表現しており、\n"
+"`b`は返り値の型です。\n"
+"`Just`の場合は保管されている`a`を`b`に変換する方法が必要であり、\n"
+"それには関数の引数`a -> b`を使えばよいです。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1126
+msgid ""
+"In Idris, lower-case identifiers in function types are treated as *type "
+"parameters*, while upper-case identifiers are treated as types or type "
+"constructors that must be in scope."
+msgstr ""
+"Idrisでは関数の型での小文字の識別子は*型変数*として扱われます。\n"
+"一方で大文字の識別子は型か型構築子でスコープにある必要があります。"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:1127 ../src/Tutorial/Eq.md:1056
+#, no-wrap
+msgid "Exercises part 4"
+msgstr "演習パート4"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1137
+msgid ""
+"If this is your first time programming in a purely functional language, the "
+"exercises below are *very* important. Do not skip any of them! Take your "
+"time and work through them all. In most cases, the types should be enough to "
+"explain what's going on, even though they might appear cryptic in the "
+"beginning. Otherwise, have a look at the comments (if any)  of each exercise."
+msgstr ""
+"もしこれが初めての関数型言語でのプログラミングであれば、\n"
+"以下の演習は*とても*大事です。\n"
+"1つも飛ばしてはいけません！\n"
+"時間を取って全てに取り組んでください。\n"
+"ほとんどの場合、型から何が起こるのかを充分に読み取れます。\n"
+"最初は取っ付きにくいかもしれませんが。\n"
+"もし読み取れない場合は（もしあれば）それぞれの演習のコメントを見てください。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1140
+msgid ""
+"Remember, that lower-case identifiers in a function signature are treated as "
+"type parameters."
+msgstr ""
+"いいですか、関数のシグネチャにある小文字の識別子は型変数と見なされますよ。"
+
+#. type: Bullet: '1. '
+#: ../src/Tutorial/DataTypes.md:1142
+msgid "Implement the following generic functions for `Maybe`:"
+msgstr "以下の`Maybe`に関する汎化関数を実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1143
+#, no-wrap
+msgid ""
+"   -- make sure to map a `Just` to a `Just`.\n"
+"   total\n"
+"   mapMaybe : (a -> b) -> Maybe a -> Maybe b\n"
+"\n"
+"   -- Example: `appMaybe (Just (+2)) (Just 20) = Just 22`\n"
+"   total\n"
+"   appMaybe : Maybe (a -> b) -> Maybe a -> Maybe b\n"
+"\n"
+"   -- Example: `bindMaybe (Just 12) Just = Just 12`\n"
+"   total\n"
+"   bindMaybe : Maybe a -> (a -> Maybe b) -> Maybe b\n"
+"\n"
+"   -- keep the value in a `Just` only if the given predicate holds\n"
+"   total\n"
+"   filterMaybe : (a -> Bool) -> Maybe a -> Maybe a\n"
+"\n"
+"   -- keep the first value that is not a `Nothing` (if any)\n"
+"   total\n"
+"   first : Maybe a -> Maybe a -> Maybe a\n"
+"\n"
+"   -- keep the last value that is not a `Nothing` (if any)\n"
+"   total\n"
+"   last : Maybe a -> Maybe a -> Maybe a\n"
+"\n"
+"   -- this is another general way to extract a value from a `Maybe`.\n"
+"   -- Make sure the following holds:\n"
+"   -- `foldMaybe (+) 5 Nothing = 5`\n"
+"   -- `foldMaybe (+) 5 (Just 12) = 17`\n"
+"   total\n"
+"   foldMaybe : (acc -> el -> acc) -> acc -> Maybe el -> acc\n"
+msgstr ""
+"   -- `Just`は`Just`に写してください。\n"
+"   total\n"
+"   mapMaybe : (a -> b) -> Maybe a -> Maybe b\n"
+"\n"
+"   -- 例：`appMaybe (Just (+2)) (Just 20) = Just 22`\n"
+"   total\n"
+"   appMaybe : Maybe (a -> b) -> Maybe a -> Maybe b\n"
+"\n"
+"   -- 例：`bindMaybe (Just 12) Just = Just 12`\n"
+"   total\n"
+"   bindMaybe : Maybe a -> (a -> Maybe b) -> Maybe b\n"
+"\n"
+"   -- 与えられた命題が満たされているときにのみ、`Just`の値を保持してください。\n"
+"   total\n"
+"   filterMaybe : (a -> Bool) -> Maybe a -> Maybe a\n"
+"\n"
+"   -- 最初の`Nothing`でない値を保持してください。（もし1つでもあるなら）\n"
+"   total\n"
+"   first : Maybe a -> Maybe a -> Maybe a\n"
+"\n"
+"   -- 最後の`Nothing`でない値を保持してください。（もし1つでもあるなら）\n"
+"   total\n"
+"   last : Maybe a -> Maybe a -> Maybe a\n"
+"\n"
+"   -- `Maybe`から値を抽出する別の一般的なやりかたです。\n"
+"   -- ただし、以下を満たします。\n"
+"   -- `foldMaybe (+) 5 Nothing = 5`\n"
+"   -- `foldMaybe (+) 5 (Just 12) = 17`\n"
+"   total\n"
+"   foldMaybe : (acc -> el -> acc) -> acc -> Maybe el -> acc\n"
+
+#. type: Bullet: '2. '
+#: ../src/Tutorial/DataTypes.md:1177
+msgid "Implement the following generic functions for `Either`:"
+msgstr "以下の`Either`についての汎化関数を実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1178
+#, no-wrap
+msgid ""
+"   total\n"
+"   mapEither : (a -> b) -> Either e a -> Either e b\n"
+"\n"
+"   -- In case of both `Either`s being `Left`s, keep the\n"
+"   -- value stored in the first `Left`.\n"
+"   total\n"
+"   appEither : Either e (a -> b) -> Either e a -> Either e b\n"
+"\n"
+"   total\n"
+"   bindEither : Either e a -> (a -> Either e b) -> Either e b\n"
+"\n"
+"   -- Keep the first value that is not a `Left`\n"
+"   -- If both `Either`s are `Left`s, use the given accumulator\n"
+"   -- for the error values\n"
+"   total\n"
+"   firstEither : (e -> e -> e) -> Either e a -> Either e a -> Either e a\n"
+"\n"
+"   -- Keep the last value that is not a `Left`\n"
+"   -- If both `Either`s are `Left`s, use the given accumulator\n"
+"   -- for the error values\n"
+"   total\n"
+"   lastEither : (e -> e -> e) -> Either e a -> Either e a -> Either e a\n"
+"\n"
+"   total\n"
+"   fromEither : (e -> c) -> (a -> c) -> Either e a -> c\n"
+msgstr ""
+"   total\n"
+"   mapEither : (a -> b) -> Either e a -> Either e b\n"
+"\n"
+"   -- 両方の`Either`が`Left`なら、\n"
+"   -- 最初の`Left`に格納された値を保持してください。\n"
+"   total\n"
+"   appEither : Either e (a -> b) -> Either e a -> Either e b\n"
+"\n"
+"   total\n"
+"   bindEither : Either e a -> (a -> Either e b) -> Either e b\n"
+"\n"
+"   -- 最初の`Left`ではない値を保持してください。\n"
+"   -- もし両方の`Either`が`Left`であれば、与えられた積載子を使ってエラーの値を出してください。\n"
+"   total\n"
+"   firstEither : (e -> e -> e) -> Either e a -> Either e a -> Either e a\n"
+"\n"
+"   -- 最後の`Left`ではない値を保持してください。\n"
+"   -- 両方の`Either`が`Left`なら、与えられた積載子を使ってエラーの値を出してください。\n"
+"   total\n"
+"   lastEither : (e -> e -> e) -> Either e a -> Either e a -> Either e a\n"
+"\n"
+"   total\n"
+"   fromEither : (e -> c) -> (a -> c) -> Either e a -> c\n"
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/DataTypes.md:1207
+msgid "Implement the following generic functions for `List`:"
+msgstr "`List`についての以下の汎化関数を実装してください。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1208
+#, no-wrap
+msgid ""
+"   total\n"
+"   mapList : (a -> b) -> List a -> List b\n"
+"\n"
+"   total\n"
+"   filterList : (a -> Bool) -> List a -> List a\n"
+"\n"
+"   -- return the first value of a list, if it is non-empty\n"
+"   total\n"
+"   headMaybe : List a -> Maybe a\n"
+"\n"
+"   -- return everything but the first value of a list, if it is non-empty\n"
+"   total\n"
+"   tailMaybe : List a -> Maybe (List a)\n"
+"\n"
+"   -- return the last value of a list, if it is non-empty\n"
+"   total\n"
+"   lastMaybe : List a -> Maybe a\n"
+"\n"
+"   -- return everything but the last value of a list,\n"
+"   -- if it is non-empty\n"
+"   total\n"
+"   initMaybe : List a -> Maybe (List a)\n"
+"\n"
+"   -- accumulate the values in a list using the given\n"
+"   -- accumulator function and initial value\n"
+"   --\n"
+"   -- Examples:\n"
+"   -- `foldList (+) 10 [1,2,7] = 20`\n"
+"   -- `foldList String.(++) \"\" [\"Hello\",\"World\"] = \"HelloWorld\"`\n"
+"   -- `foldList last Nothing (mapList Just [1,2,3]) = Just 3`\n"
+"   total\n"
+"   foldList : (acc -> el -> acc) -> acc -> List el -> acc\n"
+msgstr ""
+"   total\n"
+"   mapList : (a -> b) -> List a -> List b\n"
+"\n"
+"   total\n"
+"   filterList : (a -> Bool) -> List a -> List a\n"
+"\n"
+"   -- リストの最初の値を返してください。もし空でなければですが。\n"
+"   total\n"
+"   headMaybe : List a -> Maybe a\n"
+"\n"
+"   -- リストの最初の値以外全部を返してください。もし空でなければですが。\n"
+"   total\n"
+"   tailMaybe : List a -> Maybe (List a)\n"
+"\n"
+"   -- リストの最後の値を返してください。もし空でなければですが。\n"
+"   total\n"
+"   lastMaybe : List a -> Maybe a\n"
+"\n"
+"   -- リストの最後の値以外全部を返してください。もし空でなければですが。\n"
+"   total\n"
+"   initMaybe : List a -> Maybe (List a)\n"
+"\n"
+"   -- リストの値を積み上げてください。\n"
+"   -- 与えられた積載関数と初期値を使います。\n"
+"   --\n"
+"   -- 例：\n"
+"   -- `foldList (+) 10 [1,2,7] = 20`\n"
+"   -- `foldList String.(++) \"\" [\"Hello\",\"World\"] = \"HelloWorld\"`\n"
+"   -- `foldList last Nothing (mapList Just [1,2,3]) = Just 3`\n"
+"   total\n"
+"   foldList : (acc -> el -> acc) -> acc -> List el -> acc\n"
+
+#. type: Bullet: '4. '
+#: ../src/Tutorial/DataTypes.md:1245
+msgid ""
+"Assume we store user data for our web application in the following record:"
+msgstr ""
+"Webアプリケーションで、以下のレコードで利用者のデータを保存するのだとしましょ"
+"う。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1246
+#, no-wrap
+msgid ""
+"   record Client where\n"
+"     constructor MkClient\n"
+"     name          : String\n"
+"     title         : Title\n"
+"     age           : Bits8\n"
+"     passwordOrKey : Either Bits64 String\n"
+msgstr ""
+"   record Client where\n"
+"     constructor MkClient\n"
+"     name          : String\n"
+"     title         : Title\n"
+"     age           : Bits8\n"
+"     passwordOrKey : Either Bits64 String\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1260
+#, no-wrap
+msgid ""
+"   Using `LoginError` from an earlier exercise,\n"
+"   implement function `login`, which, given a list of `Client`s\n"
+"   plus a value of type `Credentials` will return either a `LoginError`\n"
+"   in case no valid credentials where provided, or the first `Client`\n"
+"   for whom the credentials match.\n"
+msgstr ""
+"前の演習での`LoginError`を使って、関数`login`を実装してください。\n"
+"この関数は`Client`のリストと`Credentials`な値を受け取って、\n"
+"もし1つも妥当な認証情報がなかったときは`LoginError`を、\n"
+"そうでないときは最初に認証情報が合致した`Client`を、それぞれ返します。\n"
+
+#. type: Bullet: '5. '
+#: ../src/Tutorial/DataTypes.md:1264
+msgid ""
+"Using your data type for chemical elements from an earlier exercise, "
+"implement a function for calculating the molar mass of a molecular formula."
+msgstr ""
+"前の演習での化学原子のデータ型を使って、\n"
+"分子式からモル質量を計算する関数を実装してください。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1268
+#, no-wrap
+msgid ""
+"   Use a list of elements each paired with its count\n"
+"   (a natural number) for representing formulae. For\n"
+"   instance:\n"
+msgstr ""
+"   原子とその個数（自然数）が対になったリストを使って式を表現してください。\n"
+"   例えばこんな感じです。\n"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1269
+#, no-wrap
+msgid ""
+"   ethanol : List (Element,Nat)\n"
+"   ethanol = [(C,2),(H,6),(O,1)]\n"
+msgstr ""
+"   ethanol : List (Element,Nat)\n"
+"   ethanol = [(C,2),(H,6),(O,1)]\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1276
+#, no-wrap
+msgid ""
+"   Hint: You can use function `cast` to convert a natural\n"
+"   number to a `Double`.\n"
+msgstr "   解決の糸口：関数`cast`を使えば自然数を`Double`に変換できます。\n"
+
+#. type: Title ##
+#: ../src/Tutorial/DataTypes.md:1277
+#, no-wrap
+msgid "Alternative Syntax for Data Definitions"
+msgstr "データ定義の別の文法"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1285
+msgid ""
+"While the examples in the section about parameterized data types are short "
+"and concise, there is a slightly more verbose but much more general form for "
+"writing such definitions, which makes it much clearer what's going on.  In "
+"my opinion, this more general form should be preferred in all but the most "
+"simple data definitions."
+msgstr ""
+"引数を取るデータ型の節での例は短く簡潔でしたが、\n"
+"それより僅かに冗長でもはるかに汎用的な形式があります。\n"
+"そのような定義の書き方をすると、何が起こっているのかもっと明白になります。\n"
+"持論ですが、\n"
+"最も簡素なデータ定義を除く全ての場合で、\n"
+"このより汎用的な形式は優れているだろうと考えます。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1290
+msgid ""
+"Here are the definitions of `Option`, `Validated`, and `Seq` again, using "
+"this more general form (I put them in their own *namespace*, so Idris will "
+"not complain about identical names in the same source file):"
+msgstr ""
+"`Option`, `Validated`, `Seq`の定義を改めて出します。\n"
+"ただしこの汎用的な形式で。\n"
+"（定義を*namespace*の中に置きましたが、\n"
+"これでIdrisは1つのソースファイル中に同じ名前があることについて文句を言わなく"
+"なります。"
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/DataTypes.md:1291
+#, no-wrap
+msgid ""
+"-- GADT is an acronym for \"generalized algebraic data type\"\n"
+"namespace GADT\n"
+"  data Option : Type -> Type where\n"
+"    Some : a -> Option a\n"
+"    None : Option a\n"
+"\n"
+"  data Validated : Type -> Type -> Type where\n"
+"    Invalid : e -> Validated e a\n"
+"    Valid   : a -> Validated e a\n"
+"\n"
+"  data Seq : Type -> Type where\n"
+"    Nil  : Seq a\n"
+"    (::) : a -> GADT.Seq a -> Seq a\n"
+msgstr ""
+"-- GADTは\"generalized algebraic data type\"の頭字語です\n"
+"namespace GADT\n"
+"  data Option : Type -> Type where\n"
+"    Some : a -> Option a\n"
+"    None : Option a\n"
+"\n"
+"  data Validated : Type -> Type -> Type where\n"
+"    Invalid : e -> Validated e a\n"
+"    Valid   : a -> Validated e a\n"
+"\n"
+"  data Seq : Type -> Type where\n"
+"    Nil  : Seq a\n"
+"    (::) : a -> GADT.Seq a -> Seq a\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1318
+#, no-wrap
+msgid ""
+"Here, `Option` is clearly declared as a type constructor\n"
+"(a function of type `Type -> Type`), while `Some`\n"
+"is a generic function of type `a -> Option a` (where `a` is\n"
+"a *type parameter*)\n"
+"and `None` is a nullary generic function of type `Option a`\n"
+"(`a` again being a type parameter).\n"
+"Likewise for `Validated` and `Seq`. Note, that in case\n"
+"of `Seq` we had to disambiguate between the different\n"
+"`Seq` definitions in the recursive case. Since we will\n"
+"usually not define several data types with the same name in\n"
+"a source file, this is not necessary most of the time.\n"
+msgstr ""
+"ここで`Option`ははっきりと型構築子として宣言されています。\n"
+"（型の関数`Type -> Type`です。）\n"
+"また、`Some`は汎化関数で型`a -> Option a`であり（ここで`a`は*型変数*です）、\n"
+"`None`は引数を持たない汎化関数で型`Option a`です（ここでも`a`は型変数です）。\n"
+"`Validated`と`Seq`についても似たようなものです。\n"
+"ただ、`Seq`の場合、再帰する部分での異なる`Seq`の定義の曖昧さ回避をせねばなりません。\n"
+"たいていは同じ名前のデータ型を1つのファイルで複数回定義することはないので、\n"
+"ほとんどの場合は必要ではありません。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1323
+msgid ""
+"We covered a lot of ground in this chapter, so I'll summarize the most "
+"important points below:"
+msgstr ""
+"この章では多くの領域の内容を押さえました。\n"
+"以下に最も大事な点を要約します。"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1326
+#, no-wrap
+msgid ""
+"* Enumerations are data types consisting of a finite\n"
+"number of possible *values*.\n"
+msgstr "* 列挙型はデータ型で有限の数の取り得る*値*からなります。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1330
+#, no-wrap
+msgid ""
+"* Sum types are data types with more than one data\n"
+"constructor, where each constructor describes a\n"
+"*choice* that can be made.\n"
+msgstr ""
+"* 直和型もデータ型で1つ以上のデータ構築子からなります。\n"
+"それぞれの構築子は可能な*選択*を表現するのでした。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1333
+#, no-wrap
+msgid ""
+"* Product types are data types with a single constructor\n"
+"used to group several values of possibly different types.\n"
+msgstr ""
+"* 直積型もデータ型で1つの構築子を持ち、\n"
+"複数の互いに異なってもよい型の値を取り纏めるのに使います。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1337
+#, no-wrap
+msgid ""
+"* We use pattern matching to deconstruct immutable\n"
+"values in Idris. The possible patterns correspond to\n"
+"a data type's data constructors.\n"
+msgstr ""
+"* パターン照合を使ってIdrisの不変な値を分解します。\n"
+"使えるパターンはデータ型のデータ構築子に対応します。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1341
+#, no-wrap
+msgid ""
+"* We can *bind* variables to values in a pattern or\n"
+"use an underscore as a placeholder for a value that's\n"
+"not needed on the right hand side of an implementation.\n"
+msgstr "* パターンでは値に変数を*束縛*したり下線文字で右側にある実装では不要な値の場所取りをしたりできます。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1344
+#, no-wrap
+msgid ""
+"* We can pattern match on an intermediary result by introducing\n"
+"a *case block*.\n"
+msgstr "* *caseブロック*を導入することで、一時的な結果にパターン照合できます。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1349
+#, no-wrap
+msgid ""
+"* The preferred way to define new product types is\n"
+"to define them as *records*, since these come with\n"
+"additional syntactic conveniences for setting and\n"
+"modifying individual *record fields*.\n"
+msgstr ""
+"* 新しい直積型を定義する好ましい方法は*レコード*として定義することです。\n"
+"なぜなら型に加えて、\n"
+"それぞれの*レコードのフィールド*を設定したり変更したりするための文法的な便宜があるためです。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1354
+#, no-wrap
+msgid ""
+"* Generic types and functions allow us generalize\n"
+"certain concepts and make them available for many\n"
+"types by using *type parameters* instead of\n"
+"concrete types in function and type signatures.\n"
+msgstr ""
+"* 汎化型と汎化関数で概念を汎化したり関数の型シグネチャで決まった型を使う代わりに*型変数*を使うことで\n"
+"多くの型で使えるようにしました。\n"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1361
+#, no-wrap
+msgid ""
+"* Common concepts like *nullary values* (`Maybe`),\n"
+"computations that might fail with some error\n"
+"condition (`Either`), and handling collections\n"
+"of values of the same type at once (`List`) are\n"
+"example use cases of generic types and functions\n"
+"already provided by the *Prelude*.\n"
+msgstr ""
+"* *nullになりかねない値* (`Maybe`) のようなよくある概念や、\n"
+"何らかのエラー状態でもって失敗するかもしれない計算 (`Either`)、\n"
+"そして同じ型の値の集まりを一度に扱うこと (`List`) は汎化型と汎化関数の使用例で、\n"
+"既に*Prelude*から提供されています。\n"
+
+#. type: Title ###
+#: ../src/Tutorial/DataTypes.md:1362 ../src/Tutorial/Dependent.md:904
+#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:954
+#: ../src/Tutorial/IO.md:1118 ../src/Tutorial/Interfaces.md:813
+#, no-wrap
+msgid "What's next"
+msgstr "お次は？"
+
+#. type: Plain text
+#: ../src/Tutorial/DataTypes.md:1366
+msgid ""
+"In the [next section](Interfaces.md), we will introduce *interfaces*, "
+"another approach to *function overloading*."
+msgstr ""
+"[次の節](Interfaces.md)では*インターフェース*を導入します。\n"
+"インターフェースは*関数のオーバーロード*の他の手法です。"

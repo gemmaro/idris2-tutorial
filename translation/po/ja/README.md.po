@@ -1,0 +1,551 @@
+# Japanese translations for PACKAGE package
+# Copyright (C) 2022 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. type: Title #
+#: ../README.md:1
+#, no-wrap
+msgid "Functional Programming in Idris 2"
+msgstr "関数型プログラミングをIdris 2で"
+
+#. type: Plain text
+#: ../README.md:7
+msgid ""
+"The goal of this project is quickly explained: To become a more or less "
+"comprehensive guide to the Idris programming language, with a lot of "
+"introductory material targeted at newcomers to functional programming."
+msgstr ""
+"この企画の目標を手短かに説明すると、\n"
+"関数型プログラミングの入門者を対称とした導入例をちりばめつつ、\n"
+"Idrisプログラミング言語の多少なりとも網羅的な手引きとなることです。"
+
+#. type: Plain text
+#: ../README.md:15
+msgid ""
+"The content will be organized in several parts, with the part about the core "
+"language features being the main guide to functional programming in Idris. "
+"Every part consists of several chapters, each trying to cover in depth a "
+"certain aspect of the Idris programming language and its core libraries. "
+"Most chapters come with (sometimes lots of) exercises, with solutions "
+"available in directory `src/Solutions`."
+msgstr ""
+"内容はいくつかの部にまとまっており、\n"
+"中核となる言語の特徴についての部はIdrisでの関数型プログラミングのための手引き"
+"の眼目です。\n"
+"各部はいくつかの章からなり、\n"
+"それぞれの章ではIdrisプログラミング言語や中核にあるライブラリの一側面を踏み込"
+"んで扱います。\n"
+"ほとんどの章は（しばしば多くの）演習が付録しており、\n"
+"ディレクトリ`src/Solutions`から解法が見られます。"
+
+#. type: Plain text
+#: ../README.md:20
+msgid ""
+"Right now, even the part about core language features is not yet finished, "
+"but is being actively developed and tried on several of my own students, "
+"some of which are completely new to functional programming."
+msgstr ""
+"現状、言語中核の特徴の部分でさえまだ安定化を終えておらず、\n"
+"活発に開発されているところです。\n"
+"筆者の生徒にも関数型プログラミングを初めたばかりで開発しようとしている者がい"
+"ます。"
+
+#. type: Title ##
+#: ../README.md:21
+#, no-wrap
+msgid "Table of Contents"
+msgstr "目次"
+
+#. type: Title ###
+#: ../README.md:23
+#, no-wrap
+msgid "Part 1: Core Language Features"
+msgstr "第1部：中核にある言語の特徴"
+
+#. type: Plain text
+#: ../README.md:29
+msgid ""
+"This part tries to give a solid introduction to the Idris programming "
+"language. If you are new to functional programming, make sure to follow "
+"these chapters in order and *solve all the exercises*."
+msgstr ""
+"この部ではIdrisプログラミング言語への導入を地道に一歩ずつ進めることを試みま"
+"す。\n"
+"もし関数型プログラミングが初めてであれば、必ず順番にこの部の章にしたがい、ま"
+"た*全ての演習を解いてください*。"
+
+#. type: Plain text
+#: ../README.md:34
+msgid ""
+"If you already used other pure functional programming languages like "
+"Haskell, you might go through the introductory material (Functions Part 1, "
+"Algebraic Data Types, and Interfaces) pretty quickly, as most of this stuff "
+"will already be familiar to you."
+msgstr ""
+"Haskellのような他の純粋関数型プログラミング言語を使ったことがあるなら、\n"
+"導入的な内容（関数 その1、代数的データ型、インターフェース）に素早く目を通す"
+"のでもよいでしょう。\n"
+"ほとんどは既に馴染みのある事柄でしょうから。"
+
+#. type: Bullet: '1. '
+#: ../README.md:103
+msgid "[Introduction](src/Tutorial/Intro.md)"
+msgstr "[導入](src/Tutorial/Intro.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid ""
+"[About the Idris Programming Language](src/Tutorial/Intro.md#about-the-idris-"
+"programming-language)"
+msgstr ""
+"[プログラミング言語Idrisについて](src/Tutorial/Intro.md#about-the-idris-"
+"programming-language)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid "[Using the REPL](src/Tutorial/Intro.md#using-the-repl)"
+msgstr "[REPLを使う](src/Tutorial/Intro.md#using-the-repl)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid "[A First Idris Program](src/Tutorial/Intro.md#a-first-idris-program)"
+msgstr "[最初のIdrisプログラム](src/Tutorial/Intro.md#a-first-idris-program)"
+
+#. type: Bullet: '   4. '
+#: ../README.md:103
+msgid ""
+"[The Shape of an Idris Definition](src/Tutorial/Intro.md#the-shape-of-an-"
+"idris-definition)"
+msgstr ""
+"[Idrisの定義の形](src/Tutorial/Intro.md#the-shape-of-an-idris-definition)"
+
+#. type: Bullet: '   5. '
+#: ../README.md:103
+msgid "[Where to get Help](src/Tutorial/Intro.md#where-to-get-help)"
+msgstr "[困ったときは](src/Tutorial/Intro.md#where-to-get-help)"
+
+#. type: Bullet: '2. '
+#: ../README.md:103
+msgid "[Functions Part 1](src/Tutorial/Functions1.md)"
+msgstr "[関数 その1](src/Tutorial/Functions1.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid ""
+"[Functions with more that one Argument](src/Tutorial/Functions1.md#functions-"
+"with-more-that-one-argument)"
+msgstr ""
+"[1つ以上の引数を持つ関数](src/Tutorial/Functions1.md#functions-with-more-"
+"that-one-argument)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid "[Function Composition](src/Tutorial/Functions1.md#function-composition)"
+msgstr "[関数結合](src/Tutorial/Functions1.md#function-composition)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid ""
+"[Higher-order Functions](src/Tutorial/Functions1.md#higher-order-functions)"
+msgstr "[高階関数](src/Tutorial/Functions1.md#higher-order-functions)"
+
+#. type: Bullet: '   4. '
+#: ../README.md:103
+msgid "[Currying](src/Tutorial/Functions1.md#currying)"
+msgstr "[カリー化](src/Tutorial/Functions1.md#currying)"
+
+#. type: Bullet: '   5. '
+#: ../README.md:103
+msgid "[Anonymous Functions](src/Tutorial/Functions1.md#anonymous-functions)"
+msgstr "[匿名関数](src/Tutorial/Functions1.md#anonymous-functions)"
+
+#. type: Bullet: '   6. '
+#: ../README.md:103
+msgid "[Operators](src/Tutorial/Functions1.md#operators)"
+msgstr "[演算子](src/Tutorial/Functions1.md#operators)"
+
+#. type: Bullet: '3. '
+#: ../README.md:103
+msgid "[Algebraic Data Types](src/Tutorial/DataTypes.md)"
+msgstr "[代数的データ型](src/Tutorial/DataTypes.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid "[Enumerations](src/Tutorial/DataTypes.md#enumerations)"
+msgstr "[列挙型](src/Tutorial/DataTypes.md#enumerations)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid "[Sum Types](src/Tutorial/DataTypes.md#sum-types)"
+msgstr "[直和型](src/Tutorial/DataTypes.md#sum-types)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid "[Records](src/Tutorial/DataTypes.md#records)"
+msgstr "[レコード](src/Tutorial/DataTypes.md#records)"
+
+#. type: Bullet: '   4. '
+#: ../README.md:103
+msgid "[Generic Data Types](src/Tutorial/DataTypes.md#generic-data-types)"
+msgstr "[汎化データ型](src/Tutorial/DataTypes.md#generic-data-types)"
+
+#. type: Bullet: '   5. '
+#: ../README.md:103
+msgid ""
+"[Alternative Syntax for Data Definitions](src/Tutorial/DataTypes."
+"md#alternative-syntax-for-data-definitions)"
+msgstr ""
+"[データ定義の別の文法](src/Tutorial/DataTypes.md#alternative-syntax-for-data-"
+"definitions)"
+
+#. type: Bullet: '4. '
+#: ../README.md:103
+msgid "[Interfaces](src/Tutorial/Interfaces.md)"
+msgstr "[インターフェース](src/Tutorial/Interfaces.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid "[Interface Basics](src/Tutorial/Interfaces.md#interface-basics)"
+msgstr "[インターフェースの基本](src/Tutorial/Interfaces.md#interface-basics)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid ""
+"[More about Interfaces](src/Tutorial/Interfaces.md#more-about-interfaces)"
+msgstr ""
+"[もっとインターフェース](src/Tutorial/Interfaces.md#more-about-interfaces)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid ""
+"[Interfaces in the Prelude](src/Tutorial/Interfaces.md#interfaces-in-the-"
+"prelude)"
+msgstr ""
+"[Preludeにあるインターフェース](src/Tutorial/Interfaces.md#interfaces-in-the-"
+"prelude)"
+
+#. type: Bullet: '5. '
+#: ../README.md:103
+msgid "[Functions Part 2](src/Tutorial/Functions2.md)"
+msgstr "[関数 その2](src/Tutorial/Functions2.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid ""
+"[Let Bindings and Local Definitions](src/Tutorial/Functions2.md#let-bindings-"
+"and-local-definitions)"
+msgstr ""
+"[let束縛と局所定義](src/Tutorial/Functions2.md#let-bindings-and-local-"
+"definitions)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid ""
+"[The Truth about Function Arguments](src/Tutorial/Functions2.md#the-truth-"
+"about-function-arguments)"
+msgstr ""
+"[関数引数の真実](src/Tutorial/Functions2.md#the-truth-about-function-"
+"arguments)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid ""
+"[Programming with Holes](src/Tutorial/Functions2.md#programming-with-holes)"
+msgstr ""
+"[穴開きプログラミング](src/Tutorial/Functions2.md#programming-with-holes)"
+
+#. type: Bullet: '6. '
+#: ../README.md:103
+msgid "[Dependent Types](src/Tutorial/Dependent.md)"
+msgstr "[依存型](src/Tutorial/Dependent.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid "[Length-Indexed Lists](src/Tutorial/Dependent.md#length-indexed-lists)"
+msgstr "[長さ指標付きリスト](src/Tutorial/Dependent.md#length-indexed-lists)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid ""
+"[Fin: Safe Indexing into Vectors](src/Tutorial/Dependent.md#fin-safe-"
+"indexing-into-vectors)"
+msgstr ""
+"[Fin: ベクタから安全に指標で引く](src/Tutorial/Dependent.md#fin-safe-"
+"indexing-into-vectors)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid ""
+"[Compile-Time Computations](src/Tutorial/Dependent.md#compile-time-"
+"computations)"
+msgstr ""
+"[コンパイル時計算](src/Tutorial/Dependent.md#compile-time-computations)"
+
+#. type: Bullet: '7. '
+#: ../README.md:103
+msgid "[IO: Programming with Side Effects](src/Tutorial/IO.md)"
+msgstr "[IO: 副作用のあるプログラミング](src/Tutorial/IO.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid "[Pure Side Effects?](src/Tutorial/IO.md#pure-side-effects)"
+msgstr "[純粋な副作用？](src/Tutorial/IO.md#pure-side-effects)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid "[Do Blocks, Desugared](src/Tutorial/IO.md#do-blocks-desugared)"
+msgstr "[doブロックとその脱糖](src/Tutorial/IO.md#do-blocks-desugared)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid "[Working with Files](src/Tutorial/IO.md#working-with-files)"
+msgstr "[ファイルを取り回す](src/Tutorial/IO.md#working-with-files)"
+
+#. type: Bullet: '   4. '
+#: ../README.md:103
+msgid "[How IO is Implemented](src/Tutorial/IO.md#how-io-is-implemented)"
+msgstr "[どうIOが実装されているか](src/Tutorial/IO.md#how-io-is-implemented)"
+
+#. type: Bullet: '8. '
+#: ../README.md:103
+msgid "[Functor and Friends](src/Tutorial/Functor.md)"
+msgstr "[関手と仲間達](src/Tutorial/Functor.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid "[Functor](src/Tutorial/Functor.md#functor)"
+msgstr "[関手](src/Tutorial/Functor.md#functor)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid "[Applicative](src/Tutorial/Functor.md#applicative)"
+msgstr "[アプリカティブ](src/Tutorial/Functor.md#applicative)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid "[Monad](src/Tutorial/Functor.md#monad)"
+msgstr "[モナド](src/Tutorial/Functor.md#monad)"
+
+#. type: Bullet: '   4. '
+#: ../README.md:103
+msgid ""
+"[Background and further Reading](src/Tutorial/Functor.md#background-and-"
+"further-reading)"
+msgstr ""
+"[背景とその先へ](src/Tutorial/Functor.md#background-and-further-reading)"
+
+#. type: Bullet: '9. '
+#: ../README.md:103
+msgid "[Recursion and Folds](src/Tutorial/Folds.md)"
+msgstr "[再帰と畳み込み](src/Tutorial/Folds.md)"
+
+#. type: Bullet: '   1. '
+#: ../README.md:103
+msgid "[Recursion](src/Tutorial/Folds.md#recursion)"
+msgstr "[再帰](src/Tutorial/Folds.md#recursion)"
+
+#. type: Bullet: '   2. '
+#: ../README.md:103
+msgid ""
+"[A few Notes on Totality Checking](src/Tutorial/Folds.md#a-few-notes-on-"
+"totality-checking)"
+msgstr ""
+"[全域性検査についての注意](src/Tutorial/Folds.md#a-few-notes-on-totality-"
+"checking)"
+
+#. type: Bullet: '   3. '
+#: ../README.md:103
+msgid "[Interface Foldable](src/Tutorial/Folds.md#interface-foldable)"
+msgstr "[Foldableインターフェース](src/Tutorial/Folds.md#interface-foldable)"
+
+#. type: Bullet: '10. '
+#: ../README.md:103
+msgid "[Effectful Traversals](src/Tutorial/Traverse.md)"
+msgstr "[作用付き巡回](src/Tutorial/Traverse.md)"
+
+#. type: Bullet: '    1. '
+#: ../README.md:103
+msgid "[Reading CSV Tables](src/Tutorial/Traverse.md#reading-csv-tables)"
+msgstr "[CSVの表を読む](src/Tutorial/Traverse.md#reading-csv-tables)"
+
+#. type: Bullet: '    2. '
+#: ../README.md:103
+msgid ""
+"[Programming with State](src/Tutorial/Traverse.md#programming-with-state)"
+msgstr ""
+"[状態付きプログラミング](src/Tutorial/Traverse.md#programming-with-state)"
+
+#. type: Bullet: '    3. '
+#: ../README.md:103
+msgid ""
+"[The Power of Composition](src/Tutorial/Traverse.md#the-power-of-composition)"
+msgstr "[組み立ての強力さ](src/Tutorial/Traverse.md#the-power-of-composition)"
+
+#. type: Bullet: '11. '
+#: ../README.md:103
+msgid "[Sigma Types](src/Tutorial/DPair.md)"
+msgstr "[シグマ型](src/Tutorial/DPair.md)"
+
+#. type: Bullet: '    1. '
+#: ../README.md:103
+msgid "[Dependent Pairs](src/Tutorial/DPair.md#dependent-pairs)"
+msgstr "[依存対](src/Tutorial/DPair.md#dependent-pairs)"
+
+#. type: Bullet: '    2. '
+#: ../README.md:103
+msgid "[Use Case: Nucleic Acids](src/Tutorial/DPair.md#use-case-nucleic-acids)"
+msgstr "[用例：核酸](src/Tutorial/DPair.md#use-case-nucleic-acids)"
+
+#. type: Bullet: '    3. '
+#: ../README.md:103
+msgid ""
+"[Use Case: CSV Files with a Schema](src/Tutorial/DPair.md#use-case-csv-files-"
+"with-a-schema)"
+msgstr ""
+"[用例：スキーマに基づくCSVファイル](src/Tutorial/DPair.md#use-case-csv-files-"
+"with-a-schema)"
+
+#. type: Bullet: '12. '
+#: ../README.md:103
+msgid "[Propositional Equality](src/Tutorial/Eq.md)"
+msgstr "[命題の等値性](src/Tutorial/Eq.md)"
+
+#. type: Bullet: '    1. '
+#: ../README.md:103
+msgid "[Equality as a Type](src/Tutorial/Eq.md#equality-as-a-type)"
+msgstr "[型としての等値性](src/Tutorial/Eq.md#equality-as-a-type)"
+
+#. type: Bullet: '    2. '
+#: ../README.md:103
+msgid "[Programs as Proofs](src/Tutorial/Eq.md#programs-as-proofs)"
+msgstr "[証明としてのプログラム](src/Tutorial/Eq.md#programs-as-proofs)"
+
+#. type: Bullet: '    3. '
+#: ../README.md:103
+msgid "[Into the Void](src/Tutorial/Eq.md#into-the-void)"
+msgstr "[Voidへ](src/Tutorial/Eq.md#into-the-void)"
+
+#. type: Bullet: '    4. '
+#: ../README.md:103
+msgid "[Rewrite Rules](src/Tutorial/Eq.md#rewrite-rules)"
+msgstr "[規則を書き換える](src/Tutorial/Eq.md#rewrite-rules)"
+
+#. type: Bullet: '13. '
+#: ../README.md:103
+msgid "[Predicates and Proof Search](src/Tutorial/Predicates.md)"
+msgstr "[前提と証明検索](src/Tutorial/Predicates.md)"
+
+#. type: Bullet: '    1. '
+#: ../README.md:103
+msgid "[Preconditions](src/Tutorial/Predicates.md#preconditions)"
+msgstr "[前提条件](src/Tutorial/Predicates.md#preconditions)"
+
+#. type: Bullet: '    2. '
+#: ../README.md:103
+msgid ""
+"[Contracts between Values](src/Tutorial/Predicates.md#contracts-between-"
+"values)"
+msgstr "[値同士の契約](src/Tutorial/Predicates.md#contracts-between-values)"
+
+#. type: Bullet: '    3. '
+#: ../README.md:103
+msgid ""
+"[Use Case: Flexible Error Handling](src/Tutorial/Predicates.md#use-case-"
+"flexible-error-handling)"
+msgstr ""
+"[用例：柔軟なエラー制御](src/Tutorial/Predicates.md#use-case-flexible-error-"
+"handling)"
+
+#. type: Bullet: '    4. '
+#: ../README.md:103
+msgid ""
+"[The Truth about Interfaces](src/Tutorial/Predicates.md#the-truth-about-"
+"interfaces)"
+msgstr ""
+"[インターフェースの真実](src/Tutorial/Predicates.md#the-truth-about-"
+"interfaces)"
+
+#. type: Bullet: '14. '
+#: ../README.md:103
+msgid "[Primitives](src/Tutorial/Prim.md)"
+msgstr "[原始型](src/Tutorial/Prim.md)"
+
+#. type: Bullet: '    1. '
+#: ../README.md:103
+msgid ""
+"[How Primitives are Implemented](src/Tutorial/Prim.md#how-primitives-are-"
+"implemented)"
+msgstr ""
+"[どのように原始型が実装されているか](src/Tutorial/Prim.md#how-primitives-are-"
+"implemented)"
+
+#. type: Bullet: '    2. '
+#: ../README.md:103
+msgid "[Working with Strings](src/Tutorial/Prim.md#working-with-strings)"
+msgstr "[文字列を取り回す](src/Tutorial/Prim.md#working-with-strings)"
+
+#. type: Bullet: '    3. '
+#: ../README.md:103
+msgid "[Integers](src/Tutorial/Prim.md#integers)"
+msgstr "[整数](src/Tutorial/Prim.md#integers)"
+
+#. type: Bullet: '    4. '
+#: ../README.md:103
+msgid "[Refined Primitives](src/Tutorial/Prim.md#refined-primitives)"
+msgstr "[精錬後の原始型](src/Tutorial/Prim.md#refined-primitives)"
+
+#. type: Title ###
+#: ../README.md:104
+#, no-wrap
+msgid "Part 2: Appendices"
+msgstr "第2部：補遺"
+
+#. type: Plain text
+#: ../README.md:110
+msgid ""
+"The appendices can be used as references for the topics at hand. I plan to "
+"eventually have a concise reference on Idris syntax, typical error messages, "
+"the module system, interactive editing and possibly others."
+msgstr ""
+"補遺は卑近な話題の参考書として使えます。\n"
+"最終的には、Idrisの文法、典型的なエラー文言、モジュールシステム、対話的編集な"
+"どについての簡潔な参考情報にしようと模索しています。"
+
+#. type: Bullet: '1. '
+#: ../README.md:112
+msgid "[Interactive Editing in Neovim](src/Appendices/Neovim.md)"
+msgstr "[Neovimでの対話的編集](src/Appendices/Neovim.md)"
+
+#. type: Title ##
+#: ../README.md:113
+#, no-wrap
+msgid "Prerequisites"
+msgstr "予め必要なもの"
+
+#. type: Plain text
+#: ../README.md:119
+msgid ""
+"At the moment, this project is being actively developed and evolved against "
+"the main branch of the Idris 2 repository.  It is being tested nightly on "
+"GitHub and built against the latest commit of the Idris 2 main branch as "
+"well as the Idris 2 commit listed in file `.idris-version`."
+msgstr ""
+"現時点でこの企画は活発に開発中で、\n"
+"Idris 2リポジトリのmainブランチとともに進展し続けています。\n"
+"GitHubでnightlyにテストされており、\n"
+"Idris 2のmainブランチの最新コミットとファイル`.idris-version`にあるIdris 2の"
+"コミット時点でビルドしています。"

@@ -1,2 +1,0 @@
-serve: mdstart ja
-watch: echo ja.po | entr make translate
