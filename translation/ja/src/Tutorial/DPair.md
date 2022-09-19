@@ -1,18 +1,16 @@
-# Sigma Types
+# 依存和型
 
-So far in our examples of dependently typed programming, type indices such
-as the length of vectors were known at compile time or could be calculated
-from values known at compile time. In real applications, however, such
-information is often not available until runtime, where values depend on the
-decisions made by users or the state of the surrounding world.  For
-instance, if we store a file's content as a vector of lines of text, the
-length of this vector is in general unknown until the file has been loaded
-into memory.  As a consequence, the types of values we work with depend on
-other values only known at runtime, and we can often only figure out these
-types by pattern matching on the values they depend on.  To express these
-dependencies, we need so called [*sigma
-types*](https://en.wikipedia.org/wiki/Dependent_type#%CE%A3_type): Dependent
-pairs and their generalization, dependent records.
+ここまでの依存的に型付いたプログラミングの例では、
+ベクタの長さのような型指標はコンパイル時に分かっていたり、
+コンパイル時に知られている値から計算できるものでした。
+しかし現実のアプリケーションではそのような情報が実行時まで入手できないことがよくあり、
+利用者や周囲の世界の状態によって下される決定に依る値となります。
+例えばファイルの内容を複数行の文章のベクタとして保管するとき、
+一般的にこのベクタの長さはファイルが記憶領域に読み込まれるまで知られていません。
+結果として取り扱う値の型が実行時にのみ知られている他の値に依存することとなり、
+これらの型は依存する値へのパターン照合によってのみ行えることはよくあります。
+こうした依存関係を表現するためには[依存和型](https://en.wikipedia.org/wiki/Dependent_type#%CE%A3_type)と呼ばれるものが必要です。
+依存対と、それを一般化した依存レコードがそれです。
 
 ```idris
 module Tutorial.DPair
@@ -35,76 +33,78 @@ import Text.CSV
 
 ## 依存対
 
-We've already seen several examples of how useful the length index of a
-vector is to describe more precisely in the types what a function can and
-can't do. For instance, `map` or `traverse` operating on a vector will
-return a vector of exactly the same length. The types guarantee that this is
-true, therefore the following function is perfectly safe and provably total:
+既にベクタの長さ指標がどれほど便利なのかについてのいくつかの例を見てきました。
+これがあれば関数のできることとできないことを型でより精密に表現できました。
+例えばベクタにおける`map`や`traverse`操作は厳密に同じ長さのベクタを返します。
+型がこれが正しいことを保証しており、
+したがって以下の関数は完全に安全で証明上全域です。
 
 ```idris
 parseAndDrop : Vect (3 + n) String -> Maybe (Vect n Nat)
 parseAndDrop = map (drop 3) . traverse parsePositive
 ```
 
-Since the argument of `traverse parsePositive` is of type `Vect (3 + n)
-String`, its result will be of type `Maybe (Vect (3 + n) Nat)`. It is
-therefore safe to use this in a call to `drop 3`. Note, how all of this is
-known at compile time: We encoded the prerequisite that the first argument
-is a vector of at least three elements in the length index and could derive
-the length of the result from this.
+`traverse parsePositive`の引数は型が`Vect (3 + n) String`なので、
+その結果は型が`Maybe (Vect (3 + n) Nat)`となります。
+したがってこれを`drop 3`での呼び出しに使うのは安全です。
+なお、これ自体はコンパイル時に知られていることです。
+つまり、最初の引数が少なくとも3引数のベクタであるという前提条件を
+長さの指標に折り込んだため、ここから結果の長さを導出することができたのです。
 
-### Vectors of Unknown Length
+### 未知の長さのベクタ
 
-However, this is not always possible. Consider the following function,
-defined on `List` and exported by `Data.List`:
+しかしこれはいつも可能とは限りません。
+`List`に定義され`Data.List`から輸出されている以下の関数について考えてください。
 
 ```repl
 Tutorial.Relations> :t takeWhile
 Data.List.takeWhile : (a -> Bool) -> List a -> List a
 ```
 
-This will take the longest prefix of the list argument, for which the given
-predicate returns `True`. In this case, it depends on the list elements and
-the predicate, how long this prefix will be.  Can we write such a function
-for vectors? Let's give it a try:
+これはリスト引数から与えられた条件が`True`を返すような最長の前部分を取得するものです。
+この場合、この前部分がどこまで長くなるかはリストの要素と前提条件に依存しています。
+そのような関数をベクタについて書くことができるでしょうか？
+試してみましょう。
 
 ```idris
 takeWhile' : (a -> Bool) -> Vect n a -> Vect m a
 ```
 
-Go ahead, and try to implement this. Don't try too long, as you will not be
-able to do so in a provably total way. The question is: What is the problem
-here? In order to understand this, we have to realize what the type of
-`takeWhile'` promises: "For all predicates operating on values on type `a`,
-and for all vectors holding values of this type, and for all lengths `m`, I
-give you a vector of length `m` holding values of type `a`".  All three
-arguments are said to be [*universally
-quantified*](https://en.wikipedia.org/wiki/Universal_quantification): The
-caller of our function is free to choose the predicate, the input vector,
-the type of values the vector holds, and *the length of the output
-vector*. Don't believe me? See here:
+さあ、これを実装してみてください。
+長く試すことはありません。
+というのは証明上全域な方法ではできないからです。
+疑問に思うのは、ここで何が問題なのかということです。
+これを理解するには`takeWhile'`の型が約束していることに気付かねばなりません。
+「あらゆる型`a`の値を操作する述語と、
+この型の値を持つあらゆるベクタと、
+全ての長さ`m`について、
+型`a`の値を持つ長さ`m`のベクタをあげます。」
+3引数全てが[*全称量化され*](https://en.wikipedia.org/wiki/Universal_quantification)ているということです。
+つまり関数の呼び出し手が、述語、入力ベクタ、ベクタの持つ値の型、
+そして*出力ベクタの長さ*を自由に選ぶのです。
+信じていませんか？
+こちらを見てください。
 
 ```idris
--- This looks like trouble: We got a non-empty vector of `Void`...
+-- 困ったことになっているようです。`Void`の非空なベクタがあります……
 voids : Vect 7 Void
 voids = takeWhile' (const True) []
 
--- ...from which immediately follows a proof of `Void`
+-- ……上から直ちに`Void`の証明に従います。
 proofOfVoid : Void
 proofOfVoid = head voids
 ```
 
-See how I could freely decide on the value of `m` when invoking
-`takeWhile'`? Although I passed `takeWhile'` an empty vector (the only
-existing vector holding values of type `Void`), the function's type promises
-me to return a possibly non-empty vector holding values of the same type,
-from which I freely extracted the first one.
+`takeWhile'`を呼び出す時に`m`の値を自由に決められたことがわかりますか？
+`takeWhile'`に空ベクタ（型`Void`の値を持つ唯一の既にあるベクタ）を渡し、
+関数の型は同じ型の値を持つ非空ベクタを何とかして返すと約束します。
+そこから自由に最初のものを抽出できるのです。
 
-Luckily, Idris doesn't allow this: We won't be able to implement
-`takeWhile'` without cheating (for instance, by turning totality checking
-off and looping forever).  So, the question remains, how to express the
-result of `takeWhile'` in a type. The answer to this is: "Use a *dependent
-pair*", a vector paired with a value corresponding to its length.
+幸運にもIdrisはこれを許しません。
+`takeWhile'`をズルする（例えば全域性検査器を切って永久にループさせるなど）ことなく実装することは決してできません。
+そこで、どうやって`takeWhile'`の結果を型で表現すればよいのか、という疑問が残ります。
+この答えは「*依存対*を使うべし」になります。
+ベクタにその長さに合致する値が対になったものです。
 
 ```idris
 record AnyVect a where
@@ -113,14 +113,13 @@ record AnyVect a where
   vect   : Vect length a
 ```
 
-This corresponds to [*existential
-quantification*](https://en.wikipedia.org/wiki/Existential_quantification)
-in predicate logic: There is a natural number, which corresponds to the
-length of the vector I have here. Note, how from the outside of `AnyVect a`,
-the length of the wrapped vector is no longer visible at the type level but
-we can still inspect it and learn something about it at runtime, since it is
-wrapped up together with the actual vector. We can implement `takeWhile` in
-such a way that it returns a value of type `AnyVect a`:
+これは述語論理における[*存在量化*](https://en.wikipedia.org/wiki/Existential_quantification)に対応します。
+つまり、ある自然数があって、それは今持っているベクタの長さに対応する、というものです。
+着目していただきたいのは、
+`AnyVect a`の外側からは最早包まれたベクタの長さが型水準では見えず、
+それでも実行時にそのベクタを調べれば何らかのことがわかる、ということです。
+これは実際のベクタと共に包まれているためです。
+`takeWhile`を型`AnyVect a`の値を返すように実装できます。
 
 ```idris
 takeWhile : (a -> Bool) -> Vect n a -> AnyVect a
@@ -130,12 +129,12 @@ takeWhile f (x :: xs) = case f x of
   True  => let MkAnyVect n ys = takeWhile f xs in MkAnyVect (S n) (x :: ys)
 ```
 
-This works in a provably total way, because callers of this function can no
-longer choose the length of the resulting vector themselves. Our function,
-`takeWhile`, decides on this length and returns it together with the vector,
-and the type checker verifies that we make no mistakes when pairing the two
-values. In fact, the length can be inferred automatically by Idris, so we
-can replace it with underscores, if we so desire:
+これは証明上全域にはたらきますが、
+それはこの関数の呼び出し手が今や結果のベクタの長さを自力で選ぶことができないからです。
+関数`takeWhile`がこの長さを決めてベクタと一緒に返し、
+型検査器は2つの値を対にするときに誤ちを犯していないことを立証します。
+実際、長さはIdrisが自動的に推論できるので、
+望むなら下線文字で置き換えることができます。
 
 ```idris
 takeWhile2 : (a -> Bool) -> Vect n a -> AnyVect a
@@ -145,22 +144,21 @@ takeWhile2 f (x :: xs) = case f x of
   True  => let MkAnyVect _ ys = takeWhile2 f xs in MkAnyVect _ (x :: ys)
 ```
 
-To summarize: Parameters in generic function types are universally
-quantified, and their values can be decided on at the call site of such
-functions. Dependent record types allow us to describe existentially
-quantified values. Callers cannot choose such values freely: They are
-returned as part of a function's result.
+まとめると、汎化関数型の引数は全称量化されており、
+それらの値はその関数の呼び出し側で決められます。
+依存レコード型があれば存在量化された値を記述できます。
+呼び出し手はそのような値を自由に選ぶことはできません。
+そうした値は関数の結果の一部として返されるのです。
 
-Note, that Idris allows us to be explicit about universal quantification.
-The type of `takeWhile'` can also be written like so:
+なお、Idrisでは全称量化について明示的にさせることができます。
+`takeWhile'`の型は以下のようにも書くことができます。
 
 ```idris
 takeWhile'' : forall a, n, m . (a -> Bool) -> Vect n a -> Vect m a
 ```
 
-Universally quantified arguments are desugared to implicit erased arguments
-by Idris. The above is a less verbose version of the following function
-type, the likes of which we have seen before:
+全称量化された引数はIdrisにより暗黙消去引数に脱糖されます。
+上記は、以前に見たことがあるような以下の関数型の、より冗長でない版です。
 
 ```idris
 takeWhile''' :  {0 a : _}
@@ -171,24 +169,21 @@ takeWhile''' :  {0 a : _}
              -> Vect m a
 ```
 
-In Idris, we are free to choose whether we want to be explicit about
-universal quantification. Sometimes it can help understanding what's going
-on at the type level. Other languages - for instance
-[PureScript](https://www.purescript.org/) - are more strict about this:
-There, explicit annotations on universally quantified parameters are
-[mandatory](https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md#explicit-forall).
+Idrisでは全称量化について明示的にしたいかどうか決めるのは自由です。
+時々型水準で起こっていることを理解する助けになります。
+他の言語、例えば[PureScript](https://www.purescript.org/)はよりこれについて厳格になっています。
+そこでは全称量化された引数への明示的な註記は[必須](https://github.com/purescript/documentation/blob/master/language/Differences-from-Haskell.md#explicit-forall)です。
 
-### The Essence of Dependent Pairs
+### 依存対の本質
 
-It can take some time and experience to understand what's going on here. At
-least in my case, it took many sessions programming in Idris, before I
-figured out what dependent pairs are about: They pair a *value* of some type
-with a second value of a type calculated from the first value.  For
-instance, a natural number `n` (the value)  paired with a vector of length
-`n` (the second value, the type of which *depends* on the first value).
-This is such a fundamental concept of programming with dependent types, that
-a general dependent pair type is provided by the *Prelude*. Here is its
-implementation (primed for disambiguation):
+ここで起こっていることを理解するには時間と経験がいるかもしれません。
+少なくとも筆者の場合はIdrisとの多くの対話を経てようやく依存対とは何かわかりました。
+何らかの型の*値*を、最初の値から計算された型の2つ目の値と対にしたものです。
+例えば自然数`n`（値）が長さ`n`（2つ目の値で、最初の値に*依存*する型のもの）のベクタと対になります。
+これは依存対のあるプログラミングのごく基本的な概念なので、
+*Prelude*から一般的な依存対型が提供されています。
+以下はその実装です。
+（プライム記号を付けて曖昧回避しました。）
 
 ```idris
 record DPair' (a : Type) (p : a -> Type) where
@@ -197,48 +192,47 @@ record DPair' (a : Type) (p : a -> Type) where
   snd : p fst
 ```
 
-It is essential to understand what's going on here. There are two
-parameters: A type `a`, and a function `p`, calculating a *type* from a
-*value* of type `a`. Such a value (`fst`) is then used to calculate the
-*type* of the second value (`snd`).  For instance, here is `AnyVect a`
-represented as a `DPair`:
+ここで起こっていることを理解するのは不可欠です。
+2つの引数、型`a`と関数`p`があり、後者は型`a`の*値*から*型*を計算します。
+まずある値 (`fst`) があり、それから2つ目の値 (`snd`) の*型*を計算するのに使われるのです。
+例えば以下は`DPair`として表現された`AnyVect a`です。
 
 ```idris
 AnyVect' : (a : Type) -> Type
 AnyVect' a = DPair Nat (\n => Vect n a)
 ```
 
-Note, how `\n => Vect n a` is a function from `Nat` to `Type`.
-Idris provides special syntax for describing dependent pairs, as
-they are important building blocks for programming in languages
-with first class types:
+なお、`\n => Vect n a`は`Nat`から`Type`への関数です。
+Idrisは依存対を表現する特別な構文を提供していますが、
+それは依存対が第一級型を持つプログラミング言語で重要な建築資材だからです。
 
 ```idris
 AnyVect'' : (a : Type) -> Type
 AnyVect'' a = (n : Nat ** Vect n a)
 ```
 
-We can inspect at the REPL, that the right hand side of `AnyVect''` get's
-desugared to the right hand side of `AnyVect'`:
+REPLで調べると`AnyVect''`の右側は`AnyVect'`の右側に脱糖されることがわかります。
 
 ```repl
 Tutorial.Relations> (n : Nat ** Vect n Int)
 DPair Nat (\n => Vect n Int)
 ```
 
-Idris can infer, that `n` must be of type `Nat`, so we can drop this
-information. (We still need to put the whole expression in parentheses.)
+Idrisは`n`が型`Nat`でなければいけないことを推論できるため、
+この情報を省くことができます。
+（それでも全体の式を括弧内に置くことは必要です。）
 
 ```idris
 AnyVect3 : (a : Type) -> Type
 AnyVect3 a = (n ** Vect n a)
 ```
 
-This allows us to pair a natural number `n` with a vector of length `n`,
-which is exactly what we did with `AnyVect`. We can therefore rewrite
-`takeWhile` to return a `DPair` instead of our custom type `AnyVect`. Note,
-that like with regular pairs, we can use the same syntax `(x ** y)` for
-creating and pattern matching on dependent pairs:
+これにより自然数`n`と長さ`n`のベクタを対にすることができましたが、
+それはちょうど`AnyVect`でしたことと同じです。
+したがって`takeWhile`を、
+自前の型`AnyVect`の代わりに`DPair`を返すように書き換えられます。
+なお、通常の対のように、依存対を作ったりパターン照合したりするのに
+同じ構文`(x ** y)`を使うことができます。
 
 ```idris
 takeWhile3 : (a -> Bool) -> Vect m a -> (n ** Vect n a)
@@ -248,26 +242,22 @@ takeWhile3 f (x :: xs) = case f x of
   True  => let (_  ** ys) = takeWhile3 f xs in (_ ** x :: ys)
 ```
 
-Just like with regular pairs, we can use the dependent pair syntax to define
-dependent triples and larger tuples:
+ちょうど通常の対のように、依存対の構文を使って依存3対やそれ以上のものを定義できます。
 
 ```idris
 AnyMatrix : (a : Type) -> Type
 AnyMatrix a = (m ** n ** Vect m (Vect n a))
 ```
 
-### Erased Existentials
+### 消去された存在子
 
-Sometimes, it is possible to determine the value of an index by pattern
-matching on a value of the indexed type.  For instance, by pattern matching
-on a vector, we can learn about its length index. In these cases, it is not
-strictly necessary to carry around the index at runtime, and we can write a
-special version of a dependent pair where the first argument has quantity
-zero. Module `Data.DPair` from *base* exports data type `Exists` for this
-use case.
+時々、指標値を指標付けられた型の値へのパターン照合で決定することができることがあります。
+例えばベクタへのパターン照合により長さの指標を知ることができます。
+このような場合には厳密には実行時に指標を持ち回る必要はなく、
+最初の引数が数量子ゼロの特別版の依存対を書くことができます。
+*base*のモジュール`Data.DPair`はこの用途でデータ型`Exists`を輸出しています。
 
-As an example, here is a version of `takeWhile` returning a value of type
-`Exists`:
+例として以下は型`Exists`の値を返す版の`takeWhile`です。
 
 ```idris
 takeWhileExists : (a -> Bool) -> Vect m a -> Exists (\n => Vect n a)
@@ -278,25 +268,24 @@ takeWhileExists f (x :: xs) = case f x of
   False => takeWhileExists f xs
 ```
 
-In order to restore an erased value, data type `Singleton` from *base*
-module `Data.Singleton` can be useful: It is parameterized by the *value* it
-stores:
+消去された値を復元するには*base*のモジュール`Data.Singleton`にあるデータ型`Singleton`が便利かもしれません。
+これは保有する*値*を引数に取るものです。
 
 ```idris
 true : Singleton True
 true = Val True
 ```
 
-This is called a *singleton* type: A type corresponding to exactly one
-value. It is a type error to return any other value for constant `true`, and
-Idris knows this:
+これは*単独*型と呼ばれます。
+ちょうど1つの値に対応する型です。
+固定値`true`以外の値を返すことは型エラーであり、Idrisはこのことを知っています。
 
 ```idris
 true' : Singleton True
 true' = Val _
 ```
 
-We can use this to conjure the (erased!) length of a vector out of thin air:
+これを使えば（消去された！）ベクタの長さを何もないところから取り出すのに使えます。
 
 ```idris
 vectLength : Vect n a -> Singleton n
@@ -304,52 +293,51 @@ vectLength []        = Val 0
 vectLength (x :: xs) = let Val k = vectLength xs in Val (S k)
 ```
 
-This function comes with much stronger guarantees than `Data.Vect.length`:
-The latter claims to just return *any* natural number, while `vectLength`
-*must* return exactly `n` in order to type check. As a demonstration, here
-is a well-typed bogus implementation of `length`:
+この関数は`Data.Vect.length`よりも遥かに強い保証が付いてきます。
+後者は単に*どんな*自然数も返すと言っていますが、
+`vectLength`は型検査のために厳密に`n`を返さ*ねばなりません*。
+実演として以下はよく型付けされたいんちきな`length`の実装です。
 
 ```idris
 bogusLength : Vect n a -> Nat
 bogusLength = const 0
 ```
 
-This would not be accepted as a valid implementation of `vectLength`, as you
-may quickly verify yourself.
+手元で簡単に確かめられますが、
+これは`vectLength`の妥当な実装として受け付けられないでしょう。
 
-With the help of `vectLength` (but not with `Data.Vect.length`)  we can
-convert an erased existential to a proper dependent pair:
+（`Data.Vect.length`ではなく）`vectLength`の助けを借りて、
+消去された存在子を適切な依存対に変換できます。
 
 ```idris
 toDPair : Exists (\n => Vect n a) -> (m ** Vect m a)
 toDPair (Evidence _ as) = let Val m = vectLength as in (m ** as)
 ```
 
-Again, as a quick exercise, try implementing `toDPair` in terms of `length`,
-and note how Idris will fail to unify the result of `length` with the actual
-length of the vector.
+ここでも簡単な演習として、
+`length`を使って`toDPair`を実装してみましょう。
+どのようにIdrisが`length`の結果と実際のベクタの長さを統合するのに失敗するかに注目してください。
 
 ### 演習 その1
 
-1. Declare and implement a function for filtering a vector similar to
-   `Data.List.filter`.
+1. `Data.List.filter`と似たようにベクタを篩に掛ける関数を宣言して実装してください。
 
-2. Declare and implement a function for mapping a partial function over the
-   values of a vector similar to `Data.List.mapMaybe`.
+2. `Data.List.mapMaybe`と似たようにベクタの値の上で部分関数を写す関数を宣言し実装してください。
 
-3. Declare and implement a function similar to `Data.List.dropWhile` for
-   vectors. Use `Data.DPair.Exists` as your return type.
+3. `Data.List.dropWhile`に似たベクタ用の関数を宣言し実装してください。
+   `Data.DPair.Exists`を返却型に使ってください。
 
-4. Repeat exercise 3 but return a proper dependent pair. Use the function
-   from exercise 3 in your implementation.
+4. 適切な依存対を返すようにして演習3を反復してください。
+   実装には演習3の関数を使ってください。
 
-## Use Case: Nucleic Acids
+## 用例：核酸
 
-We'd like to come up with a small, simplified library for running
-computations on nucleic acids: RNA and DNA. These are built from five types
-of nucleobases, three of which are used in both types of nucleic acids and
-two bases specific for each type of acid. We'd like to make sure that only
-valid bases are in strands of nucleic acids.  Here's a possible encoding:
+核酸であるRNAとDNAについての計算を走らせる、
+小さく単純化したライブラリを作ってみたいと思います。
+これらの核酸は5つの核酸塩基から構築されるもので、そのうち3つは両方の種類の核酸で使われ、
+2つはそれぞれの酸の種類に特有のものです。
+必ず妥当な塩基のみが核酸鎖にあるようにしたいです。
+以下はそのような符号化です。
 
 ```idris
 data BaseType = DNABase | RNABase
@@ -381,7 +369,7 @@ encode : NucleicAcid b -> String
 encode = pack . map encodeBase
 ```
 
-It is a type error to use `Uracile` in a strand of DNA:
+`Uracile`をDNA鎖で使うと型エラーになります。
 
 ```idris
 failing "Mismatch between: RNABase and DNABase."
@@ -389,10 +377,10 @@ failing "Mismatch between: RNABase and DNABase."
   errDNA = [Uracile, Adenine]
 ```
 
-Note, how we used a variable for nucleobases `Adenine`, `Cytosine`, and
-`Guanine`: These are again universally quantified, and client code is free
-to choose a value here. This allows us to use these bases in strands of DNA
-*and* RNA:
+なお、核酸塩基`Adenine`、`Cytosine`、`Guanine`用に変数を使いました。
+これらはここでも全称量化されており、
+使い手のコードが自由にここの値を選びます。
+これによりこれらの塩基をDNA*及び*RNAで使うことができます。
 
 ```idris
 dna1 : DNA
@@ -402,9 +390,10 @@ rna1 : RNA
 rna1 = [Adenine, Cytosine, Guanine]
 ```
 
-With `Thymine` and `Uracile`, we are more restrictive: `Thymine` is only
-allowed in DNA, while `Uracile` is restricted to be used in RNA strands.
-Let's write parsers for strands of DNA and RNA:
+`Thymine`と`Uracile`についてはより強い制限があります。
+`Thymine`はDNAでしか許されていない一方で、
+`Uracile`はRNA鎖で使うように制限されています。
+DNAとRNA鎖の構文解析器を書いてみましょう。
 
 ```idris
 readAnyBase : Char -> Maybe (Nucleobase b)
@@ -428,12 +417,12 @@ readDNA : String -> Maybe DNA
 readDNA = traverse readDNABase . unpack
 ```
 
-Again, in case of the bases appearing in both kinds of strands, users of the
-universally quantified `readAnyBase` are free to choose what base type they
-want, but they will never get a `Thymine` or `Uracile` value.
+ここでも両方の鎖の種類に登場する塩基の場合は、
+全称量化された`readAnyBase`を使うところでは自由に塩基の種類を選ぶことができます。
+しかし`Thymine`や`Uracile`の値は決して得られません。
 
-We can now implement some simple calculations on sequences of
-nucleobases. For instance, we can come up with the complementary strand:
+これで核酸塩基の並びにおける単純な計算をいくつか実装することができます。
+例えば鎖の補完を出すことができます。
 
 ```idris
 complementRNA' : RNA -> RNA
@@ -453,9 +442,11 @@ complementDNA' = map calc
         calc Thymine  = Adenine
 ```
 
-Ugh, code repetition! Not too bad here, but imagine there were dozens of
-bases with only few specialized ones. Surely, we can do better?
-Unfortunately, the following won't work:
+ああ、コードの重複が！
+ここではそこまで悪くありませんが、
+山のような塩基のごく一部に特別なものを含むものがある状況を想像してください。
+もちろん、もっとうまくできますよね？
+不幸にも以下は動きません。
 
 ```idris
 complementBase' : Nucleobase b -> Nucleobase b
@@ -466,12 +457,13 @@ complementBase' Thymine  = Adenine
 complementBase' Uracile  = Adenine
 ```
 
-All goes well with the exception of the `Adenine` case. Remember: Parameter
-`b` is universally quantified, and the *callers* of our function can decide
-what `b` is supposed to be. We therefore can't just return `Thymine`: Idris
-will respond with a type error since callers might want a `Nucleobase
-RNABase` instead.  One way to go about this is to take an additional
-unerased argument (explicit or implicit) representing the base type:
+ほぼうまくいきますが、`Adenine`の場合は例外です。
+思い出してほしいのですが、変数`b`は全称量化されており、
+関数の*呼び出し手*が`b`が何であるかを決められるのです。
+したがって単に`Thymine`を返すことはできません。
+呼び出し手が`Nucleobase RNABase`を代わりに望んでいるかもしれないため、
+Idrisは型エラーを応答するのです。
+これを遣り過ごす一案は追加で（明示的ないし暗黙的に）塩基の種類を表す消去される引数を取ることです。
 
 ```idris
 complementBase : (b : BaseType) -> Nucleobase b -> Nucleobase b
@@ -483,28 +475,28 @@ complementBase _       Thymine  = Adenine
 complementBase _       Uracile  = Adenine
 ```
 
-This is again an example of a dependent *function* type (also called a [*pi
-type*](https://en.wikipedia.org/wiki/Dependent_type#%CE%A0_type)): The input
-and output types both *depend* on the *value* of the first argument.  We can
-now use this to calculate the complement of any nucleic acid:
+これもまた依存*関数*型の一例です。
+（[*依存積型*](https://en.wikipedia.org/wiki/Dependent_type#%CE%A0_type)とも呼ばれます。）
+入出力型が両方とも最初の引数の*値*に*依存*しています。
+これを使えばどんな核酸塩基の補完も計算できます。
 
 ```idris
 complement : (b : BaseType) -> NucleicAcid b -> NucleicAcid b
 complement b = map (complementBase b)
 ```
 
-Now, here is an interesting use case: We'd like to read a sequence of
-nucleobases from user input, accepting two strings: The first telling us,
-whether the user plans to enter a DNA or RNA sequence, the second being the
-sequence itself. What should be the type of such a function? Well, we're
-describing computations with side effects, so something involving `IO` seems
-about right. User input almost always needs to be validated or translated,
-so something might go wrong and we need an error type for this
-case. Finally, our users can decide whether they want to enter a strand of
-RNA or DNA, so this distinction should be encoded as well.
+さて、ここで興味深い用例があります。
+利用者の入力から塩基配列を読んで2つの文字列を受け付けます。
+最初のものは利用者がDNAないしRNAのどちらの鎖を入力しようとしているかで、
+2つ目は並びそのものです。
+そのような関数の型はどうあるべきでしょうか。
+副作用を伴う計算を記述しているので何か`IO`が絡むものになりそうです。
+利用者の入力はほとんどいつでも検証されて翻訳される必要があるので、
+何か間違っていればこの場合のためのエラー型が必要です。
+最終的に利用者はRNAないしDNA鎖のいずれかを入力したいので、
+この区別もまた符号化されるべきです。
 
-Of course, it is always possible to write a custom sum type for such a use
-case:
+もちろんそのような用例のための自前の直和型を書くことはいつでもできます。
 
 ```idris
 data Result : Type where
@@ -514,19 +506,21 @@ data Result : Type where
   GotRNA          : RNA -> Result
 ```
 
-This has all possible outcomes encoded in a single data type.  However, it
-is lacking in terms of flexibility. If we want to handle errors early on and
-just extract a strand of RNA or DNA, we need yet another data type:
+これには全てのありうる出力が単一のデータ型に落とし込まれています。
+しかしながら柔軟性の点からは今一つです。
+手始めに、エラーを制御して、単にRNAないしDNA鎖を抽出したいのだとしても、
+さらに別のデータ型が必要です。
 
 ```idris
 data RNAOrDNA = ItsRNA RNA | ItsDNA DNA
 ```
 
-This might be the way to go, but for results with many options, this can get
-cumbersome quickly. Also: Why come up with a custom data type when we
-already have the tools to deal with this at our hands?
+これも方法の1つではありますが、多くの選択肢がある結果については、
+早急に面倒なことになりえます。
+それに、なぜ既にこうしたことを扱う道具を手中にしているのに、
+自前のデータ型を出すことがあるでしょうか。
 
-Here is how we can encode this with a dependent pair:
+以下は依存対でこれを落とし込むやり方です。
 
 ```idris
 namespace InputError
@@ -551,10 +545,10 @@ getNucleicAcid = do
     _     => pure $ Left (UnknownBaseType baseString)
 ```
 
-Note, how we paired the type of nucleobases with the nucleic acid
-sequence. Assume now we implement a function for transcribing a strand of
-DNA to RNA, and we'd like to convert a sequence of nucleobases from user
-input to the corresponding RNA sequence.  Here's how to do this:
+核酸塩基の型と塩基配列とを対にしている点に注目してください。
+さて、DNAからRNAに転写する関数を実装することを考え、
+利用者の入力から対応するRNA配列へと塩基配列を変換したいとします。
+以下はこれを行う方法です。
 
 ```idris
 transcribeBase : Nucleobase DNABase -> Nucleobase RNABase
@@ -579,27 +573,28 @@ transcribeProg = do
     RNABase => printRNA seq
 ```
 
-By pattern matching on the first value of the dependent pair we could
-determine, whether the second value is an RNA or DNA sequence.  In the first
-case, we had to transcribe the sequence first, in the second case, we could
-invoke `printRNA` directly.
+依存対の最初の値にパターン照合することで、
+2つ目の値がRNAないしDNA配列のいずれになるかを決定することができます。
+最初の場合だとまず配列を転写する必要がありますが、
+2つ目の場合では直接`printRNA`を呼び出すことができます。
 
-In a more interesting scenario, we would *translate* the RNA sequence to the
-corresponding protein sequence. Still, this example shows how to deal with a
-simplified real world scenario: Data may be encoded differently and coming
-from different sources. By using precise types, we are forced to first
-convert values to the correct format. Failing to do so leads to a compile
-time exception instead of an error at runtime or - even worse - the program
-silently running a bogus computation.
+より興味深い筋書では、
+RNA配列を対応する蛋白質配列に*翻訳*することでしょう。
+それでもこの例は単純化した現実世界の筋書をどのように扱うかを示しています。
+データは異なるやり方で符号化されるかもしれず、異なる源から来るかもしれないということです。
+精緻な型を使うことで最初に値を正しい書式に変換することを強制されます。
+そうすることに失敗するとコンパイル時の例外に繋がりますが、
+実行時のエラーにはなりませんし、
+プログラムが静かにいんちきな計算を走らせるような更に悪いことにもなりません。
 
 ### 依存型対直和型
 
-Dependent records as shown for `AnyVect a` are a generalization of dependent
-pairs: We can have an arbitrary number of fields and use the values stored
-therein to calculate the types of other values. For very simple cases like
-the example with nucleobases, it doesn't matter too much, whether we use a
-`DPair`, a custom dependent record, or even a sum type. In fact, the three
-encodings are equally expressive:
+`AnyVect a`でお見せしたような依存レコードは依存対の一般化です。
+任意の数のフィールドを持つことができ、中に格納されている値を使って他の値の型を計算できます。
+核酸塩基の例のような大変単純な場合には、
+`DPair`、自前の依存レコード、ましてや直和型のどれを使おうとも、
+あまり問題になりません。
+実際、3つの符号化は等しく表現力があります。
 
 ```idris
 Acid1 : Type
@@ -615,67 +610,67 @@ data Acid3 : Type where
   SomeDNA : DNA -> Acid3
 ```
 
-It is trivial to write lossless conversions between these encodings, and
-with each encoding we can decide with a simple pattern match, whether we
-currently have a sequence of RNA or DNA. However, dependent types can depend
-on more than one value, as we will see in the exercises. In such cases, sum
-types and dependent pairs quickly become unwieldy, and you should go for an
-encoding as a dependent record.
+これらの符号化の間の損失のない変換を書くことはつまらないことで、
+それぞれの符号化があれば1回のパターン照合で、
+現時点でRNAないしDNAどちらの配列があるのかを決めることができます。
+しかしながら依存型は1つ以上の値に依存することができ、
+演習で見ていくことになります。
+そのような場合、直和型と依存対はすぐに手に余るようになり、
+依存レコードとしての符号化に進んだほうがよくなります。
 
 ### 演習 その2
 
-Sharpen your skills in using dependent pairs and dependent records! In
-exercises 2 to 7 you have to decide yourself, when a function should return
-a dependent pair or record, when a function requires additional arguments,
-on which you can pattern match, and what other utility functions might be
-necessary.
+依存対と依存レコードの技能を研ぎ澄ましましょう！
+演習2から7では、
+関数が依存対ないしレコードのいずれを返すべきか、
+関数が追加の引数を必要とすべきかどうか、
+何にパターン照合できるのか、
+そして他のどの便利関数が必要なのか、
+について自分で決めなくてはいけません。
 
-1. Proof that the three encodings for nucleobases are *isomorphic* (meaning:
-   of the same structure) by writing lossless conversion functions from
-   `Acid1` to `Acid2` and back. Likewise for `Acid1` and `Acid3`.
+1. 核酸塩基の3つの符号化が*同形*（意味：同じ構造をしている）であることを、
+   損失のない変換関数を書くことで証明してください。
+   `Acid1`から`Acid2`へのものとその逆、および`Acid1`と`Acid3`についても同様です。
 
-2. Sequences of nucleobases can be encoded in one of two directions:
-   [*Sense* and
-   *antisense*](https://en.wikipedia.org/wiki/Sense_(molecular_biology)).
-   Declare a new data type to describe the sense of a sequence of
-   nucleobases, and add this as an additional parameter to type `Nucleobase`
-   and types `DNA` and `RNA`.
+2. 塩基配列は2つに1つの方向で符号化できます。
+   これが[*センス*と*アンチセンス*](https://en.wikipedia.org/wiki/Sense_(molecular_biology))です。
+   新しいデータ型を宣言し、塩基配列のセンスを記述し、
+   そしてこれを型`Nucleobase`と型`DNA`および`RNA`への追加の引数として加えてください。
 
-3. Refine the types of `complement` and `transcribe`, so that they reflect
-   the changing of *sense*. In case of `transcribe`, a strand of antisense
-   DNA is converted to a strand of sense RNA.
+3. `complement`と`transcribe`の型を精錬し、
+   *センス*の変化を反映するようにしてください。
+   `transcribe`の場合はアンチセンスDNA鎖はセンスRNA鎖に変換されます。
 
-4. Define a dependent record storing the base type and sense together with a
-   sequence of nucleobases.
+4. 塩基配列と共に塩基の種類とセンスを格納する依存レコードを定義してください。
 
-5. Adjust `readRNA` and `readDNA` in such a way that the *sense* of a
-   sequence is read from the input string.  Sense strands are encoded like
-   so: "5´-CGGTAG-3´". Antisense strands are encoded like so:
-   "3´-CGGTAG-5´".
+5. `readRNA`と`readDNA`を調整し、
+   配列の*センス*が入力文字列から読まれるようにしてください。
+   センス鎖は "5´-CGGTAG-3´" のように符号化されます。
+   アンチセンス鎖は "3´-CGGTAG-5´" のように符号化されます。
 
-6. Adjust `encode` in such a way that it includes the sense in its output.
+6. `encode` を調整し、出力にセンスが含まれるようにしてください。
 
-7. Enhance `getNucleicAcid` and `transcribeProg` in such a way that the
-   sense and base type are stored together with the sequence, and that
-   `transcribeProg` always prints the *sense* RNA strand (after
-   transcription, if necessary).
+7. `getNucleicAcid`と`transcribeProg`を向上させ、
+   センスと塩基の種類が配列と共に格納され、
+   `transcribeProg`が常に*センス*RNA鎖を印字するようにしてください。
+   （必要に応じて予め転写します。）
 
-8. Enjoy the fruits of your labour and test your program at the REPL.
+8. 骨折りの成果を喜びましょう。プログラムをREPLで試してください。
 
-Note: Instead of using a dependent record, we could again have used a sum
-type of four constructors to encode the different types of
-sequences. However, the number of constructors required corresponds to the
-*product* of the number of values of each type level index. Therefore, this
-number can grow quickly and sum type encodings can lead to lengthy blocks of
-pattern matches in these cases.
+補足：ここでも依存レコードを使う代わりに、
+4つの構築子からなる直和型を使ってそれぞれの配列の型を符号化することができます。
+しかしながら構築子の数はそれぞれの型水準指標の値の数の*積*に対応する分だけ必要です。
+したがってこの数は急増する可能性があり、
+このような場合には直和型の符号化は長いパターン照合ブロックに繋がりかねません。
 
-## Use Case: CSV Files with a Schema
+## 用例：スキーマ付きCSVファイル
 
-In this section, we are going to look at an extended example based on our
-previous work on CSV parsers. We'd like to write a small command-line
-program, where users can specify a schema for the CSV tables they'd like to
-parse and load into memory. Before we begin, here is a REPL session running
-the final program, which you will complete in the exercises:
+この節では以前CSV構文解析器に取り組んだことに基づいた発展例を見ていきます。
+小さなコマンドラインプログラムがほしいとします。
+このプログラムでは、
+利用者が構文解析してメモリに読み込むCSVの表にスキーマを指定することができます。
+始める前に以下が最終的なプログラムを走らせたREPLセッションです。
+これを演習で完成させていきます。
 
 ```repl
 Solutions.DPair> :exec main
@@ -716,32 +711,31 @@ Goodbye.
 ```
 
 この例は書籍[Type-Driven Development with
-Idris](https://www.manning.com/books/type-driven-development-with-idris)にある例で
-使われたプログラムに着想を得ました。
+Idris](https://www.manning.com/books/type-driven-development-with-idris)にある例で使われたプログラムに着想を得ました。
 
-We'd like to focus on several things here:
+ここでいくつかの点に集中したいと思います。
 
-* Purity: With the exception of the main program loop, all functions used in
-  the implementation should be pure, which in this context means "not
-  running in any monad with side effects such as `IO`".
-* Fail early: With the exception of the command parser, all functions
-  updating the table and handling queries should be typed and implemented in
-  such a way that they cannot fail.
+* 純粋性：メインプログラムのループは例外であれ、
+  実装で使われている全ての関数は純粋です。
+  この文脈での意味は「`IO`のような副作用を伴ういかなるモナドも走らせない」です。
+* 早期に失敗する：コマンドパーサは例外であれ、
+  表を更新したりクエリを制御したりする全ての関数が型付けされ、
+  失敗することのないような方法で実装されます。
 
-We are often well advised to adhere to these two guidelines, as they can
-make the majority of our functions easier to implement and test.
+しばしばこれらの2つの指針を固守するよう忠告しますが、
+それは関数の大多数を実装しやすく、また検査しやすくするためです。
 
-Since we allow users of our library to specify a schema (order and types of
-columns) for the table they work with, this information is not known until
-runtime. The same goes for the current size of the table. We will therefore
-store both values as fields in a dependent record.
+ライブラリの利用者が作業する表のスキーマ（列の順番と型）を指定できるようにするため、
+この情報は実行されるまで知られていません。
+現在の表の大きさについても同じことが言えます。
+したがって両方の値を依存レコード中のフィールドとして保管することになります。
 
-### Encoding the Schema
+### スキーマを符号化する
 
-We need to inspect the table schema at runtime. Although theoretically
-possible, it is not advisable to operate on Idris types directly here.  We'd
-rather use a closed custom data type describing the types of columns we
-understand. In a first try, we only support some Idris primitives:
+表のスキーマを実行時に調べる必要があります。
+理論上は可能ですが、ここではIdrisの型を直接操作するのは感心しません。
+その代わり閉じた自前のデータ型を使い、認識できる列の型を記述します。
+最初の試みではいくつかのIdrisの原始型のみ対応します。
 
 ```idris
 data ColType = I64 | Str | Boolean | Float
@@ -750,9 +744,8 @@ Schema : Type
 Schema = List ColType
 ```
 
-Next, we need a way to convert a `Schema` to a list of Idris types, which we
-will then use as the index of a heterogeneous list representing the rows in
-our table:
+次に`Schema`をIdrisの型のリストに変換する方法が必要です。
+それからこのリストを使って表中の行に対応する混成リストの指標として使うことになります。
 
 ```idris
 IdrisType : ColType -> Type
@@ -765,10 +758,9 @@ Row : Schema -> Type
 Row = HList . map IdrisType
 ```
 
-We can now describe a table as a dependent record storing the table's
-content as a vector of rows. In order to safely index rows of the table and
-parse new rows to be added, the current schema and size of the table must be
-known at runtime:
+これで表の内容を行のベクタとして格納する依存レコードとして表を記述することができます。
+表の行を安全に索引し、また追加する新しい行を解析するため、
+現在のスキーマと表の大きさは実行時に既知でなくてはなりません。
 
 ```idris
 record Table where
@@ -778,12 +770,12 @@ record Table where
   rows   : Vect size (Row schema)
 ```
 
-Finally, we define an indexed data type describing commands operating on the
-current table. Using the current table as the command's index allows us to
-make sure that indices for accessing and deleting rows are within bounds and
-that new rows agree with the current schema. This is necessary to uphold our
-second design principle: All functions operating on tables must do so
-without the possibility of failure.
+最後に現在の表を操作する命令を記述する指標付けられたデータ型を定義します。
+現在の表を命令の指標として使うことにより、
+アクセスしたり行を削除したりするためのインデックスが範囲内にあり、
+新しい行が現在のスキーマに適合することを確かめられます。
+これは2つ目の設計原理を守る上で必要です。
+つまり、表における全ての関数は失敗の可能性なく実行されなくてはならない、ということです。
 
 ```idris
 data Command : (t : Table) -> Type where
@@ -796,9 +788,10 @@ data Command : (t : Table) -> Type where
   Quit        : Command t
 ```
 
-We can now implement the main application logic: How user entered commands
-affect the application's current state. As promised, this comes without the
-risk of failure, so we don't have to wrap the return type in an `Either`:
+これで主なアプリケーションのはたらきを実装できます。
+利用者がどの命令を入力したかがアプリケーションの現状態に影響します。
+約束通り、これは失敗の危険なくできているため、
+返り値の型を`Either`に包むことはありません。
 
 ```idris
 applyCommand : (t : Table) -> Command t -> Table
@@ -813,58 +806,49 @@ applyCommand (MkTable ts n rs) (Delete x)  = case n of
   Z   => absurd x
 ```
 
-Please understand, that the constructors of `Command t` are typed in such a
-way that indices are always within bounds (constructors `Get` and `Delete`),
-and new rows adhere to the table's current schema (constructor `Prepend`).
+指標が常に範囲内にあるように（構築子`Get`と`Delete`）、
+また新しい行が表の現在のスキーマに遵守しているように（構築子`Prepend`）、
+`Command t`の構築子が型付けられていることを理解してください。
 
-One thing you might not have seen so far is the call to `absurd` on the last
-line. This is a derived function of the `Uninhabited` interface, which is
-used to describe types such as `Void` or - in the case above - `Fin 0`, of
-which there can be no value. Function `absurd` is then just another
-manifestation of the principle of explosion. If this doesn't make too much
-sense yet, don't worry. We will look at `Void` and its uses in the next
-chapter.
+1つこれまでにまだ見たことのないであろう箇所は末行での`absurd`の呼び出しです。
+これは`Uninhabited`インターフェースの導出された関数であり、
+`Void`のような型や上の例での`Fin 0`といった値が1つも存在しえないことを記述します。
+そこで関数`absurd`は単に別の爆発の原理の表明なのです。
+まだこれがあまり飲み込めなくても心配ご無用。
+`Void`とその使用について次章で見ていきます。
 
-### Parsing Commands
+### 命令を解析する
 
-User input validation is an important topic when writing applications. If it
-happens early, you can keep larger parts of your application pure (which -
-in this context - means: "without the possibility of failure") and provably
-total.  If done properly, this step encodes and handles most if not all ways
-in which things can go wrong in your program, allowing you to come up with
-clear error messages telling users exactly what caused an issue. As you
-surely have experienced yourself, there are few things more frustrating than
-a non-trivial computer program terminating with an unhelpful "There was an
-error" message.
+利用者の入力の検証はアプリケーションを書くときの重要な話題です。
+早期に起きたのであればアプリケーションの大部分を純粋（この文脈では、「失敗の可能性なしに」という意味です。）に保つことができます。
+適切に行われればこの工程はプログラムで何かが間違う可能性の全てではなくともそのほとんどを符号化し制御しますが、これにより厳密に何が問題を生じているのかを利用者に伝える明白なエラー文言を出すことができます。
+きっと自身で体験してきたはずですが、どうでもよくないコンピュータプログラムが助けにならない「エラーがありました」文言で終了することほど腹立たしいことはそうありません。
 
-So, in order to treat this important topic with all due respect, we are
-first going to implement a custom error type. This is not *strictly*
-necessary for small programs, but once your software gets more complex, it
-can be tremendously helpful for keeping track of what can go wrong where. In
-order to figure out what can possibly go wrong, we first need to decide on
-how the commands should be entered.  Here, we use a single keyword for each
-command, together with an optional number of arguments separated from the
-keyword by a single space character. For instance: `"new
-i64,boolean,str,str"`, for initializing an empty table with a new
-schema. With this settled, here is a list of things that can go wrong, and
-the messages we'd like to print:
+ですからこの重要な話題を細心の注意を持って扱うために、
+まず自前のエラー型を実装していきます。
+これは小さなプログラムでは*厳密には*必須ではありませんが、
+ひとたびソフトウェアがより複雑になると、
+どこで何がおかしくなったのか把握するのに凄まじく助けになりえます。
+何がおかしくなりえるのかを見付けだすためにはまず、
+どのように命令が入力されるのかを決める必要があります。
+ここではそれぞれの命令について、1つのキーワードとオプションでキーワードから1つの空白文字を隔てていくつかの引数を使います。
+例えば：`"new i64,boolean,str,str"`は新しいスキーマで空の表を初期化します。
+こうと決まれば、以下がおかしくなりえる事柄と印字したい文言の一覧です。
 
-* A bogus command is entered. We repeat the input with a message that we
-  don't know the command plus a list of commands we know about.
-* An invalid schema was entered. In this case, we list the position of the
-  first unknown type, the string we found there, and a list of types we know
-  about.
-* An invalid CSV encoding of a row was entered. We list the erroneous
-  position, the string encountered there, plus the expected type. In case of
-  a too small or too large number of fields, we also print a corresponding
-  error message.
-* An index was out of bounds. This can happen, when users try to access or
-  delete specific rows. We print the current number of rows plus the value
-  entered.
-* A value not representing a natural number was entered as an index.  We
-  print an according error message.
+* いんちきな命令が入力された。
+  入力の復唱と共にその命令を知らない旨の文言と知っている命令の一覧を出す。
+* 不当なスキーマが入力された。
+  この場合最初の不明な型の位置とそこで見付けた文字列を一覧にし、そして知っている型も列挙する。
+* 不当ななCSV符号化がされた行が入力された。
+  エラーのある位置、そこで出喰わした文字列、加えて期待される型を一覧にする。
+  フィールドの数が少なすぎたり多すぎたりする場合は対応するエラー文言も印字する。
+* インデックスが範囲外である。
+  利用者が特定の行にアクセスしようとしたり削除しようとしたりするときに起こりえる。
+  現在の行番号に加えて入力された値を印字する。
+* 値がインデックスとして入力された自然数を表現していない。
+  その値に応じたエラー文言を印字する。
 
-That's a lot of stuff to keep track off, so let's encode this in a sum type:
+把握すべきことが沢山ありますから、これを直和型に符号化しましょう。
 
 ```idris
 data Error : Type where
@@ -877,12 +861,11 @@ data Error : Type where
   NoNat          : String -> Error
 ```
 
-In order to conveniently construct our error messages, it is best to use
-Idris' string interpolation facilities: We can enclose arbitrary string
-expressions in a string literal by enclosing them in curly braces, the first
-of which must be escaped with a backslash. Like so: `"foo \{myExpr a b
-c}"`.  We can pair this with multiline string literals to get nicely
-formatted error messages.
+エラー文言を快適に構築するためにはIdrisの文字列内挿機能を使うのが一番です。
+任意の文字列式を中括弧で囲んで文字列リテラル内に置くことができます。
+ここで1つ目の中括弧はバックスラッシュでエスケープされている必要があります。
+`"foo \{myExpr a b c}`のような感じです。
+これを複数行文字列リテラルと併せていい感じにエラー文言を書式化できます。
 
 ```idris
 showColType : ColType -> String
@@ -939,10 +922,10 @@ showError (OutOfBounds size index) = """
 showError (NoNat x) = "Not a natural number: \{x}"
 ```
 
-We can now write parsers for the different commands. We need facilities to
-parse vector indices, schemata, and CSV rows.  Since we are using a CSV
-format for encoding and decoding rows, it makes sense to also encode the
-schema as a comma-separated list of values:
+これでそれぞれの命令の構文解析器を書くことができます。
+ベクタ指標、スキーマ、そしてCSVの行を解析する機能が必要です。
+CSV書式を使って行を符号化したり復号化したりしているため、
+スキーマについてもコンマ区切りの値のリストとして符号化するのが自然です。
 
 ```idris
 zipWithIndex : Traversable t => t a -> t (Nat, a)
@@ -964,12 +947,12 @@ readSchema : String -> Either Error Schema
 readSchema = traverse (uncurry readColType) . zipWithIndex . fromCSV
 ```
 
-We also need to decode CSV content based on the current schema.  Note, how
-we can do so in a type safe manner by pattern matching on the schema, which
-will not be known until runtime. Unfortunately, we need to reimplement
-CSV-parsing, because we want to add the expected type to the error messages
-(a thing that would be much harder to do with interface `CSVLine` and error
-type `CSVError`).
+現在のスキーマに基づいてCSVの内容を復号する必要もあります。
+スキーマのパターン照合により型安全なやり方でそれができることに目を向けてください。
+このスキーマは実行するまで知られていないものです。
+不運にもCSVの解析を再実装する必要がありますが、
+それはエラー文言に期待される型を加えたいからです。
+（これはインターフェース`CSVLine`とエラー型`CSVError`では遥かに大変でしょう。）
 
 ```idris
 decodeField : Nat -> (c : ColType) -> String -> Either Error (IdrisType c)
@@ -990,19 +973,17 @@ decodeRow s = go 1 ts $ fromCSV s
         go k (c :: cs) (s :: ss) = [| decodeField k c s :: go (S k) cs ss |]
 ```
 
-There is no hard and fast rule about whether to pass an index as an implicit
-argument or not. Some considerations:
+指標を暗黙の引数として渡すかどうかについての規則の決定版はありません。
+以下にいくつかの観点を示します。
 
-* Pattern matching on explicit arguments comes with less syntactic overhead.
-* If an argument can be inferred from the context most of the time, consider
-  passing it as an implicit to make your function nicer to use in client
-  code.
-* Use explicit (possibly erased) arguments for values that can't be inferred
-  by Idris most of the time.
+* 明示的引数でのパターン照合は構文的オーバーヘッドが比較的少ない。
+* 引数がほとんどの場合に文脈から推論できる場合、
+  使い手側のコードでいい感じに使えるように、関数に暗黙子として渡すことを検討する。
+* ほとんどの場合でIdrisが推論できない値については（消去されうる）明示的引数を使う。
 
-All that is missing now is a way to parse indices for accessing the current
-table's rows. We use the conversion for indices to start at one instead of
-zero, which feels more natural for most non-programmers.
+今欠けているのは現在の表の行にアクセスするインデックスを解析する方法だけです。
+インデックスをゼロ始まりの代わりに1始まりにする変換を使いますが、
+これはほとんどの非プログラマにとってより自然に感じるためです。
 
 ```idris
 readFin : {n : _} -> String -> Either Error (Fin n)
@@ -1012,11 +993,10 @@ readFin s = do
   maybeToEither (OutOfBounds n $ S k) $ natToFin k n
 ```
 
-We are finally able to implement a parser for user commands.  Function
-`Data.String.words` is used for splitting a string at space characters. In
-most cases, we expect the name of the command plus a single argument without
-additional spaces.  CSV rows can have additional space characters, however,
-so we use `Data.String.unwords` on the split string.
+遂に利用者の命令のための構文解析器を実装することができます。
+関数`Data.String.words`は文字列を空白文字で分割するのに使われます。
+ほとんどの場合、命令名に加えて余剰の空白のない単一引数を期待します。
+しかしCSVの行は余剰の空白文字があってもよいので、`Data.String.unwords`を分割された文字列に使います。
 
 ```idris
 readCommand :  (t : Table) -> String -> Either Error (Command t)
@@ -1031,11 +1011,11 @@ readCommand (MkTable ts n _) s         = case words s of
   _               => Left $ UnknownCommand s
 ```
 
-### Running the Application
+### アプリケーションを走らせる
 
-All that's left to do is to write functions for printing the results of
-commands to users and run the application in a loop until command `"quit"`
-is entered.
+残っていることは、
+利用者に命令の結果を印字する関数を書き、
+命令`"quit"`が入力されるまでアプリケーションを繰り返し走らせることだけです。
 
 ```idris
 encodeField : (t : ColType) -> IdrisType t -> String
@@ -1079,71 +1059,67 @@ main = runProg $ MkTable [] _ []
 
 ### 演習 その3
 
-The challenges presented here all deal with enhancing our table editor in
-several interesting ways. Some of them are more a matter of style and less a
-matter of learning to write dependently typed programs, so feel free to
-solve these as you please. Exercises 1 to 3 should be considered to be
-mandatory.
+ここに示した挑戦問題は全ていくつかの対話的なやり方で表編集器の改善を行うものです。
+問題の中には依存的に型付けられたプログラムを書くことを学ぶというより形式上の問題というべきものもあるので、気の赴くままに解いてください。
+演習1から3は必須と考えてよいでしょう。
 
-1. Add support for storing Idris types `Integer` and `Nat` in CSV columns
+1. Idrisの型`Integer`と`Nat`をCSVの列に保管できるように対応してください。
 
-2. Add support for `Fin n` to CSV columns. Note: We need runtime access to
-   `n` in order for this to work.
+2. CSVの列に`Fin n`への対応を加えてください。
+   補足：動くようにするためには`n`への実行時のアクセスが必要です。
 
-3. Add support for optional types to CSV columns. Since missing values
-   should be encoded by empty strings, it makes no sense to allow for nested
-   optional types, meaning that types like `Maybe Nat` should be allowed
-   while `Maybe (Maybe Nat)` should not.
+3. CSVの列にオプション型への対応を加えてください。
+   欠落した値は空文字列で符号化されるでしょうから、
+   入れ子のオプション型を許すのは無意味です。
+   つまり、`Maybe Nat`のような型は許されますが、`Maybe (Maybe Nat)`は許されません。
 
-   Hint: There are several ways to encode these, one being
-   to add a boolean index to `ColType`.
+   手掛かり：こうしたことを符号化するにはいくつかの方法がありますが、
+   1つは`ColType`に真偽値指標を加えることです。
 
-4. Add a command for printing the whole table. Bonus points if all columns
-   are properly aligned.
+4. 表全体を印字する命令を加えてください。
+   全ての列が適切に整列されていれば尚良しです。
 
-5. Add support for simple queries: Given a column number and a value, list
-   all rows where entries match the given value.
+5. 単純な問い合わせへの対応を加えてください。
+   列の番号と値が与えられているとき、与えられた値に合致する項目の全行を一覧にします。
 
-   This might be a challenge, as the types get pretty interesting.
+   これは挑戦的かもしれません。
+   というのも型がとても興味深いものになるためです。
 
-6. Add support for loading and saving tables from and to disk.  A table
-   should be stored in two files: One for the schema and one for the CSV
-   content.
+6. 表をディスクから読み出したり保存したりする対応を加えてください。
+   表は2つのファイルに保存されます。
+   1つはスキーマのためのもので、もう1つはCSVの内容のためのものです。
 
-   Note: Reading files in a provably total way can be pretty
-   hard and will be a topic for another day. For now,
-   just use function `readFile` exported from
-   `System.File` in base for reading a file as a whole.
-   This function is partial, because
-   it will not terminate when used with an infinite input
-   stream such as `/dev/urandom` or `/dev/zero`.
-   It is important to *not* use `assert_total` here.
-   Using partial functions like `readFile` might well impose
-   a security risk in a real world application, so eventually,
-   we'd have to deal with this and allow for some way to
-   limit the size of accepted input. It is therefore best
-   to make this partiality visible and annotate all downstream
-   functions accordingly.
+   補足：ファイルを証明上全域に読むことはかなり困難になりえるもので、
+   日を改めての話題になるでしょう。
+   現時点では単にbaseの`System.File`から輸出されている関数`readFile`を使ってください。
+   この関数は部分的ですが、
+   それは`/dev/urandom`や`/dev/zero`のような無限入力ストリームに使うと決して終了しないからです。
+   ここで`assert_total`を使わ*ない*ことは大事です。
+   現実世界のアプリケーションで`readFile`のような部分関数を使うことはセキュリティ上の危険を招く可能性が充分にあるため、
+   最終的にはこれの対処をして何らかの方法で受け付ける入力の大きさを制限する必要があります。
+   したがってこの部分性を可視化し、
+   これにしたがって全ての下流の関数に註釈付けさせるのが一番なのです。
 
-You can find an implementation of these additions in the solutions. A small
-example table can be found in folder `resources`.
+これらの追加点の実装は解法で見ることができます。
+小さな例としての表はフォルダ`resources`で見付けられます。
 
-Note: There are of course tons of projects to pursue from here, such as
-writing a proper query language, calculating new rows from existing ones,
-accumulating values in a column, concatenating and zipping tables, and so
-on.  We will stop for now, probably coming back to this in later examples.
+補足：当然ながらここから山ほどのプロジェクトを追究できます。
+例えば適切な問い合わせ言語を書いたり、
+既存の行から新しい行を計算したり、
+列中の値を累積したり、
+表を結合したり縫合したり、
+などです。
+ここでは止めておきますが後の例でこれに立ち返ることがあるかもしれません。
 
 ## まとめ
 
-Dependent pairs and records are necessary to at runtime inspect the values
-defining the types we work with. By pattern matching on these values, we
-learn about the types and possible shapes of other values, allowing us to
-reduce the number of potential bugs in our programs.
+依存対と依存レコードは実行時に値を調べて取り扱う型を定義するのに必要です。
+これらの値へのパターン照合により型と他の値の取り得る形状についてわかりますが、
+これにより数多くのプログラム中の潜在的なバグを減らすことができます。
 
-In the [next chapter](Eq.md) we start learning about how to write data
-types, which we use as proofs that certain contracts between values
-hold. These will eventually allow us to define pre- and post conditions for
-our function arguments and output types.
+[次章](Eq.md)ではデータ型の書き方について学びます。
+ただしこのデータ型は、値の間で満たされている何らかの契約についての証明としてのものです。
+これらにより、最終的に関数の引数と出力型に事前ないし事後の条件を定義することができます。
 
 <!-- vi: filetype=idris2
 -->

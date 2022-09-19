@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2022-08-17 08:59+0900\n"
-"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"PO-Revision-Date: 2022-09-19 13:08+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -46,33 +46,9 @@ msgstr ""
 
 #. type: Title #
 #: ../src/Tutorial/DPair.md:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Sigma Types"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DataTypes.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"直和型\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "依存和型"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:18
@@ -91,10 +67,26 @@ msgid ""
 "wiki/Dependent_type#%CE%A3_type): Dependent pairs and their generalization, "
 "dependent records."
 msgstr ""
+"ここまでの依存的に型付いたプログラミングの例では、\n"
+"ベクタの長さのような型指標はコンパイル時に分かっていたり、\n"
+"コンパイル時に知られている値から計算できるものでした。\n"
+"しかし現実のアプリケーションではそのような情報が実行時まで入手できないことが"
+"よくあり、\n"
+"利用者や周囲の世界の状態によって下される決定に依る値となります。\n"
+"例えばファイルの内容を複数行の文章のベクタとして保管するとき、\n"
+"一般的にこのベクタの長さはファイルが記憶領域に読み込まれるまで知られていませ"
+"ん。\n"
+"結果として取り扱う値の型が実行時にのみ知られている他の値に依存することとな"
+"り、\n"
+"これらの型は依存する値へのパターン照合によってのみ行えることはよくありま"
+"す。\n"
+"こうした依存関係を表現するためには[依存和型](https://en.wikipedia.org/wiki/"
+"Dependent_type#%CE%A3_type)と呼ばれるものが必要です。\n"
+"依存対と、それを一般化した依存レコードがそれです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:19
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "module Tutorial.DPair\n"
 "\n"
@@ -113,48 +105,22 @@ msgid ""
 "\n"
 "%default total\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.IO\n"
+"module Tutorial.DPair\n"
 "\n"
+"import Control.Monad.State\n"
+"\n"
+"import Data.DPair\n"
+"import Data.Either\n"
+"import Data.HList\n"
+"import Data.List\n"
 "import Data.List1\n"
+"import Data.Singleton\n"
 "import Data.String\n"
 "import Data.Vect\n"
 "\n"
-"import System.File\n"
+"import Text.CSV\n"
 "\n"
 "%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Functor\n"
-"\n"
-"import Data.List1\n"
-"import Data.String\n"
-"import Data.Vect\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Folds\n"
-"\n"
-"import Data.List1\n"
-"import Data.Maybe\n"
-"import Data.Vect\n"
-"import Debug.Trace\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
 
 #. type: Title ##
 #: ../src/Tutorial/DPair.md:38
@@ -171,6 +137,13 @@ msgid ""
 "return a vector of exactly the same length. The types guarantee that this is "
 "true, therefore the following function is perfectly safe and provably total:"
 msgstr ""
+"既にベクタの長さ指標がどれほど便利なのかについてのいくつかの例を見てきまし"
+"た。\n"
+"これがあれば関数のできることとできないことを型でより精密に表現できました。\n"
+"例えばベクタにおける`map`や`traverse`操作は厳密に同じ長さのベクタを返しま"
+"す。\n"
+"型がこれが正しいことを保証しており、\n"
+"したがって以下の関数は完全に安全で証明上全域です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:47
@@ -179,6 +152,8 @@ msgid ""
 "parseAndDrop : Vect (3 + n) String -> Maybe (Vect n Nat)\n"
 "parseAndDrop = map (drop 3) . traverse parsePositive\n"
 msgstr ""
+"parseAndDrop : Vect (3 + n) String -> Maybe (Vect n Nat)\n"
+"parseAndDrop = map (drop 3) . traverse parsePositive\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:60
@@ -190,12 +165,18 @@ msgid ""
 "is a vector of at least three elements in the length index and could derive "
 "the length of the result from this."
 msgstr ""
+"`traverse parsePositive`の引数は型が`Vect (3 + n) String`なので、\n"
+"その結果は型が`Maybe (Vect (3 + n) Nat)`となります。\n"
+"したがってこれを`drop 3`での呼び出しに使うのは安全です。\n"
+"なお、これ自体はコンパイル時に知られていることです。\n"
+"つまり、最初の引数が少なくとも3引数のベクタであるという前提条件を\n"
+"長さの指標に折り込んだため、ここから結果の長さを導出することができたのです。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:61
 #, no-wrap
 msgid "Vectors of Unknown Length"
-msgstr ""
+msgstr "未知の長さのベクタ"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:65
@@ -203,35 +184,19 @@ msgid ""
 "However, this is not always possible. Consider the following function, "
 "defined on `List` and exported by `Data.List`:"
 msgstr ""
+"しかしこれはいつも可能とは限りません。\n"
+"`List`に定義され`Data.List`から輸出されている以下の関数について考えてくださ"
+"い。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/DPair.md:66
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Tutorial.Relations> :t takeWhile\n"
 "Data.List.takeWhile : (a -> Bool) -> List a -> List a\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   filterTR : (a -> Bool) -> List a -> List a\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Functions2> :ti the\n"
-"Prelude.the : (0 a : Type) -> a -> a\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Tutorial.Relations> :t takeWhile\n"
+"Data.List.takeWhile : (a -> Bool) -> List a -> List a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:75
@@ -241,36 +206,18 @@ msgid ""
 "the predicate, how long this prefix will be.  Can we write such a function "
 "for vectors? Let's give it a try:"
 msgstr ""
+"これはリスト引数から与えられた条件が`True`を返すような最長の前部分を取得する"
+"ものです。\n"
+"この場合、この前部分がどこまで長くなるかはリストの要素と前提条件に依存してい"
+"ます。\n"
+"そのような関数をベクタについて書くことができるでしょうか？\n"
+"試してみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:76
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "takeWhile' : (a -> Bool) -> Vect n a -> Vect m a\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"zipWithV : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   filterTR : (a -> Bool) -> List a -> List a\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "takeWhile' : (a -> Bool) -> Vect n a -> Vect m a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:92
@@ -286,6 +233,22 @@ msgid ""
 "the predicate, the input vector, the type of values the vector holds, and "
 "*the length of the output vector*. Don't believe me? See here:"
 msgstr ""
+"さあ、これを実装してみてください。\n"
+"長く試すことはありません。\n"
+"というのは証明上全域な方法ではできないからです。\n"
+"疑問に思うのは、ここで何が問題なのかということです。\n"
+"これを理解するには`takeWhile'`の型が約束していることに気付かねばなりませ"
+"ん。\n"
+"「あらゆる型`a`の値を操作する述語と、\n"
+"この型の値を持つあらゆるベクタと、\n"
+"全ての長さ`m`について、\n"
+"型`a`の値を持つ長さ`m`のベクタをあげます。」\n"
+"3引数全てが[*全称量化され*](https://en.wikipedia.org/wiki/"
+"Universal_quantification)ているということです。\n"
+"つまり関数の呼び出し手が、述語、入力ベクタ、ベクタの持つ値の型、\n"
+"そして*出力ベクタの長さ*を自由に選ぶのです。\n"
+"信じていませんか？\n"
+"こちらを見てください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:93
@@ -299,6 +262,13 @@ msgid ""
 "proofOfVoid : Void\n"
 "proofOfVoid = head voids\n"
 msgstr ""
+"-- 困ったことになっているようです。`Void`の非空なベクタがあります……\n"
+"voids : Vect 7 Void\n"
+"voids = takeWhile' (const True) []\n"
+"\n"
+"-- ……上から直ちに`Void`の証明に従います。\n"
+"proofOfVoid : Void\n"
+"proofOfVoid = head voids\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:108
@@ -309,6 +279,10 @@ msgid ""
 "me to return a possibly non-empty vector holding values of the same type, "
 "from which I freely extracted the first one."
 msgstr ""
+"`takeWhile'`を呼び出す時に`m`の値を自由に決められたことがわかりますか？\n"
+"`takeWhile'`に空ベクタ（型`Void`の値を持つ唯一の既にあるベクタ）を渡し、\n"
+"関数の型は同じ型の値を持つ非空ベクタを何とかして返すと約束します。\n"
+"そこから自由に最初のものを抽出できるのです。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:115
@@ -319,84 +293,27 @@ msgid ""
 "result of `takeWhile'` in a type. The answer to this is: \"Use a *dependent "
 "pair*\", a vector paired with a value corresponding to its length."
 msgstr ""
+"幸運にもIdrisはこれを許しません。\n"
+"`takeWhile'`をズルする（例えば全域性検査器を切って永久にループさせるなど）こ"
+"となく実装することは決してできません。\n"
+"そこで、どうやって`takeWhile'`の結果を型で表現すればよいのか、という疑問が残"
+"ります。\n"
+"この答えは「*依存対*を使うべし」になります。\n"
+"ベクタにその長さに合致する値が対になったものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:116
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "record AnyVect a where\n"
 "  constructor MkAnyVect\n"
 "  length : Nat\n"
 "  vect   : Vect length a\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DataTypes.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record User where\n"
-"  constructor MkUser\n"
-"  name  : String\n"
-"  title : Title\n"
-"  age   : Bits8\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Const (e,a : Type) where\n"
-"     constructor MkConst\n"
-"     value : e\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Last a where\n"
-"     constructor MkLast\n"
-"     value : Maybe a\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record First a where\n"
-"     constructor MkFirst\n"
-"     value : Maybe a\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Prog a where\n"
-"     constructor MkProg\n"
-"     runProg : DB -> IO (Either DBError a)\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DataTypes.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record User where\n"
-"  constructor MkUser\n"
-"  name  : String\n"
-"  title : Title\n"
-"  age   : Bits8\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record Ascii where\n"
-"  constructor MkAscii\n"
-"  value : String\n"
-"  0 prf : isAsciiString value === True\n"
+"record AnyVect a where\n"
+"  constructor MkAnyVect\n"
+"  length : Nat\n"
+"  vect   : Vect length a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:131
@@ -410,6 +327,15 @@ msgid ""
 "actual vector. We can implement `takeWhile` in such a way that it returns a "
 "value of type `AnyVect a`:"
 msgstr ""
+"これは述語論理における[*存在量化*](https://en.wikipedia.org/wiki/"
+"Existential_quantification)に対応します。\n"
+"つまり、ある自然数があって、それは今持っているベクタの長さに対応する、という"
+"ものです。\n"
+"着目していただきたいのは、\n"
+"`AnyVect a`の外側からは最早包まれたベクタの長さが型水準では見えず、\n"
+"それでも実行時にそのベクタを調べれば何らかのことがわかる、ということです。\n"
+"これは実際のベクタと共に包まれているためです。\n"
+"`takeWhile`を型`AnyVect a`の値を返すように実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:132
@@ -421,6 +347,11 @@ msgid ""
 "  False => MkAnyVect 0 []\n"
 "  True  => let MkAnyVect n ys = takeWhile f xs in MkAnyVect (S n) (x :: ys)\n"
 msgstr ""
+"takeWhile : (a -> Bool) -> Vect n a -> AnyVect a\n"
+"takeWhile f []        = MkAnyVect 0 []\n"
+"takeWhile f (x :: xs) = case f x of\n"
+"  False => MkAnyVect 0 []\n"
+"  True  => let MkAnyVect n ys = takeWhile f xs in MkAnyVect (S n) (x :: ys)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:147
@@ -432,6 +363,13 @@ msgid ""
 "values. In fact, the length can be inferred automatically by Idris, so we "
 "can replace it with underscores, if we so desire:"
 msgstr ""
+"これは証明上全域にはたらきますが、\n"
+"それはこの関数の呼び出し手が今や結果のベクタの長さを自力で選ぶことができない"
+"からです。\n"
+"関数`takeWhile`がこの長さを決めてベクタと一緒に返し、\n"
+"型検査器は2つの値を対にするときに誤ちを犯していないことを立証します。\n"
+"実際、長さはIdrisが自動的に推論できるので、\n"
+"望むなら下線文字で置き換えることができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:148
@@ -443,6 +381,11 @@ msgid ""
 "  False => MkAnyVect 0 []\n"
 "  True  => let MkAnyVect _ ys = takeWhile2 f xs in MkAnyVect _ (x :: ys)\n"
 msgstr ""
+"takeWhile2 : (a -> Bool) -> Vect n a -> AnyVect a\n"
+"takeWhile2 f []        = MkAnyVect _ []\n"
+"takeWhile2 f (x :: xs) = case f x of\n"
+"  False => MkAnyVect 0 []\n"
+"  True  => let MkAnyVect _ ys = takeWhile2 f xs in MkAnyVect _ (x :: ys)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:161
@@ -453,6 +396,11 @@ msgid ""
 "quantified values. Callers cannot choose such values freely: They are "
 "returned as part of a function's result."
 msgstr ""
+"まとめると、汎化関数型の引数は全称量化されており、\n"
+"それらの値はその関数の呼び出し側で決められます。\n"
+"依存レコード型があれば存在量化された値を記述できます。\n"
+"呼び出し手はそのような値を自由に選ぶことはできません。\n"
+"そうした値は関数の結果の一部として返されるのです。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:164
@@ -460,34 +408,14 @@ msgid ""
 "Note, that Idris allows us to be explicit about universal quantification.  "
 "The type of `takeWhile'` can also be written like so:"
 msgstr ""
+"なお、Idrisでは全称量化について明示的にさせることができます。\n"
+"`takeWhile'`の型は以下のようにも書くことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:165
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "takeWhile'' : forall a, n, m . (a -> Bool) -> Vect n a -> Vect m a\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "takeWhile'' : forall a, n, m . (a -> Bool) -> Vect n a -> Vect m a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:173
@@ -496,10 +424,12 @@ msgid ""
 "by Idris. The above is a less verbose version of the following function "
 "type, the likes of which we have seen before:"
 msgstr ""
+"全称量化された引数はIdrisにより暗黙消去引数に脱糖されます。\n"
+"上記は、以前に見たことがあるような以下の関数型の、より冗長でない版です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:174
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "takeWhile''' :  {0 a : _}\n"
 "             -> {0 n : _}\n"
@@ -508,28 +438,12 @@ msgid ""
 "             -> Vect n a\n"
 "             -> Vect m a\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"zipEitherWith'' :  {0 a : _}\n"
-"                -> {0 b : _}\n"
-"                -> {0 c : _}\n"
-"                -> {0 e : _}\n"
-"                -> (a -> b -> c)\n"
-"                -> Either e a\n"
-"                -> Either e b\n"
-"                -> Either e c\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"takeWhile''' :  {0 a : _}\n"
+"             -> {0 n : _}\n"
+"             -> {0 m : _}\n"
+"             -> (a -> Bool)\n"
+"             -> Vect n a\n"
+"             -> Vect m a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:189
@@ -542,12 +456,19 @@ msgid ""
 "github.com/purescript/documentation/blob/master/language/Differences-from-"
 "Haskell.md#explicit-forall)."
 msgstr ""
+"Idrisでは全称量化について明示的にしたいかどうか決めるのは自由です。\n"
+"時々型水準で起こっていることを理解する助けになります。\n"
+"他の言語、例えば[PureScript](https://www.purescript.org/)はよりこれについて厳"
+"格になっています。\n"
+"そこでは全称量化された引数への明示的な註記は[必須](https://github.com/"
+"purescript/documentation/blob/master/language/Differences-from-Haskell."
+"md#explicit-forall)です。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:190
 #, no-wrap
 msgid "The Essence of Dependent Pairs"
-msgstr ""
+msgstr "依存対の本質"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:202
@@ -562,61 +483,30 @@ msgid ""
 "a general dependent pair type is provided by the *Prelude*. Here is its "
 "implementation (primed for disambiguation):"
 msgstr ""
+"ここで起こっていることを理解するには時間と経験がいるかもしれません。\n"
+"少なくとも筆者の場合はIdrisとの多くの対話を経てようやく依存対とは何かわかりま"
+"した。\n"
+"何らかの型の*値*を、最初の値から計算された型の2つ目の値と対にしたものです。\n"
+"例えば自然数`n`（値）が長さ`n`（2つ目の値で、最初の値に*依存*する型のもの）の"
+"ベクタと対になります。\n"
+"これは依存対のあるプログラミングのごく基本的な概念なので、\n"
+"*Prelude*から一般的な依存対型が提供されています。\n"
+"以下はその実装です。\n"
+"（プライム記号を付けて曖昧回避しました。）"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:203
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "record DPair' (a : Type) (p : a -> Type) where\n"
 "  constructor MkDPair'\n"
 "  fst : a\n"
 "  snd : p fst\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Const (e,a : Type) where\n"
-"     constructor MkConst\n"
-"     value : e\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record First a where\n"
-"     constructor MkFirst\n"
-"     value : Maybe a\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Prog a where\n"
-"     constructor MkProg\n"
-"     runProg : DB -> IO (Either DBError a)\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DataTypes.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record User where\n"
-"  constructor MkUser\n"
-"  name  : String\n"
-"  title : Title\n"
-"  age   : Bits8\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"record DPair' (a : Type) (p : a -> Type) where\n"
+"  constructor MkDPair'\n"
+"  fst : a\n"
+"  snd : p fst\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:215
@@ -627,36 +517,21 @@ msgid ""
 "*type* of the second value (`snd`).  For instance, here is `AnyVect a` "
 "represented as a `DPair`:"
 msgstr ""
+"ここで起こっていることを理解するのは不可欠です。\n"
+"2つの引数、型`a`と関数`p`があり、後者は型`a`の*値*から*型*を計算します。\n"
+"まずある値 (`fst`) があり、それから2つ目の値 (`snd`) の*型*を計算するのに使わ"
+"れるのです。\n"
+"例えば以下は`DPair`として表現された`AnyVect a`です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:216
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "AnyVect' : (a : Type) -> Type\n"
 "AnyVect' a = DPair Nat (\\n => Vect n a)\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"AnyVect' : (a : Type) -> Type\n"
+"AnyVect' a = DPair Nat (\\n => Vect n a)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:225
@@ -667,36 +542,19 @@ msgid ""
 "they are important building blocks for programming in languages\n"
 "with first class types:\n"
 msgstr ""
+"なお、`\\n => Vect n a`は`Nat`から`Type`への関数です。\n"
+"Idrisは依存対を表現する特別な構文を提供していますが、\n"
+"それは依存対が第一級型を持つプログラミング言語で重要な建築資材だからです。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:226
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "AnyVect'' : (a : Type) -> Type\n"
 "AnyVect'' a = (n : Nat ** Vect n a)\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"AnyVect'' : (a : Type) -> Type\n"
+"AnyVect'' a = (n : Nat ** Vect n a)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:233
@@ -704,6 +562,8 @@ msgid ""
 "We can inspect at the REPL, that the right hand side of `AnyVect''` get's "
 "desugared to the right hand side of `AnyVect'`:"
 msgstr ""
+"REPLで調べると`AnyVect''`の右側は`AnyVect'`の右側に脱糖されることがわかりま"
+"す。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/DPair.md:234
@@ -712,6 +572,8 @@ msgid ""
 "Tutorial.Relations> (n : Nat ** Vect n Int)\n"
 "DPair Nat (\\n => Vect n Int)\n"
 msgstr ""
+"Tutorial.Relations> (n : Nat ** Vect n Int)\n"
+"DPair Nat (\\n => Vect n Int)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:242
@@ -719,36 +581,19 @@ msgid ""
 "Idris can infer, that `n` must be of type `Nat`, so we can drop this "
 "information. (We still need to put the whole expression in parentheses.)"
 msgstr ""
+"Idrisは`n`が型`Nat`でなければいけないことを推論できるため、\n"
+"この情報を省くことができます。\n"
+"（それでも全体の式を括弧内に置くことは必要です。）"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:243
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "AnyVect3 : (a : Type) -> Type\n"
 "AnyVect3 a = (n ** Vect n a)\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"AnyVect3 : (a : Type) -> Type\n"
+"AnyVect3 a = (n ** Vect n a)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:254
@@ -759,6 +604,12 @@ msgid ""
 "that like with regular pairs, we can use the same syntax `(x ** y)` for "
 "creating and pattern matching on dependent pairs:"
 msgstr ""
+"これにより自然数`n`と長さ`n`のベクタを対にすることができましたが、\n"
+"それはちょうど`AnyVect`でしたことと同じです。\n"
+"したがって`takeWhile`を、\n"
+"自前の型`AnyVect`の代わりに`DPair`を返すように書き換えられます。\n"
+"なお、通常の対のように、依存対を作ったりパターン照合したりするのに\n"
+"同じ構文`(x ** y)`を使うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:255
@@ -770,6 +621,11 @@ msgid ""
 "  False => (_ ** [])\n"
 "  True  => let (_  ** ys) = takeWhile3 f xs in (_ ** x :: ys)\n"
 msgstr ""
+"takeWhile3 : (a -> Bool) -> Vect m a -> (n ** Vect n a)\n"
+"takeWhile3 f []        = (_ ** [])\n"
+"takeWhile3 f (x :: xs) = case f x of\n"
+"  False => (_ ** [])\n"
+"  True  => let (_  ** ys) = takeWhile3 f xs in (_ ** x :: ys)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:265
@@ -777,6 +633,8 @@ msgid ""
 "Just like with regular pairs, we can use the dependent pair syntax to define "
 "dependent triples and larger tuples:"
 msgstr ""
+"ちょうど通常の対のように、依存対の構文を使って依存3対やそれ以上のものを定義で"
+"きます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:266
@@ -785,12 +643,14 @@ msgid ""
 "AnyMatrix : (a : Type) -> Type\n"
 "AnyMatrix a = (m ** n ** Vect m (Vect n a))\n"
 msgstr ""
+"AnyMatrix : (a : Type) -> Type\n"
+"AnyMatrix a = (m ** n ** Vect m (Vect n a))\n"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:271
 #, no-wrap
 msgid "Erased Existentials"
-msgstr ""
+msgstr "消去された存在子"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:281
@@ -803,13 +663,19 @@ msgid ""
 "zero. Module `Data.DPair` from *base* exports data type `Exists` for this "
 "use case."
 msgstr ""
+"時々、指標値を指標付けられた型の値へのパターン照合で決定することができること"
+"があります。\n"
+"例えばベクタへのパターン照合により長さの指標を知ることができます。\n"
+"このような場合には厳密には実行時に指標を持ち回る必要はなく、\n"
+"最初の引数が数量子ゼロの特別版の依存対を書くことができます。\n"
+"*base*のモジュール`Data.DPair`はこの用途でデータ型`Exists`を輸出しています。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:284
 msgid ""
 "As an example, here is a version of `takeWhile` returning a value of type "
 "`Exists`:"
-msgstr ""
+msgstr "例として以下は型`Exists`の値を返す版の`takeWhile`です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:285
@@ -822,6 +688,12 @@ msgid ""
 "            in Evidence _ (x :: ys)\n"
 "  False => takeWhileExists f xs\n"
 msgstr ""
+"takeWhileExists : (a -> Bool) -> Vect m a -> Exists (\\n => Vect n a)\n"
+"takeWhileExists f []        = Evidence _ []\n"
+"takeWhileExists f (x :: xs) = case f x of\n"
+"  True  => let Evidence _ ys = takeWhileExists f xs\n"
+"            in Evidence _ (x :: ys)\n"
+"  False => takeWhileExists f xs\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:297
@@ -830,6 +702,9 @@ msgid ""
 "module `Data.Singleton` can be useful: It is parameterized by the *value* it "
 "stores:"
 msgstr ""
+"消去された値を復元するには*base*のモジュール`Data.Singleton`にあるデータ型"
+"`Singleton`が便利かもしれません。\n"
+"これは保有する*値*を引数に取るものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:298
@@ -838,6 +713,8 @@ msgid ""
 "true : Singleton True\n"
 "true = Val True\n"
 msgstr ""
+"true : Singleton True\n"
+"true = Val True\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:306
@@ -846,6 +723,10 @@ msgid ""
 "value. It is a type error to return any other value for constant `true`, and "
 "Idris knows this:"
 msgstr ""
+"これは*単独*型と呼ばれます。\n"
+"ちょうど1つの値に対応する型です。\n"
+"固定値`true`以外の値を返すことは型エラーであり、Idrisはこのことを知っていま"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:307
@@ -854,36 +735,28 @@ msgid ""
 "true' : Singleton True\n"
 "true' = Val _\n"
 msgstr ""
+"true' : Singleton True\n"
+"true' = Val _\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:314
 msgid ""
 "We can use this to conjure the (erased!) length of a vector out of thin air:"
 msgstr ""
+"これを使えば（消去された！）ベクタの長さを何もないところから取り出すのに使え"
+"ます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:315
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "vectLength : Vect n a -> Singleton n\n"
 "vectLength []        = Val 0\n"
 "vectLength (x :: xs) = let Val k = vectLength xs in Val (S k)\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"toLengthList : List String -> List Nat\n"
-"toLengthList []        = []\n"
-"toLengthList (x :: xs) = length x :: toLengthList xs\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"vectLength : Vect n a -> Singleton n\n"
+"vectLength []        = Val 0\n"
+"vectLength (x :: xs) = let Val k = vectLength xs in Val (S k)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:326
@@ -893,6 +766,10 @@ msgid ""
 "*must* return exactly `n` in order to type check. As a demonstration, here "
 "is a well-typed bogus implementation of `length`:"
 msgstr ""
+"この関数は`Data.Vect.length`よりも遥かに強い保証が付いてきます。\n"
+"後者は単に*どんな*自然数も返すと言っていますが、\n"
+"`vectLength`は型検査のために厳密に`n`を返さ*ねばなりません*。\n"
+"実演として以下はよく型付けされたいんちきな`length`の実装です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:327
@@ -901,6 +778,8 @@ msgid ""
 "bogusLength : Vect n a -> Nat\n"
 "bogusLength = const 0\n"
 msgstr ""
+"bogusLength : Vect n a -> Nat\n"
+"bogusLength = const 0\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:334
@@ -908,6 +787,8 @@ msgid ""
 "This would not be accepted as a valid implementation of `vectLength`, as you "
 "may quickly verify yourself."
 msgstr ""
+"手元で簡単に確かめられますが、\n"
+"これは`vectLength`の妥当な実装として受け付けられないでしょう。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:338
@@ -915,6 +796,8 @@ msgid ""
 "With the help of `vectLength` (but not with `Data.Vect.length`)  we can "
 "convert an erased existential to a proper dependent pair:"
 msgstr ""
+"（`Data.Vect.length`ではなく）`vectLength`の助けを借りて、\n"
+"消去された存在子を適切な依存対に変換できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:339
@@ -923,6 +806,8 @@ msgid ""
 "toDPair : Exists (\\n => Vect n a) -> (m ** Vect m a)\n"
 "toDPair (Evidence _ as) = let Val m = vectLength as in (m ** as)\n"
 msgstr ""
+"toDPair : Exists (\\n => Vect n a) -> (m ** Vect m a)\n"
+"toDPair (Evidence _ as) = let Val m = vectLength as in (m ** as)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:347
@@ -931,6 +816,10 @@ msgid ""
 "and note how Idris will fail to unify the result of `length` with the actual "
 "length of the vector."
 msgstr ""
+"ここでも簡単な演習として、\n"
+"`length`を使って`toDPair`を実装してみましょう。\n"
+"どのようにIdrisが`length`の結果と実際のベクタの長さを統合するのに失敗するかに"
+"注目してください。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:348 ../src/Tutorial/DataTypes.md:261
@@ -945,50 +834,21 @@ msgstr "演習 その1"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/DPair.md:352
-#, fuzzy
 msgid ""
 "Declare and implement a function for filtering a vector similar to `Data."
 "List.filter`."
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"同様に計算演算子をパースする関数を宣言し実装します。\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"あらゆる`List01 ne a`を同じ長さと値の順番の`List01 False a`に変換する関数"
-"`weaken`を宣言し実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"`Data.List.filter`と似たようにベクタを篩に掛ける関数を宣言して実装してくださ"
+"い。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/DPair.md:356
-#, fuzzy
 msgid ""
 "Declare and implement a function for mapping a partial function over the "
 "values of a vector similar to `Data.List.mapMaybe`."
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"あらゆる`List01 ne a`を同じ長さと値の順番の`List01 False a`に変換する関数"
-"`weaken`を宣言し実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"`Data.List.mapMaybe`と似たようにベクタの値の上で部分関数を写す関数を宣言し実"
+"装してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/DPair.md:360
@@ -996,6 +856,8 @@ msgid ""
 "Declare and implement a function similar to `Data.List.dropWhile` for "
 "vectors. Use `Data.DPair.Exists` as your return type."
 msgstr ""
+"`Data.List.dropWhile`に似たベクタ用の関数を宣言し実装してください。\n"
+"`Data.DPair.Exists`を返却型に使ってください。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/DPair.md:363
@@ -1003,12 +865,14 @@ msgid ""
 "Repeat exercise 3 but return a proper dependent pair. Use the function from "
 "exercise 3 in your implementation."
 msgstr ""
+"適切な依存対を返すようにして演習3を反復してください。\n"
+"実装には演習3の関数を使ってください。"
 
 #. type: Title ##
 #: ../src/Tutorial/DPair.md:364
 #, no-wrap
 msgid "Use Case: Nucleic Acids"
-msgstr ""
+msgstr "用例：核酸"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:372
@@ -1019,6 +883,13 @@ msgid ""
 "two bases specific for each type of acid. We'd like to make sure that only "
 "valid bases are in strands of nucleic acids.  Here's a possible encoding:"
 msgstr ""
+"核酸であるRNAとDNAについての計算を走らせる、\n"
+"小さく単純化したライブラリを作ってみたいと思います。\n"
+"これらの核酸は5つの核酸塩基から構築されるもので、そのうち3つは両方の種類の核"
+"酸で使われ、\n"
+"2つはそれぞれの酸の種類に特有のものです。\n"
+"必ず妥当な塩基のみが核酸鎖にあるようにしたいです。\n"
+"以下はそのような符号化です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:373
@@ -1052,44 +923,50 @@ msgid ""
 "encode : NucleicAcid b -> String\n"
 "encode = pack . map encodeBase\n"
 msgstr ""
+"data BaseType = DNABase | RNABase\n"
+"\n"
+"data Nucleobase : BaseType -> Type where\n"
+"  Adenine  : Nucleobase b\n"
+"  Cytosine : Nucleobase b\n"
+"  Guanine  : Nucleobase b\n"
+"  Thymine  : Nucleobase DNABase\n"
+"  Uracile  : Nucleobase RNABase\n"
+"\n"
+"NucleicAcid : BaseType -> Type\n"
+"NucleicAcid = List . Nucleobase\n"
+"\n"
+"RNA : Type\n"
+"RNA = NucleicAcid RNABase\n"
+"\n"
+"DNA : Type\n"
+"DNA = NucleicAcid DNABase\n"
+"\n"
+"encodeBase : Nucleobase b -> Char\n"
+"encodeBase Adenine  = 'A'\n"
+"encodeBase Cytosine = 'C'\n"
+"encodeBase Guanine  = 'G'\n"
+"encodeBase Thymine  = 'T'\n"
+"encodeBase Uracile  = 'U'\n"
+"\n"
+"encode : NucleicAcid b -> String\n"
+"encode = pack . map encodeBase\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:404
 msgid "It is a type error to use `Uracile` in a strand of DNA:"
-msgstr ""
+msgstr "`Uracile`をDNA鎖で使うと型エラーになります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:405
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "failing \"Mismatch between: RNABase and DNABase.\"\n"
 "  errDNA : DNA\n"
 "  errDNA = [Uracile, Adenine]\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"failing \"Mismatch between: S ?n and 0.\"\n"
-"  ex2 : Vect 0 Integer\n"
-"  ex2 = [12]\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"failing \"Mismatch between: RNABase and DNABase.\"\n"
+"  errDNA : DNA\n"
+"  errDNA = [Uracile, Adenine]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:415
@@ -1099,6 +976,10 @@ msgid ""
 "to choose a value here. This allows us to use these bases in strands of DNA "
 "*and* RNA:"
 msgstr ""
+"なお、核酸塩基`Adenine`、`Cytosine`、`Guanine`用に変数を使いました。\n"
+"これらはここでも全称量化されており、\n"
+"使い手のコードが自由にここの値を選びます。\n"
+"これによりこれらの塩基をDNA*及び*RNAで使うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:416
@@ -1110,6 +991,11 @@ msgid ""
 "rna1 : RNA\n"
 "rna1 = [Adenine, Cytosine, Guanine]\n"
 msgstr ""
+"dna1 : DNA\n"
+"dna1 = [Adenine, Cytosine, Guanine]\n"
+"\n"
+"rna1 : RNA\n"
+"rna1 = [Adenine, Cytosine, Guanine]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:427
@@ -1118,6 +1004,10 @@ msgid ""
 "allowed in DNA, while `Uracile` is restricted to be used in RNA strands.  "
 "Let's write parsers for strands of DNA and RNA:"
 msgstr ""
+"`Thymine`と`Uracile`についてはより強い制限があります。\n"
+"`Thymine`はDNAでしか許されていない一方で、\n"
+"`Uracile`はRNA鎖で使うように制限されています。\n"
+"DNAとRNA鎖の構文解析器を書いてみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:428
@@ -1143,6 +1033,25 @@ msgid ""
 "readDNA : String -> Maybe DNA\n"
 "readDNA = traverse readDNABase . unpack\n"
 msgstr ""
+"readAnyBase : Char -> Maybe (Nucleobase b)\n"
+"readAnyBase 'A' = Just Adenine\n"
+"readAnyBase 'C' = Just Cytosine\n"
+"readAnyBase 'G' = Just Guanine\n"
+"readAnyBase _   = Nothing\n"
+"\n"
+"readRNABase : Char -> Maybe (Nucleobase RNABase)\n"
+"readRNABase 'U' = Just Uracile\n"
+"readRNABase c   = readAnyBase c\n"
+"\n"
+"readDNABase : Char -> Maybe (Nucleobase DNABase)\n"
+"readDNABase 'T' = Just Thymine\n"
+"readDNABase c   = readAnyBase c\n"
+"\n"
+"readRNA : String -> Maybe RNA\n"
+"readRNA = traverse readRNABase . unpack\n"
+"\n"
+"readDNA : String -> Maybe DNA\n"
+"readDNA = traverse readDNABase . unpack\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:454
@@ -1151,6 +1060,10 @@ msgid ""
 "universally quantified `readAnyBase` are free to choose what base type they "
 "want, but they will never get a `Thymine` or `Uracile` value."
 msgstr ""
+"ここでも両方の鎖の種類に登場する塩基の場合は、\n"
+"全称量化された`readAnyBase`を使うところでは自由に塩基の種類を選ぶことができま"
+"す。\n"
+"しかし`Thymine`や`Uracile`の値は決して得られません。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:458
@@ -1158,6 +1071,8 @@ msgid ""
 "We can now implement some simple calculations on sequences of nucleobases. "
 "For instance, we can come up with the complementary strand:"
 msgstr ""
+"これで核酸塩基の並びにおける単純な計算をいくつか実装することができます。\n"
+"例えば鎖の補完を出すことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:459
@@ -1179,6 +1094,21 @@ msgid ""
 "        calc Adenine  = Thymine\n"
 "        calc Thymine  = Adenine\n"
 msgstr ""
+"complementRNA' : RNA -> RNA\n"
+"complementRNA' = map calc\n"
+"  where calc : Nucleobase RNABase -> Nucleobase RNABase\n"
+"        calc Guanine  = Cytosine\n"
+"        calc Cytosine = Guanine\n"
+"        calc Adenine  = Uracile\n"
+"        calc Uracile  = Adenine\n"
+"\n"
+"complementDNA' : DNA -> DNA\n"
+"complementDNA' = map calc\n"
+"  where calc : Nucleobase DNABase -> Nucleobase DNABase\n"
+"        calc Guanine  = Cytosine\n"
+"        calc Cytosine = Guanine\n"
+"        calc Adenine  = Thymine\n"
+"        calc Thymine  = Adenine\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:480
@@ -1187,6 +1117,12 @@ msgid ""
 "bases with only few specialized ones. Surely, we can do better? "
 "Unfortunately, the following won't work:"
 msgstr ""
+"ああ、コードの重複が！\n"
+"ここではそこまで悪くありませんが、\n"
+"山のような塩基のごく一部に特別なものを含むものがある状況を想像してくださ"
+"い。\n"
+"もちろん、もっとうまくできますよね？\n"
+"不幸にも以下は動きません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:481
@@ -1199,6 +1135,12 @@ msgid ""
 "complementBase' Thymine  = Adenine\n"
 "complementBase' Uracile  = Adenine\n"
 msgstr ""
+"complementBase' : Nucleobase b -> Nucleobase b\n"
+"complementBase' Adenine  = ?what_now\n"
+"complementBase' Cytosine = Guanine\n"
+"complementBase' Guanine  = Cytosine\n"
+"complementBase' Thymine  = Adenine\n"
+"complementBase' Uracile  = Adenine\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:497
@@ -1210,6 +1152,14 @@ msgid ""
 "RNABase` instead.  One way to go about this is to take an additional "
 "unerased argument (explicit or implicit) representing the base type:"
 msgstr ""
+"ほぼうまくいきますが、`Adenine`の場合は例外です。\n"
+"思い出してほしいのですが、変数`b`は全称量化されており、\n"
+"関数の*呼び出し手*が`b`が何であるかを決められるのです。\n"
+"したがって単に`Thymine`を返すことはできません。\n"
+"呼び出し手が`Nucleobase RNABase`を代わりに望んでいるかもしれないため、\n"
+"Idrisは型エラーを応答するのです。\n"
+"これを遣り過ごす一案は追加で（明示的ないし暗黙的に）塩基の種類を表す消去され"
+"る引数を取ることです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:498
@@ -1223,6 +1173,13 @@ msgid ""
 "complementBase _       Thymine  = Adenine\n"
 "complementBase _       Uracile  = Adenine\n"
 msgstr ""
+"complementBase : (b : BaseType) -> Nucleobase b -> Nucleobase b\n"
+"complementBase DNABase Adenine  = Thymine\n"
+"complementBase RNABase Adenine  = Uracile\n"
+"complementBase _       Cytosine = Guanine\n"
+"complementBase _       Guanine  = Cytosine\n"
+"complementBase _       Thymine  = Adenine\n"
+"complementBase _       Uracile  = Adenine\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:512
@@ -1232,6 +1189,11 @@ msgid ""
 "and output types both *depend* on the *value* of the first argument.  We can "
 "now use this to calculate the complement of any nucleic acid:"
 msgstr ""
+"これもまた依存*関数*型の一例です。\n"
+"（[*依存積型*](https://en.wikipedia.org/wiki/Dependent_type#%CE%A0_type)とも"
+"呼ばれます。）\n"
+"入出力型が両方とも最初の引数の*値*に*依存*しています。\n"
+"これを使えばどんな核酸塩基の補完も計算できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:513
@@ -1240,6 +1202,8 @@ msgid ""
 "complement : (b : BaseType) -> NucleicAcid b -> NucleicAcid b\n"
 "complement b = map (complementBase b)\n"
 msgstr ""
+"complement : (b : BaseType) -> NucleicAcid b -> NucleicAcid b\n"
+"complement b = map (complementBase b)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:528
@@ -1254,6 +1218,16 @@ msgid ""
 "Finally, our users can decide whether they want to enter a strand of RNA or "
 "DNA, so this distinction should be encoded as well."
 msgstr ""
+"さて、ここで興味深い用例があります。\n"
+"利用者の入力から塩基配列を読んで2つの文字列を受け付けます。\n"
+"最初のものは利用者がDNAないしRNAのどちらの鎖を入力しようとしているかで、\n"
+"2つ目は並びそのものです。\n"
+"そのような関数の型はどうあるべきでしょうか。\n"
+"副作用を伴う計算を記述しているので何か`IO`が絡むものになりそうです。\n"
+"利用者の入力はほとんどいつでも検証されて翻訳される必要があるので、\n"
+"何か間違っていればこの場合のためのエラー型が必要です。\n"
+"最終的に利用者はRNAないしDNA鎖のいずれかを入力したいので、\n"
+"この区別もまた符号化されるべきです。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:531
@@ -1261,6 +1235,7 @@ msgid ""
 "Of course, it is always possible to write a custom sum type for such a use "
 "case:"
 msgstr ""
+"もちろんそのような用例のための自前の直和型を書くことはいつでもできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:532
@@ -1272,6 +1247,11 @@ msgid ""
 "  GotDNA          : DNA -> Result\n"
 "  GotRNA          : RNA -> Result\n"
 msgstr ""
+"data Result : Type where\n"
+"  UnknownBaseType : String -> Result\n"
+"  InvalidSequence : String -> Result\n"
+"  GotDNA          : DNA -> Result\n"
+"  GotRNA          : RNA -> Result\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:544
@@ -1280,12 +1260,16 @@ msgid ""
 "is lacking in terms of flexibility. If we want to handle errors early on and "
 "just extract a strand of RNA or DNA, we need yet another data type:"
 msgstr ""
+"これには全てのありうる出力が単一のデータ型に落とし込まれています。\n"
+"しかしながら柔軟性の点からは今一つです。\n"
+"手始めに、エラーを制御して、単にRNAないしDNA鎖を抽出したいのだとしても、\n"
+"さらに別のデータ型が必要です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:545
 #, no-wrap
 msgid "data RNAOrDNA = ItsRNA RNA | ItsDNA DNA\n"
-msgstr ""
+msgstr "data RNAOrDNA = ItsRNA RNA | ItsDNA DNA\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:552
@@ -1294,11 +1278,15 @@ msgid ""
 "cumbersome quickly. Also: Why come up with a custom data type when we "
 "already have the tools to deal with this at our hands?"
 msgstr ""
+"これも方法の1つではありますが、多くの選択肢がある結果については、\n"
+"早急に面倒なことになりえます。\n"
+"それに、なぜ既にこうしたことを扱う道具を手中にしているのに、\n"
+"自前のデータ型を出すことがあるでしょうか。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:554
 msgid "Here is how we can encode this with a dependent pair:"
-msgstr ""
+msgstr "以下は依存対でこれを落とし込むやり方です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:555
@@ -1325,6 +1313,26 @@ msgid ""
 "    \"RNA\" => map (MkDPair _) . readAcid RNABase <$> getLine\n"
 "    _     => pure $ Left (UnknownBaseType baseString)\n"
 msgstr ""
+"namespace InputError\n"
+"  public export\n"
+"  data InputError : Type where\n"
+"    UnknownBaseType : String -> InputError\n"
+"    InvalidSequence : String -> InputError\n"
+"\n"
+"readAcid : (b : BaseType) -> String -> Either InputError (NucleicAcid b)\n"
+"readAcid b str =\n"
+"  let err = InvalidSequence str\n"
+"   in case b of\n"
+"        DNABase => maybeToEither err $ readDNA str\n"
+"        RNABase => maybeToEither err $ readRNA str\n"
+"\n"
+"getNucleicAcid : IO (Either InputError (b ** NucleicAcid b))\n"
+"getNucleicAcid = do\n"
+"  baseString <- getLine\n"
+"  case baseString of\n"
+"    \"DNA\" => map (MkDPair _) . readAcid DNABase <$> getLine\n"
+"    \"RNA\" => map (MkDPair _) . readAcid RNABase <$> getLine\n"
+"    _     => pure $ Left (UnknownBaseType baseString)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:583
@@ -1334,6 +1342,10 @@ msgid ""
 "and we'd like to convert a sequence of nucleobases from user input to the "
 "corresponding RNA sequence.  Here's how to do this:"
 msgstr ""
+"核酸塩基の型と塩基配列とを対にしている点に注目してください。\n"
+"さて、DNAからRNAに転写する関数を実装することを考え、\n"
+"利用者の入力から対応するRNA配列へと塩基配列を変換したいとします。\n"
+"以下はこれを行う方法です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:584
@@ -1360,6 +1372,26 @@ msgid ""
 "    DNABase => printRNA $ transcribe seq\n"
 "    RNABase => printRNA seq\n"
 msgstr ""
+"transcribeBase : Nucleobase DNABase -> Nucleobase RNABase\n"
+"transcribeBase Adenine  = Uracile\n"
+"transcribeBase Cytosine = Guanine\n"
+"transcribeBase Guanine  = Cytosine\n"
+"transcribeBase Thymine  = Adenine\n"
+"\n"
+"transcribe : DNA -> RNA\n"
+"transcribe = map transcribeBase\n"
+"\n"
+"printRNA : RNA -> IO ()\n"
+"printRNA = putStrLn . encode\n"
+"\n"
+"transcribeProg : IO ()\n"
+"transcribeProg = do\n"
+"  Right (b ** seq) <- getNucleicAcid\n"
+"    | Left (InvalidSequence str) => putStrLn $ \"Invalid sequence: \" ++ str\n"
+"    | Left (UnknownBaseType str) => putStrLn $ \"Unknown base type: \" ++ str\n"
+"  case b of\n"
+"    DNABase => printRNA $ transcribe seq\n"
+"    RNABase => printRNA seq\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:611
@@ -1369,6 +1401,10 @@ msgid ""
 "case, we had to transcribe the sequence first, in the second case, we could "
 "invoke `printRNA` directly."
 msgstr ""
+"依存対の最初の値にパターン照合することで、\n"
+"2つ目の値がRNAないしDNA配列のいずれになるかを決定することができます。\n"
+"最初の場合だとまず配列を転写する必要がありますが、\n"
+"2つ目の場合では直接`printRNA`を呼び出すことができます。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:620
@@ -1381,6 +1417,15 @@ msgid ""
 "time exception instead of an error at runtime or - even worse - the program "
 "silently running a bogus computation."
 msgstr ""
+"より興味深い筋書では、\n"
+"RNA配列を対応する蛋白質配列に*翻訳*することでしょう。\n"
+"それでもこの例は単純化した現実世界の筋書をどのように扱うかを示しています。\n"
+"データは異なるやり方で符号化されるかもしれず、異なる源から来るかもしれないと"
+"いうことです。\n"
+"精緻な型を使うことで最初に値を正しい書式に変換することを強制されます。\n"
+"そうすることに失敗するとコンパイル時の例外に繋がりますが、\n"
+"実行時のエラーにはなりませんし、\n"
+"プログラムが静かにいんちきな計算を走らせるような更に悪いことにもなりません。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:621
@@ -1398,6 +1443,13 @@ msgid ""
 "`DPair`, a custom dependent record, or even a sum type. In fact, the three "
 "encodings are equally expressive:"
 msgstr ""
+"`AnyVect a`でお見せしたような依存レコードは依存対の一般化です。\n"
+"任意の数のフィールドを持つことができ、中に格納されている値を使って他の値の型"
+"を計算できます。\n"
+"核酸塩基の例のような大変単純な場合には、\n"
+"`DPair`、自前の依存レコード、ましてや直和型のどれを使おうとも、\n"
+"あまり問題になりません。\n"
+"実際、3つの符号化は等しく表現力があります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:631
@@ -1415,6 +1467,17 @@ msgid ""
 "  SomeRNA : RNA -> Acid3\n"
 "  SomeDNA : DNA -> Acid3\n"
 msgstr ""
+"Acid1 : Type\n"
+"Acid1 = (b ** NucleicAcid b)\n"
+"\n"
+"record Acid2 where\n"
+"  constructor MkAcid2\n"
+"  baseType : BaseType\n"
+"  sequence : NucleicAcid baseType\n"
+"\n"
+"data Acid3 : Type where\n"
+"  SomeRNA : RNA -> Acid3\n"
+"  SomeDNA : DNA -> Acid3\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:652
@@ -1426,6 +1489,13 @@ msgid ""
 "types and dependent pairs quickly become unwieldy, and you should go for an "
 "encoding as a dependent record."
 msgstr ""
+"これらの符号化の間の損失のない変換を書くことはつまらないことで、\n"
+"それぞれの符号化があれば1回のパターン照合で、\n"
+"現時点でRNAないしDNAどちらの配列があるのかを決めることができます。\n"
+"しかしながら依存型は1つ以上の値に依存することができ、\n"
+"演習で見ていくことになります。\n"
+"そのような場合、直和型と依存対はすぐに手に余るようになり、\n"
+"依存レコードとしての符号化に進んだほうがよくなります。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
@@ -1447,6 +1517,13 @@ msgid ""
 "on which you can pattern match, and what other utility functions might be "
 "necessary."
 msgstr ""
+"依存対と依存レコードの技能を研ぎ澄ましましょう！\n"
+"演習2から7では、\n"
+"関数が依存対ないしレコードのいずれを返すべきか、\n"
+"関数が追加の引数を必要とすべきかどうか、\n"
+"何にパターン照合できるのか、\n"
+"そして他のどの便利関数が必要なのか、\n"
+"について自分で決めなくてはいけません。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/DPair.md:666
@@ -1455,6 +1532,10 @@ msgid ""
 "the same structure) by writing lossless conversion functions from `Acid1` to "
 "`Acid2` and back. Likewise for `Acid1` and `Acid3`."
 msgstr ""
+"核酸塩基の3つの符号化が*同形*（意味：同じ構造をしている）であることを、\n"
+"損失のない変換関数を書くことで証明してください。\n"
+"`Acid1`から`Acid2`へのものとその逆、および`Acid1`と`Acid3`についても同様で"
+"す。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/DPair.md:673
@@ -1465,6 +1546,12 @@ msgid ""
 "and add this as an additional parameter to type `Nucleobase` and types `DNA` "
 "and `RNA`."
 msgstr ""
+"塩基配列は2つに1つの方向で符号化できます。\n"
+"これが[*センス*と*アンチセンス*](https://en.wikipedia.org/wiki/"
+"Sense_(molecular_biology))です。\n"
+"新しいデータ型を宣言し、塩基配列のセンスを記述し、\n"
+"そしてこれを型`Nucleobase`と型`DNA`および`RNA`への追加の引数として加えてくだ"
+"さい。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/DPair.md:677
@@ -1473,6 +1560,9 @@ msgid ""
 "changing of *sense*. In case of `transcribe`, a strand of antisense DNA is "
 "converted to a strand of sense RNA."
 msgstr ""
+"`complement`と`transcribe`の型を精錬し、\n"
+"*センス*の変化を反映するようにしてください。\n"
+"`transcribe`の場合はアンチセンスDNA鎖はセンスRNA鎖に変換されます。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/DPair.md:680
@@ -1480,6 +1570,7 @@ msgid ""
 "Define a dependent record storing the base type and sense together with a "
 "sequence of nucleobases."
 msgstr ""
+"塩基配列と共に塩基の種類とセンスを格納する依存レコードを定義してください。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/DPair.md:685
@@ -1488,11 +1579,15 @@ msgid ""
 "is read from the input string.  Sense strands are encoded like so: \"5´-"
 "CGGTAG-3´\". Antisense strands are encoded like so: \"3´-CGGTAG-5´\"."
 msgstr ""
+"`readRNA`と`readDNA`を調整し、\n"
+"配列の*センス*が入力文字列から読まれるようにしてください。\n"
+"センス鎖は \"5´-CGGTAG-3´\" のように符号化されます。\n"
+"アンチセンス鎖は \"3´-CGGTAG-5´\" のように符号化されます。"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/DPair.md:688
 msgid "Adjust `encode` in such a way that it includes the sense in its output."
-msgstr ""
+msgstr "`encode` を調整し、出力にセンスが含まれるようにしてください。"
 
 #. type: Bullet: '7. '
 #: ../src/Tutorial/DPair.md:693
@@ -1502,25 +1597,15 @@ msgid ""
 "`transcribeProg` always prints the *sense* RNA strand (after transcription, "
 "if necessary)."
 msgstr ""
+"`getNucleicAcid`と`transcribeProg`を向上させ、\n"
+"センスと塩基の種類が配列と共に格納され、\n"
+"`transcribeProg`が常に*センス*RNA鎖を印字するようにしてください。\n"
+"（必要に応じて予め転写します。）"
 
 #. type: Bullet: '8. '
 #: ../src/Tutorial/DPair.md:695
-#, fuzzy
 msgid "Enjoy the fruits of your labour and test your program at the REPL."
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"骨折りの成果を得るために、REPLで試すときが来ました。\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "骨折りの成果を喜びましょう。プログラムをREPLで試してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:703
@@ -1532,25 +1617,20 @@ msgid ""
 "grow quickly and sum type encodings can lead to lengthy blocks of pattern "
 "matches in these cases."
 msgstr ""
+"補足：ここでも依存レコードを使う代わりに、\n"
+"4つの構築子からなる直和型を使ってそれぞれの配列の型を符号化することができま"
+"す。\n"
+"しかしながら構築子の数はそれぞれの型水準指標の値の数の*積*に対応する分だけ必"
+"要です。\n"
+"したがってこの数は急増する可能性があり、\n"
+"このような場合には直和型の符号化は長いパターン照合ブロックに繋がりかねませ"
+"ん。"
 
 #. type: Title ##
 #: ../src/Tutorial/DPair.md:704
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Use Case: CSV Files with a Schema"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"用例：CSV読取器\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "用例：スキーマ付きCSVファイル"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:712
@@ -1561,6 +1641,13 @@ msgid ""
 "parse and load into memory. Before we begin, here is a REPL session running "
 "the final program, which you will complete in the exercises:"
 msgstr ""
+"この節では以前CSV構文解析器に取り組んだことに基づいた発展例を見ていきます。\n"
+"小さなコマンドラインプログラムがほしいとします。\n"
+"このプログラムでは、\n"
+"利用者が構文解析してメモリに読み込むCSVの表にスキーマを指定することができま"
+"す。\n"
+"始める前に以下が最終的なプログラムを走らせたREPLセッションです。\n"
+"これを演習で完成させていきます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/DPair.md:713
@@ -1602,6 +1689,41 @@ msgid ""
 "Enter a command: quit\n"
 "Goodbye.\n"
 msgstr ""
+"Solutions.DPair> :exec main\n"
+"Enter a command: load resources/example\n"
+"Table loaded. Schema: str,str,fin2023,str?,boolean?\n"
+"Enter a command: get 3\n"
+"Row 3:\n"
+"\n"
+"str   | str    | fin2023 | str? | boolean?\n"
+"------------------------------------------\n"
+"Floor | Jansen | 1981    |      | t\n"
+"\n"
+"Enter a command: add Mikael,Stanne,1974,,\n"
+"Row prepended:\n"
+"\n"
+"str    | str    | fin2023 | str? | boolean?\n"
+"-------------------------------------------\n"
+"Mikael | Stanne | 1974    |      |\n"
+"\n"
+"Enter a command: get 1\n"
+"Row 1:\n"
+"\n"
+"str    | str    | fin2023 | str? | boolean?\n"
+"-------------------------------------------\n"
+"Mikael | Stanne | 1974    |      |\n"
+"\n"
+"Enter a command: delete 1\n"
+"Deleted row: 1.\n"
+"Enter a command: get 1\n"
+"Row 1:\n"
+"\n"
+"str | str     | fin2023 | str? | boolean?\n"
+"-----------------------------------------\n"
+"Rob | Halford | 1951    |      |\n"
+"\n"
+"Enter a command: quit\n"
+"Goodbye.\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:754
@@ -1611,13 +1733,13 @@ msgid ""
 "driven-development-with-idris)  book."
 msgstr ""
 "この例は書籍[Type-Driven Development with Idris](https://www.manning.com/"
-"books/type-driven-development-with-idris)にある例で\n"
-"使われたプログラムに着想を得ました。"
+"books/type-driven-development-with-idris)にある例で使われたプログラムに着想を"
+"得ました。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:756
 msgid "We'd like to focus on several things here:"
-msgstr ""
+msgstr "ここでいくつかの点に集中したいと思います。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:763
@@ -1626,6 +1748,10 @@ msgid ""
 "the implementation should be pure, which in this context means \"not running "
 "in any monad with side effects such as `IO`\"."
 msgstr ""
+"純粋性：メインプログラムのループは例外であれ、\n"
+"実装で使われている全ての関数は純粋です。\n"
+"この文脈での意味は「`IO`のような副作用を伴ういかなるモナドも走らせない」で"
+"す。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:763
@@ -1634,6 +1760,9 @@ msgid ""
 "the table and handling queries should be typed and implemented in such a way "
 "that they cannot fail."
 msgstr ""
+"早期に失敗する：コマンドパーサは例外であれ、\n"
+"表を更新したりクエリを制御したりする全ての関数が型付けされ、\n"
+"失敗することのないような方法で実装されます。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:766
@@ -1641,6 +1770,8 @@ msgid ""
 "We are often well advised to adhere to these two guidelines, as they can "
 "make the majority of our functions easier to implement and test."
 msgstr ""
+"しばしばこれらの2つの指針を固守するよう忠告しますが、\n"
+"それは関数の大多数を実装しやすく、また検査しやすくするためです。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:772
@@ -1650,12 +1781,17 @@ msgid ""
 "runtime. The same goes for the current size of the table. We will therefore "
 "store both values as fields in a dependent record."
 msgstr ""
+"ライブラリの利用者が作業する表のスキーマ（列の順番と型）を指定できるようにす"
+"るため、\n"
+"この情報は実行されるまで知られていません。\n"
+"現在の表の大きさについても同じことが言えます。\n"
+"したがって両方の値を依存レコード中のフィールドとして保管することになります。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:773
 #, no-wrap
 msgid "Encoding the Schema"
-msgstr ""
+msgstr "スキーマを符号化する"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:780
@@ -1665,6 +1801,10 @@ msgid ""
 "rather use a closed custom data type describing the types of columns we "
 "understand. In a first try, we only support some Idris primitives:"
 msgstr ""
+"表のスキーマを実行時に調べる必要があります。\n"
+"理論上は可能ですが、ここではIdrisの型を直接操作するのは感心しません。\n"
+"その代わり閉じた自前のデータ型を使い、認識できる列の型を記述します。\n"
+"最初の試みではいくつかのIdrisの原始型のみ対応します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:781
@@ -1675,6 +1815,10 @@ msgid ""
 "Schema : Type\n"
 "Schema = List ColType\n"
 msgstr ""
+"data ColType = I64 | Str | Boolean | Float\n"
+"\n"
+"Schema : Type\n"
+"Schema = List ColType\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:791
@@ -1683,6 +1827,9 @@ msgid ""
 "will then use as the index of a heterogeneous list representing the rows in "
 "our table:"
 msgstr ""
+"次に`Schema`をIdrisの型のリストに変換する方法が必要です。\n"
+"それからこのリストを使って表中の行に対応する混成リストの指標として使うことに"
+"なります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:792
@@ -1697,6 +1844,14 @@ msgid ""
 "Row : Schema -> Type\n"
 "Row = HList . map IdrisType\n"
 msgstr ""
+"IdrisType : ColType -> Type\n"
+"IdrisType I64     = Int64\n"
+"IdrisType Str     = String\n"
+"IdrisType Boolean = Bool\n"
+"IdrisType Float   = Double\n"
+"\n"
+"Row : Schema -> Type\n"
+"Row = HList . map IdrisType\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:807
@@ -1706,10 +1861,14 @@ msgid ""
 "parse new rows to be added, the current schema and size of the table must be "
 "known at runtime:"
 msgstr ""
+"これで表の内容を行のベクタとして格納する依存レコードとして表を記述することが"
+"できます。\n"
+"表の行を安全に索引し、また追加する新しい行を解析するため、\n"
+"現在のスキーマと表の大きさは実行時に既知でなくてはなりません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:808
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "record Table where\n"
 "  constructor MkTable\n"
@@ -1717,34 +1876,11 @@ msgid ""
 "  size   : Nat\n"
 "  rows   : Vect size (Row schema)\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DataTypes.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record User where\n"
-"  constructor MkUser\n"
-"  name  : String\n"
-"  title : Title\n"
-"  age   : Bits8\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"record Table where\n"
+"  constructor MkTable\n"
+"  schema : Schema\n"
+"  size   : Nat\n"
+"  rows   : Vect size (Row schema)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:823
@@ -1756,6 +1892,13 @@ msgid ""
 "second design principle: All functions operating on tables must do so "
 "without the possibility of failure."
 msgstr ""
+"最後に現在の表を操作する命令を記述する指標付けられたデータ型を定義します。\n"
+"現在の表を命令の指標として使うことにより、\n"
+"アクセスしたり行を削除したりするためのインデックスが範囲内にあり、\n"
+"新しい行が現在のスキーマに適合することを確かめられます。\n"
+"これは2つ目の設計原理を守る上で必要です。\n"
+"つまり、表における全ての関数は失敗の可能性なく実行されなくてはならない、とい"
+"うことです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:824
@@ -1770,6 +1913,14 @@ msgid ""
 "  Delete      : Fin (size t) -> Command t\n"
 "  Quit        : Command t\n"
 msgstr ""
+"data Command : (t : Table) -> Type where\n"
+"  PrintSchema : Command t\n"
+"  PrintSize   : Command t\n"
+"  New         : (newSchema : Schema) -> Command t\n"
+"  Prepend     : Row (schema t) -> Command t\n"
+"  Get         : Fin (size t) -> Command t\n"
+"  Delete      : Fin (size t) -> Command t\n"
+"  Quit        : Command t\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:839
@@ -1778,6 +1929,10 @@ msgid ""
 "affect the application's current state. As promised, this comes without the "
 "risk of failure, so we don't have to wrap the return type in an `Either`:"
 msgstr ""
+"これで主なアプリケーションのはたらきを実装できます。\n"
+"利用者がどの命令を入力したかがアプリケーションの現状態に影響します。\n"
+"約束通り、これは失敗の危険なくできているため、\n"
+"返り値の型を`Either`に包むことはありません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:840
@@ -1794,6 +1949,16 @@ msgid ""
 "  S k => MkTable ts k (deleteAt x rs)\n"
 "  Z   => absurd x\n"
 msgstr ""
+"applyCommand : (t : Table) -> Command t -> Table\n"
+"applyCommand t                 PrintSchema = t\n"
+"applyCommand t                 PrintSize   = t\n"
+"applyCommand _                 (New ts)    = MkTable ts _ []\n"
+"applyCommand (MkTable ts n rs) (Prepend r) = MkTable ts _ $ r :: rs\n"
+"applyCommand t                 (Get x)     = t\n"
+"applyCommand t                 Quit        = t\n"
+"applyCommand (MkTable ts n rs) (Delete x)  = case n of\n"
+"  S k => MkTable ts k (deleteAt x rs)\n"
+"  Z   => absurd x\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:857
@@ -1802,6 +1967,9 @@ msgid ""
 "way that indices are always within bounds (constructors `Get` and `Delete`), "
 "and new rows adhere to the table's current schema (constructor `Prepend`)."
 msgstr ""
+"指標が常に範囲内にあるように（構築子`Get`と`Delete`）、\n"
+"また新しい行が表の現在のスキーマに遵守しているように（構築子`Prepend`）、\n"
+"`Command t`の構築子が型付けられていることを理解してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:866
@@ -1814,12 +1982,20 @@ msgid ""
 "sense yet, don't worry. We will look at `Void` and its uses in the next "
 "chapter."
 msgstr ""
+"1つこれまでにまだ見たことのないであろう箇所は末行での`absurd`の呼び出しで"
+"す。\n"
+"これは`Uninhabited`インターフェースの導出された関数であり、\n"
+"`Void`のような型や上の例での`Fin 0`といった値が1つも存在しえないことを記述し"
+"ます。\n"
+"そこで関数`absurd`は単に別の爆発の原理の表明なのです。\n"
+"まだこれがあまり飲み込めなくても心配ご無用。\n"
+"`Void`とその使用について次章で見ていきます。"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:867
 #, no-wrap
 msgid "Parsing Commands"
-msgstr ""
+msgstr "命令を解析する"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:879
@@ -1834,6 +2010,15 @@ msgid ""
 "than a non-trivial computer program terminating with an unhelpful \"There "
 "was an error\" message."
 msgstr ""
+"利用者の入力の検証はアプリケーションを書くときの重要な話題です。\n"
+"早期に起きたのであればアプリケーションの大部分を純粋（この文脈では、「失敗の"
+"可能性なしに」という意味です。）に保つことができます。\n"
+"適切に行われればこの工程はプログラムで何かが間違う可能性の全てではなくともそ"
+"のほとんどを符号化し制御しますが、これにより厳密に何が問題を生じているのかを"
+"利用者に伝える明白なエラー文言を出すことができます。\n"
+"きっと自身で体験してきたはずですが、どうでもよくないコンピュータプログラムが"
+"助けにならない「エラーがありました」文言で終了することほど腹立たしいことはそ"
+"うありません。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:892
@@ -1850,6 +2035,18 @@ msgid ""
 "here is a list of things that can go wrong, and the messages we'd like to "
 "print:"
 msgstr ""
+"ですからこの重要な話題を細心の注意を持って扱うために、\n"
+"まず自前のエラー型を実装していきます。\n"
+"これは小さなプログラムでは*厳密には*必須ではありませんが、\n"
+"ひとたびソフトウェアがより複雑になると、\n"
+"どこで何がおかしくなったのか把握するのに凄まじく助けになりえます。\n"
+"何がおかしくなりえるのかを見付けだすためにはまず、\n"
+"どのように命令が入力されるのかを決める必要があります。\n"
+"ここではそれぞれの命令について、1つのキーワードとオプションでキーワードから1"
+"つの空白文字を隔てていくつかの引数を使います。\n"
+"例えば：`\"new i64,boolean,str,str\"`は新しいスキーマで空の表を初期化しま"
+"す。\n"
+"こうと決まれば、以下がおかしくなりえる事柄と印字したい文言の一覧です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:907
@@ -1857,6 +2054,8 @@ msgid ""
 "A bogus command is entered. We repeat the input with a message that we don't "
 "know the command plus a list of commands we know about."
 msgstr ""
+"いんちきな命令が入力された。\n"
+"入力の復唱と共にその命令を知らない旨の文言と知っている命令の一覧を出す。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:907
@@ -1865,6 +2064,9 @@ msgid ""
 "first unknown type, the string we found there, and a list of types we know "
 "about."
 msgstr ""
+"不当なスキーマが入力された。\n"
+"この場合最初の不明な型の位置とそこで見付けた文字列を一覧にし、そして知ってい"
+"る型も列挙する。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:907
@@ -1874,6 +2076,10 @@ msgid ""
 "too small or too large number of fields, we also print a corresponding error "
 "message."
 msgstr ""
+"不当ななCSV符号化がされた行が入力された。\n"
+"エラーのある位置、そこで出喰わした文字列、加えて期待される型を一覧にする。\n"
+"フィールドの数が少なすぎたり多すぎたりする場合は対応するエラー文言も印字す"
+"る。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:907
@@ -1882,6 +2088,10 @@ msgid ""
 "delete specific rows. We print the current number of rows plus the value "
 "entered."
 msgstr ""
+"インデックスが範囲外である。\n"
+"利用者が特定の行にアクセスしようとしたり削除しようとしたりするときに起こりえ"
+"る。\n"
+"現在の行番号に加えて入力された値を印字する。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:907
@@ -1889,12 +2099,14 @@ msgid ""
 "A value not representing a natural number was entered as an index.  We print "
 "an according error message."
 msgstr ""
+"値がインデックスとして入力された自然数を表現していない。\n"
+"その値に応じたエラー文言を印字する。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:910
 msgid ""
 "That's a lot of stuff to keep track off, so let's encode this in a sum type:"
-msgstr ""
+msgstr "把握すべきことが沢山ありますから、これを直和型に符号化しましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:911
@@ -1909,6 +2121,14 @@ msgid ""
 "  OutOfBounds    : (size : Nat) -> (index : Nat) -> Error\n"
 "  NoNat          : String -> Error\n"
 msgstr ""
+"data Error : Type where\n"
+"  UnknownCommand : String -> Error\n"
+"  UnknownType    : (pos : Nat) -> String -> Error\n"
+"  InvalidField   : (pos : Nat) -> ColType -> String -> Error\n"
+"  ExpectedEOI    : (pos : Nat) -> String -> Error\n"
+"  UnexpectedEOI  : (pos : Nat) -> String -> Error\n"
+"  OutOfBounds    : (size : Nat) -> (index : Nat) -> Error\n"
+"  NoNat          : String -> Error\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:929
@@ -1920,6 +2140,11 @@ msgid ""
 "c}\"`.  We can pair this with multiline string literals to get nicely "
 "formatted error messages."
 msgstr ""
+"エラー文言を快適に構築するためにはIdrisの文字列内挿機能を使うのが一番です。\n"
+"任意の文字列式を中括弧で囲んで文字列リテラル内に置くことができます。\n"
+"ここで1つ目の中括弧はバックスラッシュでエスケープされている必要があります。\n"
+"`\"foo \\{myExpr a b c}`のような感じです。\n"
+"これを複数行文字列リテラルと併せていい感じにエラー文言を書式化できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:930
@@ -1978,6 +2203,58 @@ msgid ""
 "\n"
 "showError (NoNat x) = \"Not a natural number: \\{x}\"\n"
 msgstr ""
+"showColType : ColType -> String\n"
+"showColType I64      = \"i64\"\n"
+"showColType Str      = \"str\"\n"
+"showColType Boolean  = \"boolean\"\n"
+"showColType Float    = \"float\"\n"
+"\n"
+"showSchema : Schema -> String\n"
+"showSchema = concat . intersperse \",\" . map showColType\n"
+"\n"
+"allTypes : String\n"
+"allTypes = concat\n"
+"         . List.intersperse \", \"\n"
+"         . map showColType\n"
+"         $ [I64,Str,Boolean,Float]\n"
+"\n"
+"showError : Error -> String\n"
+"showError (UnknownCommand x) = \"\"\"\n"
+"  Unknown command: \\{x}.\n"
+"  Known commands are: clear, schema, size, new, add, get, delete, quit.\n"
+"  \"\"\"\n"
+"\n"
+"showError (UnknownType pos x) = \"\"\"\n"
+"  Unknown type at position \\{show pos}: \\{x}.\n"
+"  Known types are: \\{allTypes}.\n"
+"  \"\"\"\n"
+"\n"
+"showError (InvalidField pos tpe x) = \"\"\"\n"
+"  Invalid value at position \\{show pos}.\n"
+"  Expected type: \\{showColType tpe}.\n"
+"  Value found: \\{x}.\n"
+"  \"\"\"\n"
+"\n"
+"showError (ExpectedEOI k x) = \"\"\"\n"
+"  Expected end of input.\n"
+"  Position: \\{show k}\n"
+"  Input: \\{x}\n"
+"  \"\"\"\n"
+"\n"
+"showError (UnexpectedEOI k x) = \"\"\"\n"
+"  Unxpected end of input.\n"
+"  Position: \\{show k}\n"
+"  Input: \\{x}\n"
+"  \"\"\"\n"
+"\n"
+"showError (OutOfBounds size index) = \"\"\"\n"
+"  Index out of bounds.\n"
+"  Size of table: \\{show size}\n"
+"  Index: \\{show index}\n"
+"  Note: Indices start at 1.\n"
+"  \"\"\"\n"
+"\n"
+"showError (NoNat x) = \"Not a natural number: \\{x}\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:990
@@ -1987,6 +2264,10 @@ msgid ""
 "format for encoding and decoding rows, it makes sense to also encode the "
 "schema as a comma-separated list of values:"
 msgstr ""
+"これでそれぞれの命令の構文解析器を書くことができます。\n"
+"ベクタ指標、スキーマ、そしてCSVの行を解析する機能が必要です。\n"
+"CSV書式を使って行を符号化したり復号化したりしているため、\n"
+"スキーマについてもコンマ区切りの値のリストとして符号化するのが自然です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:991
@@ -2010,6 +2291,23 @@ msgid ""
 "readSchema : String -> Either Error Schema\n"
 "readSchema = traverse (uncurry readColType) . zipWithIndex . fromCSV\n"
 msgstr ""
+"zipWithIndex : Traversable t => t a -> t (Nat, a)\n"
+"zipWithIndex = evalState 1 . traverse pairWithIndex\n"
+"  where pairWithIndex : a -> State Nat (Nat,a)\n"
+"        pairWithIndex v = (,v) <$> get <* modify S\n"
+"\n"
+"fromCSV : String -> List String\n"
+"fromCSV = forget . split (',' ==)\n"
+"\n"
+"readColType : Nat -> String -> Either Error ColType\n"
+"readColType _ \"i64\"      = Right I64\n"
+"readColType _ \"str\"      = Right Str\n"
+"readColType _ \"boolean\"  = Right Boolean\n"
+"readColType _ \"float\"    = Right Float\n"
+"readColType n s          = Left $ UnknownType n s\n"
+"\n"
+"readSchema : String -> Either Error Schema\n"
+"readSchema = traverse (uncurry readColType) . zipWithIndex . fromCSV\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1018
@@ -2021,6 +2319,14 @@ msgid ""
 "thing that would be much harder to do with interface `CSVLine` and error "
 "type `CSVError`)."
 msgstr ""
+"現在のスキーマに基づいてCSVの内容を復号する必要もあります。\n"
+"スキーマのパターン照合により型安全なやり方でそれができることに目を向けてくだ"
+"さい。\n"
+"このスキーマは実行するまで知られていないものです。\n"
+"不運にもCSVの解析を再実装する必要がありますが、\n"
+"それはエラー文言に期待される型を加えたいからです。\n"
+"（これはインターフェース`CSVLine`とエラー型`CSVError`では遥かに大変でしょ"
+"う。）"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:1019
@@ -2043,6 +2349,22 @@ msgid ""
 "        go k (_ :: _) []         = Left $ UnexpectedEOI k s\n"
 "        go k (c :: cs) (s :: ss) = [| decodeField k c s :: go (S k) cs ss |]\n"
 msgstr ""
+"decodeField : Nat -> (c : ColType) -> String -> Either Error (IdrisType c)\n"
+"decodeField k c s =\n"
+"  let err = InvalidField k c s\n"
+"   in case c of\n"
+"        I64     => maybeToEither err $ read s\n"
+"        Str     => maybeToEither err $ read s\n"
+"        Boolean => maybeToEither err $ read s\n"
+"        Float   => maybeToEither err $ read s\n"
+"\n"
+"decodeRow : {ts : _} -> String -> Either Error (Row ts)\n"
+"decodeRow s = go 1 ts $ fromCSV s\n"
+"  where go : Nat -> (cs : Schema) -> List String -> Either Error (Row cs)\n"
+"        go k []       []         = Right []\n"
+"        go k []       (_ :: _)   = Left $ ExpectedEOI k s\n"
+"        go k (_ :: _) []         = Left $ UnexpectedEOI k s\n"
+"        go k (c :: cs) (s :: ss) = [| decodeField k c s :: go (S k) cs ss |]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1040
@@ -2050,12 +2372,14 @@ msgid ""
 "There is no hard and fast rule about whether to pass an index as an implicit "
 "argument or not. Some considerations:"
 msgstr ""
+"指標を暗黙の引数として渡すかどうかについての規則の決定版はありません。\n"
+"以下にいくつかの観点を示します。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:1047
 msgid ""
 "Pattern matching on explicit arguments comes with less syntactic overhead."
-msgstr ""
+msgstr "明示的引数でのパターン照合は構文的オーバーヘッドが比較的少ない。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:1047
@@ -2063,6 +2387,9 @@ msgid ""
 "If an argument can be inferred from the context most of the time, consider "
 "passing it as an implicit to make your function nicer to use in client code."
 msgstr ""
+"引数がほとんどの場合に文脈から推論できる場合、\n"
+"使い手側のコードでいい感じに使えるように、関数に暗黙子として渡すことを検討す"
+"る。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:1047
@@ -2070,6 +2397,8 @@ msgid ""
 "Use explicit (possibly erased) arguments for values that can't be inferred "
 "by Idris most of the time."
 msgstr ""
+"ほとんどの場合でIdrisが推論できない値については（消去されうる）明示的引数を使"
+"う。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1052
@@ -2078,6 +2407,10 @@ msgid ""
 "table's rows. We use the conversion for indices to start at one instead of "
 "zero, which feels more natural for most non-programmers."
 msgstr ""
+"今欠けているのは現在の表の行にアクセスするインデックスを解析する方法だけで"
+"す。\n"
+"インデックスをゼロ始まりの代わりに1始まりにする変換を使いますが、\n"
+"これはほとんどの非プログラマにとってより自然に感じるためです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:1053
@@ -2089,6 +2422,11 @@ msgid ""
 "    | Z => Left $ OutOfBounds n Z\n"
 "  maybeToEither (OutOfBounds n $ S k) $ natToFin k n\n"
 msgstr ""
+"readFin : {n : _} -> String -> Either Error (Fin n)\n"
+"readFin s = do\n"
+"  S k <- maybeToEither (NoNat s) $ parsePositive {a = Nat} s\n"
+"    | Z => Left $ OutOfBounds n Z\n"
+"  maybeToEither (OutOfBounds n $ S k) $ natToFin k n\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1067
@@ -2099,6 +2437,11 @@ msgid ""
 "additional spaces.  CSV rows can have additional space characters, however, "
 "so we use `Data.String.unwords` on the split string."
 msgstr ""
+"遂に利用者の命令のための構文解析器を実装することができます。\n"
+"関数`Data.String.words`は文字列を空白文字で分割するのに使われます。\n"
+"ほとんどの場合、命令名に加えて余剰の空白のない単一引数を期待します。\n"
+"しかしCSVの行は余剰の空白文字があってもよいので、`Data.String.unwords`を分割"
+"された文字列に使います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:1068
@@ -2115,29 +2458,22 @@ msgid ""
 "  [\"delete\", str] => Delete  <$> readFin str\n"
 "  _               => Left $ UnknownCommand s\n"
 msgstr ""
+"readCommand :  (t : Table) -> String -> Either Error (Command t)\n"
+"readCommand _                \"schema\"  = Right PrintSchema\n"
+"readCommand _                \"size\"    = Right PrintSize\n"
+"readCommand _                \"quit\"    = Right Quit\n"
+"readCommand (MkTable ts n _) s         = case words s of\n"
+"  [\"new\",    str] => New     <$> readSchema str\n"
+"  \"add\" ::   ss   => Prepend <$> decodeRow (unwords ss)\n"
+"  [\"get\",    str] => Get     <$> readFin str\n"
+"  [\"delete\", str] => Delete  <$> readFin str\n"
+"  _               => Left $ UnknownCommand s\n"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1081
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Running the Application"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DPair.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`($)`: 関数適用\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "アプリケーションを走らせる"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1087
@@ -2146,6 +2482,10 @@ msgid ""
 "commands to users and run the application in a loop until command `\"quit\"` "
 "is entered."
 msgstr ""
+"残っていることは、\n"
+"利用者に命令の結果を印字する関数を書き、\n"
+"命令`\"quit\"`が入力されるまでアプリケーションを繰り返し走らせることだけで"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:1088
@@ -2189,6 +2529,43 @@ msgid ""
 "main : IO ()\n"
 "main = runProg $ MkTable [] _ []\n"
 msgstr ""
+"encodeField : (t : ColType) -> IdrisType t -> String\n"
+"encodeField I64     x     = show x\n"
+"encodeField Str     x     = show x\n"
+"encodeField Boolean True  = \"t\"\n"
+"encodeField Boolean False = \"f\"\n"
+"encodeField Float   x     = show x\n"
+"\n"
+"encodeRow : (ts : List ColType) -> Row ts -> String\n"
+"encodeRow ts = concat . intersperse \",\" . go ts\n"
+"  where go : (cs : List ColType) -> Row cs -> Vect (length cs) String\n"
+"        go []        []        = []\n"
+"        go (c :: cs) (v :: vs) = encodeField c v :: go cs vs\n"
+"\n"
+"result :  (t : Table) -> Command t -> String\n"
+"result t PrintSchema = \"Current schema: \\{showSchema t.schema}\"\n"
+"result t PrintSize   = \"Current size: \\{show t.size}\"\n"
+"result _ (New ts)    = \"Created table. Schema: \\{showSchema ts}\"\n"
+"result t (Prepend r) = \"Row prepended: \\{encodeRow t.schema r}\"\n"
+"result _ (Delete x)  = \"Deleted row: \\{show $ FS x}.\"\n"
+"result _ Quit        = \"Goodbye.\"\n"
+"result t (Get x)     =\n"
+"  \"Row \\{show $ FS x}: \\{encodeRow t.schema (index x t.rows)}\"\n"
+"\n"
+"covering\n"
+"runProg : Table -> IO ()\n"
+"runProg t = do\n"
+"  putStr \"Enter a command: \"\n"
+"  str <- getLine\n"
+"  case readCommand t str of\n"
+"    Left err   => putStrLn (showError err) >> runProg t\n"
+"    Right Quit => putStrLn (result t Quit)\n"
+"    Right cmd  => putStrLn (result t cmd) >>\n"
+"                  runProg (applyCommand t cmd)\n"
+"\n"
+"covering\n"
+"main : IO ()\n"
+"main = runProg $ MkTable [] _ []\n"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
@@ -2210,11 +2587,16 @@ msgid ""
 "solve these as you please. Exercises 1 to 3 should be considered to be "
 "mandatory."
 msgstr ""
+"ここに示した挑戦問題は全ていくつかの対話的なやり方で表編集器の改善を行うもの"
+"です。\n"
+"問題の中には依存的に型付けられたプログラムを書くことを学ぶというより形式上の"
+"問題というべきものもあるので、気の赴くままに解いてください。\n"
+"演習1から3は必須と考えてよいでしょう。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/DPair.md:1139
 msgid "Add support for storing Idris types `Integer` and `Nat` in CSV columns"
-msgstr ""
+msgstr "Idrisの型`Integer`と`Nat`をCSVの列に保管できるように対応してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/DPair.md:1142
@@ -2222,6 +2604,8 @@ msgid ""
 "Add support for `Fin n` to CSV columns. Note: We need runtime access to `n` "
 "in order for this to work."
 msgstr ""
+"CSVの列に`Fin n`への対応を加えてください。\n"
+"補足：動くようにするためには`n`への実行時のアクセスが必要です。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/DPair.md:1148
@@ -2231,6 +2615,11 @@ msgid ""
 "types, meaning that types like `Maybe Nat` should be allowed while `Maybe "
 "(Maybe Nat)` should not."
 msgstr ""
+"CSVの列にオプション型への対応を加えてください。\n"
+"欠落した値は空文字列で符号化されるでしょうから、\n"
+"入れ子のオプション型を許すのは無意味です。\n"
+"つまり、`Maybe Nat`のような型は許されますが、`Maybe (Maybe Nat)`は許されませ"
+"ん。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1151
@@ -2239,6 +2628,8 @@ msgid ""
 "   Hint: There are several ways to encode these, one being\n"
 "   to add a boolean index to `ColType`.\n"
 msgstr ""
+"   手掛かり：こうしたことを符号化するにはいくつかの方法がありますが、\n"
+"   1つは`ColType`に真偽値指標を加えることです。\n"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/DPair.md:1154
@@ -2246,6 +2637,8 @@ msgid ""
 "Add a command for printing the whole table. Bonus points if all columns are "
 "properly aligned."
 msgstr ""
+"表全体を印字する命令を加えてください。\n"
+"全ての列が適切に整列されていれば尚良しです。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/DPair.md:1158
@@ -2253,12 +2646,17 @@ msgid ""
 "Add support for simple queries: Given a column number and a value, list all "
 "rows where entries match the given value."
 msgstr ""
+"単純な問い合わせへの対応を加えてください。\n"
+"列の番号と値が与えられているとき、与えられた値に合致する項目の全行を一覧にし"
+"ます。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1160
 #, no-wrap
 msgid "   This might be a challenge, as the types get pretty interesting.\n"
 msgstr ""
+"   これは挑戦的かもしれません。\n"
+"   というのも型がとても興味深いものになるためです。\n"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/DPair.md:1164
@@ -2266,6 +2664,9 @@ msgid ""
 "Add support for loading and saving tables from and to disk.  A table should "
 "be stored in two files: One for the schema and one for the CSV content."
 msgstr ""
+"表をディスクから読み出したり保存したりする対応を加えてください。\n"
+"表は2つのファイルに保存されます。\n"
+"1つはスキーマのためのもので、もう1つはCSVの内容のためのものです。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1179
@@ -2286,6 +2687,16 @@ msgid ""
 "   to make this partiality visible and annotate all downstream\n"
 "   functions accordingly.\n"
 msgstr ""
+"   補足：ファイルを証明上全域に読むことはかなり困難になりえるもので、\n"
+"   日を改めての話題になるでしょう。\n"
+"   現時点では単にbaseの`System.File`から輸出されている関数`readFile`を使ってください。\n"
+"   この関数は部分的ですが、\n"
+"   それは`/dev/urandom`や`/dev/zero`のような無限入力ストリームに使うと決して終了しないからです。\n"
+"   ここで`assert_total`を使わ*ない*ことは大事です。\n"
+"   現実世界のアプリケーションで`readFile`のような部分関数を使うことはセキュリティ上の危険を招く可能性が充分にあるため、\n"
+"   最終的にはこれの対処をして何らかの方法で受け付ける入力の大きさを制限する必要があります。\n"
+"   したがってこの部分性を可視化し、\n"
+"   これにしたがって全ての下流の関数に註釈付けさせるのが一番なのです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1183
@@ -2293,6 +2704,8 @@ msgid ""
 "You can find an implementation of these additions in the solutions. A small "
 "example table can be found in folder `resources`."
 msgstr ""
+"これらの追加点の実装は解法で見ることができます。\n"
+"小さな例としての表はフォルダ`resources`で見付けられます。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1190
@@ -2302,6 +2715,13 @@ msgid ""
 "accumulating values in a column, concatenating and zipping tables, and so "
 "on.  We will stop for now, probably coming back to this in later examples."
 msgstr ""
+"補足：当然ながらここから山ほどのプロジェクトを追究できます。\n"
+"例えば適切な問い合わせ言語を書いたり、\n"
+"既存の行から新しい行を計算したり、\n"
+"列中の値を累積したり、\n"
+"表を結合したり縫合したり、\n"
+"などです。\n"
+"ここでは止めておきますが後の例でこれに立ち返ることがあるかもしれません。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1198
@@ -2311,6 +2731,10 @@ msgid ""
 "learn about the types and possible shapes of other values, allowing us to "
 "reduce the number of potential bugs in our programs."
 msgstr ""
+"依存対と依存レコードは実行時に値を調べて取り扱う型を定義するのに必要です。\n"
+"これらの値へのパターン照合により型と他の値の取り得る形状についてわかります"
+"が、\n"
+"これにより数多くのプログラム中の潜在的なバグを減らすことができます。"
 
 #. type: Plain text
 #: ../src/Tutorial/DPair.md:1204
@@ -2320,3 +2744,8 @@ msgid ""
 "These will eventually allow us to define pre- and post conditions for our "
 "function arguments and output types."
 msgstr ""
+"[次章](Eq.md)ではデータ型の書き方について学びます。\n"
+"ただしこのデータ型は、値の間で満たされている何らかの契約についての証明として"
+"のものです。\n"
+"これらにより、最終的に関数の引数と出力型に事前ないし事後の条件を定義すること"
+"ができます。"
