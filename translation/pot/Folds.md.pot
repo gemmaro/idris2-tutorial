@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
+"POT-Creation-Date: 2022-10-20 20:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1126,8 +1126,9 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Folds.md:673
 msgid ""
-"Implement the following functions in a provably total way without \"cheating"
-"\". Note: It is not necessary to implement these in a tail recursive way."
+"Implement the following functions in a provably total way without "
+"\"cheating\". Note: It is not necessary to implement these in a tail "
+"recursive way."
 msgstr ""
 
 #. type: Plain text

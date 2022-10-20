@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
+"POT-Creation-Date: 2022-10-30 20:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -634,7 +634,7 @@ msgstr ""
 #: ../src/Tutorial/Functions1.md:358
 #, no-wrap
 msgid ""
-"Tutorial.Functions1> applyToThen (* 2)\n"
+"Tutorial.Functions1> applyToTen (* 2)\n"
 "20\n"
 msgstr ""
 

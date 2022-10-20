@@ -341,7 +341,7 @@ applyToTen f = f 10
 以下の例では実にうまくいきます。
 
 ```repl
-Tutorial.Functions1> applyToThen (* 2)
+Tutorial.Functions1> applyToTen (* 2)
 20
 ```
 
