@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
+"POT-Creation-Date: 2022-10-20 20:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -792,8 +792,8 @@ msgstr ""
 #: ../src/Tutorial/Predicates.md:474
 msgid ""
 "As you can see, Idris fails to find a proof that `Maybe String` is an "
-"element of `Tps`. The search depth can be increased with the `"
-"%auto_implicit_depth` directive, which will hold for the rest of the source "
+"element of `Tps`. The search depth can be increased with the "
+"`%auto_implicit_depth` directive, which will hold for the rest of the source "
 "file or until set to a different value.  The default value is set at 25. In "
 "general, it is not advisable to set this to a too large value as this can "
 "drastically increase compile times."
@@ -1667,8 +1667,8 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1104
 msgid ""
-"In order to access the record in a constrained function, we use the `"
-"%search` keyword, which will try to conjure a value of the desired type "
+"In order to access the record in a constrained function, we use the "
+"`%search` keyword, which will try to conjure a value of the desired type "
 "(`Print a` in this case) by means of a proof search:"
 msgstr ""
 

@@ -1,10 +1,7 @@
-# Propositional Equality
+# 命題の等価性
 
-In the [last chapter](DPair.md) we learned, how dependent pairs and records
-can be used to calculate *types* from values only known at runtime by
-pattern matching on these values. We will now look at how we can describe
-relations - or *contracts* - between values as types, and how we can use
-values of these types as proofs that the contracts hold.
+[前の章](DPair.md)で、どうすれば依存対と依存レコードを使って、実行時にのみ知られている値にパターン照合することでその値から*型*を計算することができるのか、を学びました。
+ここからは、どのようにして型としての値の間の関係……または*契約*……を記述することができるのか、どのようにすればこれらの型の値を契約を充足する証明として使えるのか、を見ていきます。
 
 ```idris
 module Tutorial.Eq
@@ -17,11 +14,11 @@ import Data.String
 %default total
 ```
 
-## Equality as a Type
+## 型としての等価性
 
-Imagine, we'd like to concatenate the contents of two CSV files, both of
-which we stored on disk as tables together with their schemata as shown in
-our discussion about dependent pairs:
+2つのCSVファイルの内容を結合したい場面を想像してください。
+この両方のファイルには、依存対についてお話ししたときに見たそれぞれのスキーマとともに、
+表としてディスクに格納されています。
 
 ```idris
 data ColType = I64 | Str | Boolean | Float
@@ -47,10 +44,11 @@ record Table where
 concatTables1 : Table -> Table -> Maybe Table
 ```
 
-We will not be able to implement `concatTables` by appending the two row
-vectors, unless we can somehow verify that the two schemata are
-identical. "Well," I hear you say, "that shouldn't be a big issue! Just
-implement `Eq` for `ColType`". Let's give this a try:
+どうにかして2つのスキーマが同値であることを検証できなければ、
+2つの行のベクタを結合することで`concatTables1`を実装することはできません。
+「それなら」とあなたが言うのが聞こえます。
+「大した問題ではありません。`ColType`に`Eq`を実装するだけです。」
+やってみましょう。
 
 ```idris
 Eq ColType where
@@ -65,10 +63,10 @@ concatTables1 (MkTable s1 m rs1) (MkTable s2 n rs2) = case s1 == s2 of
   False => Nothing
 ```
 
-Somehow, this doesn't seem to work. If we inspect the context of hole
-`what_now`, Idris still thinks that `s1` and `s2` are different, and if we
-go ahead and invoke `Vect.(++)` anyway in the `True` case, Idris will
-respond with a type error.
+どういうわけか動かないようです。
+穴開き`what_new`の文脈を調べると、Idrisはまだs1とs2が異なると考えています。
+それを脇目に`True`の場合で兎にも角にも`Vect.(++)`を呼び出したならば、
+Idrisは型エラーで応じます。
 
 ```repl
 Tutorial.Relations> :t what_now
@@ -82,53 +80,49 @@ Tutorial.Relations> :t what_now
 what_now : Maybe Table
 ```
 
-The problem is, that there is no reason for Idris to unify the two values,
-even though `(==)` returned `True` because the result of `(==)` holds no
-other information than the type being a `Bool`. *We* think, if this is
-`True` the two values should be identical, but Idris is not convinced. In
-fact, the following implementation of `Eq ColType` would be perfectly fine
-as far as the type checker is concerned:
+問題は、たとえ`(==)`が`True`を返したとしても、
+Idrisにとって2つの値を統合する根拠がないことです。
+なぜなら`(==)`の結果には型が`Bool`であること以外の情報を持たないからです。
+*私達*はこれが`True`なら2つの値は同値だろうと考えますが、Idrisは説得を受けません。
+実際、以下の`Eq ColType`の実装は型検査器の知る限りでは全く問題ないでしょう。
 
 ```repl
 Eq ColType where
   _       == _       = True
 ```
 
-So Idris is right in not trusting us. You might expect it to inspect the
-implementation of `(==)` and figure out on its own, what the `True` result
-means, but this is not how these things work in general, because most of the
-time the number of computational paths to check would be far too large.  As
-a consequence, Idris is able to evaluate functions during unification, but
-it will not trace back information about function arguments from a
-function's result for us. We can do so manually, however, as we will see
-later.
+なのでIdrisが私達を信用しないことは正しいのです。
+`(==)`の実装を調べてひとりでに`True`の結果が意味するところを解明してくれることを期待するかもしれませんが、
+これは一般的にうまくいくものではありません。
+なぜならほとんどの場合確認すべき計算経路の数はあまりにも多過ぎるからです。
+結果として、Idrisは関数を統合時に評価することができますが、
+関数の結果から関数の引数についての情報を遡って解析してはくれません。
 
-### A Type for equal Schemata
+### 等しいスキーマのための型
 
-The problem described above is similar to what we saw when we talked about
-the benefit of [singleton types](DPair.md#erased-existentials): The types
-are not precise enough. What we are going to do now, is something we'll
-repeat time again for different use cases: We encode a contract between
-values in an indexed data type:
+上で記述した問題は[単独型](DPair.md#erased-existentials)の利点についてお話しした際に見たことと似ています。
+つまり型が充分に精密でないのです。
+今から行っていくことは、異なる用例で同じことの繰り返しをすることです。
+値の間の契約を指標化されたデータ型に符号化するのです。
 
 ```idris
 data SameSchema : (s1 : Schema) -> (s2 : Schema) -> Type where
   Same : SameSchema s s
 ```
 
-First, note how `SameSchema` is a family of types indexed over two values of
-type `Schema`. But note also that the sole constructor restricts the values
-we allow for `s1` and `s2`: The two indices *must* be identical.
+まず、`SameSchema`が型`Schema`の2つの値で指標付けられた型族である点に着目してください。
+でも唯一の構築子が`s1`と`s2`の値に制限を課していることにも注意してください。
+2つの指標は同値である*必要*があります。
 
-Why is this useful? Well, imagine we had a function for checking the
-equality of two schemata, which would try and return a value of type
-`SameSchema s1 s2`:
+なぜこれが便利なのでしょうか？
+それでは、2つのスキーマの等価性を確認する関数を想像してください。
+この関数は型`SameSchema s1 s2`の値を返そうとします。
 
 ```idris
 sameSchema : (s1, s2 : Schema) -> Maybe (SameSchema s1 s2)
 ```
 
-We could then use this function to implement `concatTables`:
+そうしてこの関数を使えば`concatTables`を実装できます。
 
 ```idris
 concatTables : Table -> Table -> Maybe Table
@@ -137,7 +131,8 @@ concatTables (MkTable s1 m rs1) (MkTable s2 n rs2) = case sameSchema s1 s2 of
   Nothing   => Nothing
 ```
 
-It worked! What's going on here? Well, let's inspect the types involved:
+動きました！何が起こっているのでしょうか？
+では、関係している型を調べましょう。
 
 ```idris
 concatTables2 : Table -> Table -> Maybe Table
@@ -146,7 +141,7 @@ concatTables2 (MkTable s1 m rs1) (MkTable s2 n rs2) = case sameSchema s1 s2 of
   Nothing   => Nothing
 ```
 
-At the REPL, we get the following context for `almost_there`:
+REPLで、以下の`almost_there`の文脈が得られます。
 
 ```repl
 Tutorial.Relations> :t almost_there
@@ -160,21 +155,21 @@ Tutorial.Relations> :t almost_there
 almost_there : Maybe Table
 ```
 
-See, how the types of `rs1` and `rs2` unify? Value `Same`, coming as the
-result of `sameSchema s1 s2`, is a *witness* that `s1` and `s2` are actually
-identical, because this is what we specified in the definition of `Same`.
+ほら、`rs1`と`rs2`の型が統合されていますね？
+`sameSchema s1 s2`の結果として来た値`Same`は、
+`s1`と`s2`が実は同値であることの*目撃者*なのです。
+なぜならこれが`Same`の定義で指定したことだからです。
 
-All that remains to do is to implement `sameSchema`. For this, we will write
-another data type for specifying when two values of type `ColType` are
-identical:
+残っているのは`sameSchema`を実装することだけです。
+このためには、型`ColType`の2つの値が同値である場合に指定するための別のデータ型を書いていきます。
 
 ```idris
 data SameColType : (c1, c2 : ColType) -> Type where
   SameCT : SameColType c1 c1
 ```
 
-We can now define several utility functions. First, one for figuring out if
-two column types are identical:
+これでいくつかの便利関数を定義できます。
+まず2つの行の型が同値であるかどうかを調べるものです。
 
 ```idris
 sameColType : (c1, c2 : ColType) -> Maybe (SameColType c1 c2)
@@ -185,18 +180,18 @@ sameColType Float   Float   = Just SameCT
 sameColType _ _             = Nothing
 ```
 
-This will convince Idris, because in each pattern match, the return type
-will be adjusted according to the values we matched on. For instance, on the
-first line, the output type is `Maybe (SameColType I64 I64)` as you can
-easily verify yourself by inserting a hole and checking its type at the
-REPL.
+これにはIdrisも説得されます。
+なぜならそれぞれのパターン照合で照合した値に応じて返却型が調整されるからです。
+例えば最初の行で出力型は`Maybe (SameColType I64 I64)`ですが、
+これはREPLで穴開きを入れて型を確認することで簡単に手元で確かめられます。
 
-We will need two additional utilities: Functions for creating values of type
-`SameSchema` for the nil and cons cases. Please note, how the
-implementations are trivial. Still, we often have to quickly write such
-small proofs (I'll explain in the next section, why I call them *proofs*),
-which will then be used to convince the type checker about some fact we
-already take for granted but Idris does not.
+もう2つの小間物が必要になります。
+nilとconsの場合のための型`SameSchema`の値を作る関数です。
+実装がどれほど取るに足らないものか見てください。
+それでもそのような小さな証明を手早く書かなくてはならないことはしばしばです。
+（時節でなぜ*証明*と呼んでいるのかを説明します。）
+そうしてこれらの証明を、私達が既に言うまでもないこととしているが
+Idrisにとってはそうでない事実について、型検査器を説得するのに使います。
 
 ```idris
 sameNil : SameSchema [] []
@@ -208,12 +203,11 @@ sameCons :  SameColType c1 c2
 sameCons SameCT Same = Same
 ```
 
-As usual, it can help understanding what's going on by replacing the right
-hand side of `sameCons` with a hole an check out its type and context at the
-REPL. The presence of values `SameCT` and `Same` on the left hand side
-forces Idris to unify `c1` and `c2` as well as `s1` and `s2`, from which the
-unification of `c1 :: s1` and `c2 :: s2` immediately follows.  With these,
-we can finally implement `sameSchema`:
+いつも通り、`sameCons`の右側を穴開きで置き換えてREPLで型と文脈を確認することで、
+何が起こっているのかを理解する助けになります。
+左側の値`SameCT`と`Same`の存在はIdrisに`c1`と`c2`及び`s1`と`s2`を統合することを強制します。
+そこから`c1 :: s1`と`c2 :: s2`の統合が直ちに従います。
+これらを以って遂に`sameSchema`を実装することができます。
 
 ```idris
 sameSchema []        []        = Just sameNil
@@ -223,26 +217,24 @@ sameSchema (x :: xs) []        = Nothing
 sameSchema []        (x :: xs) = Nothing
 ```
 
-What we described here is a far stronger form of equality than what is
-provided by interface `Eq` and the `(==)` operator: Equality of values that
-is accepted by the type checker when trying to unify type level indices.
-This is also called *propositional equality*: We will see below, that we can
-view types as mathematical *propositions*, and values of these types a
-*proofs* that these propositions hold.
+ここで記述したことはインターフェース`Eq`や`(==)`演算子によりもたらされるものよりずっと強力な等価性の形式です。
+型水準指標を統合しようとする際に型検査器によって受け付けられる値の等価性なのです。
+これは*命題等値性*とも呼ばれています。
+以降で見ていきますが、型と数学的な*命題*として、
+これらの型の値をこれらの命題が持つ*証明*として、見ることができるのです。
 
-### Type `Equal`
+### 型`Equal`
 
-Propositional equality is such a fundamental concept, that the *Prelude*
-exports a general data type for this already: `Equal`, with its only data
-constructor `Refl`. In addition, there is a built-in operator for expressing
-propositional equality, which gets desugared to `Equal`: `(=)`. This can
-sometimes lead to some confusion, because the equals symbol is also used for
-*definitional equality*: Describing in function implementations that the
-left-hand side and right-hand side are defined to be equal. If you want to
-disambiguate propositional from definitional equality, you can also use
-operator `(===)` for the former.
+命題の等値性は基礎的な概念なので、*Prelude*はこのための汎用的なデータ型を既に輸出しています。
+それが`Equal`で、その唯一のデータ型は`Refl`です。
+加えて命題の等値性を表す組込み演算子もあり、`Equal`に脱糖されます。
+それが`(=)`です。
+この演算子はときに混乱に繋がることもありますが、
+それは等号が*定義の等値性*にも使われているからです。
+定義の等値性とは関数の実装で左側と右側が等しいものとして定義する記述です。
+定義の方の等値性ではなく命題の方に曖昧回避したいときは前者に演算子`(===)`を使うこともできます。
 
-考えられる実装はこちらです。
+`concatTables`の別実装は以下です。
 
 ```idris
 eqColType : (c1,c2 : ColType) -> Maybe (c1 = c2)
@@ -271,66 +263,59 @@ concatTables3 (MkTable s1 m rs1) (MkTable s2 n rs2) = case eqSchema s1 s2 of
 
 ### 演習 その1
 
-In the following exercises, you are going to implement some very basic
-properties of equality proofs. You'll have to come up with the types of the
-functions yourself, as the implementations will be incredibly simple.
+以下の演習ではいくつかの等値性の証明におけるとても基本的な性質を実装していくことになります。
+実装は物凄く簡素なので、関数の型は自力で思い付かなくてはいけません。
 
-Note: If you can't remember what the terms "reflexive", "symmetric", and
-"transitive" mean, quickly read about equivalence relations
-[here](https://en.wikipedia.org/wiki/Equivalence_relation).
+補足：用語「反射的」「対称的」「推移的」が意味することが思い出せなければ、
+[こちら](https://en.wikipedia.org/wiki/Equivalence_relation)で同値関係について軽く読んでください。
 
-1. Show that `SameColType` is a reflexive relation.
+1. `SameColType`が反射関係の1つであることを示してください。
 
-2. Show that `SameColType` is a symmetric relation.
+2. `SameColType`が対称関係の1つであることを示してください。
 
-3. Show that `SameColType` is a transitive relation.
+3. `SameColType`が推移関係の1つであることを示してください。
 
-4. Let `f` be a function of type `ColType -> a` for an arbitrary type
-   `a`. Show that from a value of type `SameColType c1 c2` follows that `f
-   c1` and `f c2` are equal.
+4. 任意の型`a`について、`f`を型`ColType -> a`の関数であるとします。
+   型`SameColType c1 c2`の値から`f c1`と`f c2`が等しいことを示してください。
 
-For `(=)` the above properties are available from the *Prelude* as functions
-`sym`, `trans`, and `cong`. Reflexivity comes from the data constructor
-`Refl` itself.
+`(=)`について上の性質は*Prelude*で関数`sym`、`trans`、`cong`として手に入ります。
+反射性はデータ構築子`Refl`そのものから来ています。
 
-5. Implement a function for verifying that two natural numbers are
-   identical. Try using `cong` in your implementation.
+5. 2つの自然数が同値か検証する関数を実装してください。
+   実装では`cong`を使ってみてください。
 
-6. Use the function from exercise 5 for zipping two `Table`s if they have
-   the same number of rows.
+6. 演習5の関数を使い、同数の行があれば2つの`Table`を縫合してください。
 
-   Hint: Use `Vect.zipWith`. You will need to implement
-   custom function `appRows` for this, since Idris will
-   not automatically figure out that the types unify when
-   using `HList.(++)`:
+   ヒント：`Vect.zipWith`を使ってください。
+   このために自前の関数`appRows`を実装する必要があるでしょう。
+   なぜなら`HList.(++)`を使うときは、
+   型が統合されることを、Idrisがひとりでに解明しないためです。
 
    ```idris
    appRows : {ts1 : _} -> Row ts1 -> Row ts2 -> Row (ts1 ++ ts2)
    ```
 
-We will later learn how to use *rewrite rules* to circumvent the need of
-writing custom functions like `appRows` and use `(++)` in `zipWith`
-directly.
+あとで*書き換え規則*の使い方を学び、
+`appRows`のような自前の関数を書く必要があるところを回避したり、
+`(++)`を`zipWith`で直接使ったりしていきます。
 
-## Programs as Proofs
+## 証明としてのプログラム
 
-A famous observation by mathematician *Haskell Curry* and logician *William
-Alvin Howard* leads to the conclusion, that we can view a *type* in a
-programming language with a sufficiently rich type system as a mathematical
-proposition and a total program calculating a *value* of this type as a
-proof that the proposition holds. This is also known as the [Curry-Howard
-isomorphism](https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence).
+数学者*Haskell Curry*と論理学者*William Alvin Howard*による有名な考察はある結論を導きだしました。
+それは充分に豊かな型システムを備えるプログラム言語における*型*を数学的な命題として、
+そしてこの型の*値*を計算する全域なプログラムを命題が満たす証明として、それぞれ見ることができるということです。
+これは[Curry-Howard同型写像](https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence)としても知られています。
 
-For instance, here is a simple proof that one plus one equals two:
+例えば、以下は1足す1が2に等しいことの単純な証明です。
 
 ```idris
 onePlusOne : the Nat 1 + 1 = 2
 onePlusOne = Refl
 ```
 
-The above proof is trivial, as Idris solves this by unification.  But we
-already stated some more interesting things in the exercises. For instance,
-the symmetry and transitivity of `SameColType`:
+Idrisは統合によりこれを解くため上の証明は取るに足らないものです。
+しかし既に演習でいくつかのより興味深いことを記しました。
+例えば`SameColType`の対称性と推移性は次の通り。
 
 ```idris
 sctSymmetric : SameColType c1 c2 -> SameColType c2 c1
@@ -340,45 +325,43 @@ sctTransitive : SameColType c1 c2 -> SameColType c2 c3 -> SameColType c1 c3
 sctTransitive SameCT SameCT = SameCT
 ```
 
-Note, that a type alone is not a proof. For instance, we are free to state
-that one plus one equals three:
+なお、型だけでは証明ではありません。
+例えば1足す1が3だと記すことは自由です。
 
 ```idris
 onePlusOneWrong : the Nat 1 + 1 = 3
 ```
 
-We will, however, have a hard time implementing this in a provably total
-way. We say: "The type `the Nat 1 + 1 = 3` is *uninhabited*", meaning, that
-there is no value of this type.
+しかしこれを証明上全域に実装するとなると手こずることでしょう。
+これを「型`the Nat 1 + 1 = 3`は*非現住*である」と言います。
+その意味はこの型の値は1つもないということです。
 
-### When Proofs replace Tests
+### 証明がテストを置き換えるとき
 
-We will see several different use cases for compile time proofs, a very
-straight forward one being to show that our functions behave as they should
-by proofing some properties about them. For instance, here is a proposition
-that `map` on list does not change the number of elements in the list:
+コンパイル時の証明のいくつかの多様な用例を見ていきます。
+とても直感的なものとしては、関数についての性質を証明することにより、その関数がそうあるべきように振る舞うことを示すことです。
+例えば以下はリストにおける`map`がリスト中の要素数を変えないという命題です。
 
 ```idris
 mapListLength : (f : a -> b) -> (as : List a) -> length as = length (map f as)
 ```
 
-Read this as a universally quantified statement: For all functions `f` from
-`a` to `b` and for all lists `as` holding values of type `a`, the length of
-`map f as` is the same the as the length of the original list.
+これは全称量化された表明として読まれます。
+つまり`a`から`b`への全ての関数`f`と型`a`の値を持つ全てのリスト`as`について、
+`map f as`の長さは元のリストの長さと同じです。
 
-We can implement `mapListLength` by pattern matching on `as`. The `Nil` case
-will be trivial: Idris solves this by unification. It knows the value of the
-input list (`Nil`), and since `map` is implemented by pattern matching on
-the input as well, it follows immediately that the result will be `Nil` as
-well:
+`mapListLength`は`as`におけるパターン照合により実装できます。
+`Nil`の場合は些細なものです。
+Idrisはこれを統合により解きます。
+入力リスト (`Nil`)
+の値を知っており、`map`もまた入力におけるパターン照合により実装されているため、結果も同じように`Nil`になることが直ちに従います。
 
 ```idris
 mapListLength f []        = Refl
 ```
 
-The `cons` case is more involved, and we will do this stepwise.  First, note
-that we can proof that the length of a map over the tail will stay the same
-by means of recursion:
+`cons`の場合はより込み入っているため、一歩ずつ進めていきます。
+まず、尾鰭上で写す長さが、再帰により同じままであることを証明することができますね。
 
 
 ```repl
@@ -386,7 +369,7 @@ mapListLength f (x :: xs) = case mapListLength f xs of
   prf => ?mll1
 ```
 
-Let's inspect the types and context we have here:
+ここで型と文脈を調べてみましょう。
 
 ```repl
  0 b : Type
@@ -399,40 +382,40 @@ Let's inspect the types and context we have here:
 mll1 : S (length xs) = S (length (map f xs))
 ```
 
-So, we have a proof of type `length xs = length (map f xs)`, and from the
-implementation of `map` Idris concludes that what we are actually looking
-for is a result of type `S (length xs) = S (length (map f xs))`. This is
-exactly what function `cong` from the *Prelude* is for ("cong" is an
-abbreviation for *congruence*). We can thus implement the *cons* case
-concisely like so:
+というわけで、型`length xs = length (map f xs)`の証明があり、
+`map`の実装からIdrisは実際に求めているものが型`S (length xs) = S (length (map f
+xs))`の結果であると結論付けています。
+*Prelude*の関数*cong*はまさにこのためにあります。
+（"cong"は*congruence*の略語です。）
+そうして以下のように簡潔に*cons*の場合を実装することができます。
 
 ```idris
 mapListLength f (x :: xs) = cong S $ mapListLength f xs
 ```
 
-Please take a moment to appreciate what we achieved here: A *proof* in the
-mathematical sense that our function will not affect the length of our
-list. We no longer need a unit test or similar program to verify this.
+ここで達成できたことをしばし噛み締めましょう。
+この関数が決してリストの長さに影響を与えないことの、数学的な意味での*証明*です。
+もはや検証のために単体テストやそれに類するプログラムは必要ないのです。
 
-Before we continue, please note an important thing: In our case expression,
-we used a *variable* for the result from the recursive call:
+続ける前に重要な点に注意してください。
+case式中で再帰呼び出しからの結果に*変数*を使いました。
 
 ```repl
 mapListLength f (x :: xs) = case mapListLength f xs of
   prf => cong S prf
 ```
 
-Here, we did not want the two lengths to unify, because we needed the
-distinction in our call to `cong`. Therefore: If you need a proof of type `x
-= y` in order for two variables to unify, use the `Refl` data constructor in
-the pattern match.  If, on the other hand, you need to run further
-computations on such a proof, use a variable and the left and right-hand
-sides will remain distinct.
+ここでは2つの長さを統合したいとはしていません。
+なぜなら`cong`の呼び出しに区別が必要だったからです。
+したがって、もし2つの変数を統合するために型`x = y`の証明が必要であれば、
+パターン照合中で`Refl`データ構築子を使ってください。
+他方でもしそのような証明においてさらに計算を走らせる必要があれば、
+変数を使い左側と右側が区別されたままにしておいてください。
 
-Here is another example from the last chapter: We want to show that parsing
-and printing column types behaves correctly.  Writing proofs about parsers
-can be very hard in general, but here it can be done with a mere pattern
-match:
+以下は前の章からの別の例です。
+列の型を解析し印字することが正しく行われることを示したいとします。
+構文解析器についての証明を書くことは一般にとても難しくなりえますが、
+以下では単なるパターン照合により完了します。
 
 ```idris
 showColType : ColType -> String
@@ -455,23 +438,19 @@ showReadColType Boolean = Refl
 showReadColType Float   = Refl
 ```
 
-Such simple proofs give us quick but strong guarantees that we did not make
-any stupid mistakes.
+こうした単純な証明は、手軽ではあれど、
+いかなる間抜けな誤りも犯していないことの強力な保証をもたらしてくれます。
 
-The examples we saw so far were very easy to implement. In general, this is
-not the case, and we will have to learn about several additional techniques
-in order to proof interesting things about our programs. However, when we
-use Idris as a general purpose programming language and not as a proof
-assistant, we are free to choose whether some aspect of our code needs such
-strong guarantees or not.
+今まで見てきた例はとても簡単に実装できました。
+一般にはこの限りではなく、プログラムについての興味深い事柄を証明するためには、追加でいくつかの技法について学ばねばならないでしょう。
+しかしながらIdrisを証明支援ではなく汎用用途のプログラミング言語として使っている時も、
+コードのいくつかの側面でこのような強力な保証が必要かどうかを選ぶことは自由なのです。
 
-### A Note of Caution: Lowercase Identifiers in Function Types
+### 注意喚起の補足：関数型での小文字の識別子
 
-When writing down the types of proofs as we did above, one has to be very
-careful not to fall into the following trap: In general, Idris will treat
-lowercase identifiers in function types as type parameters (erased implicit
-arguments).  For instance, here is a try at proofing the identity functor
-law for `Maybe`:
+上で行ったように証明の型を書き下す際、以下の罠に嵌らないよう細心の注意を払わねばなりません。
+一般にIdrisは関数型中の小文字の識別子を型変数（消去される暗黙引数）として扱います。
+例えば以下では`Maybe`に同値関手則を証明しようとしています。
 
 ```idris
 mapMaybeId1 : (ma : Maybe a) -> map id ma = ma
@@ -479,9 +458,9 @@ mapMaybeId1 Nothing  = Refl
 mapMaybeId1 (Just x) = ?mapMaybeId1_rhs
 ```
 
-You will not be able to implement the `Just` case, because Idris treats `id`
-as an implicit argument as can easily be seen when inspecting the context of
-`mapMaybeId1_rhs`:
+`Just`の場合を実装することは叶わないでしょう。
+なぜならIdrisは`id`を暗黙引数として扱うからです。
+`mapMaybeId1_rhs`の文脈を調べれば簡単にわかります。
 
 ```repl
 Tutorial.Relations> :t mapMaybeId1_rhs
@@ -492,9 +471,8 @@ Tutorial.Relations> :t mapMaybeId1_rhs
 mapMaybeId1_rhs : Just (id x) = Just x
 ```
 
-As you can see, `id` is an erased argument of type `a -> a`. And in
-fact, when type-checking this module, Idris will issue a warning that
-parameter `id` is shadowing an existing function:
+見ての通り`id`は型`a -> a`の消去引数です。
+そして実際にこのモジュールを型検査するとき、Idrisは引数`id`が既存の関数に影を落としていると警告を上げます。
 
 ```repl
 Warning: We are about to implicitly bind the following lowercase names.
@@ -502,11 +480,12 @@ You may be unintentionally shadowing the associated global definitions:
   id is shadowing Prelude.Basics.id
 ```
 
-The same is not true for `map`: Since we explicitly pass arguments to `map`,
-Idris treats this as a function name and not as an implicit argument.
+同じことは`map`には当て嵌まりません。
+明示的に`map`に引数を渡しているため、Idrisはこれを暗黙引数としてではなく関数名として扱います。
 
-You have several options here. For instance, you could use an uppercase
-identifier, as these will never be treated as implicit arguments:
+ここではいくつかの選択肢があります。
+例えば大文字の識別子を使うことができます。
+こうすれば決して暗黙引数として扱われることがないからです。
 
 ```idris
 Id : a -> a
@@ -517,9 +496,8 @@ mapMaybeId2 Nothing  = Refl
 mapMaybeId2 (Just x) = Refl
 ```
 
-As an alternative - and this is the preferred way to handle this case - you
-can prefix `id` with part of its namespace, which will immediately resolve
-the issue:
+代替として……そしてこれがこの場合を制御するより好ましい方法です……`id`に名前空間の一部を前置することができます。
+こうすれば直ちに問題が解決します。
 
 ```idris
 mapMaybeId : (ma : Maybe a) -> map Prelude.id ma = ma
@@ -527,116 +505,110 @@ mapMaybeId Nothing  = Refl
 mapMaybeId (Just x) = Refl
 ```
 
-Note: If you have semantic highlighting turned on in your editor (for
-instance, by using the [idris2-lsp
-plugin](https://github.com/idris-community/idris2-lsp)), you will note that
-`map` and `id` in `mapMaybeId1` get highlighted differently: `map` as a
-function name, `id` as a bound variable.
+補足：エディタで（例えば[idris2-lsp
+plugin](https://github.com/idris-community/idris2-lsp)を使うことによって）意味論的彩色を有効にしていれば、`mapMaybeId1`中の`map`と`id`が異なって彩色されていることに気付くことでしょう。
+`map`は関数名に、`id`は束縛変数になっています。
 
 ### 演習 その2
 
-In these exercises, you are going to proof several simple properties of
-small functions. When writing proofs, it is even more important to use holes
-to figure out what Idris expects from you next. Use the tools given to you,
-instead of trying to find your way in the dark!
+これらの演習では小さな関数のいくつかの単純な性質を証明していきます。
+証明を書くときはIdrisが次に何を期待しているのか調べるために穴開きを使うことがずっと重要になります。
+暗中模索する前に与えられた道具を使いましょう。
 
-1. Proof that `map id` on an `Either e` returns the value unmodified.
+1. `Either e`への`map id`が値を変更せずに返すことを証明してください。
 
-2. Proof that `map id` on a list returns the list unmodified.
+2. リストへの`map id`が変更されていないリストを返すことを証明してください。
 
-3. Proof that complementing a strand of a nucleobase (see the [previous
-   chapter](DPair.md#use-case-nucleic-acids))  twice leads to the original
-   strand.
+3. 核酸塩基の鎖（[前の章](DPair.md#use-case-nucleic-acids)を見てください）を2度相補すると元の鎖になることを証明してください。
 
-   Hint: Proof this for single bases first, and use `cong2`
-   from the *Prelude* in your implementation for sequences
-   of nucleic acids.
+   ヒント: 最初にこれを単一の塩基に証明してから、
+   塩基配列の実装で*Prelude*の`cong2`を使いましょう。
 
-4. Implement function `replaceVect`:
+4. 関数`replaceVect`を実装してください。
 
    ```idris
    replaceVect : (ix : Fin n) -> a -> Vect n a -> Vect n a
    ```
 
-   Now proof, that after replacing an element in a vector
-   using `replaceAt` accessing the same element using
-   `index` will return the value we just added.
+   それでは、`replaceAt`を使ってベクタ中の要素を置き換えたあとに、
+   `index`を使って同じ要素にアクセスすると、
+   ちょうど追加した値を返すことを証明してください。
 
-5. Implement function `insertVect`:
+5. 関数`insertVect`を実装してください。
 
    ```idris
    insertVect : (ix : Fin (S n)) -> a -> Vect n a -> Vect (S n) a
    ```
 
-   Use a similar proof as in exercise 4 to show that this
-   behaves correctly.
+   演習4と似た証明を使ってこれが正しく振る舞うことを示してください。
 
-Note: Functions `replaceVect` and `insertVect` are available from
-`Data.Vect` as `replaceAt` and `insertAt`.
+補足：関数`replaceVect`と`insertVect`は`Data.Vect`でそれぞれ`replaceAt`と`insertAt`として手に入ります。
 
-## Into the Void
+## 虚空の中へ
 
-Remember function `onePlusOneWrong` from above? This was definitely a wrong
-statement: One plus one does not equal three. Sometimes, we want to express
-exactly this: That a certain statement is false and does not hold. Consider
-for a moment what it means to proof a statement in Idris: Such a statement
-(or proposition) is a type, and a proof of the statement is a value or
-expression of this type: The type is said to be *inhabited*.  If a statement
-is not true, there can be no value of the given type. We say, the given type
-is *uninhabited*.  If we still manage to get our hands on a value of an
-uninhabited type, that is a logical contradiction and from this, anything
-follows (remember [ex falso
-quodlibet](https://en.wikipedia.org/wiki/Principle_of_explosion)).
+以前の関数`onePlusOneWrong`を覚えていますか。
+これは全き誤りの表明でした。
+1足す1は3に等しくありませんから。
+ときどき正にこのことを表したいことがあります。
+ある表明が偽であり満たされないということです。
+Idrisでの証明の表明においてこれが何を意味するのかしばし考えてください。
+そのような表明（あるいは命題）は型で、その表明の証明はこの型の値や式になっています。
+そのような型はいわゆる*現住*です。
+表明が真でなければ与えられた型の値は1つもありえません。
+このとき与えられた型は*非現住*であると言います。
+それでもなお非現住型の値を何とかして掴み取るならば、
+それは論理的な矛盾であって、この矛盾からどんなことも従います。
+（[ex falso
+quodlibet](https://en.wikipedia.org/wiki/Principle_of_explosion)を思い出してください。）
 
-So this is how to express that a proposition does not hold: We state that if
-it *would* hold, this would lead to a contradiction.  The most natural way
-to express a contradiction in Idris is to return a value of type `Void`:
+というわけでこれが命題を満たさないことを表現する方法です。
+もし命題を満たす*としたら*、矛盾になってしまうことを表明するのです。
+Idrisで矛盾を表現する最も自然な方法は型`Void`の値を返すことです。
 
 ```idris
 onePlusOneWrongProvably : the Nat 1 + 1 = 3 -> Void
 onePlusOneWrongProvably Refl impossible
 ```
 
-See how this is a provably total implementation of the given type: A
-function from `1 + 1 = 3` to `Void`. We implement this by pattern matching,
-and there is only one constructor to match on, which leads to an impossible
-case.
+これは与えられた型の証明上全域な実装になっていますね。
+型は`1 + 1 = 3`から`Void`への関数です。
+これをパターン照合により実装し、たった1つの構築子が照合されますが、
+これにより不可能な場合になってしまいます。
 
-We can also use contradictory statements to proof other such statements. For
-instance, here is a proof that if the lengths of two lists are not the same,
-then the two list can't be the same either:
+矛盾した表明を使って他の表明を証明することもできます。
+例えば以下は、2つのリストの長さが同じでなければ、
+2つのリストが同じになることもありえないということの証明です。
 
 ```idris
 notSameLength1 : (List.length as = length bs -> Void) -> as = bs -> Void
 notSameLength1 f prf = f (cong length prf)
 ```
 
-This is cumbersome to write and pretty hard to read, so there is function
-`Not` in the prelude to express the same thing more naturally:
+こう書くのは億劫ですしとても読みづらいです。
+なのでpreludeに関数`Not`があり、同じことをより自然に表すことができます。
 
 ```idris
 notSameLength : Not (List.length as = length bs) -> Not (as = bs)
 notSameLength f prf = f (cong length prf)
 ```
 
-Actually, this is just a specialized version of the contraposition of
-`cong`: If from `a = b` follows `f a = f b`, then from `not (f a = f b)`
-follows `not (a = b)`:
+実はこれは`cong`の待遇の特殊版にすぎません。
+つまり、`a = b`から`f a = f b`が従うのであれば、`not (f a = f b)`から`not (a = b)`が従います。
 
 ```idris
 contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)
 contraCong fun = fun . cong f
 ```
 
-### Interface `Uninhabited`
+### インターフェース`Uninhabited`
 
-There is an interface in the *Prelude* for uninhabited types: `Uninhabited`
-with its sole function `uninhabited`. Have a look at its documentation at
-the REPL. You will see, that there is already an impressive number of
-implementations available, many of which involve data type `Equal`.
+*Prelude*には非現住型のためのインターフェースがあります。
+`Uninhabited`とその唯一の関数`uninhabited`です。
+REPLでこのインターフェースのドキュメントを眺めてみましょう。
+すると既にちょっとした数の実装が使えることがわかります。
+その多くがデータ型`Equal`に関わっています。
 
-We can use `Uninhabited`, to for instance express that the empty schema is
-not equal to a non-empty schema:
+`Uninhabited`を使えば、例えば空のスキーマが空でないスキーマと等しくないことを表せます。
 
 ```idris
 Uninhabited (SameSchema [] (h :: t)) where
@@ -646,8 +618,8 @@ Uninhabited (SameSchema (h :: t) []) where
   uninhabited Same impossible
 ```
 
-There is a related function you need to know about: `absurd`, which combines
-`uninhabited` with `void`:
+関連して知っておかねばならない関数があります。`absurd`です。
+これは`uninhabited`を`void`と繋げるものです。
 
 ```repl
 Tutorial.Eq> :printdef absurd
@@ -655,30 +627,25 @@ Prelude.absurd : Uninhabited t => t -> a
 absurd h = void (uninhabited h)
 ```
 
-### Decidable Equality
+### 決定可能等値性
 
-When we implemented `sameColType`, we got a proof that two
-column types are indeed the same, from which we could figure out,
-whether two schemata are identical. The types guarantee
-we do not generate any false positives: If we generate a value
-of type `SameSchema s1 s2`, we have a proof that `s1` and `s2`
-are indeed identical.
-However, `sameColType` and thus `sameSchema` could theoretically
-still produce false negatives by returning `Nothing`
-although the two values are identical. For instance,
-we could implement `sameColType` in such a way that it
-always returns `Nothing`. This would be in agreement with
-the types, but definitely not what we want. So, here is
-what we'd like to do in order to get yet stronger guarantees:
-We'd either want to return a proof that the two schemata
-are the same, or return a proof that the two schemata
-are not the same. (Remember that `Not a` is an alias for `a -> Void`).
+`sameColType`を実装したとき、2つの行の型が確かに同じであるという証明を
+得て、そこから2つのスキーマが同値かどうかが調べられました。型は偽陽性
+の発生がないことを保証します。つまり型`SameSchema s1 s2`の値を生成すれ
+ば`s1`と`s2`が確かに同値であるという証明があるのです。しかし
+`sameColType`とそれを使う`sameSchema`は、2つの値が同値であっても
+`Nothing`を返すことによって、それでも理論的には偽陰性を生じる可能性が
+あるのです。例えば`sameColType`を常に`Nothing`を返すようなやり方で実装
+できてしまいます。これは型としては合致しますが間違いなく望んでいるもの
+ではないでしょう。なのでここでより強い保証を得るために行いたいことが出
+てきます。2つのスキーマが同じであるという証明を返すか、2つのスキーマ
+が同じでないという証明を返すかのどちらかをしたいのです。（`Not a`が`a
+-> Void`の別の形であることを思い出してください。）
 
-We call a property, which either holds or leads to a contradiction a
-*decidable property*, and the *Prelude* exports data type `Dec prop`, which
-encapsulates this distinction.
+命題を満たすか矛盾になるかする性質を*決定可能性質*と呼びます。そして
+*Prelude*はデータ型`Dec prop`を輸出しており、この区別を内蔵化します。
 
-Here is a way to encode this for `ColType`:
+以下はこれを`ColType`に符号化する方法です。
 
 ```idris
 decSameColType :  (c1,c2 : ColType) -> Dec (SameColType c1 c2)
@@ -703,21 +670,20 @@ decSameColType Float Boolean   = No $ \case SameCT impossible
 decSameColType Float Float     = Yes SameCT
 ```
 
-First, note how we could use a pattern match in a single argument lambda
-directly. This is sometimes called the *lambda case* style, named after an
-extension of the Haskell programming language. If we use the `SameCT`
-constructor in the pattern match, Idris is forced to try and unify for
-instance `Float` with `I64`. This is not possible, so the case as a whole is
-impossible.
+まず、単一引数ラムダで直接パターン照合を使えている点に注目してください。
+これはしばしば*ラムダcase*スタイルと呼ばれるもので、Haskellプログラミ
+ング言語の拡張に因んでいます。パターン照合で`SameCT`構築子を使うと
+Idrisはインスタンス`Float`を`I64`を統合するよう迫られます。これは可能
+ではないためcase全体が不可能になります。
 
-Yet, this was pretty cumbersome to implement. In order to convince Idris we
-did not miss a case, there is no way around treating every possible pairing
-of constructors explicitly.  However, we get *much* stronger guarantees out
-of this: We can no longer create false positives *or* false negatives, and
-therefore, `decSameColType` is provably correct.
+ただこれはかなり実装するのが億劫です。Idrisを説得するために場合を漏ら
+さなかったわけですが、全ての可能な構築子の対を明示的に扱う方法などあり
+ません。しかしここから*遥かに*強力な保証を得ています。もはや偽陽性*も*
+偽陰性も生み出すことはなく、したがって`decSameColType`は証明上正しいの
+です。
 
-Doing the same thing for schemata requires some utility functions, the types
-of which we can figure out by placing some holes:
+同じことをスキーマに対して行うにはいくつかの便利関数が必要で、その型は
+穴開きを置くことで調べられます。
 
 ```idris
 decSameSchema' :  (s1, s2 : Schema) -> Dec (SameSchema s1 s2)
@@ -731,17 +697,16 @@ decSameSchema' (x :: xs) (y :: ys) = case decSameColType x y of
   No  contra => No $ \prf => ?decss4
 ```
 
-The first two cases are not too hard. The type of `decss1` is
-`SameSchema [] (y :: ys) -> Void`, which you can easily verify
-at the REPL. But that's just `uninhabited`, specialized to
-`SameSchema [] (y :: ys)`, and this we already implemented
-further above. The same goes for `decss2`.
+最初の2つの場合はそれほど難しくありません。`decss1`の型は`SameSchema
+[] (y :: ys) -> Void`で、これはREPLで簡単に確かめられます。しかしそれ
+は単に`uninhabited`であって、`SameSchema [] (y :: ys)`に特殊化されてお
+り、既にもっと前で実装したことなのです。同じことが`decss2`にも言えます。
 
-The other two cases are harder, so I already filled in as much stuff as
-possible. We know that we want to return a `No`, if either the heads or
-tails are provably distinct. The `No` holds a function, so I already added a
-lambda, leaving a hole only for the return value. Here are the type and -
-more important - context of `decss3`:
+他2つの場合はこれより難しいので既にできる限り書き入れました。もし先頭
+か尾鰭のいずれかが証明上独立しているときは`No`を返したいことがわかって
+います。`No`は関数を満たしているので、既にラムダを加えてあり、返る値に
+ついてのみ穴開きにしています。以下はその型と……そしてより重要
+な……`decss3`の文脈です。
 
 ```repl
 Tutorial.Relations> :t decss3
@@ -755,12 +720,12 @@ Tutorial.Relations> :t decss3
 decss3 : Void
 ```
 
-The types of `contra` and `prf` are what we need here: If `xs` and `ys` are
-distinct, then `y :: xs` and `y :: ys` must be distinct as well. This is the
-contraposition of the following statement: If `x :: xs` is the same as `y ::
-ys`, then `xs` and `ys` are the same as well. We must therefore implement a
-lemma, which proves that the *cons* constructor is
-[*injective*](https://en.wikipedia.org/wiki/Injective_function):
+`contra`と`prf`の型はここで必要なものです。`xs`と`ys`が相異なるもので
+あれば`y :: xs`と`y :: ys`もまた相異なるものでなくてはなりません。これ
+は`x :: xs`が`y :: ys`と同じであれば、`xs`と`ys`もまた同じであるという
+表明の待遇になっています。したがってラムダを実装することで、*cons*構築
+子が[*単射*](https://en.wikipedia.org/wiki/Injective_function)であるこ
+とを証明せねばなりません。
 
 ```idris
 consInjective :  SameSchema (c1 :: cs1) (c2 :: cs2)
@@ -768,10 +733,10 @@ consInjective :  SameSchema (c1 :: cs1) (c2 :: cs2)
 consInjective Same = (SameCT, Same)
 ```
 
-We can now pass `prf` to `consInjective` to extract a value of type
-`SameSchema xs ys`, which we then pass to `contra` in order to get the
-desired value of type `Void`.  With these observations and utilities, we can
-now implement `decSameSchema`:
+これで`prf`を`consInjective`に渡し型`SameSchema xs ys`の値を取り出すこ
+とができます。そしてこれを`contra`に渡せば型`Void`の望んだ値を得ること
+になります。これらの観察と小間物を以ってこれで`decSameSchema`を実装で
+きます。
 
 ```idris
 decSameSchema :  (s1, s2 : Schema) -> Dec (SameSchema s1 s2)
@@ -785,24 +750,25 @@ decSameSchema (x :: xs) (y :: ys) = case decSameColType x y of
   No  contra => No $ contra . fst . consInjective
 ```
 
-There is an interface called `DecEq` exported by module `Decidable.Equality`
-for types for which we can implement a decision procedure for propositional
-equality. We can implement this to figure out if two values are equal or
-not.
+命題的等値性のための決定過程を実装できる型用に、モジュール
+`Decidable.Equality`により輸出されている`DecEq`と呼ばれるインターフェー
+スがあります。2つの値が等しいかどうかを調べるためにこれを実装すること
+ができます。
 
 ### 演習 その3
 
-1. Show that there can be no non-empty vector of `Void` by writing a
-   corresponding implementation of uninhabited
+1. 空でない`Void`のベクタが1つとしてありえないことを対応する非現住の実装
+   を書くことにより示してください。
 
-2. Generalize exercise 1 for all uninhabited element types.
+2. 演習1を全ての非現住要素型に一般化してください。
 
-3. Show that if `a = b` cannot hold, then `b = a` cannot hold either.
+3. `a = b`を満たしえなければ`b = a`もまた満たしえないことを示してください。
 
-4. Show that if `a = b` holds, and `b = c` cannot hold, then `a = c` cannot
-   hold either.
+4. `a = b`を満たしており、且つ`b = c`を満たしえないならば、`a = c`もまた
+   満たしえないことを示してください。
 
-5. Implement `Uninhabited` for `Crud i a`. Try to be as general as possible.
+5. `Crud i a`に`Uninhabited`を実装してください。可能な限り一般的になるよ
+   うにしてみてください。
 
    ```idris
    data Crud : (i : Type) -> (a : Type) -> Type where
@@ -812,40 +778,35 @@ not.
      Delete : (id : i) -> Crud i a
    ```
 
-6. Implement `DecEq` for `ColType`.
+6. `DecEq`を`ColType`に実装してください。
 
-7. Implementations such as the one from exercise 6 are cumbersome to write
-   as they require a quadratic number of pattern matches with relation to
-   the number of data constructors. Here is a trick how to make this more
-   bearable.
+7. 演習6のような実装はデータ構築子の数の関係に伴いその平方のパターン照合
+   が必要になるため書くのが面倒です。以下はこれをより堪えられるようにする
+   秘訣です。
 
-   1. Implement a function `ctNat`, which assigns every value of type
-      `ColType` a unique natural number.
+   1. 関数`ctNat`を実装してください。この関数は型`ColType`の全ての値に一意の
+      自然数を割り当てます。
 
-   2. Proof that `ctNat` is injective.  Hint: You will need to pattern match
-      on the `ColType` values, but four matches should be enough to satisfy
-      the coverage checker.
+   2. `ctNat`が単射であることを証明してください。ヒント：`ColType`の値でパター
+      ン照合する必要があるでしょうが、網羅性検査器を満足させるには4つの照合
+      で充分でしょう。
 
-   3. In your implementation of `DecEq` for `ColType`, use `decEq` on the
-      result of applying both column types to `ctNat`, thus reducing it to
-      only two lines of code.
+   3. `ColType`への`DecEq`の実装では、両方の行の型を`ctNat`に適用した結果に
+      `decEq`を使ってください。そうすればたった2行のコードに削減されます。
 
-   We will later talk about `with` rules: Special forms of
-   dependent pattern matches, that allow us to learn something
-   about the shape of function arguments by performing
-   computations on them. These will allow us to use
-   a similar technique as shown here to implement `DecEq`
-   requiring only `n` pattern matches
-   for arbitrary sum types with `n` data constructors.
+   あとで`with`規則についてお話しします。これは依存パターン照合の特殊
+   な形式であり、関数の引数に計算を行うことによりそれら引数の形状につ
+   いて知ることができるようになります。これにより、ここで見たのと似た
+   技法を使って`DecEq`を実装するのに、`n`個のデータ構築子のある任意の
+   直和型に対してたった`n`個のパターン照合が必要になるようにできます。
 
-## Rewrite Rules
+## 書き換え規則
 
-One of the most important use cases of propositional equality is to replace
-or *rewrite* existing types, which Idris can't unify automatically
-otherwise. For instance, the following is no problem: Idris know that `0 +
-n` equals `n`, because `plus` on natural numbers is implemented by pattern
-matching on the first argument. The two vector lengths therefore unify just
-fine.
+命題の等値性の最重要の用例の1つに、Idrisが自動的には統合できない既存の
+型を置き換えたり*書き換え*たりすることがあります。例えば以下は何ら問題
+はありません。Idrisは`0 + n`が`n`に等しいことを知っています。なぜなら
+自然数における`plus`は最初の引数でのパターン照合により実装されているか
+らです。したがって2つのベクタの長さはちょうどうまく統合されるのです。
 
 ```idris
 leftZero :  List (Vect n Nat)
@@ -854,8 +815,8 @@ leftZero :  List (Vect n Nat)
 leftZero = (++)
 ```
 
-However, the example below can't be implemented as easily (try id!), because
-Idris can't figure out on its own that the two lengths unify.
+しかし下の例は簡単には実装できません（やってみてください！）。なぜなら
+Idrisは自力で2つの長さを統合するものだと調べられないからです。
 
 ```idris
 rightZero' :  List (Vect n Nat)
@@ -863,21 +824,21 @@ rightZero' :  List (Vect n Nat)
            -> List (Vect n Nat)
 ```
 
-Probably for the first time we realize, just how little Idris knows about
-the laws of arithmetics. Idris is able to unify values when
+Idrisが算数の法則について知っていることはどれほど少ないかということを、
+もしかすると初めて気付いたかもしれません。Idrisが値を統合できるのは以
+下の場合です。
 
-* all values in a computation are known at compile time
-* one expression follows directly from the other due to the pattern matches
-  used in a function's implementation.
+* 計算中の全ての値はコンパイル時に知られている
+* 関数の実装で使われているパターン照合から、ある式が他の式から直接従っている
 
-In expression `n + 0`, not all values are known (`n` is a variable), and
-`(+)` is implemented by pattern matching on the first argument, about which
-we know nothing here.
+式`n + 0`では全ての値は知られておらず（`n`は変数）、`(+)`は最初の引数
+でパターン照合することにより実装されています。ここで最初の引数について
+分かることは何もないのです。
 
-However, we can teach Idris. If we can proof that the two expressions are
-equivalent, we can replace one expression for the other, so that the two
-unify again. Here is a lemma and its proof, that `n + 0` equals `n`, for all
-natural numbers `n`.
+しかしIdrisに教えることができます。2式が等価であることを証明できれば一
+方の式を他方に置き換えることができ、したがって2つは改めて統合されるの
+です。以下は補題とその証明で、全ての自然数`n`について`n + 0`が`n`に等
+しいとするものです。
 
 ```idris
 addZeroRight : (n : Nat) -> n + 0 = n
@@ -885,52 +846,49 @@ addZeroRight 0     = Refl
 addZeroRight (S k) = cong S $ addZeroRight k
 ```
 
-Note, how the base case is trivial: Since there are no variables left, Idris
-can immediately figure out that `0 + 0 = 0`. In the recursive case, it can
-be instructive to replace `cong S` with a hole and look at its type and
-context to figure out how to proceed.
+基底の場合が自明であるところに注目してください。残っている変数が1つも
+ないためIdrisは直ちに`0 + 0 = 0`を解明できるのです。再帰の場合では
+`cong S`を穴開きに置き換えて型と文脈を眺めるとどのように処理されるのか
+が分かりやすいかもしれません。
 
-The *Prelude* exports function `replace` for substituting one variable in a
-term by another, based on a proof of equality.  Make sure to inspect its
-type first before looking at the example below:
+*Prelude*は条件中の1変数を別のものに置換するための関数`replace`を輸出
+ しています。以下の例を見る前にまずその型を調べて確かめてください。
 
 ```idris
 replaceVect : Vect (n + 0) a -> Vect n a
 replaceVect as = replace {p = \k => Vect k a} (addZeroRight n) as
 ```
 
-As you can see, we *replace* a value of type `p x` with a value
-of type `p y` based on a proof that `x = y`,
-where `p` is a function from some type `t` to
-`Type`, and `x` and `y` are values of type `t`. In our
-`replaceVect` example, `t` equals `Nat`, `x` equals `n + 0`,
-`y` equals `n`, and `p` equals `\k => Vect k a`.
+見てわかるように`x = y`という証明に基づいて、型`p x`の値を型`p y`の値
+で*置き換え*ています。ただし`p`は何らかの型`t`から`Type`への関数で、
+`x`と`y`は型`t`の値です。`replaceVect`の例では`t`は`Nat`に等しく、
+`x`は`n + 0`に等しく、`y`は`n`に等しく、そして`p`は`\k => Vect k a`に
+等しいものです。
 
-Using `replace` directly is not very convenient, because Idris can often not
-infer the value of `p` on its own. Indeed, we had to give its type
-explicitly in `replaceVect`.  Idris therefore provides special syntax for
-such *rewrite rules*, which will get desugared to calls to `replace` with
-all the details filled in for us. Here is an implementation of `replaceVect`
-with a rewrite rule:
+直接`replace`を使うのはあまり便利ではありません。それはIdrisが`p`の値
+を自力で推論できないことがよくあるからです。そのときはもちろん
+`replaceVect`中で明示的に型を与えなくてはなりません。したがってIdrisは
+*書き換え規則*のような特別な構文を提供しています。この構文は
+`replace`の呼び出しを全ての詳細が記入されたものに脱糖してくれるもので
+す。以下は書き換え規則を使った`replaceVect`の実装です。
 
 ```idris
 rewriteVect : Vect (n + 0) a -> Vect n a
 rewriteVect as = rewrite sym (addZeroRight n) in as
 ```
 
-One source of confusion is that *rewrite* uses proofs of equality the other
-way round: Given an `y = x` it replaces `p x` with `p y`. Hence the need to
-call `sym` in our implementation above.
+混乱の元の1つとして*rewrite*が等値性の証明をあべこべに使うということで
+す。つまり`y = x`が与えられているとき`p x`を`p y`に置き換えるのです。
+だから上の実装では`sym`を呼び出す必要があったんですね。
 
-### Use Case: Reversing Vectors
+### 用例：ベクタを反転する
 
-Rewrite rules are often required when we perform interesting type-level
-computations. For instance, we have already seen many interesting examples
-of functions operating on `Vect`, which allowed us to keep track of the
-exact lengths of the vectors involved, but one key functionality has been
-missing from our discussions so far, and for good reasons: Function
-`reverse`. Here is a possible implementation, which is how `reverse` is
-implemented for lists:
+書き換え規則はよく興味深い型水準計算を行う際に必要になります。例えば既
+に`Vect`を操作する関数の多くの興味深い例を見てきましたが、これらは関係
+するベクタの厳密な長さを把握し続けられるものでした。しかしもっともな理
+由があってここまでのお話では1つの鍵となる機能が欠けていました。関数
+`reverse`です。以下は考えられる実装で、リストに`reverse`を実装したやり
+かたになっています。
 
 
 ```repl
@@ -943,22 +901,21 @@ reverseVect' : Vect n a -> Vect n a
 reverseVect' = reverseOnto' []
 ```
 
-As you might have guessed, this will not compile as the length indices in
-the two clauses of `reverseOnto'` do not unify.
+推測されたかもしれませんがこれは`reverseOnto'`の2つの節の長さ指標が統
+合しないためコンパイルされません。
 
-The *nil* case is a case we've already seen above: Here `n` is zero, because
-the second vector is empty, so we have to convince Idris once again that `m
-+ 0 = m`:
+*nil*の場合は上で既に見た場合です。ここでは`n`がゼロですが、それは2つ
+ 目のベクタが空であり、Idrisを再び`m + 0 = m`だと説得せねばなりません。
 
 ```idris
 reverseOnto : Vect m a -> Vect n a -> Vect (m + n) a
 reverseOnto xs [] = rewrite addZeroRight m in xs
 ```
 
-The second case is more complex. Here, Idris fails to unify `S (m + len)`
-with `m + S len`, where `len` is the length of `ys`, the tail of the second
-vector. Module `Data.Nat` provides many proofs about arithmetic operations
-on natural numbers, one of which is `plusSuccRightSucc`. Here's its type:
+2つ目の場合はより複雑です。ここでIdrisは`S (m + len)`と`m + S len`を統
+合するのに失敗しています。ただし`len`は2つ目のベクタの尾鰭である`ys`の
+長さです。モジュール`Data.Nat`は自然数における算術操作についての多くの
+証明を提供しており、その1つが`plusSuccRightSucc`です。以下がその型です。
 
 ```repl
 Tutorial.Eq> :t plusSuccRightSucc
@@ -967,53 +924,52 @@ Data.Nat.plusSuccRightSucc :  (left : Nat)
                            -> S (left + right) = left + S right
 ```
 
-In our case, we want to replace `S (m + len)` with `m + S len`, so we will
-need the version with arguments flipped. However, there is one more
-obstacle: We need to invoke `plusSuccRightSucc` with the length of `ys`,
-which is not given as an implicit function argument of `reverseOnto`. We
-therefore need to pattern match on `n` (the length of the second vector), in
-order to bind the length of the tail to a variable. Remember, that we are
-allowed to pattern match on an erased argument only if the constructor used
-follows from a match on another, unerased, argument (`ys` in this
-case). Here's the implementation of the second case:
+ここでは`S (m + len)`を`m + S len`で置き換えたいので、引数が入れ替わっ
+たバージョンが必要です。しかしもう1つ障害物があります。
+`plusSuccRightSucc`を`reverseOnto`の暗黙の関数引数として与えられていな
+い`ys`の長さで呼び出す必要があるのです。したがって`n`（2つ目のベクタの
+長さ）でパターン照合する必要がありますが、これは尾鰭の長さを変数に束縛
+するためです。覚えておいてほしいのは、使われている構築子が別の消去され
+ていない引数での照合に従っているときにのみ、消去された引数でパターン照
+合することができるということです（この場合`ys`があたります）。以下は2
+つ目の場合の実装です。
 
 ```idris
 reverseOnto {n = S len} xs (x :: ys) =
   rewrite sym (plusSuccRightSucc m len) in reverseOnto (x :: xs) ys
 ```
 
-I know from my own experience that this can be highly confusing at first. If
-you use Idris as a general purpose programming language and not as a proof
-assistant, you probably will not have to use rewrite rules too often. Still,
-it is important to know that they exist, as they allow us to teach complex
-equivalences to Idris.
+私自身の経験からこれは最初のうち相当に混乱するものだと知っています。も
+しIdrisを証明支援ではなく汎用目的プログラミング言語として使うのであれ
+ば惧らくそこまで頻繁に書き換え規則を使わなければいけないことはないでしょ
+う。それでもそうしたものが存在すると知っておくことは大事です。複雑な等
+値性をIdrisに教えることができるからです。
 
-### A Note on Erasure
+### 消去についての補足
 
-Single value data types like `Unit`, `Equal`, or `SameSchema` have not
-runtime relevance, as values of these types are always identical.  We can
-therefore always use them as erased function arguments while still being
-able to pattern match on these values.  For instance, when you look at the
-type of `replace`, you will see that the equality proof is an erased
-argument.  This allows us to run arbitrarily complex computations to produce
-such values without fear of these computations slowing down the compiled
-Idris program.
+`Unit`、`Equal`、`SameSchema`といった単一値データ型は実行に関係しませ
+ん。というのもこれらの型の値は常に同値であるためです。したがって常にこ
+れらの値でパターン照合することが可能でありつつ、消去される関数引数とし
+て使うことができます。例えば`replace`の型を見れば等値性の証明が消去引
+数であることに気付きます。これによりそのような値を生み出す任意の複雑な
+計算がコンパイルされたIdrisプログラムを低速にしてしまうのではないかと
+恐れることなく、そのような計算を走らせることができるのです。
 
 ### 演習パート4
 
-1. Implement `plusSuccRightSucc` yourself.
+1. 自力で`plusSuccRightSucc`を実装してください。
 
-2. Proof that `minus n n` equals zero for all natural numbers `n`.
+2. `minus n n`がゼロに等しいことを全ての自然数`n`について証明してください。
 
-3. Proof that `minus n 0` equals n for all natural numbers `n`
+3. `minus n 0`が`n`に等しいことを全ての自然数`n`について証明してください。
 
-4. Proof that `n * 1 = n` and `1 * n = n` for all natural numbers `n`.
+4. `n * 1 = n`と`1 * n = n`を全ての自然数`n`について証明してください。
 
-5. Proof that addition of natural numbers is commutative.
+5. 自然数の和が可換であることを証明してください。
 
-6. Implement a tail-recursive version of `map` for vectors.
+6. ベクタの`map`の末尾再帰版を実装してください。
 
-7. Proof the following proposition:
+7. 以下の命題を証明してください。
 
    ```idris
    mapAppend :  (f : a -> b)
@@ -1022,19 +978,18 @@ Idris program.
              -> map f (xs ++ ys) = map f xs ++ map f ys
    ```
 
-8. Use the proof from exercise 7 to implement again a function for zipping
-   two `Table`s, this time using a rewrite rule plus `Data.HList.(++)`
-   instead of custom function `appRows`.
+8. 演習7の証明を使ってもう一度2つの`Table`を縫合する関数を実装してくださ
+   い。今回は`Data.HList.(++)`に加えて自前の関数`appRows`の代わりに書き換
+   え規則も使ってください。
 
 ## まとめ
 
-The concept of *types as propositions, values as proofs* is a very powerful
-tool for writing provably correct programs. We will therefore spend some
-more time defining data types for describing contracts between values, and
-values of these types as proofs that the contracts hold. This will allow us
-to describe necessary pre- and postconditions for our functions, thus
-reducing the need to return a `Maybe` or other failure type, because due to
-the restricted input, our functions can no longer fail.
+*命題としての型、証明としての値*という概念は証明上正しいプログラムを書
+ く上でとても強力な道具です。したがってもう少し時間を掛けて値の間の契
+ 約を記述するデータ型と,その契約を満たす証明としてのこれらの型の値を定
+ 義していきましょう。これにより必要な関数の前後条件を記述でき、したがっ
+ て`Maybe`や他の失敗型を返す必要が減ります。なぜなら制限された入力とな
+ るため関数が最早失敗することがなくなるからです。
 
 <!-- vi: filetype=idris2
 -->

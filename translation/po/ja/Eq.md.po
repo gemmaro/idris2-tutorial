@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-08-17 08:59+0900\n"
-"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial\n"
+"POT-Creation-Date: 2022-10-20 20:24+0900\n"
+"PO-Revision-Date: 2022-10-16 08:25+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -87,7 +87,7 @@ msgstr "演習パート4"
 #: ../src/Tutorial/Eq.md:1
 #, no-wrap
 msgid "Propositional Equality"
-msgstr ""
+msgstr "命題の等価性"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:9
@@ -98,10 +98,16 @@ msgid ""
 "relations - or *contracts* - between values as types, and how we can use "
 "values of these types as proofs that the contracts hold."
 msgstr ""
+"[前の章](DPair.md)で、どうすれば依存対と依存レコードを使って、実行時にのみ知"
+"られている値にパターン照合することでその値から*型*を計算することができるの"
+"か、を学びました。\n"
+"ここからは、どのようにして型としての値の間の関係……または*契約*……を記述するこ"
+"とができるのか、どのようにすればこれらの型の値を契約を充足する証明として使え"
+"るのか、を見ていきます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:10
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "module Tutorial.Eq\n"
 "\n"
@@ -112,89 +118,11 @@ msgid ""
 "\n"
 "%default total\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Folds\n"
+"module Tutorial.Eq\n"
 "\n"
-"import Data.List1\n"
-"import Data.Maybe\n"
+"import Data.Either\n"
+"import Data.HList\n"
 "import Data.Vect\n"
-"import Debug.Trace\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Functor\n"
-"\n"
-"import Data.List1\n"
-"import Data.String\n"
-"import Data.Vect\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.IO\n"
-"\n"
-"import Data.List1\n"
-"import Data.String\n"
-"import Data.Vect\n"
-"\n"
-"import System.File\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.IO\n"
-"\n"
-"import Data.List1\n"
-"import Data.String\n"
-"import Data.Vect\n"
-"\n"
-"import System.File\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Functor\n"
-"\n"
-"import Data.List1\n"
-"import Data.String\n"
-"import Data.Vect\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Folds\n"
-"\n"
-"import Data.List1\n"
-"import Data.Maybe\n"
-"import Data.Vect\n"
-"import Debug.Trace\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Prim\n"
-"\n"
-"import Data.Bits\n"
 "import Data.String\n"
 "\n"
 "%default total\n"
@@ -203,7 +131,7 @@ msgstr ""
 #: ../src/Tutorial/Eq.md:21
 #, no-wrap
 msgid "Equality as a Type"
-msgstr ""
+msgstr "型としての等価性"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:26
@@ -212,6 +140,10 @@ msgid ""
 "which we stored on disk as tables together with their schemata as shown in "
 "our discussion about dependent pairs:"
 msgstr ""
+"2つのCSVファイルの内容を結合したい場面を想像してください。\n"
+"この両方のファイルには、依存対についてお話ししたときに見たそれぞれのスキーマ"
+"とともに、\n"
+"表としてディスクに格納されています。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:27
@@ -239,6 +171,27 @@ msgid ""
 "\n"
 "concatTables1 : Table -> Table -> Maybe Table\n"
 msgstr ""
+"data ColType = I64 | Str | Boolean | Float\n"
+"\n"
+"Schema : Type\n"
+"Schema = List ColType\n"
+"\n"
+"IdrisType : ColType -> Type\n"
+"IdrisType I64     = Int64\n"
+"IdrisType Str     = String\n"
+"IdrisType Boolean = Bool\n"
+"IdrisType Float   = Double\n"
+"\n"
+"Row : Schema -> Type\n"
+"Row = HList . map IdrisType\n"
+"\n"
+"record Table where\n"
+"  constructor MkTable\n"
+"  schema : Schema\n"
+"  size   : Nat\n"
+"  rows   : Vect size (Row schema)\n"
+"\n"
+"concatTables1 : Table -> Table -> Maybe Table\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:55
@@ -248,6 +201,11 @@ msgid ""
 "\"Well,\" I hear you say, \"that shouldn't be a big issue! Just implement "
 "`Eq` for `ColType`\". Let's give this a try:"
 msgstr ""
+"どうにかして2つのスキーマが同値であることを検証できなければ、\n"
+"2つの行のベクタを結合することで`concatTables1`を実装することはできません。\n"
+"「それなら」とあなたが言うのが聞こえます。\n"
+"「大した問題ではありません。`ColType`に`Eq`を実装するだけです。」\n"
+"やってみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:56
@@ -264,6 +222,16 @@ msgid ""
 "  True  => ?what_now\n"
 "  False => Nothing\n"
 msgstr ""
+"Eq ColType where\n"
+"  I64     == I64     = True\n"
+"  Str     == Str     = True\n"
+"  Boolean == Boolean = True\n"
+"  Float   == Float   = True\n"
+"  _       == _       = False\n"
+"\n"
+"concatTables1 (MkTable s1 m rs1) (MkTable s2 n rs2) = case s1 == s2 of\n"
+"  True  => ?what_now\n"
+"  False => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:73
@@ -273,6 +241,10 @@ msgid ""
 "go ahead and invoke `Vect.(++)` anyway in the `True` case, Idris will "
 "respond with a type error."
 msgstr ""
+"どういうわけか動かないようです。\n"
+"穴開き`what_new`の文脈を調べると、Idrisはまだs1とs2が異なると考えています。\n"
+"それを脇目に`True`の場合で兎にも角にも`Vect.(++)`を呼び出したならば、\n"
+"Idrisは型エラーで応じます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:74
@@ -288,6 +260,15 @@ msgid ""
 "------------------------------\n"
 "what_now : Maybe Table\n"
 msgstr ""
+"Tutorial.Relations> :t what_now\n"
+"   m : Nat\n"
+"   s1 : List ColType\n"
+"   rs1 : Vect m (HList (map IdrisType s1))\n"
+"   n : Nat\n"
+"   s2 : List ColType\n"
+"   rs2 : Vect n (HList (map IdrisType s2))\n"
+"------------------------------\n"
+"what_now : Maybe Table\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:92
@@ -299,6 +280,12 @@ msgid ""
 "fact, the following implementation of `Eq ColType` would be perfectly fine "
 "as far as the type checker is concerned:"
 msgstr ""
+"問題は、たとえ`(==)`が`True`を返したとしても、\n"
+"Idrisにとって2つの値を統合する根拠がないことです。\n"
+"なぜなら`(==)`の結果には型が`Bool`であること以外の情報を持たないからです。\n"
+"*私達*はこれが`True`なら2つの値は同値だろうと考えますが、Idrisは説得を受けま"
+"せん。\n"
+"実際、以下の`Eq ColType`の実装は型検査器の知る限りでは全く問題ないでしょう。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:93
@@ -307,6 +294,8 @@ msgid ""
 "Eq ColType where\n"
 "  _       == _       = True\n"
 msgstr ""
+"Eq ColType where\n"
+"  _       == _       = True\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:106
@@ -320,12 +309,19 @@ msgid ""
 "function's result for us. We can do so manually, however, as we will see "
 "later."
 msgstr ""
+"なのでIdrisが私達を信用しないことは正しいのです。\n"
+"`(==)`の実装を調べてひとりでに`True`の結果が意味するところを解明してくれるこ"
+"とを期待するかもしれませんが、\n"
+"これは一般的にうまくいくものではありません。\n"
+"なぜならほとんどの場合確認すべき計算経路の数はあまりにも多過ぎるからです。\n"
+"結果として、Idrisは関数を統合時に評価することができますが、\n"
+"関数の結果から関数の引数についての情報を遡って解析してはくれません。"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:107
 #, no-wrap
 msgid "A Type for equal Schemata"
-msgstr ""
+msgstr "等しいスキーマのための型"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:114
@@ -336,6 +332,11 @@ msgid ""
 "repeat time again for different use cases: We encode a contract between "
 "values in an indexed data type:"
 msgstr ""
+"上で記述した問題は[単独型](DPair.md#erased-existentials)の利点についてお話し"
+"した際に見たことと似ています。\n"
+"つまり型が充分に精密でないのです。\n"
+"今から行っていくことは、異なる用例で同じことの繰り返しをすることです。\n"
+"値の間の契約を指標化されたデータ型に符号化するのです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:115
@@ -344,6 +345,8 @@ msgid ""
 "data SameSchema : (s1 : Schema) -> (s2 : Schema) -> Type where\n"
 "  Same : SameSchema s s\n"
 msgstr ""
+"data SameSchema : (s1 : Schema) -> (s2 : Schema) -> Type where\n"
+"  Same : SameSchema s s\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:124
@@ -352,6 +355,11 @@ msgid ""
 "type `Schema`. But note also that the sole constructor restricts the values "
 "we allow for `s1` and `s2`: The two indices *must* be identical."
 msgstr ""
+"まず、`SameSchema`が型`Schema`の2つの値で指標付けられた型族である点に着目して"
+"ください。\n"
+"でも唯一の構築子が`s1`と`s2`の値に制限を課していることにも注意してくださ"
+"い。\n"
+"2つの指標は同値である*必要*があります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:128
@@ -360,17 +368,20 @@ msgid ""
 "equality of two schemata, which would try and return a value of type "
 "`SameSchema s1 s2`:"
 msgstr ""
+"なぜこれが便利なのでしょうか？\n"
+"それでは、2つのスキーマの等価性を確認する関数を想像してください。\n"
+"この関数は型`SameSchema s1 s2`の値を返そうとします。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:129
 #, no-wrap
 msgid "sameSchema : (s1, s2 : Schema) -> Maybe (SameSchema s1 s2)\n"
-msgstr ""
+msgstr "sameSchema : (s1, s2 : Schema) -> Maybe (SameSchema s1 s2)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:134
 msgid "We could then use this function to implement `concatTables`:"
-msgstr ""
+msgstr "そうしてこの関数を使えば`concatTables`を実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:135
@@ -381,12 +392,18 @@ msgid ""
 "  Just Same => Just $ MkTable s1 _ (rs1 ++ rs2)\n"
 "  Nothing   => Nothing\n"
 msgstr ""
+"concatTables : Table -> Table -> Maybe Table\n"
+"concatTables (MkTable s1 m rs1) (MkTable s2 n rs2) = case sameSchema s1 s2 of\n"
+"  Just Same => Just $ MkTable s1 _ (rs1 ++ rs2)\n"
+"  Nothing   => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:143
 msgid ""
 "It worked! What's going on here? Well, let's inspect the types involved:"
 msgstr ""
+"動きました！何が起こっているのでしょうか？\n"
+"では、関係している型を調べましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:144
@@ -397,33 +414,15 @@ msgid ""
 "  Just Same => ?almost_there\n"
 "  Nothing   => Nothing\n"
 msgstr ""
+"concatTables2 : Table -> Table -> Maybe Table\n"
+"concatTables2 (MkTable s1 m rs1) (MkTable s2 n rs2) = case sameSchema s1 s2 of\n"
+"  Just Same => ?almost_there\n"
+"  Nothing   => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:152
-#, fuzzy
 msgid "At the REPL, we get the following context for `almost_there`:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"このファイルをREPLセッションに読み込んで以下を試してみましょう。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "REPLで、以下の`almost_there`の文脈が得られます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:153
@@ -439,6 +438,15 @@ msgid ""
 "------------------------------\n"
 "almost_there : Maybe Table\n"
 msgstr ""
+"Tutorial.Relations> :t almost_there\n"
+"   m : Nat\n"
+"   s2 : List ColType\n"
+"   rs1 : Vect m (HList (map IdrisType s2))\n"
+"   n : Nat\n"
+"   rs2 : Vect n (HList (map IdrisType s2))\n"
+"   s1 : List ColType\n"
+"------------------------------\n"
+"almost_there : Maybe Table\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:168
@@ -447,6 +455,10 @@ msgid ""
 "result of `sameSchema s1 s2`, is a *witness* that `s1` and `s2` are actually "
 "identical, because this is what we specified in the definition of `Same`."
 msgstr ""
+"ほら、`rs1`と`rs2`の型が統合されていますね？\n"
+"`sameSchema s1 s2`の結果として来た値`Same`は、\n"
+"`s1`と`s2`が実は同値であることの*目撃者*なのです。\n"
+"なぜならこれが`Same`の定義で指定したことだからです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:172
@@ -455,6 +467,9 @@ msgid ""
 "another data type for specifying when two values of type `ColType` are "
 "identical:"
 msgstr ""
+"残っているのは`sameSchema`を実装することだけです。\n"
+"このためには、型`ColType`の2つの値が同値である場合に指定するための別のデータ"
+"型を書いていきます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:173
@@ -463,6 +478,8 @@ msgid ""
 "data SameColType : (c1, c2 : ColType) -> Type where\n"
 "  SameCT : SameColType c1 c1\n"
 msgstr ""
+"data SameColType : (c1, c2 : ColType) -> Type where\n"
+"  SameCT : SameColType c1 c1\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:180
@@ -470,6 +487,8 @@ msgid ""
 "We can now define several utility functions. First, one for figuring out if "
 "two column types are identical:"
 msgstr ""
+"これでいくつかの便利関数を定義できます。\n"
+"まず2つの行の型が同値であるかどうかを調べるものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:181
@@ -482,6 +501,12 @@ msgid ""
 "sameColType Float   Float   = Just SameCT\n"
 "sameColType _ _             = Nothing\n"
 msgstr ""
+"sameColType : (c1, c2 : ColType) -> Maybe (SameColType c1 c2)\n"
+"sameColType I64     I64     = Just SameCT\n"
+"sameColType Str     Str     = Just SameCT\n"
+"sameColType Boolean Boolean = Just SameCT\n"
+"sameColType Float   Float   = Just SameCT\n"
+"sameColType _ _             = Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:195
@@ -491,6 +516,11 @@ msgid ""
 "first line, the output type is `Maybe (SameColType I64 I64)` as you can "
 "easily verify yourself by inserting a hole and checking its type at the REPL."
 msgstr ""
+"これにはIdrisも説得されます。\n"
+"なぜならそれぞれのパターン照合で照合した値に応じて返却型が調整されるからで"
+"す。\n"
+"例えば最初の行で出力型は`Maybe (SameColType I64 I64)`ですが、\n"
+"これはREPLで穴開きを入れて型を確認することで簡単に手元で確かめられます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:203
@@ -502,6 +532,14 @@ msgid ""
 "which will then be used to convince the type checker about some fact we "
 "already take for granted but Idris does not."
 msgstr ""
+"もう2つの小間物が必要になります。\n"
+"nilとconsの場合のための型`SameSchema`の値を作る関数です。\n"
+"実装がどれほど取るに足らないものか見てください。\n"
+"それでもそのような小さな証明を手早く書かなくてはならないことはしばしばで"
+"す。\n"
+"（時節でなぜ*証明*と呼んでいるのかを説明します。）\n"
+"そうしてこれらの証明を、私達が既に言うまでもないこととしているが\n"
+"Idrisにとってはそうでない事実について、型検査器を説得するのに使います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:204
@@ -515,6 +553,13 @@ msgid ""
 "         -> SameSchema (c1 :: s1) (c2 :: s2)\n"
 "sameCons SameCT Same = Same\n"
 msgstr ""
+"sameNil : SameSchema [] []\n"
+"sameNil = Same\n"
+"\n"
+"sameCons :  SameColType c1 c2\n"
+"         -> SameSchema s1 s2\n"
+"         -> SameSchema (c1 :: s1) (c2 :: s2)\n"
+"sameCons SameCT Same = Same\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:221
@@ -526,6 +571,13 @@ msgid ""
 "unification of `c1 :: s1` and `c2 :: s2` immediately follows.  With these, "
 "we can finally implement `sameSchema`:"
 msgstr ""
+"いつも通り、`sameCons`の右側を穴開きで置き換えてREPLで型と文脈を確認すること"
+"で、\n"
+"何が起こっているのかを理解する助けになります。\n"
+"左側の値`SameCT`と`Same`の存在はIdrisに`c1`と`c2`及び`s1`と`s2`を統合すること"
+"を強制します。\n"
+"そこから`c1 :: s1`と`c2 :: s2`の統合が直ちに従います。\n"
+"これらを以って遂に`sameSchema`を実装することができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:222
@@ -537,6 +589,11 @@ msgid ""
 "sameSchema (x :: xs) []        = Nothing\n"
 "sameSchema []        (x :: xs) = Nothing\n"
 msgstr ""
+"sameSchema []        []        = Just sameNil\n"
+"sameSchema (x :: xs) (y :: ys) =\n"
+"  [| sameCons (sameColType x y) (sameSchema xs ys) |]\n"
+"sameSchema (x :: xs) []        = Nothing\n"
+"sameSchema []        (x :: xs) = Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:238
@@ -548,12 +605,19 @@ msgid ""
 "view types as mathematical *propositions*, and values of these types a "
 "*proofs* that these propositions hold."
 msgstr ""
+"ここで記述したことはインターフェース`Eq`や`(==)`演算子によりもたらされるもの"
+"よりずっと強力な等価性の形式です。\n"
+"型水準指標を統合しようとする際に型検査器によって受け付けられる値の等価性なの"
+"です。\n"
+"これは*命題等値性*とも呼ばれています。\n"
+"以降で見ていきますが、型と数学的な*命題*として、\n"
+"これらの型の値をこれらの命題が持つ*証明*として、見ることができるのです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:239
 #, no-wrap
 msgid "Type `Equal`"
-msgstr ""
+msgstr "型`Equal`"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:251
@@ -568,11 +632,21 @@ msgid ""
 "disambiguate propositional from definitional equality, you can also use "
 "operator `(===)` for the former."
 msgstr ""
+"命題の等値性は基礎的な概念なので、*Prelude*はこのための汎用的なデータ型を既に"
+"輸出しています。\n"
+"それが`Equal`で、その唯一のデータ型は`Refl`です。\n"
+"加えて命題の等値性を表す組込み演算子もあり、`Equal`に脱糖されます。\n"
+"それが`(=)`です。\n"
+"この演算子はときに混乱に繋がることもありますが、\n"
+"それは等号が*定義の等値性*にも使われているからです。\n"
+"定義の等値性とは関数の実装で左側と右側が等しいものとして定義する記述です。\n"
+"定義の方の等値性ではなく命題の方に曖昧回避したいときは前者に演算子`(===)`を使"
+"うこともできます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:253
 msgid "Here is another implementation of `concatTables`:"
-msgstr "考えられる実装はこちらです。"
+msgstr "`concatTables`の別実装は以下です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:254
@@ -601,6 +675,28 @@ msgid ""
 "  Just Refl => Just $ MkTable _ _ (rs1 ++ rs2)\n"
 "  Nothing   => Nothing\n"
 msgstr ""
+"eqColType : (c1,c2 : ColType) -> Maybe (c1 = c2)\n"
+"eqColType I64     I64     = Just Refl\n"
+"eqColType Str     Str     = Just Refl\n"
+"eqColType Boolean Boolean = Just Refl\n"
+"eqColType Float   Float   = Just Refl\n"
+"eqColType _ _             = Nothing\n"
+"\n"
+"eqCons :  {0 c1,c2 : a}\n"
+"       -> {0 s1,s2 : List a}\n"
+"       -> c1 = c2 -> s1 = s2 ->  c1 :: s1 = c2 :: s2\n"
+"eqCons Refl Refl = Refl\n"
+"\n"
+"eqSchema : (s1,s2 : Schema) -> Maybe (s1 = s2)\n"
+"eqSchema []        []        = Just Refl\n"
+"eqSchema (x :: xs) (y :: ys) = [| eqCons (eqColType x y) (eqSchema xs ys) |]\n"
+"eqSchema (x :: xs) []        = Nothing\n"
+"eqSchema []        (x :: xs) = Nothing\n"
+"\n"
+"concatTables3 : Table -> Table -> Maybe Table\n"
+"concatTables3 (MkTable s1 m rs1) (MkTable s2 n rs2) = case eqSchema s1 s2 of\n"
+"  Just Refl => Just $ MkTable _ _ (rs1 ++ rs2)\n"
+"  Nothing   => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:285
@@ -609,6 +705,9 @@ msgid ""
 "properties of equality proofs. You'll have to come up with the types of the "
 "functions yourself, as the implementations will be incredibly simple."
 msgstr ""
+"以下の演習ではいくつかの等値性の証明におけるとても基本的な性質を実装していく"
+"ことになります。\n"
+"実装は物凄く簡素なので、関数の型は自力で思い付かなくてはいけません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:289
@@ -617,21 +716,24 @@ msgid ""
 "\"transitive\" mean, quickly read about equivalence relations [here](https://"
 "en.wikipedia.org/wiki/Equivalence_relation)."
 msgstr ""
+"補足：用語「反射的」「対称的」「推移的」が意味することが思い出せなければ、\n"
+"[こちら](https://en.wikipedia.org/wiki/Equivalence_relation)で同値関係につい"
+"て軽く読んでください。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Eq.md:291
 msgid "Show that `SameColType` is a reflexive relation."
-msgstr ""
+msgstr "`SameColType`が反射関係の1つであることを示してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Eq.md:293
 msgid "Show that `SameColType` is a symmetric relation."
-msgstr ""
+msgstr "`SameColType`が対称関係の1つであることを示してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Eq.md:295
 msgid "Show that `SameColType` is a transitive relation."
-msgstr ""
+msgstr "`SameColType`が推移関係の1つであることを示してください。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Eq.md:299
@@ -640,6 +742,8 @@ msgid ""
 "that from a value of type `SameColType c1 c2` follows that `f c1` and `f c2` "
 "are equal."
 msgstr ""
+"任意の型`a`について、`f`を型`ColType -> a`の関数であるとします。\n"
+"型`SameColType c1 c2`の値から`f c1`と`f c2`が等しいことを示してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:303
@@ -648,6 +752,9 @@ msgid ""
 "`sym`, `trans`, and `cong`. Reflexivity comes from the data constructor "
 "`Refl` itself."
 msgstr ""
+"`(=)`について上の性質は*Prelude*で関数`sym`、`trans`、`cong`として手に入りま"
+"す。\n"
+"反射性はデータ構築子`Refl`そのものから来ています。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Eq.md:307
@@ -655,13 +762,15 @@ msgid ""
 "Implement a function for verifying that two natural numbers are identical. "
 "Try using `cong` in your implementation."
 msgstr ""
+"2つの自然数が同値か検証する関数を実装してください。\n"
+"実装では`cong`を使ってみてください。"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/Eq.md:310
 msgid ""
 "Use the function from exercise 5 for zipping two `Table`s if they have the "
 "same number of rows."
-msgstr ""
+msgstr "演習5の関数を使い、同数の行があれば2つの`Table`を縫合してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:315
@@ -672,12 +781,16 @@ msgid ""
 "   not automatically figure out that the types unify when\n"
 "   using `HList.(++)`:\n"
 msgstr ""
+"   ヒント：`Vect.zipWith`を使ってください。\n"
+"   このために自前の関数`appRows`を実装する必要があるでしょう。\n"
+"   なぜなら`HList.(++)`を使うときは、\n"
+"   型が統合されることを、Idrisがひとりでに解明しないためです。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:316
 #, no-wrap
 msgid "   appRows : {ts1 : _} -> Row ts1 -> Row ts2 -> Row (ts1 ++ ts2)\n"
-msgstr ""
+msgstr "   appRows : {ts1 : _} -> Row ts1 -> Row ts2 -> Row (ts1 ++ ts2)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:323
@@ -685,12 +798,15 @@ msgid ""
 "We will later learn how to use *rewrite rules* to circumvent the need of "
 "writing custom functions like `appRows` and use `(++)` in `zipWith` directly."
 msgstr ""
+"あとで*書き換え規則*の使い方を学び、\n"
+"`appRows`のような自前の関数を書く必要があるところを回避したり、\n"
+"`(++)`を`zipWith`で直接使ったりしていきます。"
 
 #. type: Title ##
 #: ../src/Tutorial/Eq.md:324
 #, no-wrap
 msgid "Programs as Proofs"
-msgstr ""
+msgstr "証明としてのプログラム"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:333
@@ -700,36 +816,22 @@ msgid ""
 "programming language with a sufficiently rich type system as a mathematical "
 "proposition and a total program calculating a *value* of this type as a "
 "proof that the proposition holds. This is also known as the [Curry-Howard "
-"isomorphism](https://en.wikipedia.org/wiki/Curry"
-"%E2%80%93Howard_correspondence)."
+"isomorphism](https://en.wikipedia.org/wiki/"
+"Curry%E2%80%93Howard_correspondence)."
 msgstr ""
+"数学者*Haskell Curry*と論理学者*William Alvin Howard*による有名な考察はある結"
+"論を導きだしました。\n"
+"それは充分に豊かな型システムを備えるプログラム言語における*型*を数学的な命題"
+"として、\n"
+"そしてこの型の*値*を計算する全域なプログラムを命題が満たす証明として、それぞ"
+"れ見ることができるということです。\n"
+"これは[Curry-Howard同型写像](https://en.wikipedia.org/wiki/"
+"Curry%E2%80%93Howard_correspondence)としても知られています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:336
-#, fuzzy
 msgid "For instance, here is a simple proof that one plus one equals two:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"例えば、以下は自然数の加算の実装です。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "例えば、以下は1足す1が2に等しいことの単純な証明です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:337
@@ -738,6 +840,8 @@ msgid ""
 "onePlusOne : the Nat 1 + 1 = 2\n"
 "onePlusOne = Refl\n"
 msgstr ""
+"onePlusOne : the Nat 1 + 1 = 2\n"
+"onePlusOne = Refl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:346
@@ -746,6 +850,9 @@ msgid ""
 "already stated some more interesting things in the exercises. For instance, "
 "the symmetry and transitivity of `SameColType`:"
 msgstr ""
+"Idrisは統合によりこれを解くため上の証明は取るに足らないものです。\n"
+"しかし既に演習でいくつかのより興味深いことを記しました。\n"
+"例えば`SameColType`の対称性と推移性は次の通り。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:347
@@ -757,6 +864,11 @@ msgid ""
 "sctTransitive : SameColType c1 c2 -> SameColType c2 c3 -> SameColType c1 c3\n"
 "sctTransitive SameCT SameCT = SameCT\n"
 msgstr ""
+"sctSymmetric : SameColType c1 c2 -> SameColType c2 c1\n"
+"sctSymmetric SameCT = SameCT\n"
+"\n"
+"sctTransitive : SameColType c1 c2 -> SameColType c2 c3 -> SameColType c1 c3\n"
+"sctTransitive SameCT SameCT = SameCT\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:357
@@ -764,12 +876,14 @@ msgid ""
 "Note, that a type alone is not a proof. For instance, we are free to state "
 "that one plus one equals three:"
 msgstr ""
+"なお、型だけでは証明ではありません。\n"
+"例えば1足す1が3だと記すことは自由です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:358
 #, no-wrap
 msgid "onePlusOneWrong : the Nat 1 + 1 = 3\n"
-msgstr ""
+msgstr "onePlusOneWrong : the Nat 1 + 1 = 3\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:365
@@ -778,12 +892,15 @@ msgid ""
 "way. We say: \"The type `the Nat 1 + 1 = 3` is *uninhabited*\", meaning, "
 "that there is no value of this type."
 msgstr ""
+"しかしこれを証明上全域に実装するとなると手こずることでしょう。\n"
+"これを「型`the Nat 1 + 1 = 3`は*非現住*である」と言います。\n"
+"その意味はこの型の値は1つもないということです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:366
 #, no-wrap
 msgid "When Proofs replace Tests"
-msgstr ""
+msgstr "証明がテストを置き換えるとき"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:373
@@ -793,59 +910,16 @@ msgid ""
 "by proofing some properties about them. For instance, here is a proposition "
 "that `map` on list does not change the number of elements in the list:"
 msgstr ""
+"コンパイル時の証明のいくつかの多様な用例を見ていきます。\n"
+"とても直感的なものとしては、関数についての性質を証明することにより、その関数"
+"がそうあるべきように振る舞うことを示すことです。\n"
+"例えば以下はリストにおける`map`がリスト中の要素数を変えないという命題です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:374
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "mapListLength : (f : a -> b) -> (as : List a) -> length as = length (map f as)\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   fromList : (as : List a) -> Vect (length as) a\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
-"     Nil  : List01 False a\n"
-"     (::) : a -> List01 False a -> List01 ne a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
-"     Nil  : List01 False a\n"
-"     (::) : a -> List01 False a -> List01 ne a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"data Vect : (len : Nat) -> (a : Type) -> Type where\n"
-"  Nil  : Vect 0 a\n"
-"  (::) : (x : a) -> (xs : Vect n a) -> Vect (S n) a\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "mapListLength : (f : a -> b) -> (as : List a) -> length as = length (map f as)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:381
@@ -854,6 +928,10 @@ msgid ""
 "`a` to `b` and for all lists `as` holding values of type `a`, the length of "
 "`map f as` is the same the as the length of the original list."
 msgstr ""
+"これは全称量化された表明として読まれます。\n"
+"つまり`a`から`b`への全ての関数`f`と型`a`の値を持つ全てのリスト`as`につい"
+"て、\n"
+"`map f as`の長さは元のリストの長さと同じです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:387
@@ -864,34 +942,17 @@ msgid ""
 "the input as well, it follows immediately that the result will be `Nil` as "
 "well:"
 msgstr ""
+"`mapListLength`は`as`におけるパターン照合により実装できます。\n"
+"`Nil`の場合は些細なものです。\n"
+"Idrisはこれを統合により解きます。\n"
+"入力リスト (`Nil`) の値を知っており、`map`もまた入力におけるパターン照合によ"
+"り実装されているため、結果も同じように`Nil`になることが直ちに従います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:388
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "mapListLength f []        = Refl\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect _ Nil       = Nil\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"traverseEither fun []        = Right []\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "mapListLength f []        = Refl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:395
@@ -900,62 +961,28 @@ msgid ""
 "that we can proof that the length of a map over the tail will stay the same "
 "by means of recursion:"
 msgstr ""
+"`cons`の場合はより込み入っているため、一歩ずつ進めていきます。\n"
+"まず、尾鰭上で写す長さが、再帰により同じままであることを証明することができま"
+"すね。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:397
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "mapListLength f (x :: xs) = case mapListLength f xs of\n"
 "  prf => ?mll1\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"traverseEither fun (x :: xs) =\n"
-"  case (fun x, traverseEither fun xs) of\n"
-"   p => ?impl_2\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"mapListLength f (x :: xs) = case mapListLength f xs of\n"
+"  prf => ?mll1\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:403
-#, fuzzy
 msgid "Let's inspect the types and context we have here:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"REPLで新しい穴あきを調べてみましょう。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "ここで型と文脈を調べてみましょう。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:404
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 " 0 b : Type\n"
 " 0 a : Type\n"
@@ -966,31 +993,14 @@ msgid ""
 "------------------------------\n"
 "mll1 : S (length xs) = S (length (map f xs))\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Functions2> :t impl_6\n"
 " 0 b : Type\n"
 " 0 a : Type\n"
-" 0 e : Type\n"
 "   xs : List a\n"
-"   fun : a -> Either e b\n"
+"   f : a -> b\n"
 "   x : a\n"
-"   y : e\n"
-"   z : e\n"
+"   prf : length xs = length (map f xs)\n"
 "------------------------------\n"
-"impl_6 : Either e (List b)\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"mll1 : S (length xs) = S (length (map f xs))\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:422
@@ -1002,33 +1012,18 @@ msgid ""
 "abbreviation for *congruence*). We can thus implement the *cons* case "
 "concisely like so:"
 msgstr ""
+"というわけで、型`length xs = length (map f xs)`の証明があり、\n"
+"`map`の実装からIdrisは実際に求めているものが型`S (length xs) = S (length "
+"(map f xs))`の結果であると結論付けています。\n"
+"*Prelude*の関数*cong*はまさにこのためにあります。\n"
+"（\"cong\"は*congruence*の略語です。）\n"
+"そうして以下のように簡潔に*cons*の場合を実装することができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:423
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "mapListLength f (x :: xs) = cong S $ mapListLength f xs\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect f (x :: xs) = f x :: mapVect f xs\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "mapListLength f (x :: xs) = cong S $ mapListLength f xs\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:431
@@ -1037,6 +1032,10 @@ msgid ""
 "mathematical sense that our function will not affect the length of our list. "
 "We no longer need a unit test or similar program to verify this."
 msgstr ""
+"ここで達成できたことをしばし噛み締めましょう。\n"
+"この関数が決してリストの長さに影響を与えないことの、数学的な意味での*証明*で"
+"す。\n"
+"もはや検証のために単体テストやそれに類するプログラムは必要ないのです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:435
@@ -1044,6 +1043,8 @@ msgid ""
 "Before we continue, please note an important thing: In our case expression, "
 "we used a *variable* for the result from the recursive call:"
 msgstr ""
+"続ける前に重要な点に注意してください。\n"
+"case式中で再帰呼び出しからの結果に*変数*を使いました。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:436
@@ -1052,6 +1053,8 @@ msgid ""
 "mapListLength f (x :: xs) = case mapListLength f xs of\n"
 "  prf => cong S prf\n"
 msgstr ""
+"mapListLength f (x :: xs) = case mapListLength f xs of\n"
+"  prf => cong S prf\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:448
@@ -1063,6 +1066,12 @@ msgid ""
 "computations on such a proof, use a variable and the left and right-hand "
 "sides will remain distinct."
 msgstr ""
+"ここでは2つの長さを統合したいとはしていません。\n"
+"なぜなら`cong`の呼び出しに区別が必要だったからです。\n"
+"したがって、もし2つの変数を統合するために型`x = y`の証明が必要であれば、\n"
+"パターン照合中で`Refl`データ構築子を使ってください。\n"
+"他方でもしそのような証明においてさらに計算を走らせる必要があれば、\n"
+"変数を使い左側と右側が区別されたままにしておいてください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:453
@@ -1072,6 +1081,10 @@ msgid ""
 "can be very hard in general, but here it can be done with a mere pattern "
 "match:"
 msgstr ""
+"以下は前の章からの別の例です。\n"
+"列の型を解析し印字することが正しく行われることを示したいとします。\n"
+"構文解析器についての証明を書くことは一般にとても難しくなりえますが、\n"
+"以下では単なるパターン照合により完了します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:454
@@ -1096,6 +1109,24 @@ msgid ""
 "showReadColType Boolean = Refl\n"
 "showReadColType Float   = Refl\n"
 msgstr ""
+"showColType : ColType -> String\n"
+"showColType I64      = \"i64\"\n"
+"showColType Str      = \"str\"\n"
+"showColType Boolean  = \"boolean\"\n"
+"showColType Float    = \"float\"\n"
+"\n"
+"readColType : String -> Maybe ColType\n"
+"readColType \"i64\"      = Just I64\n"
+"readColType \"str\"      = Just Str\n"
+"readColType \"boolean\"  = Just Boolean\n"
+"readColType \"float\"    = Just Float\n"
+"readColType s          = Nothing\n"
+"\n"
+"showReadColType : (c : ColType) -> readColType (showColType c) = Just c\n"
+"showReadColType I64     = Refl\n"
+"showReadColType Str     = Refl\n"
+"showReadColType Boolean = Refl\n"
+"showReadColType Float   = Refl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:477
@@ -1103,6 +1134,8 @@ msgid ""
 "Such simple proofs give us quick but strong guarantees that we did not make "
 "any stupid mistakes."
 msgstr ""
+"こうした単純な証明は、手軽ではあれど、\n"
+"いかなる間抜けな誤りも犯していないことの強力な保証をもたらしてくれます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:485
@@ -1114,12 +1147,19 @@ msgid ""
 "assistant, we are free to choose whether some aspect of our code needs such "
 "strong guarantees or not."
 msgstr ""
+"今まで見てきた例はとても簡単に実装できました。\n"
+"一般にはこの限りではなく、プログラムについての興味深い事柄を証明するために"
+"は、追加でいくつかの技法について学ばねばならないでしょう。\n"
+"しかしながらIdrisを証明支援ではなく汎用用途のプログラミング言語として使ってい"
+"る時も、\n"
+"コードのいくつかの側面でこのような強力な保証が必要かどうかを選ぶことは自由な"
+"のです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:486
 #, no-wrap
 msgid "A Note of Caution: Lowercase Identifiers in Function Types"
-msgstr ""
+msgstr "注意喚起の補足：関数型での小文字の識別子"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:494
@@ -1130,38 +1170,23 @@ msgid ""
 "arguments).  For instance, here is a try at proofing the identity functor "
 "law for `Maybe`:"
 msgstr ""
+"上で行ったように証明の型を書き下す際、以下の罠に嵌らないよう細心の注意を払わ"
+"ねばなりません。\n"
+"一般にIdrisは関数型中の小文字の識別子を型変数（消去される暗黙引数）として扱い"
+"ます。\n"
+"例えば以下では`Maybe`に同値関手則を証明しようとしています。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:495
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "mapMaybeId1 : (ma : Maybe a) -> map id ma = ma\n"
 "mapMaybeId1 Nothing  = Refl\n"
 "mapMaybeId1 (Just x) = ?mapMaybeId1_rhs\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"maybe2 : b -> (a -> b) -> Maybe a -> b\n"
-"maybe2 x f Nothing = x\n"
-"maybe2 x f (Just y) = ?maybe2_rhs_1\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"fromMaybe : (deflt : a) -> (ma : Maybe a) -> a\n"
-"fromMaybe deflt Nothing = deflt\n"
-"fromMaybe _    (Just x) = x\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapMaybe : (a -> b) -> Maybe a -> Maybe b\n"
-"mapMaybe f Nothing  = Nothing\n"
-"mapMaybe f (Just v) = Just (f v)\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"mapMaybeId1 : (ma : Maybe a) -> map id ma = ma\n"
+"mapMaybeId1 Nothing  = Refl\n"
+"mapMaybeId1 (Just x) = ?mapMaybeId1_rhs\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:504
@@ -1170,10 +1195,13 @@ msgid ""
 "as an implicit argument as can easily be seen when inspecting the context of "
 "`mapMaybeId1_rhs`:"
 msgstr ""
+"`Just`の場合を実装することは叶わないでしょう。\n"
+"なぜならIdrisは`id`を暗黙引数として扱うからです。\n"
+"`mapMaybeId1_rhs`の文脈を調べれば簡単にわかります。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:505
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Tutorial.Relations> :t mapMaybeId1_rhs\n"
 " 0 a : Type\n"
@@ -1182,42 +1210,12 @@ msgid ""
 "------------------------------\n"
 "mapMaybeId1_rhs : Just (id x) = Just x\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Dependent> :t rest\n"
+"Tutorial.Relations> :t mapMaybeId1_rhs\n"
 " 0 a : Type\n"
-" 0 b : Type\n"
+" 0 id : a -> a\n"
 "   x : a\n"
-"   xs : Vect n a\n"
-"   f : a -> b\n"
-" 0 n : Nat\n"
 "------------------------------\n"
-"rest : Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Functions2> :t impl_0\n"
-" 0 b : Type\n"
-" 0 a : Type\n"
-" 0 e : Type\n"
-"   fun : a -> Either e b\n"
-"------------------------------\n"
-"impl_0 : Either e (List b)\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"mapMaybeId1_rhs : Just (id x) = Just x\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:517
@@ -1227,6 +1225,8 @@ msgid ""
 "fact, when type-checking this module, Idris will issue a warning that\n"
 "parameter `id` is shadowing an existing function:\n"
 msgstr ""
+"見ての通り`id`は型`a -> a`の消去引数です。\n"
+"そして実際にこのモジュールを型検査するとき、Idrisは引数`id`が既存の関数に影を落としていると警告を上げます。\n"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:518
@@ -1236,6 +1236,9 @@ msgid ""
 "You may be unintentionally shadowing the associated global definitions:\n"
 "  id is shadowing Prelude.Basics.id\n"
 msgstr ""
+"Warning: We are about to implicitly bind the following lowercase names.\n"
+"You may be unintentionally shadowing the associated global definitions:\n"
+"  id is shadowing Prelude.Basics.id\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:527
@@ -1243,6 +1246,9 @@ msgid ""
 "The same is not true for `map`: Since we explicitly pass arguments to `map`, "
 "Idris treats this as a function name and not as an implicit argument."
 msgstr ""
+"同じことは`map`には当て嵌まりません。\n"
+"明示的に`map`に引数を渡しているため、Idrisはこれを暗黙引数としてではなく関数"
+"名として扱います。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:530
@@ -1250,10 +1256,13 @@ msgid ""
 "You have several options here. For instance, you could use an uppercase "
 "identifier, as these will never be treated as implicit arguments:"
 msgstr ""
+"ここではいくつかの選択肢があります。\n"
+"例えば大文字の識別子を使うことができます。\n"
+"こうすれば決して暗黙引数として扱われることがないからです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:531
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Id : a -> a\n"
 "Id = id\n"
@@ -1262,26 +1271,12 @@ msgid ""
 "mapMaybeId2 Nothing  = Refl\n"
 "mapMaybeId2 (Just x) = Refl\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"fromMaybe : (deflt : a) -> (ma : Maybe a) -> a\n"
-"fromMaybe deflt Nothing = deflt\n"
-"fromMaybe _    (Just x) = x\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapMaybe : (a -> b) -> Maybe a -> Maybe b\n"
-"mapMaybe f Nothing  = Nothing\n"
-"mapMaybe f (Just v) = Just (f v)\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Id : a -> a\n"
+"Id = id\n"
+"\n"
+"mapMaybeId2 : (ma : Maybe a) -> map Id ma = ma\n"
+"mapMaybeId2 Nothing  = Refl\n"
+"mapMaybeId2 (Just x) = Refl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:543
@@ -1290,35 +1285,21 @@ msgid ""
 "can prefix `id` with part of its namespace, which will immediately resolve "
 "the issue:"
 msgstr ""
+"代替として……そしてこれがこの場合を制御するより好ましい方法です……`id`に名前空"
+"間の一部を前置することができます。\n"
+"こうすれば直ちに問題が解決します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:544
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "mapMaybeId : (ma : Maybe a) -> map Prelude.id ma = ma\n"
 "mapMaybeId Nothing  = Refl\n"
 "mapMaybeId (Just x) = Refl\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"fromMaybe : (deflt : a) -> (ma : Maybe a) -> a\n"
-"fromMaybe deflt Nothing = deflt\n"
-"fromMaybe _    (Just x) = x\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapMaybe : (a -> b) -> Maybe a -> Maybe b\n"
-"mapMaybe f Nothing  = Nothing\n"
-"mapMaybe f (Just v) = Just (f v)\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"mapMaybeId : (ma : Maybe a) -> map Prelude.id ma = ma\n"
+"mapMaybeId Nothing  = Refl\n"
+"mapMaybeId (Just x) = Refl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:554
@@ -1329,6 +1310,11 @@ msgid ""
 "get highlighted differently: `map` as a function name, `id` as a bound "
 "variable."
 msgstr ""
+"補足：エディタで（例えば[idris2-lsp plugin](https://github.com/idris-"
+"community/idris2-lsp)を使うことによって）意味論的彩色を有効にしていれば、"
+"`mapMaybeId1`中の`map`と`id`が異なって彩色されていることに気付くことでしょ"
+"う。\n"
+"`map`は関数名に、`id`は束縛変数になっています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:562
@@ -1338,16 +1324,21 @@ msgid ""
 "to figure out what Idris expects from you next. Use the tools given to you, "
 "instead of trying to find your way in the dark!"
 msgstr ""
+"これらの演習では小さな関数のいくつかの単純な性質を証明していきます。\n"
+"証明を書くときはIdrisが次に何を期待しているのか調べるために穴開きを使うことが"
+"ずっと重要になります。\n"
+"暗中模索する前に与えられた道具を使いましょう。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Eq.md:564
 msgid "Proof that `map id` on an `Either e` returns the value unmodified."
-msgstr ""
+msgstr "`Either e`への`map id`が値を変更せずに返すことを証明してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Eq.md:566
 msgid "Proof that `map id` on a list returns the list unmodified."
 msgstr ""
+"リストへの`map id`が変更されていないリストを返すことを証明してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Eq.md:570
@@ -1355,6 +1346,8 @@ msgid ""
 "Proof that complementing a strand of a nucleobase (see the [previous chapter]"
 "(DPair.md#use-case-nucleic-acids))  twice leads to the original strand."
 msgstr ""
+"核酸塩基の鎖（[前の章](DPair.md#use-case-nucleic-acids)を見てください）を2度"
+"相補すると元の鎖になることを証明してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:574
@@ -1364,62 +1357,19 @@ msgid ""
 "   from the *Prelude* in your implementation for sequences\n"
 "   of nucleic acids.\n"
 msgstr ""
+"   ヒント: 最初にこれを単一の塩基に証明してから、\n"
+"   塩基配列の実装で*Prelude*の`cong2`を使いましょう。\n"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Eq.md:576
-#, fuzzy
 msgid "Implement function `replaceVect`:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"関数`head`を非空のベクタに実装してください。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Functor`を`Vaidated e`に実装してください。\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "関数`replaceVect`を実装してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:577
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "   replaceVect : (ix : Fin n) -> a -> Vect n a -> Vect n a\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"zipWithV : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "   replaceVect : (ix : Fin n) -> a -> Vect n a -> Vect n a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:584
@@ -1429,62 +1379,20 @@ msgid ""
 "   using `replaceAt` accessing the same element using\n"
 "   `index` will return the value we just added.\n"
 msgstr ""
+"   それでは、`replaceAt`を使ってベクタ中の要素を置き換えたあとに、\n"
+"   `index`を使って同じ要素にアクセスすると、\n"
+"   ちょうど追加した値を返すことを証明してください。\n"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Eq.md:586
-#, fuzzy
 msgid "Implement function `insertVect`:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"関数`head`を非空のベクタに実装してください。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Functor`を`Vaidated e`に実装してください。\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "関数`insertVect`を実装してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:587
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "   insertVect : (ix : Fin (S n)) -> a -> Vect n a -> Vect (S n) a\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"zipWithV : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"mapVect' : (a -> b) -> Vect n a -> Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "   insertVect : (ix : Fin (S n)) -> a -> Vect n a -> Vect (S n) a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:593
@@ -1492,7 +1400,7 @@ msgstr ""
 msgid ""
 "   Use a similar proof as in exercise 4 to show that this\n"
 "   behaves correctly.\n"
-msgstr ""
+msgstr "   演習4と似た証明を使ってこれが正しく振る舞うことを示してください。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:596
@@ -1500,12 +1408,14 @@ msgid ""
 "Note: Functions `replaceVect` and `insertVect` are available from `Data."
 "Vect` as `replaceAt` and `insertAt`."
 msgstr ""
+"補足：関数`replaceVect`と`insertVect`は`Data.Vect`でそれぞれ`replaceAt`と"
+"`insertAt`として手に入ります。"
 
 #. type: Title ##
 #: ../src/Tutorial/Eq.md:597
 #, no-wrap
 msgid "Into the Void"
-msgstr ""
+msgstr "虚空の中へ"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:612
@@ -1522,6 +1432,21 @@ msgid ""
 "follows (remember [ex falso quodlibet](https://en.wikipedia.org/wiki/"
 "Principle_of_explosion))."
 msgstr ""
+"以前の関数`onePlusOneWrong`を覚えていますか。\n"
+"これは全き誤りの表明でした。\n"
+"1足す1は3に等しくありませんから。\n"
+"ときどき正にこのことを表したいことがあります。\n"
+"ある表明が偽であり満たされないということです。\n"
+"Idrisでの証明の表明においてこれが何を意味するのかしばし考えてください。\n"
+"そのような表明（あるいは命題）は型で、その表明の証明はこの型の値や式になって"
+"います。\n"
+"そのような型はいわゆる*現住*です。\n"
+"表明が真でなければ与えられた型の値は1つもありえません。\n"
+"このとき与えられた型は*非現住*であると言います。\n"
+"それでもなお非現住型の値を何とかして掴み取るならば、\n"
+"それは論理的な矛盾であって、この矛盾からどんなことも従います。\n"
+"（[ex falso quodlibet](https://en.wikipedia.org/wiki/Principle_of_explosion)"
+"を思い出してください。）"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:617
@@ -1530,6 +1455,9 @@ msgid ""
 "it *would* hold, this would lead to a contradiction.  The most natural way "
 "to express a contradiction in Idris is to return a value of type `Void`:"
 msgstr ""
+"というわけでこれが命題を満たさないことを表現する方法です。\n"
+"もし命題を満たす*としたら*、矛盾になってしまうことを表明するのです。\n"
+"Idrisで矛盾を表現する最も自然な方法は型`Void`の値を返すことです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:618
@@ -1538,6 +1466,8 @@ msgid ""
 "onePlusOneWrongProvably : the Nat 1 + 1 = 3 -> Void\n"
 "onePlusOneWrongProvably Refl impossible\n"
 msgstr ""
+"onePlusOneWrongProvably : the Nat 1 + 1 = 3 -> Void\n"
+"onePlusOneWrongProvably Refl impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:628
@@ -1547,6 +1477,10 @@ msgid ""
 "and there is only one constructor to match on, which leads to an impossible "
 "case."
 msgstr ""
+"これは与えられた型の証明上全域な実装になっていますね。\n"
+"型は`1 + 1 = 3`から`Void`への関数です。\n"
+"これをパターン照合により実装し、たった1つの構築子が照合されますが、\n"
+"これにより不可能な場合になってしまいます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:633
@@ -1555,6 +1489,9 @@ msgid ""
 "instance, here is a proof that if the lengths of two lists are not the same, "
 "then the two list can't be the same either:"
 msgstr ""
+"矛盾した表明を使って他の表明を証明することもできます。\n"
+"例えば以下は、2つのリストの長さが同じでなければ、\n"
+"2つのリストが同じになることもありえないということの証明です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:634
@@ -1563,6 +1500,8 @@ msgid ""
 "notSameLength1 : (List.length as = length bs -> Void) -> as = bs -> Void\n"
 "notSameLength1 f prf = f (cong length prf)\n"
 msgstr ""
+"notSameLength1 : (List.length as = length bs -> Void) -> as = bs -> Void\n"
+"notSameLength1 f prf = f (cong length prf)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:642
@@ -1570,6 +1509,8 @@ msgid ""
 "This is cumbersome to write and pretty hard to read, so there is function "
 "`Not` in the prelude to express the same thing more naturally:"
 msgstr ""
+"こう書くのは億劫ですしとても読みづらいです。\n"
+"なのでpreludeに関数`Not`があり、同じことをより自然に表すことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:643
@@ -1578,6 +1519,8 @@ msgid ""
 "notSameLength : Not (List.length as = length bs) -> Not (as = bs)\n"
 "notSameLength f prf = f (cong length prf)\n"
 msgstr ""
+"notSameLength : Not (List.length as = length bs) -> Not (as = bs)\n"
+"notSameLength f prf = f (cong length prf)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:651
@@ -1586,6 +1529,9 @@ msgid ""
 "`cong`: If from `a = b` follows `f a = f b`, then from `not (f a = f b)` "
 "follows `not (a = b)`:"
 msgstr ""
+"実はこれは`cong`の待遇の特殊版にすぎません。\n"
+"つまり、`a = b`から`f a = f b`が従うのであれば、`not (f a = f b)`から`not (a "
+"= b)`が従います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:652
@@ -1594,33 +1540,14 @@ msgid ""
 "contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)\n"
 "contraCong fun = fun . cong f\n"
 msgstr ""
+"contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)\n"
+"contraCong fun = fun . cong f\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:657
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Interface `Uninhabited`"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インターフェースFoldable\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インターフェース`HasIO`\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インターフェースの基本\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "インターフェース`Uninhabited`"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:664
@@ -1630,36 +1557,20 @@ msgid ""
 "the REPL. You will see, that there is already an impressive number of "
 "implementations available, many of which involve data type `Equal`."
 msgstr ""
+"*Prelude*には非現住型のためのインターフェースがあります。\n"
+"`Uninhabited`とその唯一の関数`uninhabited`です。\n"
+"REPLでこのインターフェースのドキュメントを眺めてみましょう。\n"
+"すると既にちょっとした数の実装が使えることがわかります。\n"
+"その多くがデータ型`Equal`に関わっています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:667
-#, fuzzy
 msgid ""
 "We can use `Uninhabited`, to for instance express that the empty schema is "
 "not equal to a non-empty schema:"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"型処方でパターンを使用でき、例えばベクタの長さが非ゼロなのでベクタが非空だと"
-"いうことを表現できます。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"`Uninhabited`を使えば、例えば空のスキーマが空でないスキーマと等しくないことを"
+"表せます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:668
@@ -1671,6 +1582,11 @@ msgid ""
 "Uninhabited (SameSchema (h :: t) []) where\n"
 "  uninhabited Same impossible\n"
 msgstr ""
+"Uninhabited (SameSchema [] (h :: t)) where\n"
+"  uninhabited Same impossible\n"
+"\n"
+"Uninhabited (SameSchema (h :: t) []) where\n"
+"  uninhabited Same impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:678
@@ -1678,6 +1594,8 @@ msgid ""
 "There is a related function you need to know about: `absurd`, which combines "
 "`uninhabited` with `void`:"
 msgstr ""
+"関連して知っておかねばならない関数があります。`absurd`です。\n"
+"これは`uninhabited`を`void`と繋げるものです。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:679
@@ -1687,12 +1605,15 @@ msgid ""
 "Prelude.absurd : Uninhabited t => t -> a\n"
 "absurd h = void (uninhabited h)\n"
 msgstr ""
+"Tutorial.Eq> :printdef absurd\n"
+"Prelude.absurd : Uninhabited t => t -> a\n"
+"absurd h = void (uninhabited h)\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:685
 #, no-wrap
 msgid "Decidable Equality"
-msgstr ""
+msgstr "決定可能等値性"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:703
@@ -1715,6 +1636,18 @@ msgid ""
 "are the same, or return a proof that the two schemata\n"
 "are not the same. (Remember that `Not a` is an alias for `a -> Void`).\n"
 msgstr ""
+"`sameColType`を実装したとき、2つの行の型が確かに同じであるという証明を\n"
+"得て、そこから2つのスキーマが同値かどうかが調べられました。型は偽陽性\n"
+"の発生がないことを保証します。つまり型`SameSchema s1 s2`の値を生成すれ\n"
+"ば`s1`と`s2`が確かに同値であるという証明があるのです。しかし\n"
+"`sameColType`とそれを使う`sameSchema`は、2つの値が同値であっても\n"
+"`Nothing`を返すことによって、それでも理論的には偽陰性を生じる可能性が\n"
+"あるのです。例えば`sameColType`を常に`Nothing`を返すようなやり方で実装\n"
+"できてしまいます。これは型としては合致しますが間違いなく望んでいるもの\n"
+"ではないでしょう。なのでここでより強い保証を得るために行いたいことが出\n"
+"てきます。2つのスキーマが同じであるという証明を返すか、2つのスキーマ\n"
+"が同じでないという証明を返すかのどちらかをしたいのです。（`Not a`が`a\n"
+"-> Void`の別の形であることを思い出してください。）\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:708
@@ -1723,11 +1656,13 @@ msgid ""
 "*decidable property*, and the *Prelude* exports data type `Dec prop`, which "
 "encapsulates this distinction."
 msgstr ""
+"命題を満たすか矛盾になるかする性質を*決定可能性質*と呼びます。そして\n"
+"*Prelude*はデータ型`Dec prop`を輸出しており、この区別を内蔵化します。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:710
 msgid "Here is a way to encode this for `ColType`:"
-msgstr ""
+msgstr "以下はこれを`ColType`に符号化する方法です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:711
@@ -1754,6 +1689,26 @@ msgid ""
 "decSameColType Float Boolean   = No $ \\case SameCT impossible\n"
 "decSameColType Float Float     = Yes SameCT\n"
 msgstr ""
+"decSameColType :  (c1,c2 : ColType) -> Dec (SameColType c1 c2)\n"
+"decSameColType I64 I64         = Yes SameCT\n"
+"decSameColType I64 Str         = No $ \\case SameCT impossible\n"
+"decSameColType I64 Boolean     = No $ \\case SameCT impossible\n"
+"decSameColType I64 Float       = No $ \\case SameCT impossible\n"
+"\n"
+"decSameColType Str I64         = No $ \\case SameCT impossible\n"
+"decSameColType Str Str         = Yes SameCT\n"
+"decSameColType Str Boolean     = No $ \\case SameCT impossible\n"
+"decSameColType Str Float       = No $ \\case SameCT impossible\n"
+"\n"
+"decSameColType Boolean I64     = No $ \\case SameCT impossible\n"
+"decSameColType Boolean Str     = No $ \\case SameCT impossible\n"
+"decSameColType Boolean Boolean = Yes SameCT\n"
+"decSameColType Boolean Float   = No $ \\case SameCT impossible\n"
+"\n"
+"decSameColType Float I64       = No $ \\case SameCT impossible\n"
+"decSameColType Float Str       = No $ \\case SameCT impossible\n"
+"decSameColType Float Boolean   = No $ \\case SameCT impossible\n"
+"decSameColType Float Float     = Yes SameCT\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:741
@@ -1765,6 +1720,11 @@ msgid ""
 "instance `Float` with `I64`. This is not possible, so the case as a whole is "
 "impossible."
 msgstr ""
+"まず、単一引数ラムダで直接パターン照合を使えている点に注目してください。\n"
+"これはしばしば*ラムダcase*スタイルと呼ばれるもので、Haskellプログラミ\n"
+"ング言語の拡張に因んでいます。パターン照合で`SameCT`構築子を使うと\n"
+"Idrisはインスタンス`Float`を`I64`を統合するよう迫られます。これは可能\n"
+"ではないためcase全体が不可能になります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:749
@@ -1775,6 +1735,11 @@ msgid ""
 "of this: We can no longer create false positives *or* false negatives, and "
 "therefore, `decSameColType` is provably correct."
 msgstr ""
+"ただこれはかなり実装するのが億劫です。Idrisを説得するために場合を漏ら\n"
+"さなかったわけですが、全ての可能な構築子の対を明示的に扱う方法などあり\n"
+"ません。しかしここから*遥かに*強力な保証を得ています。もはや偽陽性*も*\n"
+"偽陰性も生み出すことはなく、したがって`decSameColType`は証明上正しいの\n"
+"です。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:752
@@ -1782,6 +1747,8 @@ msgid ""
 "Doing the same thing for schemata requires some utility functions, the types "
 "of which we can figure out by placing some holes:"
 msgstr ""
+"同じことをスキーマに対して行うにはいくつかの便利関数が必要で、その型は\n"
+"穴開きを置くことで調べられます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:753
@@ -1797,6 +1764,15 @@ msgid ""
 "    No  contra => No $ \\prf => ?decss3\n"
 "  No  contra => No $ \\prf => ?decss4\n"
 msgstr ""
+"decSameSchema' :  (s1, s2 : Schema) -> Dec (SameSchema s1 s2)\n"
+"decSameSchema' []        []        = Yes Same\n"
+"decSameSchema' []        (y :: ys) = No ?decss1\n"
+"decSameSchema' (x :: xs) []        = No ?decss2\n"
+"decSameSchema' (x :: xs) (y :: ys) = case decSameColType x y of\n"
+"  Yes SameCT => case decSameSchema' xs ys of\n"
+"    Yes Same => Yes Same\n"
+"    No  contra => No $ \\prf => ?decss3\n"
+"  No  contra => No $ \\prf => ?decss4\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:770
@@ -1808,6 +1784,10 @@ msgid ""
 "`SameSchema [] (y :: ys)`, and this we already implemented\n"
 "further above. The same goes for `decss2`.\n"
 msgstr ""
+"最初の2つの場合はそれほど難しくありません。`decss1`の型は`SameSchema\n"
+"[] (y :: ys) -> Void`で、これはREPLで簡単に確かめられます。しかしそれ\n"
+"は単に`uninhabited`であって、`SameSchema [] (y :: ys)`に特殊化されてお\n"
+"り、既にもっと前で実装したことなのです。同じことが`decss2`にも言えます。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:777
@@ -1818,10 +1798,15 @@ msgid ""
 "lambda, leaving a hole only for the return value. Here are the type and - "
 "more important - context of `decss3`:"
 msgstr ""
+"他2つの場合はこれより難しいので既にできる限り書き入れました。もし先頭\n"
+"か尾鰭のいずれかが証明上独立しているときは`No`を返したいことがわかって\n"
+"います。`No`は関数を満たしているので、既にラムダを加えてあり、返る値に\n"
+"ついてのみ穴開きにしています。以下はその型と……そしてより重要\n"
+"な……`decss3`の文脈です。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:778
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Tutorial.Relations> :t decss3\n"
 "   y : ColType\n"
@@ -1833,46 +1818,15 @@ msgid ""
 "------------------------------\n"
 "decss3 : Void\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Dependent> :t rest\n"
-" 0 a : Type\n"
-" 0 b : Type\n"
-"   x : a\n"
-"   xs : Vect n a\n"
-"   f : a -> b\n"
-" 0 n : Nat\n"
+"Tutorial.Relations> :t decss3\n"
+"   y : ColType\n"
+"   xs : List ColType\n"
+"   ys : List ColType\n"
+"   x : ColType\n"
+"   contra : SameSchema xs ys -> Void\n"
+"   prf : SameSchema (y :: xs) (y :: ys)\n"
 "------------------------------\n"
-"rest : Vect n b\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Functions2> :t impl_6\n"
-" 0 b : Type\n"
-" 0 a : Type\n"
-" 0 e : Type\n"
-"   xs : List a\n"
-"   fun : a -> Either e b\n"
-"   x : a\n"
-"   y : e\n"
-"   z : e\n"
-"------------------------------\n"
-"impl_6 : Either e (List b)\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"decss3 : Void\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:797
@@ -1884,6 +1838,12 @@ msgid ""
 "lemma, which proves that the *cons* constructor is [*injective*](https://en."
 "wikipedia.org/wiki/Injective_function):"
 msgstr ""
+"`contra`と`prf`の型はここで必要なものです。`xs`と`ys`が相異なるもので\n"
+"あれば`y :: xs`と`y :: ys`もまた相異なるものでなくてはなりません。これ\n"
+"は`x :: xs`が`y :: ys`と同じであれば、`xs`と`ys`もまた同じであるという\n"
+"表明の待遇になっています。したがってラムダを実装することで、*cons*構築\n"
+"子が[*単射*](https://en.wikipedia.org/wiki/Injective_function)であるこ\n"
+"とを証明せねばなりません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:798
@@ -1893,6 +1853,9 @@ msgid ""
 "              -> (SameColType c1 c2, SameSchema cs1 cs2)\n"
 "consInjective Same = (SameCT, Same)\n"
 msgstr ""
+"consInjective :  SameSchema (c1 :: cs1) (c2 :: cs2)\n"
+"              -> (SameColType c1 c2, SameSchema cs1 cs2)\n"
+"consInjective Same = (SameCT, Same)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:809
@@ -1902,6 +1865,10 @@ msgid ""
 "desired value of type `Void`.  With these observations and utilities, we can "
 "now implement `decSameSchema`:"
 msgstr ""
+"これで`prf`を`consInjective`に渡し型`SameSchema xs ys`の値を取り出すこ\n"
+"とができます。そしてこれを`contra`に渡せば型`Void`の望んだ値を得ること\n"
+"になります。これらの観察と小間物を以ってこれで`decSameSchema`を実装で\n"
+"きます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:810
@@ -1917,6 +1884,15 @@ msgid ""
 "    No  contra => No $ contra . snd . consInjective\n"
 "  No  contra => No $ contra . fst . consInjective\n"
 msgstr ""
+"decSameSchema :  (s1, s2 : Schema) -> Dec (SameSchema s1 s2)\n"
+"decSameSchema []        []        = Yes Same\n"
+"decSameSchema []        (y :: ys) = No absurd\n"
+"decSameSchema (x :: xs) []        = No absurd\n"
+"decSameSchema (x :: xs) (y :: ys) = case decSameColType x y of\n"
+"  Yes SameCT => case decSameSchema xs ys of\n"
+"    Yes Same   => Yes Same\n"
+"    No  contra => No $ contra . snd . consInjective\n"
+"  No  contra => No $ contra . fst . consInjective\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:825
@@ -1925,6 +1901,10 @@ msgid ""
 "for types for which we can implement a decision procedure for propositional "
 "equality. We can implement this to figure out if two values are equal or not."
 msgstr ""
+"命題的等値性のための決定過程を実装できる型用に、モジュール\n"
+"`Decidable.Equality`により輸出されている`DecEq`と呼ばれるインターフェー\n"
+"スがあります。2つの値が等しいかどうかを調べるためにこれを実装すること\n"
+"ができます。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Eq.md:830
@@ -1932,16 +1912,19 @@ msgid ""
 "Show that there can be no non-empty vector of `Void` by writing a "
 "corresponding implementation of uninhabited"
 msgstr ""
+"空でない`Void`のベクタが1つとしてありえないことを対応する非現住の実装\n"
+"を書くことにより示してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Eq.md:832
 msgid "Generalize exercise 1 for all uninhabited element types."
-msgstr ""
+msgstr "演習1を全ての非現住要素型に一般化してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Eq.md:835
 msgid "Show that if `a = b` cannot hold, then `b = a` cannot hold either."
 msgstr ""
+"`a = b`を満たしえなければ`b = a`もまた満たしえないことを示してください。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Eq.md:838
@@ -1949,12 +1932,16 @@ msgid ""
 "Show that if `a = b` holds, and `b = c` cannot hold, then `a = c` cannot "
 "hold either."
 msgstr ""
+"`a = b`を満たしており、且つ`b = c`を満たしえないならば、`a = c`もまた\n"
+"満たしえないことを示してください。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Eq.md:841
 msgid ""
 "Implement `Uninhabited` for `Crud i a`. Try to be as general as possible."
 msgstr ""
+"`Crud i a`に`Uninhabited`を実装してください。可能な限り一般的になるよ\n"
+"うにしてみてください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:842 ../src/Tutorial/Folds.md:996
@@ -1975,61 +1962,8 @@ msgstr ""
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/Eq.md:851
-#, fuzzy
 msgid "Implement `DecEq` for `ColType`."
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インスタンス`Eq`を木薔薇に実装してください。\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`head`を`HList`に実装してください。\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`tail`を`HList`に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インスタンス`Eq`を木薔薇に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`head`を`HList`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Foldable`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "`DecEq`を`ColType`に実装してください。"
 
 #. type: Bullet: '7. '
 #: ../src/Tutorial/Eq.md:856
@@ -2038,6 +1972,9 @@ msgid ""
 "they require a quadratic number of pattern matches with relation to the "
 "number of data constructors. Here is a trick how to make this more bearable."
 msgstr ""
+"演習6のような実装はデータ構築子の数の関係に伴いその平方のパターン照合\n"
+"が必要になるため書くのが面倒です。以下はこれをより堪えられるようにする\n"
+"秘訣です。"
 
 #. type: Bullet: '   1. '
 #: ../src/Tutorial/Eq.md:859
@@ -2045,6 +1982,8 @@ msgid ""
 "Implement a function `ctNat`, which assigns every value of type `ColType` a "
 "unique natural number."
 msgstr ""
+"関数`ctNat`を実装してください。この関数は型`ColType`の全ての値に一意の\n"
+"自然数を割り当てます。"
 
 #. type: Bullet: '   2. '
 #: ../src/Tutorial/Eq.md:864
@@ -2053,6 +1992,9 @@ msgid ""
 "the `ColType` values, but four matches should be enough to satisfy the "
 "coverage checker."
 msgstr ""
+"`ctNat`が単射であることを証明してください。ヒント：`ColType`の値でパター\n"
+"ン照合する必要があるでしょうが、網羅性検査器を満足させるには4つの照合\n"
+"で充分でしょう。"
 
 #. type: Bullet: '   3. '
 #: ../src/Tutorial/Eq.md:869
@@ -2061,6 +2003,8 @@ msgid ""
 "of applying both column types to `ctNat`, thus reducing it to only two lines "
 "of code."
 msgstr ""
+"`ColType`への`DecEq`の実装では、両方の行の型を`ctNat`に適用した結果に\n"
+"`decEq`を使ってください。そうすればたった2行のコードに削減されます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:877
@@ -2074,12 +2018,17 @@ msgid ""
 "   requiring only `n` pattern matches\n"
 "   for arbitrary sum types with `n` data constructors.\n"
 msgstr ""
+"   あとで`with`規則についてお話しします。これは依存パターン照合の特殊\n"
+"   な形式であり、関数の引数に計算を行うことによりそれら引数の形状につ\n"
+"   いて知ることができるようになります。これにより、ここで見たのと似た\n"
+"   技法を使って`DecEq`を実装するのに、`n`個のデータ構築子のある任意の\n"
+"   直和型に対してたった`n`個のパターン照合が必要になるようにできます。\n"
 
 #. type: Title ##
 #: ../src/Tutorial/Eq.md:878
 #, no-wrap
 msgid "Rewrite Rules"
-msgstr ""
+msgstr "書き換え規則"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:888
@@ -2091,6 +2040,11 @@ msgid ""
 "matching on the first argument. The two vector lengths therefore unify just "
 "fine."
 msgstr ""
+"命題の等値性の最重要の用例の1つに、Idrisが自動的には統合できない既存の\n"
+"型を置き換えたり*書き換え*たりすることがあります。例えば以下は何ら問題\n"
+"はありません。Idrisは`0 + n`が`n`に等しいことを知っています。なぜなら\n"
+"自然数における`plus`は最初の引数でのパターン照合により実装されているか\n"
+"らです。したがって2つのベクタの長さはちょうどうまく統合されるのです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:889
@@ -2101,6 +2055,10 @@ msgid ""
 "         -> List (Vect n Nat)\n"
 "leftZero = (++)\n"
 msgstr ""
+"leftZero :  List (Vect n Nat)\n"
+"         -> List (Vect (0 + n) Nat)\n"
+"         -> List (Vect n Nat)\n"
+"leftZero = (++)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:899
@@ -2108,6 +2066,8 @@ msgid ""
 "However, the example below can't be implemented as easily (try id!), because "
 "Idris can't figure out on its own that the two lengths unify."
 msgstr ""
+"しかし下の例は簡単には実装できません（やってみてください！）。なぜなら\n"
+"Idrisは自力で2つの長さを統合するものだと調べられないからです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:900
@@ -2117,6 +2077,9 @@ msgid ""
 "           -> List (Vect (n + 0) Nat)\n"
 "           -> List (Vect n Nat)\n"
 msgstr ""
+"rightZero' :  List (Vect n Nat)\n"
+"           -> List (Vect (n + 0) Nat)\n"
+"           -> List (Vect n Nat)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:909
@@ -2124,11 +2087,14 @@ msgid ""
 "Probably for the first time we realize, just how little Idris knows about "
 "the laws of arithmetics. Idris is able to unify values when"
 msgstr ""
+"Idrisが算数の法則について知っていることはどれほど少ないかということを、\n"
+"もしかすると初めて気付いたかもしれません。Idrisが値を統合できるのは以\n"
+"下の場合です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Eq.md:913
 msgid "all values in a computation are known at compile time"
-msgstr ""
+msgstr "計算中の全ての値はコンパイル時に知られている"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Eq.md:913
@@ -2136,6 +2102,7 @@ msgid ""
 "one expression follows directly from the other due to the pattern matches "
 "used in a function's implementation."
 msgstr ""
+"関数の実装で使われているパターン照合から、ある式が他の式から直接従っている"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:917
@@ -2144,6 +2111,9 @@ msgid ""
 "`(+)` is implemented by pattern matching on the first argument, about which "
 "we know nothing here."
 msgstr ""
+"式`n + 0`では全ての値は知られておらず（`n`は変数）、`(+)`は最初の引数\n"
+"でパターン照合することにより実装されています。ここで最初の引数について\n"
+"分かることは何もないのです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:923
@@ -2153,6 +2123,10 @@ msgid ""
 "unify again. Here is a lemma and its proof, that `n + 0` equals `n`, for all "
 "natural numbers `n`."
 msgstr ""
+"しかしIdrisに教えることができます。2式が等価であることを証明できれば一\n"
+"方の式を他方に置き換えることができ、したがって2つは改めて統合されるの\n"
+"です。以下は補題とその証明で、全ての自然数`n`について`n + 0`が`n`に等\n"
+"しいとするものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:924
@@ -2162,6 +2136,9 @@ msgid ""
 "addZeroRight 0     = Refl\n"
 "addZeroRight (S k) = cong S $ addZeroRight k\n"
 msgstr ""
+"addZeroRight : (n : Nat) -> n + 0 = n\n"
+"addZeroRight 0     = Refl\n"
+"addZeroRight (S k) = cong S $ addZeroRight k\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:935
@@ -2171,6 +2148,10 @@ msgid ""
 "be instructive to replace `cong S` with a hole and look at its type and "
 "context to figure out how to proceed."
 msgstr ""
+"基底の場合が自明であるところに注目してください。残っている変数が1つも\n"
+"ないためIdrisは直ちに`0 + 0 = 0`を解明できるのです。再帰の場合では\n"
+"`cong S`を穴開きに置き換えて型と文脈を眺めるとどのように処理されるのか\n"
+"が分かりやすいかもしれません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:940
@@ -2179,6 +2160,8 @@ msgid ""
 "term by another, based on a proof of equality.  Make sure to inspect its "
 "type first before looking at the example below:"
 msgstr ""
+"*Prelude*は条件中の1変数を別のものに置換するための関数`replace`を輸出\n"
+" しています。以下の例を見る前にまずその型を調べて確かめてください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:941
@@ -2187,6 +2170,8 @@ msgid ""
 "replaceVect : Vect (n + 0) a -> Vect n a\n"
 "replaceVect as = replace {p = \\k => Vect k a} (addZeroRight n) as\n"
 msgstr ""
+"replaceVect : Vect (n + 0) a -> Vect n a\n"
+"replaceVect as = replace {p = \\k => Vect k a} (addZeroRight n) as\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:952
@@ -2199,6 +2184,11 @@ msgid ""
 "`replaceVect` example, `t` equals `Nat`, `x` equals `n + 0`,\n"
 "`y` equals `n`, and `p` equals `\\k => Vect k a`.\n"
 msgstr ""
+"見てわかるように`x = y`という証明に基づいて、型`p x`の値を型`p y`の値\n"
+"で*置き換え*ています。ただし`p`は何らかの型`t`から`Type`への関数で、\n"
+"`x`と`y`は型`t`の値です。`replaceVect`の例では`t`は`Nat`に等しく、\n"
+"`x`は`n + 0`に等しく、`y`は`n`に等しく、そして`p`は`\\k => Vect k a`に\n"
+"等しいものです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:960
@@ -2210,6 +2200,12 @@ msgid ""
 "all the details filled in for us. Here is an implementation of `replaceVect` "
 "with a rewrite rule:"
 msgstr ""
+"直接`replace`を使うのはあまり便利ではありません。それはIdrisが`p`の値\n"
+"を自力で推論できないことがよくあるからです。そのときはもちろん\n"
+"`replaceVect`中で明示的に型を与えなくてはなりません。したがってIdrisは\n"
+"*書き換え規則*のような特別な構文を提供しています。この構文は\n"
+"`replace`の呼び出しを全ての詳細が記入されたものに脱糖してくれるもので\n"
+"す。以下は書き換え規則を使った`replaceVect`の実装です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:961
@@ -2218,6 +2214,8 @@ msgid ""
 "rewriteVect : Vect (n + 0) a -> Vect n a\n"
 "rewriteVect as = rewrite sym (addZeroRight n) in as\n"
 msgstr ""
+"rewriteVect : Vect (n + 0) a -> Vect n a\n"
+"rewriteVect as = rewrite sym (addZeroRight n) in as\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:970
@@ -2226,42 +2224,15 @@ msgid ""
 "way round: Given an `y = x` it replaces `p x` with `p y`. Hence the need to "
 "call `sym` in our implementation above."
 msgstr ""
+"混乱の元の1つとして*rewrite*が等値性の証明をあべこべに使うということで\n"
+"す。つまり`y = x`が与えられているとき`p x`を`p y`に置き換えるのです。\n"
+"だから上の実装では`sym`を呼び出す必要があったんですね。"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:971
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Use Case: Reversing Vectors"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"ベクタを作る\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"用例：CSV読取器\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "用例：ベクタを反転する"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:982
@@ -2274,6 +2245,12 @@ msgid ""
 "`reverse`. Here is a possible implementation, which is how `reverse` is "
 "implemented for lists:"
 msgstr ""
+"書き換え規則はよく興味深い型水準計算を行う際に必要になります。例えば既\n"
+"に`Vect`を操作する関数の多くの興味深い例を見てきましたが、これらは関係\n"
+"するベクタの厳密な長さを把握し続けられるものでした。しかしもっともな理\n"
+"由があってここまでのお話では1つの鍵となる機能が欠けていました。関数\n"
+"`reverse`です。以下は考えられる実装で、リストに`reverse`を実装したやり\n"
+"かたになっています。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:984
@@ -2287,6 +2264,13 @@ msgid ""
 "reverseVect' : Vect n a -> Vect n a\n"
 "reverseVect' = reverseOnto' []\n"
 msgstr ""
+"reverseOnto' : Vect m a -> Vect n a -> Vect (m + n) a\n"
+"reverseOnto' xs []        = xs\n"
+"reverseOnto' xs (x :: ys) = reverseOnto' (x :: xs) ys\n"
+"\n"
+"\n"
+"reverseVect' : Vect n a -> Vect n a\n"
+"reverseVect' = reverseOnto' []\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:997
@@ -2294,6 +2278,8 @@ msgid ""
 "As you might have guessed, this will not compile as the length indices in "
 "the two clauses of `reverseOnto'` do not unify."
 msgstr ""
+"推測されたかもしれませんがこれは`reverseOnto'`の2つの節の長さ指標が統\n"
+"合しないためコンパイルされません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:1001
@@ -2302,6 +2288,8 @@ msgid ""
 "the second vector is empty, so we have to convince Idris once again that `m "
 "+ 0 = m`:"
 msgstr ""
+"*nil*の場合は上で既に見た場合です。ここでは`n`がゼロですが、それは2つ\n"
+" 目のベクタが空であり、Idrisを再び`m + 0 = m`だと説得せねばなりません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:1002
@@ -2310,6 +2298,8 @@ msgid ""
 "reverseOnto : Vect m a -> Vect n a -> Vect (m + n) a\n"
 "reverseOnto xs [] = rewrite addZeroRight m in xs\n"
 msgstr ""
+"reverseOnto : Vect m a -> Vect n a -> Vect (m + n) a\n"
+"reverseOnto xs [] = rewrite addZeroRight m in xs\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:1013
@@ -2319,6 +2309,10 @@ msgid ""
 "vector. Module `Data.Nat` provides many proofs about arithmetic operations "
 "on natural numbers, one of which is `plusSuccRightSucc`. Here's its type:"
 msgstr ""
+"2つ目の場合はより複雑です。ここでIdrisは`S (m + len)`と`m + S len`を統\n"
+"合するのに失敗しています。ただし`len`は2つ目のベクタの尾鰭である`ys`の\n"
+"長さです。モジュール`Data.Nat`は自然数における算術操作についての多くの\n"
+"証明を提供しており、その1つが`plusSuccRightSucc`です。以下がその型です。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Eq.md:1014
@@ -2329,6 +2323,10 @@ msgid ""
 "                           -> (right : Nat)\n"
 "                           -> S (left + right) = left + S right\n"
 msgstr ""
+"Tutorial.Eq> :t plusSuccRightSucc\n"
+"Data.Nat.plusSuccRightSucc :  (left : Nat)\n"
+"                           -> (right : Nat)\n"
+"                           -> S (left + right) = left + S right\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:1032
@@ -2343,6 +2341,15 @@ msgid ""
 "follows from a match on another, unerased, argument (`ys` in this case). "
 "Here's the implementation of the second case:"
 msgstr ""
+"ここでは`S (m + len)`を`m + S len`で置き換えたいので、引数が入れ替わっ\n"
+"たバージョンが必要です。しかしもう1つ障害物があります。\n"
+"`plusSuccRightSucc`を`reverseOnto`の暗黙の関数引数として与えられていな\n"
+"い`ys`の長さで呼び出す必要があるのです。したがって`n`（2つ目のベクタの\n"
+"長さ）でパターン照合する必要がありますが、これは尾鰭の長さを変数に束縛\n"
+"するためです。覚えておいてほしいのは、使われている構築子が別の消去され\n"
+"ていない引数での照合に従っているときにのみ、消去された引数でパターン照\n"
+"合することができるということです（この場合`ys`があたります）。以下は2\n"
+"つ目の場合の実装です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:1033
@@ -2351,6 +2358,8 @@ msgid ""
 "reverseOnto {n = S len} xs (x :: ys) =\n"
 "  rewrite sym (plusSuccRightSucc m len) in reverseOnto (x :: xs) ys\n"
 msgstr ""
+"reverseOnto {n = S len} xs (x :: ys) =\n"
+"  rewrite sym (plusSuccRightSucc m len) in reverseOnto (x :: xs) ys\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:1043
@@ -2361,12 +2370,17 @@ msgid ""
 "it is important to know that they exist, as they allow us to teach complex "
 "equivalences to Idris."
 msgstr ""
+"私自身の経験からこれは最初のうち相当に混乱するものだと知っています。も\n"
+"しIdrisを証明支援ではなく汎用目的プログラミング言語として使うのであれ\n"
+"ば惧らくそこまで頻繁に書き換え規則を使わなければいけないことはないでしょ\n"
+"う。それでもそうしたものが存在すると知っておくことは大事です。複雑な等\n"
+"値性をIdrisに教えることができるからです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:1044
 #, no-wrap
 msgid "A Note on Erasure"
-msgstr ""
+msgstr "消去についての補足"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:1055
@@ -2380,85 +2394,50 @@ msgid ""
 "such values without fear of these computations slowing down the compiled "
 "Idris program."
 msgstr ""
+"`Unit`、`Equal`、`SameSchema`といった単一値データ型は実行に関係しませ\n"
+"ん。というのもこれらの型の値は常に同値であるためです。したがって常にこ\n"
+"れらの値でパターン照合することが可能でありつつ、消去される関数引数とし\n"
+"て使うことができます。例えば`replace`の型を見れば等値性の証明が消去引\n"
+"数であることに気付きます。これによりそのような値を生み出す任意の複雑な\n"
+"計算がコンパイルされたIdrisプログラムを低速にしてしまうのではないかと\n"
+"恐れることなく、そのような計算を走らせることができるのです。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Eq.md:1059
 msgid "Implement `plusSuccRightSucc` yourself."
-msgstr ""
+msgstr "自力で`plusSuccRightSucc`を実装してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Eq.md:1061
 msgid "Proof that `minus n n` equals zero for all natural numbers `n`."
 msgstr ""
+"`minus n n`がゼロに等しいことを全ての自然数`n`について証明してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Eq.md:1063
 msgid "Proof that `minus n 0` equals n for all natural numbers `n`"
 msgstr ""
+"`minus n 0`が`n`に等しいことを全ての自然数`n`について証明してください。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Eq.md:1066
 msgid "Proof that `n * 1 = n` and `1 * n = n` for all natural numbers `n`."
-msgstr ""
+msgstr "`n * 1 = n`と`1 * n = n`を全ての自然数`n`について証明してください。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Eq.md:1069
 msgid "Proof that addition of natural numbers is commutative."
-msgstr ""
+msgstr "自然数の和が可換であることを証明してください。"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/Eq.md:1071
-#, fuzzy
 msgid "Implement a tail-recursive version of `map` for vectors."
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"リスト連結の末尾再帰版を実装してください。\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "ベクタの`map`の末尾再帰版を実装してください。"
 
 #. type: Bullet: '7. '
 #: ../src/Tutorial/Eq.md:1073
-#, fuzzy
 msgid "Proof the following proposition:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"以下の宣言について考えてください。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"以下のREPLセッションについて考えましょう。\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"あってもなくてもよい値の、以下の梱包について考えてみましょう。\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "以下の命題を証明してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:1074
@@ -2469,6 +2448,10 @@ msgid ""
 "             -> (ys : List a)\n"
 "             -> map f (xs ++ ys) = map f xs ++ map f ys\n"
 msgstr ""
+"   mapAppend :  (f : a -> b)\n"
+"             -> (xs : List a)\n"
+"             -> (ys : List a)\n"
+"             -> map f (xs ++ ys) = map f xs ++ map f ys\n"
 
 #. type: Bullet: '8. '
 #: ../src/Tutorial/Eq.md:1084
@@ -2477,6 +2460,9 @@ msgid ""
 "`Table`s, this time using a rewrite rule plus `Data.HList.(++)` instead of "
 "custom function `appRows`."
 msgstr ""
+"演習7の証明を使ってもう一度2つの`Table`を縫合する関数を実装してくださ\n"
+"い。今回は`Data.HList.(++)`に加えて自前の関数`appRows`の代わりに書き換\n"
+"え規則も使ってください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:1096
@@ -2489,3 +2475,9 @@ msgid ""
 "reducing the need to return a `Maybe` or other failure type, because due to "
 "the restricted input, our functions can no longer fail."
 msgstr ""
+"*命題としての型、証明としての値*という概念は証明上正しいプログラムを書\n"
+" く上でとても強力な道具です。したがってもう少し時間を掛けて値の間の契\n"
+" 約を記述するデータ型と,その契約を満たす証明としてのこれらの型の値を定\n"
+" 義していきましょう。これにより必要な関数の前後条件を記述でき、したがっ\n"
+" て`Maybe`や他の失敗型を返す必要が減ります。なぜなら制限された入力とな\n"
+" るため関数が最早失敗することがなくなるからです。"

@@ -799,7 +799,7 @@ REPLで型を見るのは大事です。
 Tutorial.DataTypes> :t Some
 Tutorial.DataTypes.Some : a -> Option a
 Tutorial.DataTypes> :t None
-Tutorial.DataTypes.None : Optin a
+Tutorial.DataTypes.None : Option a
 Tutorial.DataTypes> :t Option
 Tutorial.DataTypes.Option : Type -> Type
 ```
