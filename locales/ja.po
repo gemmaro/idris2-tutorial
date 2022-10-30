@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: idris 2-tutorial\n"
 "POT-Creation-Date: 2022-06-26 20:00+0900\n"
-"PO-Revision-Date: 2022-06-26 21:08+0900\n"
+"PO-Revision-Date: 2022-07-10 18:35+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -10857,6 +10857,9 @@ msgid ""
 "     Nil  : List01 False a\n"
 "     (::) : a -> List01 False a -> List01 ne a\n"
 msgstr ""
+"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
+"     Nil  : List01 False a\n"
+"     (::) : a -> List01 False a -> List01 ne a\n"
 
 #. type: Bullet: '4. '
 #: src/Tutorial/Folds.md:1030
@@ -16712,7 +16715,7 @@ msgstr ""
 #: src/Tutorial/IO.md:1
 #, no-wrap
 msgid "IO: Programming with Side Effects"
-msgstr ""
+msgstr "IO: 副作用のあるプログラミング"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:7
@@ -16722,6 +16725,10 @@ msgid ""
 "to the standard output. It is time to change that and learn, how we can "
 "write effectful programs in Idris."
 msgstr ""
+"ここまでの全ての例や演習で、純粋で全域な関数を扱ってきました。\n"
+"ファイルから内容を読んだり書き込んだり、\n"
+"標準出力に文言を書き込んだりするようなことはしてきませんでした。\n"
+"今こそ流れを変え、副作用のあるプログラムをIdrisで書く方法を学ぶときです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:8
@@ -16737,19 +16744,28 @@ msgid ""
 "\n"
 "%default total\n"
 msgstr ""
+"module Tutorial.IO\n"
+"\n"
+"import Data.List1\n"
+"import Data.String\n"
+"import Data.Vect\n"
+"\n"
+"import System.File\n"
+"\n"
+"%default total\n"
 
 #. type: Title ##
 #: src/Tutorial/IO.md:20
 #, no-wrap
 msgid "Pure Side Effects?"
-msgstr ""
+msgstr "純粋な副作用？"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:24
 msgid ""
 "If we once again look at the *hello world* example from the [introduction]"
 "(Intro.md), it had the following type and implementation:"
-msgstr ""
+msgstr "[導入](Intro.md)の*hello world*の例をもう一度見ると、以下の型と実装がありました。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:25
@@ -16766,7 +16782,7 @@ msgstr ""
 msgid ""
 "If you load this module in a REPL session and evaluate `hello`, you'll get "
 "the following:"
-msgstr "このファイルをREPLセッションに読み込んで以下を試してみましょう。"
+msgstr "このモジュールをREPLセッションに読み込んで`hello`を評価すると、以下が得られるでしょう。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:33
@@ -16785,6 +16801,10 @@ msgid ""
 "program to just print \"Hello World!\". In order to explain what's going on "
 "here, we need to quickly look at how evaluation at the REPL works."
 msgstr ""
+"実際にはプログラムに単に \"Hello World!\" を印字してほしかったとしたら、\n"
+"この振舞いは期待したものではないでしょう。\n"
+"ここで起こっていることを説明するためには、\n"
+"REPLでどのように評価が行われるのかを軽く知っておかねばなりません。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:51
@@ -16799,6 +16819,13 @@ msgid ""
 "even then, values of type `IO a` (`a` being a type parameter) are typically "
 "not reduced."
 msgstr ""
+"REPLで何らかの式を評価するとき、Idrisは行き着くところまで値に簡略しようとします。\n"
+"上の場合、Idrisは関数`prim__putStr`で立ち止まります。\n"
+"これは*Prelude*で定義された*異邦関数*であり、\n"
+"それぞれのバックエンドで実装されることで使えるようになるものです。\n"
+"コンパイル時（そしてREPL時）は、Idrisは異邦関数の実装について何も知らず、\n"
+"したがってコンパイラ自身に組込まれていない限り異邦関数を簡略することはできません。\n"
+"なので型`IO a`（`a`は型変数）の値も同様に大抵は簡略できないのです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:61
@@ -16814,6 +16841,14 @@ msgid ""
 "empty tuple defined at the *Prelude*, which has only one value called `MkUnit`,\n"
 "for which we can also use `()` in our code.)\n"
 msgstr ""
+"型`IO a`の値はプログラムを*記述*している、ということを理解することは大事です。\n"
+"これは*実行*されると型`a`の値を返しますが、その道すがら任意の副作用を生じてからなのです。\n"
+"例えば`putStrLn`は型`String -> IO ()`です。\n"
+"読み下すとすればこうです。\n"
+"「`putStrLn`は関数で、`String`引数を与えられると、\n"
+"出力型が`()`の副作用付きのプログラムの記述を返す。」\n"
+"（`()`は型`Unit`の糖衣構文で、*Prelude*で定義されている空タプルです。\n"
+"`Unit`には唯一`MkUnit`という名前の値があり、コードでも`()`を使えるのです。）\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:72
@@ -16830,12 +16865,20 @@ msgid ""
 "(Actually, there *is* such a function called `unsafePerformIO`.\n"
 "Do not ever use it in your code unless you know what you are doing.)\n"
 msgstr ""
+"型`IO a`の値は作用付き計算の記述に過ぎないことから、\n"
+"そのような値を返したり引数として値を取ったりする関数はそれでもなお*純粋*で、つまりは参照透過なのです。\n"
+"しかしながら、型`a`の値を型`IO a`の値から抽出することは不可能です。\n"
+"というのは、汎化関数`IO a -> a`は存在しないということですが、\n"
+"これは関数が引数から結果を抽出するときにうっかり副作用を実行するであろうからで、\n"
+"つまりは参照透過性を破っているのです。\n"
+"（実は`unsafePerformIO`という名前の関数が*あります*。\n"
+"何をするものかわかっていない限り、決してコードで使わないでください。）\n"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:73
 #, no-wrap
 msgid "Do Blocks"
-msgstr ""
+msgstr "doブロック"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:83
@@ -16850,6 +16893,14 @@ msgid ""
 "complex programs. Idris provides special syntax for this: *Do blocks*.\n"
 "Here's an example:\n"
 msgstr ""
+"純粋関数型プログラミングを始めたてだったら、\n"
+"今頃恐らく、というかきっと、実行できない作用付きプログラムのの記述の役立たなさを愚痴っているかもしれません。\n"
+"まあ、聞いてください。\n"
+"型`IO a`の値を実行することはできない、\n"
+"つまり型`IO a -> a`の関数はどこにもありませんが、\n"
+"こうした計算を連鎖させてより複雑なプログラムを記述できます。\n"
+"Idrisはこのための特別な文法、*doブロック*を提供しています。\n"
+"以下は例です。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:84
@@ -16860,12 +16911,16 @@ msgid ""
 "  name <- getLine\n"
 "  putStrLn $ \"Hello \" ++ name ++ \"!\"\n"
 msgstr ""
+"readHello : IO ()\n"
+"readHello = do\n"
+"  name <- getLine\n"
+"  putStrLn $ \"Hello \" ++ name ++ \"!\"\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:93
 msgid ""
 "Before we talk about what's going on here, let's give this a go at the REPL:"
-msgstr ""
+msgstr "何が起こっているのかをお話しする前に、REPLでやってみましょう。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:94
@@ -16886,6 +16941,9 @@ msgid ""
 "(`getLine`), assign the result to variable `name`, and then use `name` to "
 "create a friendly greeting and write it to standard output."
 msgstr ""
+"これは対話的プログラムであり、標準入力から1行読んで (`getLine`)、\n"
+"結果を変数`name`に代入し、\n"
+"そうして`name`を使って気さくな挨拶文をつくって標準出力に書き込みます。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:114
@@ -16901,12 +16959,19 @@ msgid ""
 "to an Idris program, which is being executed when we run a compiled\n"
 "Idris binary.\n"
 msgstr ""
+"`readHello`の実装の初めにある`do`キーワードに注目してください。\n"
+"このキーワードから*doブロック*が始まり、\n"
+"ここでは`IO`計算を連鎖できたり、\n"
+"左向きの矢印 (`<-`) を使って中間結果を変数に束縛し、あとの`IO`行動で使えるようにできたりします。\n"
+"型`IO`の値1つに副作用付きの任意のプログラムを内蔵化できるほどこの概念は強力です。\n"
+"このような表現はそれから関数`main`から返されます。\n"
+"`main`はIdrisプログラムへの主な入口で、コンパイルされたIdrisバイナリを走らせるときに実行されます。\n"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:115
 #, no-wrap
 msgid "The Difference between Program Description and Execution"
-msgstr ""
+msgstr "プログラム記述と実行の違い"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:120
@@ -16915,6 +16980,8 @@ msgid ""
 "effectful computation and *executing* or *running* it, here is a small "
 "program:"
 msgstr ""
+"作用のある計算を*記述*することと、*実行し*たり*走らせ*たりすること、この違いをよりよく理解するために、\n"
+"以下の小さなプラグラムを見てみましょう。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:121
@@ -16942,6 +17009,27 @@ msgid ""
 "readHellos : IO ()\n"
 "readHellos = runActions actions\n"
 msgstr ""
+"launchMissiles : IO ()\n"
+"launchMissiles = putStrLn \"Boom! You're dead.\"\n"
+"\n"
+"friendlyReadHello : IO ()\n"
+"friendlyReadHello = do\n"
+"  _ <- putStrLn \"Please enter your name.\"\n"
+"  readHello\n"
+"\n"
+"actions : Vect 3 (IO ())\n"
+"actions = [launchMissiles, friendlyReadHello, friendlyReadHello]\n"
+"\n"
+"runActions : Vect (S n) (IO ()) -> IO ()\n"
+"runActions (_ :: xs) = go xs\n"
+"  where go : Vect k (IO ()) -> IO ()\n"
+"        go []        = pure ()\n"
+"        go (y :: ys) = do\n"
+"          _ <- y\n"
+"          go ys\n"
+"\n"
+"readHellos : IO ()\n"
+"readHellos = runActions actions\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:153
@@ -16956,6 +17044,13 @@ msgid ""
 "any side effects. We can now look at the big picture of what's\n"
 "going on in `readHellos`.\n"
 msgstr ""
+"上のコードが何をするのかを説明する前に、\n"
+"`runActions`の実装で使われている関数`pure`を見てください。\n"
+"これは制約付き関数ですが、これについては次の章で学びましょう。\n"
+"`IO`に特化すれば汎化型`a -> IO a`です。\n"
+"つまり値を`IO`行動に包むことができます。\n"
+"`IO`プログラムの結果は副作用を生じることなく単に包まれた値を返します。\n"
+"これで`readHellos`で何が起こっているのかを大局的に眺められます。\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:160
@@ -16966,6 +17061,12 @@ msgid ""
 "here. Afterwards, `readHello` is invoked. We also define `launchMissiles`, "
 "which, when being executed, will lead to the destruction of planet earth."
 msgstr ""
+"まず、`readHello`のよりやさしい版を定義します。\n"
+"実行されると名前をはっきりと尋ねます。\n"
+"`putStrLn`の結果をこれ以上使うことがないので、全て堰き止めるパターンとしての下線文字をここで使えます。\n"
+"そのあとで`readHello`が呼び出されます。\n"
+"`launchMissiles`も定義します。\n"
+"これが実行されると惑星地球が破壊されてしまいます。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:169
@@ -16978,6 +17079,11 @@ msgid ""
 "`runActions` should be silently dropped together with all its potential side "
 "effects."
 msgstr ""
+"さて、`runActions`は`IO`行動を*記述する*ことが*走らせる*ことと同じではないことを実演する関数です。\n"
+"これは引数として取る非空ベクタから最初の行動を切り落として新しい`IO`行動を返します。\n"
+"返される行動は残りの`IO`行動を順番に実行する記述です。\n"
+"もしこれが期待通りに振る舞うとしたら、\n"
+"`runActions`に渡された最初の`IO`行動はあらゆる潜在的な副作用とともに黙殺されます。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:174
@@ -16987,11 +17093,15 @@ msgid ""
 "Luckily, although we described how to destroy the planet, the action was not "
 "executed, and we are (probably) still here."
 msgstr ""
+"REPLで`readHellos`を実行すると、\n"
+"`actions`は最初に`launchMissiles`も含んでいますが、名前を2回尋ねられます。\n"
+"惑星を破壊する方法を記述したものの、\n"
+"運よくその行動は実行されず、そして私達は（たぶん）まだここに立っています。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:176
 msgid "From this example we learn several things:"
-msgstr ""
+msgstr "この例からいくつかのことを学びました。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:180
@@ -17000,6 +17110,8 @@ msgid ""
 "*executed*, perform arbitrary side effects before returning a value of type "
 "`a`."
 msgstr ""
+"型`IO a`の値はプログラムの*純粋記述*です。\n"
+"この記述が*実行*されると型`a`の値を返す前にありとあらゆる副作用を生じます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:184
@@ -17008,13 +17120,15 @@ msgid ""
 "around as arguments or in data structures, without the risk of them being "
 "executed."
 msgstr ""
+"型`IO a`の値は安全に関数から返したり引数やデータ構造に入れて受け渡したりできます。\n"
+"実行される惧れはありません。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:187
 msgid ""
 "Values of type `IO a` can be safely combined in *do blocks* to *describe* "
 "new `IO` actions."
-msgstr ""
+msgstr "型`IO a`の値は*doブロック*で安全に新しい`IO`行動に結合できます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:191
@@ -17023,6 +17137,8 @@ msgid ""
 "the REPL, or when it is the `main` function of a compiled Idris program that "
 "is being executed."
 msgstr ""
+"`IO`行動は、REPLで`:exec`に渡されたり、\n"
+"コンパイルされたIdrisプログラムの`main`関数から実行されるものであったりするときにのみ実行されます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:196
@@ -17032,12 +17148,16 @@ msgid ""
 "argument in order to extract the final result, and this would break "
 "referential transparency."
 msgstr ""
+"`IO`文脈の殻を破ることは絶対にできません。\n"
+"つまり型`IO a -> a`の関数はありませんが、\n"
+"それはそうした関数が最終的な結果を抽出するために引数を順番に実行する必要があり、\n"
+"これが参照透過性を破るからです。"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:197
 #, no-wrap
 msgid "Combining Pure Code with `IO` Actions"
-msgstr ""
+msgstr "純粋なコードと`IO`行動をくっつける"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:202
@@ -17046,6 +17166,9 @@ msgid ""
 "values, but what is typically meant here, is that we combine non-`IO` "
 "functions with effectful computations."
 msgstr ""
+"この小節の題はどこか誤読を誘うところがあります。\n"
+"`IO`行動は純粋な値*です*が、\n"
+"ここでの意味は`IO`ではない関数と作用のある計算をくっつけることです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:208
@@ -17055,6 +17178,9 @@ msgid ""
 "and allow only expressions with a single operator and two arguments, both of "
 "which must be integers, for instance `12 + 13`."
 msgstr ""
+"実演として本節では計算式を評価する小さなプログラムを書いていきます。\n"
+"話を簡単にして演算子1つと2つの引数がある式のみ許すことにします。\n"
+"引数はどちらも整数でなければならず、例えば`12 + 13`です。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:216
@@ -17066,6 +17192,12 @@ msgid ""
 "`String`, but I consider it to be good practice to use custom sum types for "
 "erroneous conditions."
 msgstr ""
+"*base*の`Data.String`由来の関数`split`を使って計算式を字句解析していきます。\n"
+"それから2つの整数値と演算子のパースを試みます。\n"
+"利用者の入力は不正かもしれず、これらの操作は失敗するかもしれません。\n"
+"そのためエラー型も必要です。\n"
+"実のところエラー型には単に`String`を使ってもいいのですが、\n"
+"エラーの条件のための自前の直和型を使うことは良い作法だと考えます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:217
@@ -17081,13 +17213,22 @@ msgid ""
 "dispError (UnknownOperator v) = \"Unknown operator: \" ++ v ++ \".\"\n"
 "dispError (ParseError v)      = \"Invalid expression: \" ++ v ++ \".\"\n"
 msgstr ""
+"data Error : Type where\n"
+"  NotAnInteger    : (value : String) -> Error\n"
+"  UnknownOperator : (value : String) -> Error\n"
+"  ParseError      : (input : String) -> Error\n"
+"\n"
+"dispError : Error -> String\n"
+"dispError (NotAnInteger v)    = \"Not an integer: \" ++ v ++ \".\"\n"
+"dispError (UnknownOperator v) = \"Unknown operator: \" ++ v ++ \".\"\n"
+"dispError (ParseError v)      = \"Invalid expression: \" ++ v ++ \".\"\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:231
 msgid ""
 "In order to parse integer literals, we use function `parseInteger` from "
 "`Data.String`:"
-msgstr ""
+msgstr "整数表記をパースするために`Data.String`の関数`parseInteger`を使います。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:232
@@ -17096,13 +17237,15 @@ msgid ""
 "readInteger : String -> Either Error Integer\n"
 "readInteger s = maybe (Left $ NotAnInteger s) Right $ parseInteger s\n"
 msgstr ""
+"readInteger : String -> Either Error Integer\n"
+"readInteger s = maybe (Left $ NotAnInteger s) Right $ parseInteger s\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:239
 msgid ""
 "Likewise, we declare and implement a function for parsing arithmetic "
 "operators:"
-msgstr ""
+msgstr "同様に計算演算子をパースする関数を宣言し実装します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:240
@@ -17113,6 +17256,10 @@ msgid ""
 "readOperator \"*\" = Right (*)\n"
 "readOperator s   = Left (UnknownOperator s)\n"
 msgstr ""
+"readOperator : String -> Either Error (Integer -> Integer -> Integer)\n"
+"readOperator \"+\" = Right (+)\n"
+"readOperator \"*\" = Right (*)\n"
+"readOperator s   = Left (UnknownOperator s)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:254
@@ -17124,6 +17271,14 @@ msgid ""
 "in this case we can use an alternative syntactic convenience: Pattern "
 "matching in let bindings. Here is the code:"
 msgstr ""
+"これで簡単な計算式をパースし評価する準備ができました。\n"
+"これはいくつかの段階（入力文字列を分割し、それぞれの表記をパースする）からなり、\n"
+"それぞれの段階は失敗しうるものです。\n"
+"あとでモナドを学んだら、\n"
+"doブロックがそうした場合にちょうど同じように使えることを見ていきます。\n"
+"しかしこの場合代わりの文法的な便宜を図れます。\n"
+"let束縛でパターンマッチするのです。\n"
+"以下がコードです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:255
@@ -17137,6 +17292,13 @@ msgid ""
 "      Right v2 := readInteger z  | Left e => Left e\n"
 "   in Right $ op v1 v2\n"
 msgstr ""
+"eval : String -> Either Error Integer\n"
+"eval s =\n"
+"  let [x,y,z]  := forget $ split isSpace s | _ => Left (ParseError s)\n"
+"      Right v1 := readInteger x  | Left e => Left e\n"
+"      Right op := readOperator y | Left e => Left e\n"
+"      Right v2 := readInteger z  | Left e => Left e\n"
+"   in Right $ op v1 v2\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:280
@@ -17153,6 +17315,19 @@ msgid ""
 "and we get a list of exactly three tokens, continue with the `let` "
 "expression, otherwise return a `ParseError` in a `Left` immediately\"."
 msgstr ""
+"これを少し解剖しましょう。\n"
+"最初の行では入力文字列を全ての空白のある位置で分割します。\n"
+"`split`は`List1`（*base*の`Data.List1`から高階されている非空のリスト型）を返しますが、\n"
+"`List`でパターン照合するほうがもっと便利なので、\n"
+"`Data.List1.forget`を使って結果を変換します。\n"
+"ここで代入演算子`:=`の左側でパターン照合を使っていますね。\n"
+"これは部分パターン照合（*部分*というのは、全ての可能な場合を網羅していないからです）なので、\n"
+"他の可能性も同様に対処しなければいけません。\n"
+"その対処は垂直線のあとで行われます。\n"
+"これは次のように読めます。\n"
+"「もし左側のパターン照合が成功し、ちょうど3つの字句のリストが得られたら、\n"
+"`let`式を続ける。\n"
+"そうでなければ直ちに`ParseError`を`Left`に入れて返す。」"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:286
@@ -17162,6 +17337,10 @@ msgid ""
 "invalid input after the vertical bar. We will later see, that this syntax is "
 "also available in *do blocks*."
 msgstr ""
+"他の3行はちょうど同じように振舞います。\n"
+"つまり、それぞれに左側に部分パターン照合がありつつ、\n"
+"垂直棒のあとに不正な入力の場合に何を返すかという説明があります。\n"
+"あとで見ていきますが、この構文は*doブロック*でも使えます。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:294
@@ -17172,6 +17351,12 @@ msgid ""
 "the code above is still referentially transparent, can be easily tested at "
 "the REPL, and evaluated at compile time, which is the important thing here.)"
 msgstr ""
+"ここで、これまで実装してきた機能の全ては*純粋*で、\n"
+"副作用のある計算を記述していません。\n"
+"（すでに失敗の可能性は観測できる*作用*だと言い張ることもできますが、\n"
+"しかしそうだとしても上のコードはそれでも参照透過で、\n"
+"REPLで簡単に試せたりコンパイル時に評価できます。\n"
+"ここではこれが大事です。）"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:298
@@ -17179,6 +17364,8 @@ msgid ""
 "Finally, we can wrap this functionality in an `IO` action, which reads a "
 "string from standard input and tries to evaluate the arithmetic expression:"
 msgstr ""
+"ついにこの機能を`IO`行動に包むことができます。\n"
+"これは標準入力から文字列を読み取って計算式を評価しようとします。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:299
@@ -17193,6 +17380,14 @@ msgid ""
 "      putStrLn (dispError err)\n"
 "    Right res => putStrLn (s ++ \" = \" ++ show res)\n"
 msgstr ""
+"exprProg : IO ()\n"
+"exprProg = do\n"
+"  s <- getLine\n"
+"  case eval s of\n"
+"    Left err  => do\n"
+"      putStrLn \"An error occured:\"\n"
+"      putStrLn (dispError err)\n"
+"    Right res => putStrLn (s ++ \" = \" ++ show res)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:316
@@ -17203,6 +17398,10 @@ msgid ""
 "we can, for instance, start a new *do block* on the right hand side of a "
 "case expression."
 msgstr ""
+"`exprProg`で失敗する可能性に対処することを強いられており、\n"
+"結果を表示するために`Either`の両方の構築子をそれぞれ扱っていますよね。\n"
+"あと、*doブロック*は普通の式なので、\n"
+"例えばcase式の右側で新しい*doブロック*を始められますよ。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:329
@@ -17215,6 +17414,14 @@ msgid ""
 "functions with `covering`, meaning that you covered all cases in all pattern "
 "matches but your program might still loop due to unrestricted recursion."
 msgstr ""
+"この演習では小さなコマンドラインアプリケーションを実装していきます。\n"
+"いくつかのものはアプリケーションを終了するためにキーワードを入力したときだけ止まるものなので、\n"
+"潜在的に永久に実行されます。\n"
+"そうしたプログラムはもはや全域であることは証明されません。\n"
+"ソースファイルの冒頭に`%default total`プラグマを加えていたら、\n"
+"これらの関数を`covering`で註釈する必要があります。\n"
+"これは全てのパターン照合の全ての場合を網羅できているものの、\n"
+"制約のない再帰によりプログラムが堂々巡りになるかもしれないことを意味します。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/IO.md:333
@@ -17223,12 +17430,15 @@ msgid ""
 "evaluate it using the given function, and print the result to standard "
 "output:"
 msgstr ""
+"関数`rep`を実装してください。\n"
+"これは端末からの入力のうち1行を読み、与えられた関数を使って評価し、\n"
+"そして標準出力に結果を印字します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:334
 #, no-wrap
 msgid "   rep : (String -> String) -> IO ()\n"
-msgstr ""
+msgstr "   rep : (String -> String) -> IO ()\n"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/IO.md:341
@@ -17236,6 +17446,9 @@ msgid ""
 "Implement function `repl`, which behaves just like `rep` but will repeat "
 "itself forever (or until being forcefully terminated):"
 msgstr ""
+"関数`repl`を実装してください。\n"
+"これは`rep`のように振舞いますが、\n"
+"（強制的に終了されるまで）永遠に関数自身を繰り返します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:342
@@ -17244,6 +17457,8 @@ msgid ""
 "   covering\n"
 "   repl : (String -> String) -> IO ()\n"
 msgstr ""
+"   covering\n"
+"   repl : (String -> String) -> IO ()\n"
 
 #. type: Bullet: '3. '
 #: src/Tutorial/IO.md:351
@@ -17253,6 +17468,10 @@ msgid ""
 "`Left`, `replTill` should print the final message wrapped in the `Left` and "
 "then stop."
 msgstr ""
+"関数`replTill`を実装してください。\n"
+"これはちょうど`repl`のように振舞いますが、\n"
+"与えられた関数が`Right`を返したときだけ繰り返すのを続けます。\n"
+"`Left`を返したら`replTill`は`Left`に包まれた最後の文言で印字し、それから停止します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:352
@@ -17261,6 +17480,8 @@ msgid ""
 "   covering\n"
 "   replTill : (String -> Either String String) -> IO ()\n"
 msgstr ""
+"   covering\n"
+"   replTill : (String -> Either String String) -> IO ()\n"
 
 #. type: Bullet: '4. '
 #: src/Tutorial/IO.md:364
@@ -17271,6 +17492,11 @@ msgid ""
 "the program should terminate with a friendly greeting.  Use `replTill` in "
 "your implementation."
 msgstr ""
+"計算式を標準入力から読み、`eval`を使って評価し、\n"
+"標準出力に結果を印字するプログラムを書いてください。\n"
+"プログラムは利用者が \"done\" と入力して停止させるまで繰り返します。\n"
+"停止された場合はプログラムは気さくな挨拶とともに終了します。\n"
+"実装では`replTill`を使ってください。"
 
 #. type: Bullet: '5. '
 #: src/Tutorial/IO.md:373
@@ -17282,6 +17508,12 @@ msgid ""
 "`next`.  The loop should terminate in case of a `Left` and print a final "
 "message using `dispResult`:"
 msgstr ""
+"関数`replWith`を実装してください。\n"
+"これはちょうど`repl`と同じように振舞いますが、\n"
+"内部状態を使って値を積み重ねます。\n"
+"それぞれの回（初回も含みます！）で関数`dispState`を使って現在の状態が標準出力に印字され、\n"
+"次の状態は関数`next`を使って計算されます。\n"
+"繰り返しは`Left`の場合に終了し、`dispResult`を使って最後の文言を印字します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:374
@@ -17294,6 +17526,12 @@ msgid ""
 "            -> (dispResult : res -> s -> String)\n"
 "            -> IO ()\n"
 msgstr ""
+"   covering\n"
+"   replWith :  (state      : s)\n"
+"            -> (next       : s -> String -> Either res s)\n"
+"            -> (dispState  : s -> String)\n"
+"            -> (dispResult : res -> s -> String)\n"
+"            -> IO ()\n"
 
 #. type: Bullet: '6. '
 #: src/Tutorial/IO.md:388
@@ -17303,12 +17541,15 @@ msgid ""
 "numbers.  The program should terminate in case of invalid input and if a "
 "user enters \"done\"."
 msgstr ""
+"問題5の`replWith`を使って、標準入力から自然数を読み、\n"
+"積み重ねられたこれらの数値の合計を印字するプログラムを書いてください。\n"
+"プログラムは不正な入力の場合と利用者が \"done\" が入力したときに終了します。"
 
 #. type: Title ##
 #: src/Tutorial/IO.md:389
 #, no-wrap
 msgid "Do Blocks, Desugared"
-msgstr ""
+msgstr "doブロックとその脱糖"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:402
@@ -17323,11 +17564,20 @@ msgid ""
 "write will sometimes be harder to read, so *do blocks* provide nicer syntax "
 "for these occasions."
 msgstr ""
+"ここで大事なお知らせがあります。\n"
+"*doブロック*について特別なことは何もないということです。\n"
+"これは単なる糖衣構文で、演算子の適用の羅列に変換されます。\n"
+"[糖衣構文](https://en.wikipedia.org/wiki/Syntactic_sugar)があれば、\n"
+"少しも言語自体を強力にしたり表現力豊かにすることなく、\n"
+"その言語で特定のことを表現することをより簡単にできるようなプログラミング言語での構文で書くことができます。\n"
+"つまり全ての`IO`プログラムを`do`記法を使わずに書くことができるのですが、\n"
+"書いたコードはしばしば読みにくくなるでしょう。\n"
+"*doブロック*はそうした場合によりよい構文を提供するものです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:404
 msgid "Consider the following example program:"
-msgstr "以下のわざとらしい例について考えましょう。"
+msgstr "以下のプログラム例について考えます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:405
@@ -17340,13 +17590,19 @@ msgid ""
 "  str3 <- getLine\n"
 "  putStrLn (str1 ++ str2 ++ str3)\n"
 msgstr ""
+"sugared1 : IO ()\n"
+"sugared1 = do\n"
+"  str1 <- getLine\n"
+"  str2 <- getLine\n"
+"  str3 <- getLine\n"
+"  putStrLn (str1 ++ str2 ++ str3)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:416
 msgid ""
 "The compiler will convert this to the following program *before "
 "disambiguating function names and type checking*:"
-msgstr ""
+msgstr "コンパイラは*関数名の曖昧性を解決して型検査する前に*これを以下のプログラムに変換します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:417
@@ -17362,6 +17618,15 @@ msgid ""
 "    )\n"
 "  )\n"
 msgstr ""
+"desugared1 : IO ()\n"
+"desugared1 =\n"
+"  getLine >>= (\\str1 =>\n"
+"    getLine >>= (\\str2 =>\n"
+"      getLine >>= (\\str3 =>\n"
+"        putStrLn (str1 ++ str2 ++ str3)\n"
+"      )\n"
+"    )\n"
+"  )\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:432
@@ -17371,6 +17636,8 @@ msgid ""
 "implementation of `desugared1`. If you look at its type\n"
 "at the REPL, you'll see the following:\n"
 msgstr ""
+"*bind*と呼ばれる新しい演算子 (`>>=`) が`desugared1`の実装中にあります。\n"
+"REPLで型を見ると以下のようになっています。\n"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:433
@@ -17379,6 +17646,8 @@ msgid ""
 "Main> :t (>>=)\n"
 "Prelude.>>= : Monad m => m a -> (a -> m b) -> m b\n"
 msgstr ""
+"Main> :t (>>=)\n"
+"Prelude.>>= : Monad m => m a -> (a -> m b) -> m b\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:441
@@ -17387,6 +17656,9 @@ msgid ""
 "will talk about `Monad` and some of its friends in the next chapter. "
 "Specialized to `IO`, *bind* has the following type:"
 msgstr ""
+"これは制約付き関数で`Monad`と呼ばれるインターフェースを必要とします。\n"
+"`Monad`とその仲間達については次章でお話しします。\n"
+"`IO`に限っていうと*bind*は以下の型を持ちます。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:442
@@ -17395,6 +17667,8 @@ msgid ""
 "Main> :t (>>=) {m = IO}\n"
 ">>= : IO a -> (a -> IO b) -> IO b\n"
 msgstr ""
+"Main> :t (>>=) {m = IO}\n"
+">>= : IO a -> (a -> IO b) -> IO b\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:451
@@ -17404,6 +17678,10 @@ msgid ""
 "function generating the second `IO` action, which is then also being "
 "executed."
 msgstr ""
+"これは`IO`行動の連接を表現しています。\n"
+"実行にあたって最初の`IO`行動が走り、\n"
+"その結果が2つ目の`IO`行動を生成する関数に引数として渡されます。\n"
+"2つ目の`IO`行動もそれから実行されていきます。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:466
@@ -17420,6 +17698,19 @@ msgid ""
 "layers of nested anonymous function, that's why in such cases, *do blocks* "
 "are a nice alternative to express the same functionality."
 msgstr ""
+"お気付きかもしれませんが、以前の演習で似たようなものを既に実装していました。\n"
+"[代数的データ型](DataTypes.md)で`Maybe`と`Either e`に*bind*を実装しましたね。\n"
+"次の章で学ぶことになりますが、\n"
+"`Maybe`と`Either e`もまた`Monad`の実装が付属しています。\n"
+"さしあたって言うべきこととしては、\n"
+"`Monad`があれば何らかの種類の作用付きの計算を、\n"
+"最初の計算の*結果*を2つ目の計算が返す関数に渡すことで、\n"
+"順繰りに走らせられるということです。\n"
+"`desugared1`を見るとわかりますが、\n"
+"最初に`IO`行動を実施し、その結果を次の`IO`行動の計算に使い、というようになっています。\n"
+"コードはどこか読み辛いものですが、\n"
+"これは何層にも入れ子になった匿名関数があるからで、\n"
+"だからこそそうした場合に*doブロック*が同じ機能を表現するよりよい代替となるのです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:471
@@ -17428,6 +17719,9 @@ msgid ""
 "operators, we can use them to chain any monadic computation. For instance, "
 "we can rewrite function `eval` by using a *do block* like so:"
 msgstr ""
+"*doブロック*は常に*bind*演算子の適用の羅列に脱糖されるため、\n"
+"これを使っていかなるモナド計算をも連鎖させられます。\n"
+"例えば関数`eval`を*doブロック*を使って書き換えられます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:472
@@ -17442,6 +17736,14 @@ msgid ""
 "    Right $ op v1 v2\n"
 "  _       => Left (ParseError s)\n"
 msgstr ""
+"evalDo : String -> Either Error Integer\n"
+"evalDo s = case forget $ split isSpace s of\n"
+"  [x,y,z] => do\n"
+"    v1 <- readInteger x\n"
+"    op <- readOperator y\n"
+"    v2 <- readInteger z\n"
+"    Right $ op v1 v2\n"
+"  _       => Left (ParseError s)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:488
@@ -17451,17 +17753,23 @@ msgid ""
 "to remember is how *do blocks* are always converted to sequences of *bind* "
 "operators as shown in `desugared1`."
 msgstr ""
+"まだよく飲み込めていなくても心配ないです。\n"
+"より多くの例を見ていくことで、もうじきに会得できるでしょう。\n"
+"覚えておくべき大事なことは*doブロック*が常に`desugared1`に示したような\n"
+"*bind*演算子の羅列に変換されるということです。"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:489
 #, no-wrap
 msgid "Binding Unit"
-msgstr ""
+msgstr "Unitを束縛する"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:492
 msgid "Remember our implementation of `friendlyReadHello`? Here it is again:"
 msgstr ""
+"`friendlyReadHello`の実装を覚えていますか？\n"
+"以下に再掲します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:493
@@ -17472,6 +17780,10 @@ msgid ""
 "  _ <- putStrLn \"Please enter your name.\"\n"
 "  readHello\n"
 msgstr ""
+"friendlyReadHello' : IO ()\n"
+"friendlyReadHello' = do\n"
+"  _ <- putStrLn \"Please enter your name.\"\n"
+"  readHello\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:505
@@ -17481,6 +17793,10 @@ msgid ""
 "merely for the side effects they perform. For instance, we could repeat "
 "`friendlyReadHello` three times, like so:"
 msgstr ""
+"下線文字がちょっと見辛く不必要です。\n"
+"実際、よくある使用例は結果の型が`Unit` (`()`) で作用のある計算を単に連鎖させるだけであり、\n"
+"発生する副作用だけがほしいのです。\n"
+"例えば`friendlyReadHello`を3回繰り返すことができます、こんな風に。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:506
@@ -17492,13 +17808,18 @@ msgid ""
 "  _ <- friendlyReadHello\n"
 "  friendlyReadHello\n"
 msgstr ""
+"friendly3 : IO ()\n"
+"friendly3 = do\n"
+"  _ <- friendlyReadHello\n"
+"  _ <- friendlyReadHello\n"
+"  friendlyReadHello\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:516
 msgid ""
 "This is such a common thing to do, that Idris allows us to drop the bound "
 "underscores altogether:"
-msgstr ""
+msgstr "これはよくあることなので、Idrisでは下線文字への束縛を一気に削ぎ落とすことができます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:517
@@ -17511,11 +17832,17 @@ msgid ""
 "  friendlyReadHello\n"
 "  friendlyReadHello\n"
 msgstr ""
+"friendly4 : IO ()\n"
+"friendly4 = do\n"
+"  friendlyReadHello\n"
+"  friendlyReadHello\n"
+"  friendlyReadHello\n"
+"  friendlyReadHello\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:527
 msgid "Note, however, that the above gets desugared slightly differently:"
-msgstr ""
+msgstr "ただしかし、上記は僅かに違う風に脱糖されます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:528
@@ -17528,12 +17855,18 @@ msgid ""
 "  friendlyReadHello >>\n"
 "  friendlyReadHello\n"
 msgstr ""
+"friendly4Desugared : IO ()\n"
+"friendly4Desugared =\n"
+"  friendlyReadHello >>\n"
+"  friendlyReadHello >>\n"
+"  friendlyReadHello >>\n"
+"  friendlyReadHello\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:538
 #, no-wrap
 msgid "Operator `(>>)` has the following type:\n"
-msgstr ""
+msgstr "演算子 `(>>)` は以下の型を持ちます。\n"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:539
@@ -17542,6 +17875,8 @@ msgid ""
 "Main> :t (>>)\n"
 "Prelude.>> : Monad m => m () -> Lazy (m b) -> m b\n"
 msgstr ""
+"Main> :t (>>)\n"
+"Prelude.>> : Monad m => m () -> Lazy (m b) -> m b\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:550
@@ -17552,12 +17887,17 @@ msgid ""
 "if the first argument is `Nothing`, in which case there is no need to even "
 "evaluate the second argument."
 msgstr ""
+"型処方中に`Lazy`キーワードがありますね。\n"
+"これが意味するのは、包まれた引数が*遅延評価*されるということです。\n"
+"これは多くの場合理に適っています。\n"
+"例えばもし問題の`Monad`が`Maybe`であれば、最初の引数が`Nothing`なら結果が`Nothing`になるでしょう。\n"
+"その場合2つ目の引数を評価する必要さえないのです。"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:551
 #, no-wrap
 msgid "Do, Overloaded"
-msgstr ""
+msgstr "doをオーバーロード"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:562
@@ -17573,6 +17913,12 @@ msgid ""
 "the results will be concatenated leading to\n"
 "a vector of length `m * n`:\n"
 msgstr ""
+"Idrisでは関数と演算子のオーバーロードができるので、\n"
+"自前の*束縛*演算子を書くことができ、\n"
+"これによって`Monad`の実装を持たない型にも*do記法*が使えます。\n"
+"例えば以下はベクタを返す連続計算のための`(>>=)`の自前実装です。\n"
+"（長さ`m`の）1つ目のベクタ中の全ての値が長さ`n`のベクタに変換され、\n"
+"連結された結果となるため長さ`m * n`のベクタになります。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:563
@@ -17585,6 +17931,12 @@ msgid ""
 "(>>=) : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
 "as >>= f = flatten (map f as)\n"
 msgstr ""
+"flatten : Vect m (Vect n a) -> Vect (m * n) a\n"
+"flatten []        = []\n"
+"flatten (x :: xs) = x ++ flatten xs\n"
+"\n"
+"(>>=) : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
+"as >>= f = flatten (map f as)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:580
@@ -17599,6 +17951,12 @@ msgid ""
 "in our custom version of *bind*. Here is an example to\n"
 "see this in action:\n"
 msgstr ""
+"この振舞いを内蔵化するような`Monad`の実装を書くことはできません。\n"
+"型が合わないからです。\n"
+"というのは、`Vect`に特化したモナドな*束縛*は`Vect k a -> (a -> Vect k b) -> Vect k b`の型を持つからです。\n"
+"見てわかるように出現する3箇所の`Vect`大きさはどれも同じであり、\n"
+"これは自家製の*束縛*で表現しているものと異なります。\n"
+"実際に動かしてみた例は以下です。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:581
@@ -17613,6 +17971,14 @@ msgid ""
 "  s2 <- [1, 2, 3]\n"
 "  modString (s1 ++ show s2)\n"
 msgstr ""
+"modString : String -> Vect 4 String\n"
+"modString s = [s, reverse s, toUpper s, toLower s]\n"
+"\n"
+"testDo : Vect 24 String\n"
+"testDo = IO.do\n"
+"  s1 <- [\"Hello\", \"World\"]\n"
+"  s2 <- [1, 2, 3]\n"
+"  modString (s1 ++ show s2)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:601
@@ -17625,6 +17991,13 @@ msgid ""
 "`Monad`, but it is still good to know that it is possible to help the "
 "compiler with disambiguating do blocks."
 msgstr ""
+"手ずから脱糖してみて、`testDo`がどのように動いているのかを調べてみてください。\n"
+"それからその結果とREPLで得られたものとを比較しましょう。\n"
+"なお、ここではIdrisが曖昧さを解決できるように手助けしました。\n"
+"演算子の名前空間の一部で`do`キーワードに前置することで、\n"
+"どの版の*束縛*演算子を使うべきかを伝えています。\n"
+"この場合、`Vect k`は`Monad`の実装を持ちますが、厳密には必要ではありません。\n"
+"しかしそれでもコンパイラがdoブロックの曖昧さを解決することを手伝うことができると知っておくことは良いことです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:605
@@ -17634,12 +18007,14 @@ msgid ""
 "same manner as `(>>=)`, if we want to overload the\n"
 "behavior of *do blocks*.\n"
 msgstr ""
+"もちろん、`(>>=)`と同じ作法で`(>>)`をオーバーロードすることもできます（し、やるべきです！）。\n"
+"もしdoブロックの振舞いをオーバーロードしたければね。\n"
 
 #. type: Title ####
 #: src/Tutorial/IO.md:606
 #, no-wrap
 msgid "Modules and Namespaces"
-msgstr ""
+msgstr "モジュールと名前空間"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:614
@@ -17650,6 +18025,10 @@ msgid ""
 "name of function `eval` would be `Tutorial.IO.eval`. Function and operator "
 "names must be unique in their namespace."
 msgstr ""
+"あらゆるデータ型、関数、演算子は名前空間を前置することで曖昧さなく識別されるようにできます。\n"
+"関数の名前空間は大抵定義されているモジュールと同じです。\n"
+"例えば関数`eval`の完全に限定された名前は`Tutorial.IO.eval`になります。\n"
+"関数と演算子の名前は名前空間において唯一でなければいけません。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:620
@@ -17660,6 +18039,9 @@ msgid ""
 "the function or operator name with a *suffix* of the full namespace. Let's "
 "demonstrate this at the REPL:"
 msgstr ""
+"既に見てきたように、Idrisはよく同名で異なる名前空間の関数を紐付く型で曖昧解決します。\n"
+"これができなければ、関数や演算子の名前に完全な名前空間の後ろ部分を前置することでコンパイラを手助けできます。\n"
+"REPLで実演します。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:621
@@ -17669,6 +18051,9 @@ msgid ""
 "Prelude.>>= : Monad m => m a -> (a -> m b) -> m b\n"
 "Tutorial.IO.>>= : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
 msgstr ""
+"Tutorial.IO> :t (>>=)\n"
+"Prelude.>>= : Monad m => m a -> (a -> m b) -> m b\n"
+"Tutorial.IO.>>= : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:633
@@ -17681,6 +18066,11 @@ msgid ""
 "is is sufficient to prefix it with `IO`, although we could\n"
 "also prefix it with its full namespace:\n"
 msgstr ""
+"見てとれるように、本モジュールをREPLセッションで読み込んで`(>>=)`の型を調べると、\n"
+"その名前の2つの演算子が結果に出てきます。\n"
+"REPLに自前の束縛演算子のみを印字させたいときは、\n"
+"`IO`を前置しておけば充分です。\n"
+"完全な名前空間を前置することもできますけどね。\n"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:634
@@ -17691,6 +18081,10 @@ msgid ""
 "Tutorial.IO> :t Tutorial.IO.(>>=)\n"
 "Tutorial.IO.>>= : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
 msgstr ""
+"Tutorial.IO> :t IO.(>>=)\n"
+"Tutorial.IO.>>= : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
+"Tutorial.IO> :t Tutorial.IO.(>>=)\n"
+"Tutorial.IO.>>= : Vect m a -> (a -> Vect n b) -> Vect (m * n) b\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:649
@@ -17702,6 +18096,12 @@ msgid ""
 "namespace (note, that all definitions in a namespace must be indented by the "
 "same amount of white space):"
 msgstr ""
+"関数名は名前空間で唯一でなければいけない一方で、\n"
+"それでも1つのIdrisのモジュールで2つのオーバーロードされた版の関数を定義したいときがあるかもしれないので、\n"
+"Idrisではモジュールに追加の名前空間を加えられます。\n"
+"例えば`eval`という名前の別の関数を定義するためには、\n"
+"それ自身の名前空間に加える必要があります。\n"
+"（1つの名前空間中の全定義が同量の空白文字で前置されなければいけないことに注意です。）"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:650
@@ -17716,6 +18116,14 @@ msgid ""
 "testFooEval : Nat\n"
 "testFooEval = Foo.eval 12 100\n"
 msgstr ""
+"namespace Foo\n"
+"  export\n"
+"  eval : Nat -> Nat -> Nat\n"
+"  eval = (*)\n"
+"\n"
+"-- `eval`を名前空間で前置していますが、ここでは厳密には不必要です\n"
+"testFooEval : Nat\n"
+"testFooEval = Foo.eval 12 100\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:665
@@ -17724,6 +18132,9 @@ msgid ""
 "accessible from outside their namespace or module, they need to be "
 "*exported* by annotating them with the `export` or `public export` keywords."
 msgstr ""
+"さて、ここで大切な話があります。\n"
+"外部の名前空間やモジュールから到達できる関数やデータ型というのは、\n"
+"`export`や`public export`キーワードで印を付けることで*輸出*しなくてはいけません。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:674
@@ -17736,6 +18147,12 @@ msgid ""
 "the function in compile-time computations. A data type annotated with "
 "`public export` exports its data constructors as well."
 msgstr ""
+"`export`と`public export`の違いは次の通り。\n"
+"`export`の印が付けられた関数は型を輸出しており他の名前空間から呼ぶことができます。\n"
+"`export`の印が付けられたデータ型は型構築子を輸出しますがデータ構築子は輸出しません。\n"
+"`public export`の印が付けられた関数は実装も輸出します。\n"
+"これはコンパイル時計算に使うために必要です。\n"
+"`public export`の印が付けられたデータ型はデータ構築子も輸出します。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:680
@@ -17745,12 +18162,15 @@ msgid ""
 "deconstruct them in pattern matches. Likewise, unless you plan to use your "
 "functions in compile-time computations, annotate them with `export`."
 msgstr ""
+"一般的にデータ型は`public export`の印を付けることを検討してください。\n"
+"さもないとその型の値を作れなかったりパターン照合で解体できないからです。\n"
+"また、関数をコンパイル時計算で使う予定がないときは`export`の印を付けましょう。"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:681
 #, no-wrap
 msgid "Bind, with a Bang"
-msgstr ""
+msgstr "束縛 〜びっくりマークを添えて〜"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:688
@@ -17760,6 +18180,9 @@ msgid ""
 "an exclamation mark (wrapping them in parentheses if they contain additional "
 "white space), while leaving pure expressions unmodified:"
 msgstr ""
+"ときどき*doブロック*さえも作用付き計算の組み合わせを表現するのに目にうるさいことがあります。\n"
+"この場合、純粋な式を変更しないままで、作用のある部分にびっくりマークを前置することができます。\n"
+"（作用のある部分に空白がある場合、括弧で囲みます。）"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:689
@@ -17774,7 +18197,7 @@ msgstr ""
 #. type: Plain text
 #: src/Tutorial/IO.md:695
 msgid "The above gets desugared to the following *do block*:"
-msgstr ""
+msgstr "上記は以下の*doブロック*に脱糖されます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:696
@@ -17793,7 +18216,7 @@ msgstr ""
 #. type: Plain text
 #: src/Tutorial/IO.md:704
 msgid "Here is another example:"
-msgstr ""
+msgstr "以下は別の例です。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:705
@@ -17803,11 +18226,14 @@ msgid ""
 "bangExpr s1 s2 s3 =\n"
 "  Just $ !(parseInteger s1) + !(parseInteger s2) * !(parseInteger s3)\n"
 msgstr ""
+"bangExpr : String -> String -> String -> Maybe Integer\n"
+"bangExpr s1 s2 s3 =\n"
+"  Just $ !(parseInteger s1) + !(parseInteger s2) * !(parseInteger s3)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:712
 msgid "And here is the desugared *do block*:"
-msgstr ""
+msgstr "そしてこれは以下の*doブロック*に脱糖されます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:713
@@ -17820,6 +18246,12 @@ msgid ""
 "  x3 <- parseInteger s3\n"
 "  Just $ x1 + x2 * x3\n"
 msgstr ""
+"bangExpr' : String -> String -> String -> Maybe Integer\n"
+"bangExpr' s1 s2 s3 = do\n"
+"  x1 <- parseInteger s1\n"
+"  x2 <- parseInteger s2\n"
+"  x3 <- parseInteger s3\n"
+"  Just $ x1 + x2 * x3\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:727
@@ -17829,6 +18261,10 @@ msgid ""
 "how clever you are, you make things harder for other people (including your "
 "future self!)  reading and trying to understand your code."
 msgstr ""
+"次のことを心に留めておきましょう。\n"
+"糖衣構文はコードをより読みやすくしたり書くのを便利にしたりするために導入されました。\n"
+"自分がどれほど賢いかを誇示するためだけに乱用すると、\n"
+"他のひと（と将来のあなたも！）がコードを読んで理解しようとすることが難しくなります。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/IO.md:733
@@ -17836,6 +18272,9 @@ msgid ""
 "Reimplement the following *do blocks*, once by using *bang notation*, and "
 "once by writing them in their desugared form with nested *bind*s:"
 msgstr ""
+"以下の*doブロック*を再実装してください。\n"
+"1つはびっくりマーク記法を使って、\n"
+"もう1つは入れ子の*束縛*の形式に脱糖した形で書いてください。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:734
@@ -17854,6 +18293,18 @@ msgid ""
 "     n2 <- parseInteger \"300\"\n"
 "     Just $ n1 + n2 * 100\n"
 msgstr ""
+"   ex1a : IO String\n"
+"   ex1a = do\n"
+"     s1 <- getLine\n"
+"     s2 <- getLine\n"
+"     s3 <- getLine\n"
+"     pure $ s1 ++ reverse s2 ++ s3\n"
+"\n"
+"   ex1b : Maybe Integer\n"
+"   ex1b = do\n"
+"     n1 <- parseInteger \"12\"\n"
+"     n2 <- parseInteger \"300\"\n"
+"     Just $ n1 + n2 * 100\n"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/IO.md:752
@@ -17861,7 +18312,7 @@ msgid ""
 "Below is the definition of an indexed family of types, the index of which "
 "keeps track of whether the value in question is possibly empty or provably "
 "non-empty:"
-msgstr ""
+msgstr "以下は指標付けられた型族で、注目する値が空か証明的に空でないかのいずれかを取る値を指標で追跡します。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:766
@@ -17875,11 +18326,17 @@ msgid ""
 "   be a *cons*, as for the `Nil` case the `nonEmpty` tag is\n"
 "   always set to `False`.\n"
 msgstr ""
+"   注目していただきたいのは、`Nil`の場合では`nonEmpty`札が`False`に設定されて*いなければならず*、\n"
+"   一方で*cons*の場合はどちらでもよいということです。\n"
+"   なので、`List 01 False a`は空もしくは非空のどちらもありえて、\n"
+"   どちらなのかはパターン照合することでのみ調べられます。\n"
+"   他方で、`Nil`の場合は`nonEmpty`札が常に`False`なので、\n"
+"   `List01 True a`は*cons*でなくてはいけません。\n"
 
 #. type: Bullet: '   1. '
 #: src/Tutorial/IO.md:768
 msgid "Declare and implement function `head` for non-empty lists:"
-msgstr ""
+msgstr "関数`head`を非空のリストに対して宣言し実装してください。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:772
@@ -17889,20 +18346,23 @@ msgid ""
 "      head : List01 True a -> a\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      head : List01 True a -> a\n"
+"      ```\n"
 
 #. type: Bullet: '   2. '
 #: src/Tutorial/IO.md:776
 msgid ""
 "Declare and implement function `weaken` for converting any `List01 ne a` to "
 "a `List01 False a` of the same length and order of values."
-msgstr ""
+msgstr "あらゆる`List01 ne a`を同じ長さと値の順番の`List01 False a`に変換する関数`weaken`を宣言し実装してください。"
 
 #. type: Bullet: '   3. '
 #: src/Tutorial/IO.md:779
 msgid ""
 "Declare and implement function `tail` for extracting the possibly empty tail "
 "from a non-empty list."
-msgstr ""
+msgstr "非空のリストから空になりうる尾っぽを取り出す関数`tail`を宣言し実装してください。"
 
 #. type: Bullet: '   4. '
 #: src/Tutorial/IO.md:784
@@ -17911,6 +18371,10 @@ msgid ""
 "Note, how we use a type-level computation to make sure the result is non-"
 "empty if and only if at least one of the two arguments is non-empty:"
 msgstr ""
+"型`List 01`の値を連結する関数`(++)`を実装してください。\n"
+"以下で、どのように型段階計算を使って、\n"
+"2つのうち少なくとも1つが非空であるときに限って、\n"
+"結果が非空であることを確かめているかに注目してください。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:788
@@ -17920,6 +18384,9 @@ msgid ""
 "      (++) : List01 b1 a -> List01 b2 a -> List01 (b1 || b2) a\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      (++) : List01 b1 a -> List01 b2 a -> List01 (b1 || b2) a\n"
+"      ```\n"
 
 #. type: Bullet: '   5. '
 #: src/Tutorial/IO.md:794
@@ -17929,6 +18396,9 @@ msgid ""
 "unrestricted implicits, since you will need to pattern match on these to "
 "determine whether the result is provably non-empty or not:"
 msgstr ""
+"小間物関数`concat'`を実装して`concat`の実装で使ってください。\n"
+"`concat`には2枚の真偽値の札が制約なし暗黙子として渡されていますね。\n"
+"これは結果が証明的に非空かそうでないかを、この札でパターン照合することで決定する必要があるからです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:797
@@ -17937,6 +18407,8 @@ msgid ""
 "      ```idris\n"
 "      concat' : List01 ne1 (List01 ne2 a) -> List01 False a\n"
 msgstr ""
+"      ```idris\n"
+"      concat' : List01 ne1 (List01 ne2 a) -> List01 False a\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:802
@@ -17947,11 +18419,15 @@ msgid ""
 "             -> List01 (ne1 && ne2) a\n"
 "      ```\n"
 msgstr ""
+"      concat :  {ne1, ne2 : _}\n"
+"             -> List01 ne1 (List01 ne2 a)\n"
+"             -> List01 (ne1 && ne2) a\n"
+"      ```\n"
 
 #. type: Bullet: '   6. '
 #: src/Tutorial/IO.md:804
 msgid "Implement `map01`:"
-msgstr ""
+msgstr "`map01`を実装してください。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:808
@@ -17961,13 +18437,16 @@ msgid ""
 "      map01 : (a -> b) -> List01 ne a -> List01 ne b\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      map01 : (a -> b) -> List01 ne a -> List01 ne b\n"
+"      ```\n"
 
 #. type: Bullet: '   7. '
 #: src/Tutorial/IO.md:811
 msgid ""
 "Implement a custom *bind* operator in namespace `List01` for sequencing "
 "computations returning `List01`s."
-msgstr ""
+msgstr "`List01`を返す計算を並べるための、自前の*束縛*演算子を名前空間`List01`に実装してください。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:814
@@ -17976,6 +18455,8 @@ msgid ""
 "      Hint: Use `map01` and `concat` in your implementation and\n"
 "      make sure to use unrestricted implicits where necessary.\n"
 msgstr ""
+"      解決の糸口：実装では`map01`と`concat`を、\n"
+"      必要に応じて制約なし暗黙子を使ってくださいね。\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:817
@@ -17983,7 +18464,7 @@ msgstr ""
 msgid ""
 "      You can use the following examples to test your\n"
 "      custom *bind* operator:\n"
-msgstr ""
+msgstr "      自前の*束縛*演算子が動くことを確かめるためには以下の例が使えます。\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:823
@@ -17995,6 +18476,10 @@ msgid ""
 "      lt : List01 True a -> List01 True a\n"
 "      lt = id\n"
 msgstr ""
+"      ```idris\n"
+"      -- これとlfはリスト表記を使うときにどちらの札を使うのかを確定させるために必要です。\n"
+"      lt : List01 True a -> List01 True a\n"
+"      lt = id\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:826
@@ -18003,6 +18488,8 @@ msgid ""
 "      lf : List01 False a -> List01 False a\n"
 "      lf = id\n"
 msgstr ""
+"      lf : List01 False a -> List01 False a\n"
+"      lf = id\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:833
@@ -18015,6 +18502,12 @@ msgid ""
 "        op <- lt [(*), (+), (-)]\n"
 "        [op x y]\n"
 msgstr ""
+"      test : List01 True Integer\n"
+"      test = List01.do\n"
+"        x  <- lt [1,2,3]\n"
+"        y  <- lt [4,5,6,7]\n"
+"        op <- lt [(*), (+), (-)]\n"
+"        [op x y]\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:841
@@ -18028,6 +18521,13 @@ msgid ""
 "        lt [op x y]\n"
 "      ```\n"
 msgstr ""
+"      test2 : List01 False Integer\n"
+"      test2 = List01.do\n"
+"        x  <- lt [1,2,3]\n"
+"        y  <- Nil {a = Integer}\n"
+"        op <- lt [(*), (+), (-)]\n"
+"        lt [op x y]\n"
+"      ```\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:857
@@ -18045,6 +18545,17 @@ msgid ""
 "from pattern matching on the data values alone, so they have to be passed as "
 "unerased (possibly implicit) arguments."
 msgstr ""
+"演習2に数点補足します。\n"
+"ここでは`List`と`Data.List1`の能力を単一の指標付けられた型族にまとめています。\n"
+"これによりリストの結合を正しく扱えます。\n"
+"つまり、少なくとも一方の引数が証明的に非空であるなら、結果もまた非空なのです。\n"
+"このことを`List`と`List1`で取り組もうとすると、\n"
+"合計4つの結合関数を書く必要があるでしょう。\n"
+"なので、指標付けられた型族の代わりに個々のデータ型を定義できることはよくありますが、\n"
+"指標付けられた型族のほうが、より複雑な型処方と引き換えに、\n"
+"書く関数のより精密な事前・事後条件のある型段階計算を行えます。\n"
+"加えて、データ値へのパターン照合だけからでは指標値を導出できないことはしばしばあり、\n"
+"そのため消去されない（暗黙にできる）引数として渡さなければなりません。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:864
@@ -18055,12 +18566,16 @@ msgid ""
 "arbitrary constraints or implicit arguments as was shown above. Idris will "
 "handle all the details, *after* desugaring the *do blocks*."
 msgstr ""
+"覚えておいてほしいことは、*doブロック*が最初に脱糖されるもので、\n"
+"それは型検査やどの*束縛*演算子かの曖昧解決をするかや暗黙引数を埋めていくより前だということです。\n"
+"したがって上記のような好きな制約や暗黙引数付きの*束縛*演算子を定義することは全くもって大丈夫なのです。\n"
+"Idrisは*doブロック*を脱糖した*後*に全ての詳細を取り扱います。"
 
 #. type: Title ##
 #: src/Tutorial/IO.md:865
 #, no-wrap
 msgid "Working with Files"
-msgstr ""
+msgstr "ファイルを取り回す"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:872
@@ -18071,11 +18586,15 @@ msgid ""
 "first thing we will typically do is to try and create a file handle (of type "
 "`System.File.File` by calling `fileOpen`)."
 msgstr ""
+"モジュール`System.File`は*base*ライブラリに由来し、\n"
+"ファイル制御子を取り回したりファイルを読み書きしたりするのに必要な小間物を輸出しています。\n"
+"ファイルパス（例えば\"/home/hock/idris/tutorial/tutorial.ipkg\"）があるとき、\n"
+"よく最初にすることはファイル制御子（型は`System.File.File`で`fileOpen`という名前）を作ろうとすることです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:874
 msgid "Here is a program for counting all empty lines in a Unix/Linux-file:"
-msgstr ""
+msgstr "以下はUnix/Linux上のファイル中の全空行を数えるプログラムです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:875
@@ -18092,6 +18611,16 @@ msgid ""
 "            | Left err => closeFile file $> Left err\n"
 "          go (k + 1) file\n"
 msgstr ""
+"covering\n"
+"countEmpty : (path : String) -> IO (Either FileError Nat)\n"
+"countEmpty path = openFile path Read >>= either (pure . Left) (go 0)\n"
+"  where covering go : Nat -> File -> IO (Either FileError Nat)\n"
+"        go k file = do\n"
+"          False <- fEOF file | True => closeFile file $> Right k\n"
+"          Right \"\\n\" <- fGetLine file\n"
+"            | Right _  => go k file\n"
+"            | Left err => closeFile file $> Left err\n"
+"          go (k + 1) file\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:894
@@ -18104,6 +18633,12 @@ msgid ""
 "`(pure . Left)` does, and note how we use a curried version of `go`\n"
 "as the second argument to `either`.\n"
 msgstr ""
+"上の例で*doブロック*なしに`(>>=)`を呼び出しました。\n"
+"このときに起こることを確実に理解しましょう。\n"
+"簡潔な関数型コードを読むことは他人のコードを理解するためには大切です。\n"
+"REPLで関数`either`を見たり、\n"
+"`(pure . Left)`がしていることを調べたり、\n"
+"`go`のカリー化された版を`either`の2つ目の引数として使っていることに注目したりしてください。\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:905
@@ -18118,6 +18653,15 @@ msgid ""
 "its trailing newline character `'\\n'`, so in order to check for empty "
 "lines, we have to match against `\"\\n\"` instead of the empty string `\"\"`."
 msgstr ""
+"関数`go`については追加で説明せねばなりません。\n"
+"まず、`let`束縛でも見たのと同じ構文で、結果にそのままパターン照合を使っているところに着目しましょう。\n"
+"見てとれるようにいくつかの垂直棒を使って1つ以上の追加のパターンを制御できます。\n"
+"ファイルから1行読むために関数`fGetLine`を使っています。\n"
+"ファイルシステムでのほとんどの操作につきものですが、\n"
+"この関数は`FileError`を返すかもしれません。\n"
+"そのような場合に正しく対処する必要があります。\n"
+"さらに言えば`fGetLine`は空行のとき末尾の改行文字`'\\n'`を含む行を返すので、\n"
+"空行を確認するためには空文字列`\"\"`の代わりに`\"\\n\"`に照合する必要があります。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:910
@@ -18126,12 +18670,15 @@ msgid ""
 "urandom` or `/dev/zero` provide infinite streams of data, so `countEmpty` "
 "will never terminate when invoked with such a file path."
 msgstr ""
+"最後に`go`は証明的に全域ではなく、それはそうです。\n"
+"`/dev/urandom`や`/dev/zero`のようなファイルはデータの無限ストリームを提供しており、\n"
+"そのため`countEmpty`がそのようなファイルパスで呼び出されたときは終了することがないでしょう。"
 
 #. type: Title ###
 #: src/Tutorial/IO.md:911
 #, no-wrap
 msgid "Safe Resource Handling"
-msgstr ""
+msgstr "安全な資源制御"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:919
@@ -18142,6 +18689,11 @@ msgid ""
 "function exported from `System.File`: `withFile`, which handles the opening, "
 "closing and handling of file errors for us."
 msgstr ""
+"`countEmpty`で手動でファイル制御子を開いたり閉じたりしなければなりませんでしたね。\n"
+"これはエラーの温床ですし億劫です。\n"
+"資源制御は大きな話題であり、ここではその詳細に踏み込むことはありませんが、\n"
+"`System.File`から輸出されている便利な関数があります。\n"
+"それは`withFile`で、これはファイルを開いたり閉じたりファイルのエラーの制御の面倒を見てくれたりします。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:920
@@ -18158,6 +18710,16 @@ msgid ""
 "            | Left err => pure (Left err)\n"
 "          go (k + 1) file\n"
 msgstr ""
+"covering\n"
+"countEmpty' : (path : String) -> IO (Either FileError Nat)\n"
+"countEmpty' path = withFile path Read pure (go 0)\n"
+"  where covering go : Nat -> File -> IO (Either FileError Nat)\n"
+"        go k file = do\n"
+"          False <- fEOF file | True => pure (Right k)\n"
+"          Right \"\\n\" <- fGetLine file\n"
+"            | Right _  => go k file\n"
+"            | Left err => pure (Left err)\n"
+"          go (k + 1) file\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:937
@@ -18167,12 +18729,15 @@ msgid ""
 "understanding slightly more complex function types is important when "
 "learning to program in Idris."
 msgstr ""
+"さあ、`withFile`の型を眺めてみて、\n"
+"それからこれを使って`countEmpty'`の実装をどのように簡単にしているのか見てみましょう。\n"
+"ちょっとだけより複雑な関数の型を読んで理解することはIdrisで書かれたプログラムを学ぶ上で大事です。"
 
 #. type: Title ####
 #: src/Tutorial/IO.md:938
 #, no-wrap
 msgid "Interface `HasIO`"
-msgstr ""
+msgstr "インターフェース`HasIO`"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:948
@@ -18185,6 +18750,12 @@ msgid ""
 "transformers. For now, you can treat these `io` parameters as being "
 "specialized to `IO`."
 msgstr ""
+"これまで使ってきた`IO`関数を見ると、\n"
+"全てではないにしてもほとんどが実際には`IO`そのものを扱ってはおらず、\n"
+"制約`HasIO`を持つ型変数`io`を使っていることに気付きます。\n"
+"このインターフェースのおかげで型`IO a`の値を他の文脈に*持ち上げ*ることができます。\n"
+"この使用例については後の章、特にモナド変換子について話すときに見ていきましょう。\n"
+"現段階ではこれらの`io`変数を`IO`に特化させたものとして扱ってよいです。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/IO.md:959
@@ -18196,6 +18767,11 @@ msgid ""
 "following utility functions and use these to further cleanup the "
 "implementation of `countEmpty'`:"
 msgstr ""
+"上の例で見てきたように、ファイル制御子を取り回す`IO`行動には失敗する危険性が付き纏います。\n"
+"したがってこういった入れ子の作用がを扱ういくらかの小間物関数と自前の*束縛*演算子を書くことで、\n"
+"話を簡単にすることができます。\n"
+"新しい名前空間`IOErr`の中で以下の小間物関数を実装し、\n"
+"これらを使ってさらに`countEmpty'`の実装を綺麗にしましょう。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:960
@@ -18213,6 +18789,17 @@ msgid ""
 "\n"
 "   (>>) : IO (Either e ()) -> Lazy (IO (Either e a)) -> IO (Either e a)\n"
 msgstr ""
+"   pure : a -> IO (Either e a)\n"
+"\n"
+"   fail : e -> IO (Either e a)\n"
+"\n"
+"   lift : IO a -> IO (Either e a)\n"
+"\n"
+"   catch : IO (Either e1 a) -> (e1 -> IO (Either e2 a)) -> IO (Either e2 a)\n"
+"\n"
+"   (>>=) : IO (Either e a) -> (a -> IO (Either e b)) -> IO (Either e b)\n"
+"\n"
+"   (>>) : IO (Either e ()) -> Lazy (IO (Either e a)) -> IO (Either e a)\n"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/IO.md:977
@@ -18221,6 +18808,8 @@ msgid ""
 "using `Data.String.words` and the utilities from exercise 1 in your "
 "implementation."
 msgstr ""
+"ファイル中の単語を数える関数`countWords`を書いてください。\n"
+"実装では`Data.String.words`と演習1の小間物を使うことを検討してください。"
 
 #. type: Bullet: '3. '
 #: src/Tutorial/IO.md:983
@@ -18230,6 +18819,9 @@ msgid ""
 "accumulating some state along the way. Implement `withLines` and use it to "
 "reimplement `countEmpty` and `countWords`:"
 msgstr ""
+"ファイル中の行を順次処理し道中の状態を累積するお助け関数を実装することで、\n"
+"`countEmpty`と`countWords`で使う機能を一般化することができます。\n"
+"`withLines`を実装し、それを使って`countEmpty`と`countWords`を実装してください。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:984
@@ -18241,6 +18833,11 @@ msgid ""
 "             -> (initialState : s)\n"
 "             -> IO (Either FileError s)\n"
 msgstr ""
+"   covering\n"
+"   withLines :  (path : String)\n"
+"             -> (accum : s -> String -> s)\n"
+"             -> (initialState : s)\n"
+"             -> IO (Either FileError s)\n"
 
 #. type: Bullet: '4. '
 #: src/Tutorial/IO.md:996
@@ -18249,6 +18846,9 @@ msgid ""
 "to specialize `withLines` for this case. Use `withLines` to implement "
 "`foldLines` according to the type given below:"
 msgstr ""
+"値を累積するのによく`Monoid`が使われます。\n"
+"この場合は`withLines`に特化させると便利になるということですね。\n"
+"`withLines`を使って`foldLines`を以下の型に沿って実装してください。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/IO.md:997
@@ -18260,6 +18860,11 @@ msgid ""
 "             -> (f    : String -> s)\n"
 "             -> IO (Either FileError s)\n"
 msgstr ""
+"   covering\n"
+"   foldLines :  Monoid s\n"
+"             => (path : String)\n"
+"             -> (f    : String -> s)\n"
+"             -> IO (Either FileError s)\n"
 
 #. type: Bullet: '5. '
 #: src/Tutorial/IO.md:1012
@@ -18269,12 +18874,15 @@ msgid ""
 "implementation of `Monoid` for storing and accumulating these values and use "
 "`foldLines` in your implementation of `wordCount`."
 msgstr ""
+"1つの文字文書中の行数、単語数、文字数を形状する関数`wordCount`を実装してください。\n"
+"これらの値を保管し累積できるように自前のレコード型を`Monoid`の実装とともに定義し、\n"
+"`foldLines`を`wordCount`の実装で使ってください。"
 
 #. type: Title ##
 #: src/Tutorial/IO.md:1013
 #, no-wrap
 msgid "How `IO` is Implemented"
-msgstr ""
+msgstr "`IO`はどのように実装されているのか"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1019
@@ -18284,6 +18892,10 @@ msgid ""
 "not a built-in type but a regular data type with only one minor speciality. "
 "Let's learn about it at the REPL:"
 msgstr ""
+"随分長くなってしまった章のこの最後の節では、\n"
+"勇気を出してIdrisでどのように`IO`が実装されているのか覗いてみましょう。\n"
+"面白いことに、`IO`は組み込み型ではないものの、1点些細な特異性がある以外は普通のデータ型なのです。\n"
+"そのことをREPLで学びましょう。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:1020
@@ -18299,6 +18911,15 @@ msgid ""
 "    HasLinearIO IO\n"
 "    Monad IO\n"
 msgstr ""
+"Tutorial.IO> :doc IO\n"
+"data PrimIO.IO : Type -> Type\n"
+"  Totality: total\n"
+"  Constructor: MkIO : (1 _ : PrimIO a) -> IO a\n"
+"  Hints:\n"
+"    Applicative IO\n"
+"    Functor IO\n"
+"    HasLinearIO IO\n"
+"    Monad IO\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1037
@@ -18308,11 +18929,14 @@ msgid ""
 "going to talk about the quantities here, as in fact they are not important "
 "to understand how `IO` works."
 msgstr ""
+"ここで`IO`が`MkIO`という名前の単一データ構築子を持ち、\n"
+"この構築子が型`PrimIO a`で数量子*1*の単一引数を取ることがわかります。\n"
+"今は数量子についてお話ししませんが、それは実のところ`IO`の仕組みを理解するのには重要ではないからです。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1039
 msgid "Now, `PrimIO a` is a type alias for the following function:"
-msgstr ""
+msgstr "さて、`PrimIO`は以下の関数の型別称です。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:1040
@@ -18322,6 +18946,9 @@ msgid ""
 "PrimIO.PrimIO : Type -> Type\n"
 "PrimIO a = (1 _ : %World) -> IORes a\n"
 msgstr ""
+"Tutorial.IO> :printdef PrimIO\n"
+"PrimIO.PrimIO : Type -> Type\n"
+"PrimIO a = (1 _ : %World) -> IORes a\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1049
@@ -18329,6 +18956,9 @@ msgid ""
 "Again, don't mind the quantities. There is only one piece of the puzzle "
 "missing: `IORes a`, which is a publicly exported record type:"
 msgstr ""
+"繰り返しますが数量子は気にしないでください。\n"
+"唯一の見つかっていないパズルピースは`IORes a`で、\n"
+"これは公に輸出されているレコード型です。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:1050
@@ -18339,19 +18969,23 @@ msgid ""
 "  Totality: total\n"
 "  Constructor: MkIORes : a -> (1 _ : %World) -> IORes a\n"
 msgstr ""
+"Solutions.IO> :doc IORes\n"
+"data PrimIO.IORes : Type -> Type\n"
+"  Totality: total\n"
+"  Constructor: MkIORes : a -> (1 _ : %World) -> IORes a\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1059
 msgid ""
 "So, to put this all together, `IO` is a wrapper around something similar to "
 "the following function type:"
-msgstr ""
+msgstr "ですので、このことを全てまとめると、`IO`は以下の関数型に似た何かの梱包になります。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/IO.md:1060
 #, no-wrap
 msgid "%World -> (a, %World)\n"
-msgstr ""
+msgstr "%World -> (a, %World)\n"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1072
@@ -18363,6 +18997,11 @@ msgid ""
 "`a`. The world state being updated represents all the side effects "
 "describable in a computer program."
 msgstr ""
+"型`%World`のことはプログラムの外側の世界の状態（ファイルシステム、記憶装置、ネットワーク接続など）の\n"
+"仮置場のように考えられます。\n"
+"概念的には、`IO`行動を実行するには世界の現在の状態を渡し、\n"
+"更新された世界状態に加えて型`a`の結果が返却される形です。\n"
+"更新される世界状態はコンピュータプログラムで表現できる副作用の全てを表現します。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1088
@@ -18379,6 +19018,18 @@ msgid ""
 "abstract, primitive type), and therefore we cannot ever extract a value of "
 "type `a` from an `IO a` action (modulo `unsafePerformIO`)."
 msgstr ""
+"ここで理解しておいてほしいことは、*世界の状態*なんてものはないということです。\n"
+"`%World`型はただの仮置場であって、\n"
+"受け渡されはするものの実行時に一度も中身が調べられないような類の定数に変換されます。\n"
+"なので型`%World`の値があったとして、\n"
+"`IO a`行動に渡して実行することはできますが、\n"
+"これは必ず実行時に起こることなのです。\n"
+"つまり、型`%World`の単一の値\n"
+"（特に意味のない仮置場で`null`や`0`や、JavaScriptバックエンドでは`undefined`のような値）は\n"
+"`main`関数に渡され、\n"
+"それから全体のプログラムが動き始めます。\n"
+"しかし、型`%World`の値をプログラムで生み出すことは不可能であり、\n"
+"したがって型`a`の値を`IO a`行動から抽出することは決してできないのです（`unsafePerformIO`を除く）。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1094
@@ -18387,6 +19038,9 @@ msgid ""
 "that `IO` is nothing else but a state monad in disguise but with an abstract "
 "state type, which makes it impossible for us to run the stateful computation."
 msgstr ""
+"モナド変換子と状態モナドについてお話ししたあとでは、\n"
+"`IO`が抽象的な状態型付きではあれど変装した状態モナドに過ぎないとわかるでしょう。\n"
+"この抽象的な点により作用付き計算を走らせることができないようになっています。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:1099
@@ -18394,6 +19048,8 @@ msgid ""
 "Values of type `IO a` describe programs with side effects, which will "
 "eventually result in a value of type `a`."
 msgstr ""
+"型`IO a`の値は副作用付きのプログラムを記述しており、\n"
+"最終的に型`a`の値になります。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:1104
@@ -18402,20 +19058,22 @@ msgid ""
 "use several combinators and syntactic constructs to combine `IO` actions and "
 "build more-complex programs."
 msgstr ""
+"安全に`IO a`から型`a`の値を取り出すことはできませんが、\n"
+"いくつかの結合子と構文的建材によって`IO`行動を組み合わせたりより複雑なプログラムを構築できます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:1107
 msgid ""
 "*Do blocks* offer a convenient way to run and combine `IO` actions "
 "sequentially."
-msgstr ""
+msgstr "*doブロック*があると`IO`行動を順番に組み合わせるのが便利になります。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:1110
 msgid ""
 "*Do blocks* are desugared to nested applications of *bind* operators "
 "(`(>>=)`)."
-msgstr ""
+msgstr "*doブロック*は*束縛*演算子 (`(>>=)`) の入れ子の適用に脱糖されます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:1114
@@ -18423,13 +19081,15 @@ msgid ""
 "*Bind* operators, and thus *do blocks*, can be overloaded to achieve custom "
 "behavior instead of the default (monadic) *bind*."
 msgstr ""
+"*束縛*演算子、そして*doブロック*は、\n"
+"既定の（モナドな）*束縛*の代わりとなる自前の振舞いを実現するためにオーバーロードできます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/IO.md:1117
 msgid ""
 "Under the hood, `IO` actions are stateful computations operating on a "
 "symbolic `%World` state."
-msgstr ""
+msgstr "見えないところでは、`IO`行動は象徴としての`%World`状態を操作する状態付き計算になっています。"
 
 #. type: Plain text
 #: src/Tutorial/IO.md:1123
@@ -18438,6 +19098,8 @@ msgid ""
 "to in the [next chapter](Functor.md) introduce `Monad` and some related "
 "interfaces for real."
 msgstr ""
+"さて、*モナド*と*束縛*演算子をチラ見したところで、\n"
+"[次章](Functor.md)でいよいよ`Monad`と関連する実際のインターフェースのいくつかを紹介する時が来ました。"
 
 #. type: Title #
 #: src/Tutorial/Interfaces.md:1
@@ -27652,7 +28314,7 @@ msgstr ""
 
 #. type: Title #
 #: README.md:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Functional Programming in Idris 2"
 msgstr "関数型プログラミングをIdris 2で"
 
