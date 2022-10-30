@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mdstart ja > log/mdstart.out 2> log/mdstart.err &
+
+echo ja.po | entr make translate > log/translate.out 2> log/translate.err &
+
+wait

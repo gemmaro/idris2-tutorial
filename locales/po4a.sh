@@ -5,7 +5,7 @@ echo '[po_directory] .'
 for markdown in ../src/**/*.md ../README.md; do
   cat << END_OF_CFG
 
-[type: text] \\
+[type:text] \\
   $markdown \\
   \$lang:\$lang/${markdown#../} \\
   opt:"--option markdown --keep 0"

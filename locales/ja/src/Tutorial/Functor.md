@@ -1,16 +1,16 @@
-# Functor and Friends
+# 関手と仲間達
 
-Programming, like mathematics, is about abstraction. We try to model parts
-of the real world, reusing recurring patterns by abstracting over them.
+プログラミングとは、数学がそうであるように、抽象化そのものです。
+現実世界の一部をモデル化しようとし、抽象化によって繰り返されるパターンを再利用します。
 
-In this chapter, we will learn about several related interfaces, which are
-all about abstraction and therefore can be hard to understand at the
-beginning. Especially figuring out *why* they are useful and *when* to use
-them will take time and experience. This chapter therefore comes with tons
-of exercises, most of which can be solved with only a few short lines of
-code. Don't skip them.  Come back to them several times until these things
-start feeling natural to you. You will then realize that their initial
-complexity has vanished.
+この章ではいくつかの関連し合うインターフェースについて学びます。
+これらは全て抽象化についてのものなので、最初のうちは理解するのが難しいかもしれません。
+特に*なぜ*役に立つのか、*いつ*使うのかがわかるには時間と経験が必要です。
+したがってこの章は山ほど演習が付属しており、
+ほとんどはごく少ない行のコードで解くことができます。
+演習を飛ばさないでください。
+内容が自然に感じられるまで何度も立ち返ってください。
+そうすれば当初感じていた複雑さが消えていることに気付くでしょう。
 
 ```idris
 module Tutorial.Functor
@@ -22,29 +22,23 @@ import Data.Vect
 %default total
 ```
 
-## Functor
+## 関手
 
-What do type constructors like `List`, `List1`, `Maybe`, or
-`IO` have in common? First, all of them are of type
-`Type -> Type`. Second, they all put values of a given type
-in a certain *context*. With `List`,
-the *context* is *non-determinism*: We know there to
-be zero or more values, but we don't know the exact number
-until we start taking the list apart by pattern matching
-on it. Likewise for `List1`, though we know for sure that
-there is at least one value. For `Maybe`, we are still not
-sure about how many values there are, but the possibilities
-are much smaller: Zero or one. With `IO`, the context is a different one:
-Arbitrary side effects.
+一般に、`List`、`List1`、`Maybe`、`IO`のような型構築子はどのような型を持っているのでしたっけ。
+一つ目に、すべて型`Type -> Type`です。
+二つ目に、すべて与えられた型の値を何らかの*文脈*の中に入れます。
+`List`については、*文脈*は*非決定論的*です。
+つまり、ゼロ以上の値があることはわかりますが、
+パターン照合によってリストを分解しない限り正確な数はわかりません。
+`List1`も同様ですが、こちらは1つは値があることが確かです。
+`Maybe`についても何個の値があるのかは定かではありませんが、選択肢はずっと小さく、ゼロか1です。
+`IO`についての文脈は違ったものであり、それはあらゆる副作用です。
 
-Although the type constructors discussed above are quite different in how
-they behave and when they are useful, there are certain operations that keep
-coming up when working with them. The first such operation is *mapping a
-pure function over the data type, without affecting its underlying
-structure*.
+上で議論した型構築子は振舞いや便利になるときがかなり異なりますが、
+これらに取り組んでいると何らかの操作は頭に上ってきます。
+そのような操作の1つ目は*土台の構造に影響することなく、純粋な関数をデータ型に写す*ことです。
 
-For instance, given a list of numbers, we'd like to multiply each number by
-two, without changing their order or removing any values:
+例えば数字のリストが与えられたとき、順番や値の削除なしに、それぞれの数を2倍したいとします。
 
 ```idris
 multBy2List : Num a => List a -> List a
@@ -52,8 +46,7 @@ multBy2List []        = []
 multBy2List (x :: xs) = 2 * x :: multBy2List xs
 ```
 
-But we might just as well convert every string in a list of strings to upper
-case characters:
+でもちょうど同じように文字列リスト中の全ての文字列を大文字に変換したいかもしれません。
 
 ```idris
 toUpperList : List String -> List String
@@ -61,8 +54,8 @@ toUpperList []        = []
 toUpperList (x :: xs) = toUpper x :: toUpperList xs
 ```
 
-Sometimes, the type of the stored value changes. In the next example, we
-calculate the lengths of the strings stored in a list:
+保管している値の種類が変わることもあります。
+次の例ではリストに保管されている文字列の長さを計算しています。
 
 ```idris
 toLengthList : List String -> List Nat
@@ -70,9 +63,9 @@ toLengthList []        = []
 toLengthList (x :: xs) = length x :: toLengthList xs
 ```
 
-I'd like you to appreciate, just how boring these functions are. They are
-almost identical, with the only interesting part being the function we apply
-to each element. Surely, there must be a pattern to abstract over:
+これらの関数がどれほど退屈かよくお分かりいただけたでしょう。
+ほとんど同じものであり、関心がある部分はそれぞれの要素に適用している関数なのです。
+もちろんこれを抽象化するパターンがあるはずです。
 
 ```idris
 mapList : (a -> b) -> List a -> List b
@@ -80,9 +73,9 @@ mapList f []        = []
 mapList f (x :: xs) = f x :: mapList f xs
 ```
 
-This is often the first step of abstraction in functional programming: Write
-a (possibly generic) higher-order function.  We can now concisely implement
-all examples shown above in terms of `mapList`:
+これはよく関数型プログラミングで行われる抽象化の初めの一歩です。
+つまり高階関数（汎化も可）を書くということです。
+これで上で示した全ての例を`mapList`を使って簡潔に実装することができます。
 
 ```idris
 multBy2List' : Num a => List a -> List a
@@ -95,9 +88,9 @@ toLengthList' : List String -> List Nat
 toLengthList' = mapList length
 ```
 
-But surely we'd like to do the same kind of thing with `List1` and `Maybe`!
-After all, they are just container types like `List`, the only difference
-being some detail about the number of values they can or can't hold:
+しかしきっと同じ類のことを`List1`や`Maybe`でもしたいでしょう！
+結局はちょうど`List`のような容器型なのです。
+単に値の数で保管できたりできなかったりする違いがあるだけで。
 
 ```idris
 mapMaybe : (a -> b) -> Maybe a -> Maybe b
@@ -105,13 +98,12 @@ mapMaybe f Nothing  = Nothing
 mapMaybe f (Just v) = Just (f v)
 ```
 
-Even with `IO`, we'd like to be able to map pure functions over effectful
-computations. The implementation is a bit more involved, due to the nested
-layers of data constructors, but if in doubt, the types will surely guide
-us. Note, however, that `IO` is not publicly exported, so its data
-constructor is unavailable to us. We can use functions `toPrim` and
-`fromPrim`, however, for converting `IO` from and to `PrimIO`, which we can
-freely dissect:
+`IO`であっても純粋な関数を作用付き計算に写せるようにしたいです。
+入れ子の層になったデータ構築子があるため、実装はもう少し込み入っていますが、
+疑問に思ったときは型がきっと導いてくれます。
+ただしかし、`IO`は公に公開されていないので、データ構築子は使えません。
+ですが`IO`を`PrimIO`と相互に変換するために関数`toPrim`や`fromPrim`を使えるので、
+これらを使えば自由に解剖できます。
 
 ```idris
 mapIO : (a -> b) -> IO a -> IO b
@@ -122,9 +114,8 @@ mapIO f io = fromPrim $ mapPrimIO (toPrim io)
            in MkIORes (f va) w2
 ```
 
-From the concept of *mapping a pure function over values in a context*
-follow some derived functions, which are often useful. Here are some of them
-for `IO`:
+*純粋な関数を文脈に写す*という概念からいくつか派生する関数が出てきますが、便利なことがよくあります。
+以下は`IO`からいくつか取ってきたものです。
 
 ```idris
 mapConstIO : b -> IO a -> IO b
@@ -134,25 +125,20 @@ forgetIO : IO a -> IO ()
 forgetIO = mapConstIO ()
 ```
 
-Of course, we'd want to implement `mapConst` and `forget` as well for
-`List`, `List1`, and `Maybe` (and dozens of other type constructors with
-some kind of mapping function), and they'd all look the same and be equally
-boring.
+もちろん`mapConst`や`forget`を
+`List`、`List1`、`Maybe`（そして他にも山程ある何らかの類の写す関数がある型構築子）にも同様に実装したいですし、
+見た目が全部同じなのでこれもまた退屈です。
 
-When we come upon a recurring class of functions with
-several useful derived functions, we should consider defining
-an interface. But how should we go about this here?
-When you look at the types of `mapList`, `mapMaybe`, and `mapIO`,
-you'll see that it's the `List`, `List1`, and `IO` types we
-need to get rid of. These are not of type `Type` but of type
-`Type -> Type`. Luckily, there is nothing preventing us
-from parametrizing an interface over something else than
-a `Type`.
+関数といくつかの派生した有用な関数の集まりが繰り返される場面に出喰わしたときは、
+インターフェースを定義することを検討すべきです。
+しかしここではどのようにすればよいのでしょうか。
+`mapList`、`mapMaybe`、`mapIO`の型を見ると、除去する必要があるのは`List`、`List1`、`IO`型であるとわかります。
+これらは型`Type`ではなく型`Type -> Type`です。
+運が良いことにインターフェースが`Type`以外の何かを変数に取るようにするのに支障はありません。
 
-The interface we are looking for is called `Functor`.  Here is its
-definition and an example implementation (I appended a tick at the end of
-the names for them not to overlap with the interface and functions exported
-by the *Prelude*):
+探しているインターフェースは`Functor`と呼ばれます。
+以下はその定義と実装例です。
+（名前のあとに印を付けて*Prelude*から輸出されているインターフェースと関数と重ならないようにしました。）
 
 ```idris
 interface Functor' (0 f : Type -> Type) where
@@ -163,15 +149,14 @@ implementation Functor' Maybe where
   map' f (Just v) = Just $ f v
 ```
 
-Note, that we had to give the type of parameter `f` explicitly, and in that
-case it needs to be annotated with quantity zero if you want it to be erased
-at runtime (which you almost always want).
+なお、変数`f`の型を明示的に与えなくてはいけず、
+その場合実行時に消去されていてほしければ数量子ゼロで註釈を付ける必要があります。
+（ほぼ常にそうであってほしいものです。）
 
-Now, reading type signatures consisting only of type parameters like the one
-of `map'` can take some time to get used to, especially when some type
-parameters are applied to other parameters as in `f a`. It can be very
-helpful to inspect these signatures together with all implicit arguments at
-the REPL (I formatted the output to make it more readable):
+さて、`map'`のように型変数のみからなる型処方を読むのは慣れるまで時間が掛かるかもしれません。
+`f a`のように型変数が他の変数に提供されているときは特にそうです。
+REPLでこれらの処方を全ての暗黙子とともに調べると大変理解の助けになります。
+（出力を読みやすいように整形しました。）
 
 ```repl
 Tutorial.Functor> :ti map'
@@ -184,23 +169,21 @@ Tutorial.Functor.map' :  {0 b : Type}
                       -> f b
 ```
 
-It can also be helpful to replace type parameter `f` with a concrete value
-of the same type:
+型変数`f`を同じ型の形がある値に置き換えるのもよいかもしれません。
 
 ```repl
 Tutorial.Functor> :t map' {f = Maybe}
 map' : (?a -> ?b) -> Maybe ?a -> Maybe ?b
 ```
 
-Remember, being able to interpret type signatures is paramount to
-understanding what's going on in an Idris declaration. You *must* practice
-this and make use of the tools and utilities given to you.
+覚えておいてほしいのですが、型処方を解釈できることはIdrisの宣言で起こっていることを理解する上での最重要事項です。
+これを練習し与えられたツールや小間物を活用する*必要*があります。
 
-### Derived Functions
+### 導出される関数
 
-There are several functions and operators directly derivable from interface
-`Functor`. Eventually, you should know and remember all of them as they are
-highly useful. Here they are together with their types:
+インターフェース`Functor`から直接導出できる関数や演算子はいくつかあります。
+これらは大変有用なので、最終的には全てを知り記憶するべきです。
+以下は型と共に見たものです。
 
 ```repl
 Tutorial.Functor> :t (<$>)
@@ -219,8 +202,8 @@ Tutorial.Functor> :t ignore
 Prelude.ignore : Functor f => f a -> f ()
 ```
 
-`(<$>)` is an operator alias for `map` and allows you to sometimes
-drop some parentheses. For instance:
+`(<$>)`は`map`の演算子別称で括弧を省略できるときがあります。
+例えば以下。
 
 ```idris
 tailShowReversNoOp : Show a => List1 a -> List String
@@ -230,21 +213,17 @@ tailShowReverse : Show a => List1 a -> List String
 tailShowReverse xs = reverse . show <$> tail xs
 ```
 
-`(<&>)` is an alias for `(<$>)` with the arguments flipped.
-The other three (`ignore`, `($>)`, and `(<$)`) are all used
-to replace the values in a context with a constant. They are often useful
-when you don't care about the values themselves but
-want to keep the underlying structure.
+`(<&>)`は引数が入れ替わっていることを除けば`(<$>)`の別称と言えます。
+他の3つ (`ignore`, `($>)`, `(<$)`) は全て、定数で文脈中の値を置き換えるために使われます。
+値そのものには関心がないものの土台の構造を維持したいときによく使います。
 
-### Functors with more than one Type Parameter
+### 1つ以上の型変数がある関手
 
-The type constructors we looked at so far where all
-of type `Type -> Type`. However, we can also implement `Functor`
-for other type constructors. The only prerequisite is that
-the type parameter we'd like to change with function `map` must
-be the last in the argument list. For instance, here is the
-`Functor` implementation for `Either e` (note, that `Either e`
-has of course type `Type -> Type` as required):
+これまで見てきた型構築子は全て型が`Type -> Type`でした。
+しかし`Functor`を他の型構築子に実装することもできます。
+唯一の事前要件は、関数`map`で変化させたい型変数が引数リストの最後になければいけないことです。
+例えば以下が`Either e`のための`Functor`の実装です。
+（なお、`Either e`はもちろん必要とされている型`Type -> Type`を持ちます。）
 
 ```idris
 implementation Functor' (Either e) where
@@ -252,9 +231,8 @@ implementation Functor' (Either e) where
   map' f (Right va) = Right $ f va
 ```
 
-Here is another example, this time for a type constructor of
-type `Bool -> Type -> Type` (you might remember this from
-the exercises in the [last chapter](IO.md)):
+以下は別の例で、この場合型構築子は`Bool -> Type -> Type`です。
+（[直近の章](IO.md)の演習でこれを覚えているかもしれません。）
 
 ```idris
 data List01 : (nonEmpty : Bool) -> Type -> Type where
@@ -266,10 +244,9 @@ implementation Functor (List01 ne) where
   map f (x :: xs) = f x :: map f xs
 ```
 
-### Functor Composition
+### 関手の組み合わせ
 
-The nice thing about functors is how they can be paired and nested with
-other functors and the results are functors again:
+関手の良いところは他の関手と対にしたり入れ子にしたりできることで、結果もまた関手になります。
 
 ```idris
 record Product (f,g : Type -> Type) (a : Type) where
@@ -281,8 +258,8 @@ implementation Functor f => Functor g => Functor (Product f g) where
   map f (MkProduct l r) = MkProduct (map f l) (map f r)
 ```
 
-The above allows us to conveniently map over a pair of functors. Note,
-however, that Idris needs some help with inferring the types involved:
+上のコードにより、便利に関手の対の上で写せます。
+ただしかし、Idrisが関係する型を推論するのに手助けが要ることがあります。
 
 ```idris
 toPair : Product f g a -> (f a, g a)
@@ -297,8 +274,8 @@ productExample :  Show a
 productExample = toPair . map show . fromPair {f = Either e, g = List}
 ```
 
-More often, we'd like to map over several layers of nested functors at
-once. Here's how to do this with an example:
+もっとよくあるのは一度に何層かの入れ子になった関手の上で写したいときです。
+以下は一例です。
 
 ```idris
 record Comp (f,g : Type -> Type) (a : Type) where
@@ -312,67 +289,67 @@ compExample :  Show a => List (Either e a) -> List (Either e String)
 compExample = unComp . map show . MkComp {f = List, g = Either e}
 ```
 
-#### Named Implementations
+#### 名前付き実装
 
-Sometimes, there are more ways to implement an interface for a given
-type. For instance, for numeric types we can have a `Monoid` representing
-addition and one representing multiplication.  Likewise, for nested
-functors, `map` can be interpreted as a mapping over only the first layer of
-values, or a mapping over several layers of values.
+時には与えられた型により多くの実装方法があることがあります。
+例えば数値型については、加算を表現する`Monoid`と乗算を表現するものを用意できます。
+同様に入れ子の関手については`map`の解釈として値の最初の層の上のみで写すことも、
+値のいくつかの層の上で写すこともできます。
 
-One way to go about this is to define single-field wrappers as shown with
-data type `Comp` above. However, Idris also allows us to define additional
-interface implementations, which must then be given a name. For instance:
+こうするための1つの方法は単一フィールドの梱包を定義することで、上で見たデータ型`Comp`のような感じです。
+しかしIdrisでは追加のインターフェース実装を定義することもでき、
+それには名前が与えられている必要があります。
+例えば以下。
 
 ```idris
 [Compose'] Functor f => Functor g => Functor (f . g) where
   map f = (map . map) f
 ```
 
-Note, that this defines a new implementation of `Functor`, which will *not*
-be considered during implicit resolution in order to avoid
-ambiguities. However, it is possible to explicitly choose to use this
-implementation by passing it as an explicit argument to `map`, prefixed with
-an `@`:
+なお、これは`Functor`の新しい実装を定義していますが、
+曖昧さを回避するための暗黙裡に行われる解決中には考慮され*ません*。
+しかし、この実装を明示的に選ぶことはでき、
+明示的な引数として`map`に渡せばよいです。
+この引数には`@`が前置されます。
 
 ```idris
 compExample2 :  Show a => List (Either e a) -> List (Either e String)
 compExample2 = map @{Compose} show
 ```
 
-In the example above, we used `Compose` instead of `Compose'`, since the
-former is already exported by the *Prelude*.
+上の例では`Compose'`の代わりに`Compose`を使いました。
+なぜなら前者は既に*Prelude*により輸出されているからです。
 
-### Functor Laws
+### 関手則
 
-Implementations of `Functor` are supposed to adhere to certain laws, just
-like implementations of `Eq` or `Ord`. Again, these laws are not verified by
-Idris, although it would be possible (and often cumbersome) to do so.
+ちょうど`Eq`や`Ord`の実装と同じように、`Functor`の実装にはある法則の遵守が必要です。
+繰り返しますがこれらの法則はIdrisによって検証されません。
+可能（で、よくややこしくなる）ではあるでしょうけれども。
 
-1. `map id = id`: Mapping the identity function over a functor
-    must not have any visible effect such as changing a container's
-    structure or affecting the side effects perfomed when
-    running an `IO` action.
+1. `map id = id`：関手の上で同一関数を写すことで、
+   容器の構造を変えたり`IO`アクションを走らせるときに生じる副作用で影響を与えたりするような、
+   目に見えるいかなる作用もあってはならない。
 
-2. `map (f . g) = map f . map g`: Sequencing two mappings must be identical
-   to a single mapping using the composition of the two functions.
+2. `map (f . g) = map f . map g`：2回の写しの連続は、
+   2つの関数の組合せを使って1回で写すことと同一でなければいけない。
 
-Both of these laws request, that `map` is preserving the *structure* of
-values. This is easier to understand with container types like `List`,
-`Maybe`, or `Either e`, where `map` is not allowed to add or remove any
-wrapped value, nor - in case of `List` - change their order. With `IO`, this
-can best be described as `map` not performing additional side effects.
+これら両方の法則が要求しているのは、
+`map`が値の*構造*を保存しているということです。
+`List`, `Maybe`, `Either e`のような容器型だとより理解しやすいです。
+ここで`map`は梱包された値に追加したりそこから削除したりすることは許しておらず、
+`List`の場合は順番を変えることもできません。
+`IO`については`map`により余剰の副作用を生じないことがこれをよく表しています。
 
 ### 演習 その1
 
-1. Write your own implementations of `Functor'` for `Maybe`, `List`,
-   `List1`, `Vect n`, `Either e`, and `Pair a`.
+1. `Maybe`, `List`, `List1`, `Vect n`, `Either e`, `Pair a`に対して、
+   自力で`Functor'`のの実装を書いてください。
 
-2. Write a named implementation of `Functor` for pairs of functors (similar
-   to the one implemented for `Product`).
+2. 関手の対について、`Functor`の名前付き実装を書いてください。
+   （`Product`に実装したものと似ています。）
 
-3. Implement `Functor` for data type `Identity` (which is available from
-   `Control.Monad.Identity` in *base*):
+3. データ型`Identity`に`Functor`を実装してください。
+   （これは*base*の`Control.Monad.Identity`から手に入ります。）
 
    ```idris
    record Identity a where
@@ -380,15 +357,16 @@ can best be described as `map` not performing additional side effects.
      value : a
    ```
 
-4. Here is a curious one: Implement `Functor` for `Const e` (which is also
-   available from `Control.Applicative.Const` in *base*). You might be
-   confused about the fact that the second type parameter has absolutely no
-   relevance at runtime, as there is no value of that type. Such types are
-   sometimes called *phantom types*. They can be quite useful for tagging
-   values with additional typing information.
+4. これは興味深い問題です：`Const e`に`Functor`を実装してください。
+   （これも*base*の`Control.Application.Const`から手に入ります。）
+   2つ目の型変数が絶対に実行時に関係しないところに当惑されるかもしれません、
+   というのはその型の値が1つもないからです。
+   そのような型は*幽霊型*と呼ばれるときがあります。
+   幽霊型は値に追加の型情報を札付けするのにかなり便利です。
 
-   Don't let the above confuse you: There is only one possible implementation.
-   As usual, use holes and let the compiler guide you if you get lost.
+   上記で混乱しないようにしてください。
+   可能な実装は1つしかありません。
+   いつも通り穴開きを使い、道を見失ったときはコンパイラに導いてもらいましょう。
 
    ```idris
    record Const (e,a : Type) where
@@ -396,8 +374,7 @@ can best be described as `map` not performing additional side effects.
      value : e
    ```
 
-5. Here is a sum type for describing CRUD operations (Create, Read, Update,
-   and Delete) in a data store:
+5. 以下はデータ保管所でのCRUD操作（Create, Read, Update, Delete）を記述する直和型です。
 
    ```idris
    data Crud : (i : Type) -> (a : Type) -> Type where
@@ -407,9 +384,9 @@ can best be described as `map` not performing additional side effects.
      Delete : (id : i) -> Crud i a
    ```
 
-   Implement `Functor` for `Crud i`.
+   `Functor`を`Crud i`に実装してください。
 
-6. Here is a sum type for describing responses from a data server:
+6. 以下はデータサーバからの応答を記述する直和型です。
 
    ```idris
    data Response : (e, i, a : Type) -> Type where
@@ -420,9 +397,9 @@ can best be described as `map` not performing additional side effects.
      Error   : (err : e) -> Response e i a
    ```
 
-   Implement `Functor` for `Repsonse e i`.
+   `Functor`を`Response e i`に実装してください。
 
-7. Implement `Functor` for `Validated e`:
+7. `Functor`を`Vaidated e`に実装してください。
 
    ```idris
    data Validated : (e,a : Type) -> Type where
@@ -430,13 +407,12 @@ can best be described as `map` not performing additional side effects.
      Valid   : (val : a) -> Validated e a
    ```
 
-## Applicative
+## アプリカティブ
 
-While `Functor` allows us to map a pure, unary function over a value in a
-context, it doesn't allow us to combine n such values under an n-ary
-function.
+`Functor`は純粋な1引数関数で文脈中の1つの値を写すことができますが、
+n個のそのような値をn引数関数に結び付けることはできません。
 
-For instance, consider the following functions:
+例えば以下の関数を考えてください。
 
 ```idris
 liftMaybe2 : (a -> b -> c) -> Maybe a -> Maybe b -> Maybe c
@@ -456,10 +432,9 @@ liftIO2 f ioa iob = fromPrim $ go (toPrim ioa) (toPrim iob)
            in MkIORes (f va vb) w3
 ```
 
-This behavior is not covered by `Functor`, yet it is a very common thing to
-do. For instance, we might want to read two numbers from standard input
-(both operations might fail), calculating the product of the two. Here's the
-code:
+この振舞いは`Functor`が押さえていないものの、とてもよく見かけるものです。
+例えば2つの数字を標準入力から読んで（両方とも操作は失敗しえます）、2つの積を計算したいかもしれません。
+以下がそのコードです。
 
 ```idris
 multNumbers : Num a => Neg a => IO (Maybe a)
@@ -469,12 +444,13 @@ multNumbers = do
   pure $ liftMaybe2 (*) (parseInteger s1) (parseInteger s2)
 ```
 
-And it won't stop here. We might just as well want to have `liftMaybe3` for
-ternary functions and three `Maybe` arguments and so on, for arbitrary
-numbers of arguments.
+そしてここで終わりではありません。
+同様にして、3つの`Maybe`な引数を取る3引数関数のための`liftMaybe3`など、
+好きな個数の引数についての関数が欲しくなります。
 
-But there is more: We'd also like to lift pure values into the context in
-question. With this, we could do the following:
+でもまだあります。
+純粋な値を問題の文脈に持ち上げたくもあるのです。
+以下のようにできます。
 
 ```idris
 liftMaybe3 : (a -> b -> c -> d) -> Maybe a -> Maybe b -> Maybe c -> Maybe d
@@ -490,9 +466,9 @@ multAdd100 s t = liftMaybe3 calc (parseInteger s) (parseInteger t) (pure 100)
         calc x y z = x * y + z
 ```
 
-As you'll of course already know, I am now going to present a new interface
-to encapsulate this behavior. It's called `Applicative`.  Here is its
-definition and an example implementation:
+もちろん既にお察しの通り、これからこの振舞いを内蔵化する新しいインターフェースをお見せします。
+それは`Applicative`と呼ばれます。
+以下はその定義と実装例です。
 
 ```idris
 interface Functor' f => Applicative' f where
@@ -506,12 +482,11 @@ implementation Applicative' Maybe where
   pure' = Just
 ```
 
-Interface `Applicative` is of course already exported by the *Prelude*.
-There, function `app` is an operator sometimes called *app* or *apply*:
-`(<*>)`.
+`Applicative`インターフェースはもちろんもう*Prelude*から輸出されています。
+ここでは関数`app`は時々*app*や*apply*と呼ばれる`(<*>)`演算子の姿を取ります。
 
-You may wonder, how functions like `liftMaybe2` or `liftIO3` are related to
-operator *apply*. Let me demonstrate this:
+どうして`liftMaybe2`や`liftIO3`のような関数が*適用*演算子に関係あるのか、不思議に思われるかもしれません。
+次のように実演してみます。
 
 ```idris
 liftA2 : Applicative f => (a -> b -> c) -> f a -> f b -> f c
@@ -521,16 +496,16 @@ liftA3 : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 liftA3 fun fa fb fc = pure fun <*> fa <*> fb <*> fc
 ```
 
-It is really important for you to understand what's going on here, so let's
-break these down. If we specialize `liftA2` to use `Maybe` for `f`,
-`pure fun` is of type `Maybe (a -> b -> c)`. Likewise, `pure fun <*> fa`
-is of type `Maybe (b -> c)`, as `(<*>)` will apply the value stored
-in `fa` to the function stored in `pure fun` (currying!).
+ここで起こっていることを理解するのは本当に大切ですから、これらを分解していきましょう。
+`liftA2`について`f`を`Maybe`に特化させると、`pure fun`は型`Maybe (a -> b -> c)`になります。
+同様に`pure fun <*> fa`は型`Maybe (b -> c)`ですが、
+これは`(<*>)`が`fa`の中に格納された値を`pure fun`に格納された関数に適用しているからです。
+（カリー化ですね！）
 
-You'll often see such chains of applications of *apply*, the number of
-*applies* corresponding to the arity of the function we lift.  You'll
-sometimes also see the following, which allows us to drop the initial call
-to `pure`, and use the operator version of `map` instead:
+そのような*apply*の適用の連鎖はよく見掛けることになるでしょうが、
+*適用*している数は持ち上げている関数の引数の数に一致するのです。
+時々以下を見掛けることもあるでしょうが、
+こうすると最初の`pure`の呼び出しを省けて、代わりに`map`の演算子版を使うことができます。
 
 ```idris
 liftA2' : Applicative f => (a -> b -> c) -> f a -> f b -> f c
@@ -540,20 +515,19 @@ liftA3' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 liftA3' fun fa fb fc = fun <$> fa <*> fb <*> fc
 ```
 
-So, interface `Applicative` allows us to lift values (and functions!)  into
-computational contexts and apply them to values in the same contexts. Before
-we will see an extended example why this is useful, I'll quickly introduce
-some syntactic sugar for working with applicative functors.
+というわけで、インターフェース`Applicative`があると値（と関数も！）計算上の文脈に持ち上げることができ、
+同じ文脈で値に適用させることができるのです。
+より大きな例でなぜこれが便利なのかを見る前に、
+アプリカティブ関手に取り組む際のいくつかの糖衣構文を手短かにご紹介します。
 
-### Idiom Brackets
+### 慣用括弧
 
-The programming style used for implementing `liftA2'` and `liftA3'` is also
-referred to as *applicative style* and is used a lot in Haskell for
-combining several effectful computations with a single pure function.
+`liftA2`や`liftA3`を実装するのに使ったプログラミングの流儀は*アプリカティブスタイル*としても知られ、
+Haskellで複数の作用のある計算を単一の純粋な関数で結合するために多用されます。
 
-In Idris, there is an alternative to using such chains of operator
-applications: Idiom brackets. Here's another reimplementation of `liftA2`
-and `liftA3`:
+Idrisではそのような演算子適用の連鎖を使う代わりの方法があります。
+慣用括弧です。
+以下は`liftA2`と`liftA3`の別の再実装です。
 
 ```idris
 liftA2'' : Applicative f => (a -> b -> c) -> f a -> f b -> f c
@@ -563,27 +537,23 @@ liftA3'' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 liftA3'' fun fa fb fc = [| fun fa fb fc |]
 ```
 
-The above implementations will be desugared to the one given
-for `liftA2` and `liftA3`, again *before disambiguating,
-type checking, and filling in of implicit values*. Like with the
-*bind* operator, we can therefore write custom implementations
-for `pure` and `(<*>)`, and Idris will use these if it
-can disambiguate between the overloaded function names.
+上記の実装は`liftA2`や`liftA3`に与えた実装と同じように脱糖されます。
+繰り返しますが、この脱糖は*曖昧解決や型検査、そして暗黙の値を埋める前*に行われます。
+*束縛*演算子と同じように、`pure`や`(<*>)`のための自前の実装を書くことができ、
+その場合オーバーロードされた関数名の曖昧解決ができればIdrisはその実装を使います。
 
-### Use Case: CSV Reader
+### 用例：CSV読取器
 
-In order to understand the power and versatility that comes with applicative
-functors, we will look at a slightly extended example. We are going to write
-some utilities for parsing and decoding content from CSV files. These are
-files where each line holds a list of values separated by commas (or some
-other delimiter). Typically, they are used to store tabular data, for
-instance from spread sheet applications. What we would like to do is convert
-lines in a CSV file and store the result in custom records, where each
-record field corresponds to a column in the table.
+アプリカティブ関手の持つ強力さと多芸さを実感するために、ほんの少し大きめの例を見ていきます。
+CSVファイルから内容をパースしたりデコードしたりする小間物です。
+ここでのCSVファイルはそれぞれの行にコンマ（あるいは他の区切文字）で区切られた値のリストがあるものです。
+よくあるのがこれらを表のデータを格納するのに使うというもので、
+例えばスプレッドシートアプリケーションから用います。
+やりたいことはCSVファイル中の行を変換して自前のレコードに保管するというもので、
+それぞれのレコードのフィールドは表中の列に対応します。
 
-For instance, here is a simple example file, containing tabular user
-information from a web store: First name, last name, age (optional), email
-address, gender, and password.
+例えば以下は単純なファイルの例で、webストアの利用者情報の表が含まれています。
+まず名前があり、名字、年齢（空欄可）、Eメールアドレス、性別、そしてパスワードがあります。
 
 ```repl
 Jon,Doe,42,jon@doe.ch,m,weijr332sdk
@@ -591,10 +561,9 @@ Jane,Doe,,jane@doe.ch,f,aa433sd112
 Stefan,Hoeck,,nope@goaway.ch,m,password123
 ```
 
-And here are the Idris data types necessary to hold this information at
-runtime. We use again custom string wrappers for increased type safety and
-because it will allow us to define for each data type what we consider to be
-valid input:
+そして以下がこの情報を実行時に持つのに必要なIdrisのデータ型です。
+ここでも型安全性を向上させるために自前の文字列の梱包を使いましたが、
+こうすることでそれぞれのデータ型について妥当と考えられる入力を定義できます。
 
 ```idris
 data Gender = Male | Female | Other
@@ -621,16 +590,16 @@ record User where
   password  : Password
 ```
 
-We start by defining an interface for reading fields in a CSV file and
-writing implementations for the data types we'd like to read:
+CSVファイル中のフィールドを読むのにインターフェースを定義することから始め、
+読み込みたいデータ型に実装を書いていきます。
 
 ```idris
 interface CSVField a where
   read : String -> Maybe a
 ```
 
-Below are implementations for `Gender` and `Bool`. I decided to in these
-cases encode each value with a single lower case character:
+以下は`Gender`と`Bool`向けの実装です。
+それぞれ小文字1文字でそれぞれの値を符号化することに決めました。
 
 ```idris
 CSVField Gender where
@@ -645,7 +614,7 @@ CSVField Bool where
   read _   = Nothing
 ```
 
-For numeric types, we can use the parsing functions from `Data.String`:
+数値型については`Data.String`由来のパースする関数が使えます。
 
 ```idris
 CSVField Nat where
@@ -658,11 +627,10 @@ CSVField Double where
   read = parseDouble
 ```
 
-For optional values, the stored type must itself
-come with an instance of `CSVField`. We can then treat
-the empty string `""` as `Nothing`, while a non-empty
-string will be passed to the encapsulated type's field reader.
-(Remember that `(<$>)` is an alias for `map`.)
+オプショナルな値については、格納される型自身が`CSVField`のインスタンスでなければいけません。
+そこで空文字列`""`を`Nothing`として扱うことにし、
+非空文字列を内蔵化された型のフィールドの読取器に渡すことにします。
+（`(<$>)`が`map`の別称なことを思い出してください。）
 
 ```idris
 CSVField a => CSVField (Maybe a) where
@@ -670,9 +638,8 @@ CSVField a => CSVField (Maybe a) where
   read s  = Just <$> read s
 ```
 
-Finally, for our string wrappers, we need to decide what we consider to be
-valid values. For simplicity, I decided to limit the length of allowed
-strings and the set of valid characters.
+最後に文字列の梱包について、妥当な値だと考えられるものを決める必要があります。
+簡単のために許される文字列の長さと妥当な文字集合で制限することに決めました。
 
 ```idris
 readIf : (String -> Bool) -> (String -> a) -> String -> Maybe a
@@ -712,11 +679,10 @@ CSVField Password where
   read = readIf isValidPassword MkPassword
 ```
 
-In a later chapter, we will learn about refinement types and how to store an
-erased proof of validity together with a validated value.
+後の章で、精錬型と、消去される妥当性の証明を検証された値とともに保管する方法とを学びます。
 
-We can now start to decode whole lines in a CSV file.  In order to do so, we
-first introduce a custom error type encapsulating how things can go wrong:
+これでCSVファイルの行全体を復号化し始められます。
+そうするためにまず自前のエラー型を導入して、どう物事が失敗しうるかを内蔵化します。
 
 ```idris
 data CSVError : Type where
@@ -725,8 +691,8 @@ data CSVError : Type where
   ExpectedEndOfInput   : (line, column : Nat) -> CSVError
 ```
 
-We can now use `CSVField` to read a single field at a given line and
-position in a CSV file, and return a `FieldError` in case of a failure.
+これで`CSVField`を使って、CSVファイル中の与えられた行と位置での単一のフィールドを読み、
+失敗したときは`FieldError`を返します。
 
 ```idris
 readField : CSVField a => (line, column : Nat) -> String -> Either CSVError a
@@ -734,10 +700,10 @@ readField line col str =
   maybe (Left $ FieldError line col str) Right (read str)
 ```
 
-If we know in advance the number of fields we need to read, we can try and
-convert a list of strings to a `Vect` of the given length. This facilitates
-reading record values of a known number of fields, as we get the correct
-number of string variables when pattern matching on the vector:
+予め読み込む必要があるフィールドの数を知っていれば、
+文字列のリストを与えられた長さの`Vect`に変換を試みることができます。
+こうすることで既知の数のフィールド分のレコード値を円滑に読み込むことができますが、
+それはベクタにパターン照合するときに正しい数の文字列変数を得られるからです。
 
 ```idris
 toVect : (n : Nat) -> (line, col : Nat) -> List a -> Either CSVError (Vect n a)
@@ -747,8 +713,7 @@ toVect (S k) line col []        = Left (UnexpectedEndOfInput line col)
 toVect (S k) line col (x :: xs) = (x ::) <$> toVect k line (S col) xs
 ```
 
-Finally, we can implement function `readUser` to try and convert a single
-line in a CSV-file to a value of type `User`:
+最後にCSVファイル中の単一行を型`User`の値に変換しようとする関数`readUser`を実装することができます。
 
 ```idris
 readUser' : (line : Nat) -> List String -> Either CSVError User
@@ -775,22 +740,19 @@ Tutorial.Functor> readUser 7 "Joe,Foo,46,j@f.ch,m,shortPW"
 Left (FieldError 7 6 "shortPW")
 ```
 
-Note, how in the implementation of `readUser'` we used an idiom bracket to
-map a function of six arguments (`MkUser`)  over six values of type `Either
-CSVError`. This will automatically succeed, if and only if all of the
-parsings have succeeded. It would have been notoriously cumbersome resulting
-in much less readable code to implement `readUser'` with a succession of six
-nested pattern matches.
+なお、`readUser'`の実装で慣用括弧を使い、6引数関数 (`MkUser`) を型`Either CSVError`の6つの値に写しました。
+これは全てのパースが成功したとき、またそのときに限って、自動的に成功します。
+もし立て続けに6重に入れ子になったパターン照合で`readUser'`を実装していたら、
+考えるまでもなく面倒ではるかに読みづらいコードになっていたでしょう。
 
-However, the idiom bracket above looks still quite repetitive.  Surely, we
-can do better?
+しかし上の慣用括弧はまだかなり繰り返しがあります。
+きっと、もっと良くできますよね？
 
-#### A Case for Heterogeneous Lists
+#### 混成リストの用例
 
-It is time to learn about a family of types, which can be used as a generic
-representation for record types, and which will allow us to represent and
-read rows in heterogeneous tables with a minimal amount of code:
-Heterogeneous lists.
+型族を学ぶときが来ました。
+型族はレコード型の汎化表現として使うことができ、
+また最小量のコードで混成になっている表中の行を表現したり読み取ったりすることができます。
 
 ```idris
 namespace HList
@@ -800,36 +762,32 @@ namespace HList
     (::) : (v : t) -> (vs : HList ts) -> HList (t :: ts)
 ```
 
-A heterogeneous list is a list type indexed over a *list of types*.  This
-allows us to at each position store a value of the type at the same position
-in the list index. For instance, here is a variant, which stores three
-values of types `Bool`, `Nat`, and `Maybe String` (in that order):
+混成リストは*型のリスト*で指標付けされたリスト型です。
+これによりそれぞれの位置にリストの指標中の同じ位置にある型の値を格納することができます。
+例えば以下の例では型`Bool`、`Nat`、`Maybe String`の3つの値を（この順で）格納します。
 
 ```idris
 hlist1 : HList [Bool, Nat, Maybe String]
 hlist1 = [True, 12, Nothing]
 ```
 
-You could argue that heterogeneous lists are just tuples storing values of
-the given types. That's right, of course, however, as you'll learn the hard
-way in the exercises, we can use the list index to perform compile-time
-computations on `HList`, for instance when concatenating two such lists to
-keep track of the types stored in the result at the same time.
+混成リストは与えられた型の値を格納するただのタプルだと言い張ることもできるでしょう。
+それはもちろん正しいのですが、演習で苦しみながら学ぶことになるように、
+リスト指標を使って`HList`についてのコンパイル時計算を行うことができるのです。
+例えば2つのリストを結合するときに、同時に結果で保管される型へ追従するなどです。
 
-But first, we'll make use of `HList` as a means to concisely parse
-CSV-lines. In order to do that, we need to introduce a new interface for
-types corresponding to whole lines in a CSV-file:
+しかしまずは`HList`を簡潔にCSVの行をパースする手段として活用します。
+そうするためにはCSVファイル中の全行に対応する型のための、新しいインターフェースを導入する必要があります。
 
 ```idris
 interface CSVLine a where
   decodeAt : (line, col : Nat) -> List String -> Either CSVError a
 ```
 
-We'll now write two implementations of `CSVLine` for `HList`: One for the
-`Nil` case, which will succeed if and only if the current list of strings is
-empty. The other for the *cons* case, which will try and read a single field
-from the head of the list and the remainder from its tail. We use again an
-idiom bracket to concatenate the results:
+これから`HList`のための`CSVLine`の2つの実装を書いていきます。
+1つは`Nil`の場合のもので、文字列からなる現在のリストが空のとき、またそのときに限り成功します。
+もう1つは*cons*の場合のもので、リストの先頭と尾っぽの残りから単一のフィールドを読もうとします。
+ここでも結果を結合するのに慣用括弧を使います。
 
 ```idris
 CSVLine (HList []) where
@@ -841,10 +799,11 @@ CSVField t => CSVLine (HList ts) => CSVLine (HList (t :: ts)) where
   decodeAt l c (s :: ss) = [| readField l c s :: decodeAt l (S c) ss |]
 ```
 
-And that's it! All we need to add is two utility function for decoding whole
-lines before they have been split into tokens, one of which is specialized
-to `HList` and takes an erased list of types as argument to make it more
-convenient to use at the REPL:
+これでおしまいです！
+加える必要があるのは2つの小間物関数だけです。
+いずれも字句に分割されたあとに行全体を復号化するもので、
+一方は`HList`に特化されており、引数に消去されたリスト型を取ります。
+これはREPLで使うのにより便利にするものです。
 
 ```idris
 decode : CSVLine a => (line : Nat) -> String -> Either CSVError a
@@ -858,7 +817,7 @@ hdecode :  (0 ts : List Type)
 hdecode _ = decode
 ```
 
-It's time to reap the fruits of our labour and give this a go at the REPL:
+骨折りの成果を得るために、REPLで試すときが来ました。
 
 ```repl
 Tutorial.Functor> hdecode [Bool,Nat,Double] 1 "f,100,12.123"
@@ -867,20 +826,17 @@ Tutorial.Functor> hdecode [Name,Name,Gender] 3 "Idris,,f"
 Left (FieldError 3 2 "")
 ```
 
-### Applicative Laws
+### アプリカティブ則
 
-Again, `Applicative` implementations must follow certain laws. Here they
-are:
+繰り返しになりますが、`Applicative`の実装もいくつかの法則に従います。
+以下の通りです。
 
-* `pure id <*> fa = fa`: Lifting and applying the identity function has no
-  visible effect.
+* `pure id <*> fa = fa`: 持ち上げて同値関数を適用しても目に見える効果はない。
 
-* `[| f . g |] <*> v = f <*> (g <*> v)`: I must not matter, whether we
-  compose our functions first and then apply them, or whether we apply our
-  functions first and then compose them.
+* `[| f . g |] <*> v = f <*> (g <*> v)`: 関数を合成してから適用しても、関数を適用してから合成しても同じである。
 
-  The above might be hard to understand, so here
-  they are again with explicit types and implementations:
+  上記は理解しづらいかもしれないので、
+  以下に再びはっきりした型と実装を置いておきます。
 
   ```idris
   compL : Maybe (b -> c) -> Maybe (a -> b) -> Maybe a -> Maybe c
@@ -890,16 +846,14 @@ are:
   compR f g v = f <*> (g <*> v)
   ```
 
-  The second applicative law states, that the two implementations
-  `compL` and `compR` should behave identically.
+  2つ目のアプリカティブ則が主張しているのは、2つの実装`compL`と`compR`が等価に振る舞うということです。
 
-* `pure f <*> pure x = pure (f x)`. This is also called the *homomorphism*
-  law. It should be pretty self-explaining.
+* `pure f <*> pure x = pure (f x)`。これは*準同型写像*の法則とも呼ばれます。
+  これ自体はかなりわかりやすいでしょう。
 
-* `f <*> pure v = pure ($ v) <*> f`. This is called the law of
-  *interchange*.
+* `f <*> pure v = pure ($ v) <*> f`。これは*交換*の法則と呼ばれます。
 
-  This should again be explained with a concrete example:
+  これも具体例で説明します。
 
   ```idris
   interL : Maybe (a -> b) -> a -> Maybe b
@@ -909,50 +863,43 @@ are:
   interR f v = pure ($ v) <*> f
   ```
 
-  Note, that `($ v)` has type `(a -> b) -> b`, so this
-  is a function type being applied to `f`, which has
-  a function of type `a -> b` wrapped in a `Maybe`
-  context.
+  なお、`($ v)`は型`(a -> b) -> b`なので、`f`に適用される関数型です。
+  `f`は型`a -> b`の関数が`Maybe`の文脈に包まれたものです。
 
-  The law of interchange states that it must not matter
-  whether we apply a pure value from the left or
-  right of the *apply* operator.
+  交換法則が主張していることは、純粋な値を*適用*演算子の左右どちらから適用しても変わってはいけないということです。
 
 ### 演習 その2
 
-1. Implement `Applicative'` for `Either e` and `Identity`.
+1. `Applicative`を`Either e`と`Identity`に実装してください。
 
-2. Implement `Applicative'` for `Vect n`. Note: In order to implement
-   `pure`, the length must be known at runtime.  This can be done by passing
-   it as an unerased implicit to the interface implementation:
+2. `Applicative`を`Vect n`に実装してください。
+   補足：`pure`を実装するためには、実行時に長さがわかっていなくてはいけません。
+   これは長さを消去されない暗黙子としてインターフェースの実装に渡すことでできます。
 
    ```idris
    implementation {n : _} -> Applicative' (Vect n) where
    ```
 
-3. Implement `Applicative'` for `Pair e`, with `e` having a `Monoid`
-   constraint.
+3. `Applicative`を`Pair e`に実装してください。
+   ただし`e`は`Monoid`制約を満たします。
 
-4. Implement `Applicative` for `Const e`, with `e` having a `Monoid`
-   constraint.
+4. `Const e`に`Applicative`を実装してください。
+   ただし`e`は`Monoid`制約を満たします。
 
-5. Implement `Applicative` for `Validated e`, with `e` having a `Semigroup`
-   constraint. This will allow us to use `(<+>)` to accumulate errors in
-   case of two `Invalid` values in the implementation of *apply*.
+5. `Applicative`を`Validated e`に実装してください。
+   ただし`e`は`Semigroup`制約を満たします。
+   これがあると*apply*の実装で2つの`Invalid`な値になったときに、`(<+>)`を使ってエラーを積み重ねることができます。
 
-6. Add an additional data constructor of type `CSVError -> CSVError ->
-   CSVError` to `CSVError` and use this to implement `Semigroup` for
-   `CSVError`.
+6. 型が`CSVError -> CSVError -> CSVError`のデータ構築子を追加し、
+   これを使って`Semigroup`を`CSVError`に実装してください。
 
-7. Refactor our CSV-parsers and all related functions so that they return
-   `Validated` instead of `Either`. This will only work, if you solved
-   exercise 6.
+7. CSVパーサと全ての関係する関数を、`Either`の代わりに`Validated`を返すようにしてリファクタしてください。
+   これは演習6を解いたあとでないと動きません。
 
-   Two things to note: You will have to adjust very little of
-   the existing code, as we can still use applicative syntax
-   with `Validated`. Also, with this change, we enhanced our CSV-parsers
-   with the ability of error accumulation. Here are some examples
-   from a REPL session:
+   2点補足：既存のコードを調整する必要があるのはごく一部ですが、
+   これは`Validated`のアプリカティブ構文をそのまま使うことができるからです。
+   また、この変更によりCSVパーサのエラー累積能力を向上させることができます。
+   以下はREPLセッションでのいくつかの例です。
 
    ```repl
    Solutions.Functor> hdecode [Bool,Nat,Gender] 1 "t,12,f"
@@ -964,74 +911,69 @@ are:
      (App (FieldError 1 2 "-12") (FieldError 1 3 "foo")))
    ```
 
-   Behold the power of applicative functors and heterogeneous lists: With
-   only a few lines of code we wrote a pure, type-safe, and total
-   parser with error accumulation for lines in CSV-files, which is
-   very convenient to use at the same time!
+   アプリカティブ関手と混成リストの強力さにご注目。
+   たった数行のコードだけで、CSVファイル中の行にあるエラーの累積を含む、
+   純粋で、型安全で、全域なパーサを書きました。
+   それにこのパーサはとても使いやすいです！
 
-8. Since we introduced heterogeneous lists in this chapter, it would be a
-   pity not to experiment with them a little.
+8. この章で混成リストを紹介したので、ちょっと実験してみないと損でしょう。
 
-   This exercise is meant to sharpen your skills in type wizardry.
-   It therefore comes with very few hints. Try to decide yourself
-   what behavior you'd expect from a given function, how to express
-   this in the types, and how to implement it afterwards.
-   If your types are correct and precise enough, the implementations
-   will almost come for free. Don't give up too early if you get stuck.
-   Only if you truly run out of ideas should you have a glance
-   at the solutions (and then, only at the types at first!)
+   この演習の目的は型の妙義における読者の技能を研ぎ澄ますことです。
+   したがって解決の糸口はほとんど付属しません。
+   自力で与えられた関数からどんな振舞いが期待されるか、
+   その振舞いをどう型で表現するか、そしてその後でどう実装するか、決めてみてください。
+   型が正しく充分に精緻であれば、実装は実質無料で手に入ります。
+   行き詰まっても早々に諦めないでください。
+   本当に万策尽きたときだけ解法を一瞥すること。
+   （そのときは、まずは型だけ見るようにしてください！）
 
-   1. Implement `head` for `HList`.
+   1. `head`を`HList`に実装してください。
 
-   2. Implement `tail` for `HList`.
+   2. `tail`を`HList`に実装してください。
 
-   3. Implement `(++)` for `HList`.
+   3. `(++)`を`HList`に実装してください。
 
-   4. Implement `index` for `HList`. This might be harder than the other
-      three.  Go back and look how we implemented `indexList` in an [earlier
-      exercise](Dependent.md) and start from there.
+   4. `index`を`HList`に実装してください。
+      これは他の3つより歯応えがあるかもしれません。
+      [前の演習](Dependent.md)でいかにして`indexList`を実装したかに立ち返り、そこから始めましょう。
 
-   5. Package *contrib*, which is part of the Idris project, provides
-      `Data.HVect.HVect`, a data type for heterogeneous vectors. The only
-      difference to our own `HList` is, that `HVect` is indexed over a
-      vector of types instead of a list of types. This makes it easier to
-      express certain operations at the type level.
+   5. パッケージ*contrib*……これはIdrisプロジェクトの一部ですが……
+      は混成ベクタのデータ型である`Data.HVect.HVect`を提供します。
+      私達の`HList`との唯一の相違点は`HVect`が型リストの代わりに型ベクタに指標付けられていることです。
+      これによりいくつかの操作を型段階で表現することがより簡単になっています。
 
-      Write your own implementation of `HVect` together with functions
-      `head`, `tail`, `(++)`, and `index`.
+      自力で`HVect`と関数`head`、`tail`、`(++)`、そして`index`関数の実装を書いてください。
 
-   6. For a real challenge, try implementing a function for transposing a
-      `Vect m (HVect ts)`. You'll first have to be creative about how to
-      even express this in the types.
+   6. 真の挑戦として、`Vect m (HVect ts)`を転地する関数を実装してみてください。
+      まずはこの型をどのようにさえすれば表現できるかというところから思索することになるでしょう。
 
-      Note: In order to implement this, you'll need to pattern match
-      on an erased argument in at least one case to help Idris with
-      type inference. Pattern matching on erased arguments is forbidden
-      (they are erased after all, so we can't inspect them at runtime),
-      *unless* the structure of the value being matched on can be derived
-      from another, un-erased argument.
+      補足：これを実装するには、少なくとも1つの場合分けでIdrisの型推論を手助けするために、
+      消去される引数でのパターン照合が必要になるでしょう。
+      消去される引数でパターン照合することは禁止されていますが、
+      その照合される値の構造が他所の消去されない引数から導出できる場合は*その限りではありません*。
 
-      Also, don't worry if you get stuck on this one. It took me several
-      tries to figure it out. But I enjoyed the experience, so I just *had*
-      to include it here. :-)
+      また、この問題で行き詰まっても心配しないでください。
+      筆者も理解するまで何度も試行しましたから。
+      でもこの体験は楽しかったので、ここに含めない*わけにはいきません*でした。:-)
 
-      Note, however, that such a function might be useful when working with
-      CSV-files, as it allows us to convert a table represented as
-      rows (a vector of tuples) to one represented as columns (a tuple of vectors).
+      ただ、このような関数がCSVファイルを扱うのに便利であろうことには頭に入れておきましょう。
+      行の集まりからなる表（タプルのベクタ）を列の集まりからなる表（ベクタのタプル）に変換できるからです。
 
-9. Show, that the composition of two applicative functors is again an
-   applicative functor by implementing `Applicative` for `Comp f g`.
+9. アプリカティブ関手の合成がこれまたアプリカティブ関手になることを、
+   `Applicative`を`Comp f g`に実装することで示してください。
 
-10. Show, that the product of two applicative functors is again an
-    applicative functor by implementing `Applicative` for `Prod f g`.
+10. 2つのアプリカティブ関手の積がこれまたアプリカティブ関手になることを、
+    `Applicative`を`Prod f g`に実装することで示してください。
 
-## Monad
+## モナド
 
-Finally, `Monad`. A lot of ink has been spilled about this one.
-However, after what we already saw in the [chapter about `IO`](IO.md),
-there is not much left to discuss here. `Monad` extends
-`Applicative` and adds two new related functions: The *bind*
-operator (`(>>=)`) and function `join`. Here is its definition:
+ついに`Monad`です。
+これには多くの紙幅が割かれてきたものでした。
+しかし既に[`IO`についての章](IO.md)で見てきたあとであり、
+ここでお伝えすべきことはそれほど残っていません。
+`Monad`は`Applicative`を拡張し2つの新しい関連する関数を追加します。
+*束縛*演算子 (`(>>=)`) と関数`join`です。
+以下がその定義です。
 
 ```idris
 interface Applicative' m => Monad' m where
@@ -1039,37 +981,30 @@ interface Applicative' m => Monad' m where
   join' : m (m a) -> m a
 ```
 
-Implementers of `Monad` are free to choose to either implement
-`(>>=)` or `join` or both. You will show in an exercise, how
-`join` can be implemented in terms of *bind* and vice versa.
+`Monad`の実装者は`(>>=)`と`join`のどちらを実装するか、もしくは両方を実装するかを自由に選べます。
+どうやって`join`が*束縛*を使って実装されるのか、またその逆については、演習で見ることになるでしょう。
 
-The big difference between `Monad` and `Applicative` is, that the former
-allows a computation to depend on the result of an earlier computation. For
-instance, we could decide based on a string read from standard input whether
-to delete a file or play a song. The result of the first `IO` action
-(reading some user input) will affect, which `IO` action to run next.  This
-is not possible with the *apply* operator:
+`Monad`と`Applicative`の大きな違いは、
+前者では何らかの計算がその前の計算の結果に依存することができる点にあります。
+例えば標準入力から読んだ文字列に基づいてファイルを削除するか歌を流すかを決めることができます。
+最初の`IO`行動（利用者の入力を読む）が、次に走る`IO`行動に影響するのです。
+これは*適用*演算子ではできません。
 
 ```repl
 (<*>) : IO (a -> b) -> IO a -> IO b
 ```
 
-The two `IO` actions have already been decided on when they
-are being passed as arguments to `(<*>)`. The result of the first
-cannot - in the general case - affect which computation to
-run in the second. (Actually, with `IO` this would theoretically be
-possible via side effects: The first action could write some
-command to a file or overwrite some mutable state, and the
-second action could read from that file or state, thus
-deciding on the next thing to do. But this is a speciality
-of `IO`, not of applicative functors in general. If the functor in
-question was `Maybe`, `List`, or `Vector`, no such thing
-would be possible.)
+`(<*>)`への引数として渡される時分には、2つの`IO`行動は既に決定されています。
+1つ目の結果は……一般的な場合において……2つ目に走る計算に影響することはありません。
+（実は`IO`については副作用を介せば理論上可能です。
+最初の行動が何らかの命令をファイルまたは何らかの可変な状態に上書きすれば、
+2つ目の行動がそのファイルや状態から読むことができるので、次にすべきことを決定することができるのです。
+しかしこれは`IO`に限った話であって、アプリカティブ関手一般の話ではありません。
+もし問題の関手が`Maybe`や`List`や`Vector`だったら、そのようなことはできません。）
 
-Let's demonstrate the difference with an example. Assume we'd like to
-enhance our CSV-reader with the ability to decode a line of tokens to a sum
-type. For instance, we'd like to decode CRUD requests from the lines of a
-CSV-file:
+例で相違点を実演しましょう。
+CSV読み取り機を改善して字句からなる行を直和型に復号化できるようにしたいとします。
+例えばCSVファイルの行からCRUDリクエストを復号化したいとしましょう。
 
 ```idris
 data Crud : (i : Type) -> (a : Type) -> Type where
@@ -1079,9 +1014,8 @@ data Crud : (i : Type) -> (a : Type) -> Type where
   Delete : (id : i) -> Crud i a
 ```
 
-We need a way to on each line decide, which data constructor to choose for
-our decoding. One way to do this is to put the name of the data constructor
-(or some other tag of identification) in the first column of the CSV-file:
+それぞれの行で復号にどのデータ構築子を選ぶべきか決める方法が必要です。
+1つの方法はデータ構築子の名前（やその他の識別用の札）をCSVファイルの最初の行に置いておくことです。
 
 ```idris
 hlift : (a -> b) -> HList [a] -> b
@@ -1107,12 +1041,11 @@ decodeCRUD l s =
        _        => Left (FieldError l 1 n)
 ```
 
-I added two utility function for helping with type inference and to get
-slightly nicer syntax. The important thing to note is, how we pattern match
-on the result of the first parsing function to decide on the data
-constructor and thus the next parsing function to use.
+2つの小間物関数を加えて型推論を手助けしたり若干いい感じの構文になるようにしました。
+大事なのは、いかにして最初の構文解析関数の結果でパターン照合し、
+データ構築子と次に使う構文解析関数を決定しているか、というところです。
 
-REPLで試してみましょう。
+以下はREPLで動かした様子です。
 
 ```repl
 Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 "Create,jon@doe.ch"
@@ -1123,24 +1056,24 @@ Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 "Delete,jon@doe.ch"
 Left (FieldError 1 2 "jon@doe.ch")
 ```
 
-To conclude, `Monad`, unlike `Applicative`, allows us to chain computations
-sequentially, where intermediary results can affect the behavior of later
-computations.  So, if you have n unrelated effectful computations and want
-to combine them under a pure, n-ary function, `Applicative` will be
-sufficient. If, however, you want to decide based on the result of an
-effectful computation what computation to run next, you need a `Monad`.
+まとめると`Monad`は`Applicative`とは異なり計算を順番に連鎖させられます。
+この連鎖では中間結果が後の計算に影響を与えられます。
+なので、もしn個の関連のない作用付き計算があり、純粋でn引数の関数のもとに束ねたいなら、
+`Applicative`で充分でしょう。
+しかしもし、ある作用付き計算の結果に基づいて次にどの計算を走らせるか決めたいときは、`Monad`を使う必要があります。
 
-Note, however, that `Monad` has one important drawback compared to
-`Applicative`: In general, monads don't compose.  For instance, there is no
-`Monad` instance for `Either e . IO`.  We will later learn about monad
-transformers, which can be composed with other monads.
+しかし注意ですが、`Monad`は`Applicative`に比べて重要な欠点があります。
+一般にモナドは組み合わさりません。
+例えば`Either e . IO`への`Monad`インスタンスはありません。
+あとでモナド変換子について学びますが、これがあると他のモナドと組み合わせられます。
 
-### Monad Laws
+### モナド則
 
-Without further ado, here are the laws for `Monad`:
+早速ですが以下が`Monad`の法則です。
 
-* `ma >>= pure = ma` and `pure v >>= f = f v`.  These are monad's identity
-  laws. Here they are as concrete examples:
+* `ma >>= pure = ma`と`pure v >>= f = f v`。
+  これらはモナドの等価法則です。
+  以下が具体例です。
 
   ```idris
   id1L : Maybe a -> Maybe a
@@ -1153,59 +1086,55 @@ Without further ado, here are the laws for `Monad`:
   id2R v f = f v
   ```
 
-  These two laws state that `pure` should behave
-  neutrally w.r.t. *bind*.
+  これら2つの法則は`pure`が*束縛*に対して中立にはたらくべきだと主張しています。
 
-* (m >>= f) >>= g = m >>= (f >=> g)  This is the law of associativity for
-  monad.  You might not have seen the second operator `(>=>)`.  It can be
-  used to sequence effectful computations and has the following type:
+* `(m >>= f) >>= g = m >>= (f >=> g)`。
+  これはモナドの結合性の法則です。
+  2つ目の演算子`(>=>)`を見掛けたことがないかもしれません。
+  これは作用付き計算を連接するのに使え、以下の型を持ちます。
 
   ```repl
   Tutorial.Functor> :t (>=>)
   Prelude.>=> : Monad m => (a -> m b) -> (b -> m c) -> a -> m c
   ```
 
-The above are the *official* monad laws. However, we need to
-consider a third one, given that in Idris (and Haskell)
-`Monad` extends `Applicative`: As `(<*>)` can be implemented
-in terms of `(>>=)`, the actual implementation of `(<*>)`
-must behave the same as the implementation in terms of `(>>=)`:
+上記は*公式の*モナド則です。
+しかし、Idris（やHaskell）では`Monad`が`Applicative`を拡張していることからすれば、
+3つ目の法則についても考える必要があります。
+`(<*>)`が`(>>=)`を使って実装できるため、
+`(<*>)`の実際の実装は`(>>=)`を使って実装と同じように振る舞わなくてはいけません。
 
-* `mf <*> ma = mf >>= (\fun => map (fun $) ma)`.
+* `mf <*> ma = mf >>= (\fun => map (fun $) ma)`
 
 ### 演習 その3
 
-1. `Applicative` extends `Functor`, because every `Applicative` is also a
-   `Functor`. Proof this by implementing `map` in terms of `pure` and
-   `(<*>)`.
+1. あらゆる`Applicative`は`Functor`でもあるので、`Applicative`は`Functor`の拡張です。
+   このことを`map`を`pure`と`(<*>)`を使って実装することで証明してください。
 
-2. `Monad` extends `Applicative`, because every `Monad` is also an
-   `Applicative`. Proof this by implementing `(<*>)` in terms of `(>>=)` and
-   `pure`.
+2. あらゆる`Monad`は`Applicative`でもあるので、`Monad`は`Applicative`の拡張です。
+   このことを`(<*>)`を`(>>=)`と`pure`を使って実装することで証明してください。
 
-3. Implement `(>>=)` in terms of `join` and other functions in the `Monad`
-   hierarchy.
+3. `(>>=)`を`join`と`Monad`にある他の関数を使って階層的に実装してください。
 
-4. Implement `join` in terms of `(>>=)` and other functions in the `Monad`
-   hierarchy.
+4. `join`を`(>>=)`と`Monad`にある他の関数を使って階層的に実装してください。
 
-5. There is no lawful `Monad` implementation for `Validated e`.  Why?
+5. `Validated e`への合法な`Monad`実装はありません。
+   なぜですか？
 
-6. In this slightly extended exercise, we are going to simulate CRUD
-   operations on a data store. We will use a mutable reference (imported
-   from `Data.IORef` from the *base* library)  holding a list of `User`s
-   paired with a unique ID of type `Nat` as our user data base:
+6. この若干発展的な演習では、データ保管所でのCRUD操作を模擬していきます。
+   可変参照（*base*ライブラリの`Data.IORef`からインポートされます）を使い、
+   利用者データベースとして`User`とこれに紐付く一意の`Nat`型のIDのリストを保持します。
 
    ```idris
    DB : Type
    DB = IORef (List (Nat,User))
    ```
 
-   Most operations on a database come with a risk of failure:
-   When we try to update or delete a user, the entry in question
-   might no longer be there. When we add a new user, a user
-   with the given email address might already exist. Here is
-   a custom error type to deal with this:
+  データベース上のほとんどの操作は失敗する危険性が付いて回ります。
+  利用者を更新したり削除したりしようとするときには、
+  対象のエントリがもはやそこにいないかもしれません。
+  新しい利用者を加える際、与えられたEmailアドレスを持つ利用者が既に存在するかもしれません。
+  以下がこれを扱う自前のエラー型です。
 
    ```idris
    data DBError : Type where
@@ -1214,15 +1143,13 @@ must behave the same as the implementation in terms of `(>>=)`:
      SizeLimitExceeded : DBError
    ```
 
-   In general, our functions will therefore have a
-   type similar to the following:
+  したがって一般にここでの関数は以下のような型を持ちます。
 
    ```idris
    someDBProg : arg1 -> arg2 -> DB -> IO (Either DBError a)
    ```
 
-   We'd like to abstract over this, by introducing a new wrapper
-   type:
+  新しい梱包型を導入することで、これを抽象化したいと思います。
 
    ```idris
    record Prog a where
@@ -1230,75 +1157,72 @@ must behave the same as the implementation in terms of `(>>=)`:
      runProg : DB -> IO (Either DBError a)
    ```
 
-   We are now ready to write us some utility functions. Make sure
-   to follow the following business rules when implementing the
-   functions below:
+  これでいくつかの小間物関数を書く準備ができました。
+  以下の関数を実装するときには次の取り決めにしたがうようにしてください。
 
-   * Email addresses in the DB must be unique. (Consider implementing `Eq
-     Email` to verify this).
+   * DB中のEmailアドレスは一意でなくてはならない。
+     （これを検証するために`Eq Email`を実装することを検討してください。）
 
-   * The size limit of 1000 entries must not be exceeded.
+   * 上限1000項目の大きさを超過してはいけない。
 
-   * Operations trying to lookup a user by their ID must fail with
-     `UserNotFound` in case no entry was found in the DB.
+   * 利用者をIDで見付けだそうとする操作は、DBに項目が見付からなかった場合は`UserNotFound`で失敗しなければいけない。
 
-   You'll need the following functions from `Data.IORef` when working
-   with mutable references: `newIORef`, `readIORef`, and `writeIORef`.
-   In addition, functions `Data.List.lookup` and `Data.List.find` might
-   be useful to implement some of the functions below.
+  可変参照を扱う際は`Data.IORef`の次の関数が必要になるでしょう。
+  すなわち、`newIORef`、`readIORef`、そして`writeIORef`です。
+  加えて関数`Data.List.lookup`と`Data.List.find`は以降の関数を実装するのに便利なことなことがあります。
 
-   1. Implement interfaces `Functor`, `Applicative`, and `Monad` for `Prog`.
+   1. インターフェース`Functor`、`Applicative`、`Monad`を`Prog`に実装してください。
 
-   2. Implement interface `HasIO` for `Prog`.
+   2. インターフェース`HasIO`を`Prog`に実装してください。
 
-   3. `List`についての以下の汎化関数を実装してください。
+   3. 以下の小間物関数を実装してください。
 
       ```idris
       throw : DBError -> Prog a
 
       getUsers : Prog (List (Nat,User))
 
-      -- check the size limit!
+      -- 項目数の上限をを検査してください！
       putUsers : List (Nat,User) -> Prog ()
 
-      -- implement this in terms of `getUsers` and `putUsers`
+      -- `getUsers`と`putUsers`を使ってこれを実装してください。
       modifyDB : (List (Nat,User) -> List (Nat,User)) -> Prog ()
       ```
 
-   4. Implement function `lookupUser`. This should fail with an appropriate
-      error, if a user with the given ID cannot be found.
+   4. 関数`lookupUser`を実装してください。
+      この関数は与えられたIDに紐付く利用者が見付からなかったときは適切なエラーで失敗します。
 
       ```idris
       lookupUser : (id : Nat) -> Prog User
       ```
 
-   5. Implement function `deleteUser`. This should fail with an appropriate
-      error, if a user with the given ID cannot be found. Make use of
-      `lookupUser` in your implementation.
+   5. 関数`deleteUser`を実装してください。
+      この関数は与えられたIDに紐付く利用者が見付からなかったときは適切なエラーで失敗します。
+      実装では`lookupUser`を使ってください。
 
       ```idris
       deleteUser : (id : Nat) -> Prog ()
       ```
 
-   6. Implement function `addUser`. This should fail, if a user with the
-      given `Email` already exists, or if the data banks size limit of 1000
-      entries is exceeded.  In addition, this should create and return a
-      unique ID for the new user entry.
+   6. 関数`addUser`を実装してください。
+      与えられた`Email`に紐付く利用者が既に存在していたり、
+      データバンクの項目数上限である1000項目を超過したりした場合は、この関数は失敗します。
+      加えてこの関数は新しい利用者の項目についての一意なIDを作って返します。
 
       ```idris
       addUser : (new : User) -> Prog Nat
       ```
 
-   7. Implement function `updateUser`. This should fail, if the user in
-      question cannot be found or a user with the updated user's `Email`
-      already exists.  The returned value should be the updated user.
+   7. 関数`updateUser`を実装してください。
+      問題の利用者が見付からなかったり更新された利用者の`Email`が既に存在している場合は失敗します。
+      返値は更新された利用者です。
 
       ```idris
       updateUser : (id : Nat) -> (mod : User -> User) -> Prog User
       ```
 
-   8. Data type `Prog` is actually too specific. We could just as well
-      abstract over the error type and the `DB` environment:
+   8. 実はデータ型`Prog`は限定的すぎます。
+      エラー型と`DB`環境を抽象化することができます。
 
       ```idris
       record Prog' env err a where
@@ -1306,56 +1230,48 @@ must behave the same as the implementation in terms of `(>>=)`:
         runProg' : env -> IO (Either err a)
       ```
 
-      Verify, that all interface implementations you wrote
-      for `Prog` can be used verbatim to implement the same
-      interfaces for `Prog' env err`. The same goes for
-      `throw` with only a slight adjustment in the function's
-      type.
+      `Prog`に書いた全てのインターフェースの実装が、
+      そのまま`Prog' env err`への同じインターフェースを実装するのに使えることを確認してください。
+      関数の型に僅かに調整が必要ですが、それ以外は`throw`についても同じことが言えます。
 
-## Background and further Reading
+## 背景とさらなる文献
 
-Concepts like *functor* and *monad* have their origin in *category theory*,
-a branch of mathematics. That is also where their laws come from.  Category
-theory was found to have applications in programming language theory,
-especially functional programming.  It is a highly abstract topic, but there
-is a pretty accessible introduction for programmers, written by [Bartosz
-Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/).
+*関手*や*モナド*といった概念は数学の一分野である*圏論*に起源があります。
+それぞれの法則が来ているのもそこからです。
+圏論はプログラミング言語理論への応用が発見されていますが、特に関数型言語で顕著です。
+高度に抽象的な話題ですが、[Bartosz
+Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)によって書かれたプログラマにとってかなり手を出しやすい導入があります。
 
-The usefulness of applicative functors as a middle ground between functor
-and monad was discovered several years after monads had already been in use
-in Haskell. They where introduced in the article [*Applicative Programming
-with Effects*](https://www.staff.city.ac.uk/~ross/papers/Applicative.html),
-which is freely available online and a highly recommended read.
+関手とモナドの中間地点としてのアプリカティブ関手の実用性は、
+Haskellで既にモナドが使われるようになってから数年後に発見されました。
+こちらは記事[*作用つきアプリカティブプログラミング* (Applicative Programming with
+Effects)](https://www.staff.city.ac.uk/~ross/papers/Applicative.html)で紹介されています。
+オンラインで自由に見ることができ、読まれることを強くお勧めします。
 
 ## まとめ
 
-* Interfaces `Functor`, `Applicative`, and `Monad` abstract over programming
-  patterns that come up when working with type constructors of type `Type ->
-  Type`. Such data types are also referred to as *values in a context*, or
-  *effectful computations*.
+* インターフェース`Functor`、`Applicative`、そして`Monad`は、
+  型`Type -> Type`の型構築子を扱うときに引き合いに出されるプログラミング様式を抽象化します。
+  そのようなデータ型は*文脈付きの値*や*作用付き計算*としても参照されます。
 
-* `Functor` allows us to *map* over values in a context without affecting
-  the context's underlying structure.
+* `Functor`があれば、文脈に土台の構造に影響することなく、文脈中の値を*写す*ことができます。
 
-* `Applicative` allows us to apply n-ary functions to n effectful
-  computations and to lift pure values into a context.
+* `Applicative`があれば、
+  n個の作用付き計算にn引数関数を適用したり、純粋な値を文脈に持ち上げたりすることができます。
 
-* `Monad` allows us to chain effectful computations, where the intermediary
-  results can affect, which computation to run further down the chain.
+* `Monad`があれば作用付き計算を連鎖させることができます。
+  この連鎖では中間結果がその後どの計算を走らせるかに影響させられます。
 
-* Unlike `Monad`, `Functor` and `Applicative` compose: The product and
-  composition of two functors or applicatives are again functors or
-  applicatives, respectively.
+* `Monad`とは異なり、`Functor`と`Applicative`は組み合わさります。
+  2つの関手やアプリカティブの積や合成はこれまたそれぞれ関手やアプリカティブとなります。
 
-* Idris provides syntactic sugar for working with some of the interfaces
-  presented here: Idiom brackets for `Applicative`, *do blocks* and the bang
-  operator for `Monad`.
+* Idrisはここで提示したインターフェースのいくつかについて扱うための糖衣構文を提供します。
+  `Applicative`の慣用括弧や*do記法*、そして`Monad`のびっくり演算子です。
 
 ### お次は？
 
-In the [next chapter](Folds.md) we get to learn more about recursion,
-totality checking, and an interface for collapsing container types:
-`Foldable`.
+[次章](Folds.md)では再帰、全域性検査、
+そして容器型を折り畳むインターフェースである`Foldable`について学び始めます。
 
 <!-- vi: filetype=idris2
 -->
