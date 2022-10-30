@@ -63,20 +63,16 @@ Idrisは *純粋* で *依存型* で *全域* な *関数型* プログラミ�
 * 関数をテストするのが簡単です。
   いくつかの入力（乱択による生成でも可）と期待値を指定します。
 
-
 * 関数はスレッドセーフです。
   なぜなら大域状態を変更しないからです。
   そして、並列実行される計算でも自由に使えます。
-
 
 純粋な関数にももちろん欠点があります。
 
 * 純粋関数だけでは、効率良く実装することが困難なアルゴリズムがあります。
 
-
 * 実際に何かを *する* プログラム（何らかの観測可能な効果を伴う）を書くのにひと工夫いることです。
   でも、確実にできます。
-
 
 ### 依存型
 
@@ -175,7 +171,8 @@ Idrisはデフォルトで常に `Integer` を使います。
 `Integer` は任意精度の符号付き整数型です。
 `Integer` は言語に組込まれている *原始型* の1つです。
 他の原始型には、
-固定精度で符号付きないし符号なしの整数型 (`Bits8`, `Bits16`, `Bits32`, `Bits64`, `Int8`, `Int16`, `Int32`, `Int64`)、
+固定精度で符号付きないし符号なしの整数型 (`Bits8`, `Bits16`, `Bits32`, `Bits64`, `Int8`,
+`Int16`, `Int32`, `Int64`)、
 倍精度 (64 bit) 浮動小数点小数 (`Double`)、
 Unicode文字 (`Char`)、
 そしてUnicode文字の連なり (`String`) があります。
@@ -351,8 +348,8 @@ Tutorial.Intro> maxBits8 * maxBits8
 それらのプログラミング言語Idrisのドキュメントは役に立つでしょう。
 全ては紹介しきれませんが、次のようなものがあります。
 
-* [Type-Driven Development with Idris](https://www.manning.com/books/type-driven-development-with-idris)
-
+* [Type-Driven Development with
+  Idris](https://www.manning.com/books/type-driven-development-with-idris)
 
 *唯一の* Idrisの書籍です！
 堅牢で簡潔なコードを書くために、Idrisと依存型を使う上での核となる概念がとても詳しく書かれています。
@@ -360,8 +357,8 @@ Tutorial.Intro> maxBits8 * maxBits8
 Idris 2で使うためには一部分を少しだけ調整する必要があります。
 [更新が必要な箇所の一覧](https://idris2.readthedocs.io/en/latest/typedd/typedd.html)もあります。
 
-* [A Crash Course in Idris 2](https://idris2.readthedocs.io/en/latest/tutorial/index.html)
-
+* [A Crash Course in Idris
+  2](https://idris2.readthedocs.io/en/latest/tutorial/index.html)
 
 公式のIdris 2入門です。
 網羅的で密度の濃いIdris 2の特徴の説明があります。
@@ -369,7 +366,6 @@ Idris 2で使うためには一部分を少しだけ調整する必要があり�
 しかし、一般には関数型プログラミングや型駆動開発の導入ではありません。
 
 * [Idris 2のGitHubリポジトリ](https://github.com/idris-lang/Idris2)
-
 
 ここにはインストール方法や導入資料があります。
 [Wiki](https://github.com/idris-lang/Idris2/wiki)もあって、
@@ -379,7 +375,6 @@ Idris 2で使うためには一部分を少しだけ調整する必要があり�
 などの役に立つ情報が載っています。
 
 * [Idris 2のDiscordチャンネル](https://discord.gg/UX68fDs2jc)
-
 
 コードの一部で詰まったり、
 よくわからない言語の特徴について質問したいとき、
@@ -391,7 +386,6 @@ Discordチャンネルはかなり活発で、
 
 * IdrisのREPL
 
-
 最後に、沢山の役に立つ情報はIdris自身から提供されます。
 筆者はIdrisでプログラミングするときはずっと、最低でも1つのREPLセッションを立ち上げたままにしがちです。
 私が使っているエディタ (neovim) には
@@ -401,26 +395,20 @@ REPLでは、
 
   * `:t` で式やメタ変数（穴）の型を調べられます。
     例えば `:t foldl` とします。
-
   * `:ti` で暗黙の引数を含む関数の型を調べられます。
     例えば `:ti foldl` とします。
-
   * `:m` でスコープ内の全てのメタ変数（穴）の一覧が出てきます。
-
   * `:doc` でドキュメントにアクセスできます。
     トップレベルの関数（`:doc the`）、
     データ型とその型の構築子と使えるヒント（`:doc Bool`）、
-    言語の特徴（`:doc case`, `:doc let`, `:doc interface`, `:doc record`, `:doc ?` まで）、
+    言語の特徴（`:doc case`, `:doc let`, `:doc interface`, `:doc record`, `:doc ?`
+    まで）、
     それからインターフェース（`:doc Uninhabited`）が対象です。
-
   * `:module` で使えるパッケージの中からモジュールをインポートします。
     例えば `:module Data.Vect` とします。
-
   * `:browse` で読み込むモジュールが提供している全ての関数の名前と型の一覧が出てきます。
     例えば `:browse Data.Vect` とします。
-
   * `:help` で他のコマンドとそれぞれの短い説明が一覧で表示されます。
-
 
 ## まとめ
 

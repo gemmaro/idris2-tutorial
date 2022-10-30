@@ -1,14 +1,12 @@
 # Predicates and Proof Search
 
-In the [last chapter](Eq.md) we learned about propositional
-equality, which allowed us to proof that two values are
-equal. Equality is a relation between values, and we used
-an indexed data type to encode this relation by limiting
-the degrees of freedom of the indices in the sole data
-constructor. There are other relations and contracts we
-can encode this way. This will allow us to restrict the
-values we accept as a function's arguments or the values
-returned by functions.
+In the [last chapter](Eq.md) we learned about propositional equality, which
+allowed us to proof that two values are equal. Equality is a relation
+between values, and we used an indexed data type to encode this relation by
+limiting the degrees of freedom of the indices in the sole data
+constructor. There are other relations and contracts we can encode this
+way. This will allow us to restrict the values we accept as a function's
+arguments or the values returned by functions.
 
 ```idris
 module Tutorial.Predicates
@@ -28,86 +26,69 @@ import System.File
 
 ## Preconditions
 
-Often, when we implement functions operating on values
-of a given type, not all values are considered to be
-valid arguments for the function in question. For instance,
-we typically do not allow division by zero, as the result
-is undefined in the general case. This concept of putting
-a *precondition* on a function argument comes up pretty often,
-and there are several ways to go about this.
+Often, when we implement functions operating on values of a given type, not
+all values are considered to be valid arguments for the function in
+question. For instance, we typically do not allow division by zero, as the
+result is undefined in the general case. This concept of putting a
+*precondition* on a function argument comes up pretty often, and there are
+several ways to go about this.
 
-A very common operation when working with lists or other
-container types is to extract the first value in the sequence.
-This function, however, cannot work in the general case, because
-in order to extract a value from a list, the list must not
-be empty. Here are a couple of ways to encode and implement
-this, each with its own advantages and disadvantages:
+A very common operation when working with lists or other container types is
+to extract the first value in the sequence.  This function, however, cannot
+work in the general case, because in order to extract a value from a list,
+the list must not be empty. Here are a couple of ways to encode and
+implement this, each with its own advantages and disadvantages:
 
-* Wrap the result in a failure type, such as a `Maybe` or
-  `Either e` with some custom error type `e`. This makes it
-  immediately clear that the function might not be able to
-  return a result. It is a natural way to deal with unvalidated
-  input from unknown sources. The drawback of this approach is
-  that results will carry the `Maybe` stain, even in situations
-  when we *know* that the *nil* case is impossible, for instance because we
-  know the value of the list argument at compile-time,
-  or because we already *refined* the input value in such a
-  way that we can be sure it is not empty (due to an earlier
-  pattern match, for instance).
+* Wrap the result in a failure type, such as a `Maybe` or `Either e` with
+  some custom error type `e`. This makes it immediately clear that the
+  function might not be able to return a result. It is a natural way to deal
+  with unvalidated input from unknown sources. The drawback of this approach
+  is that results will carry the `Maybe` stain, even in situations when we
+  *know* that the *nil* case is impossible, for instance because we know the
+  value of the list argument at compile-time, or because we already
+  *refined* the input value in such a way that we can be sure it is not
+  empty (due to an earlier pattern match, for instance).
 
+* Define a new data type for non-empty lists and use this as the function's
+  argument. This is the approach taken in module `Data.List1`. It allows us
+  to return a pure value (meaning "not wrapped in a failure type" here),
+  because the function cannot possibly fail, but it comes with the burden of
+  reimplementing many of the utility functions and interfaces we already
+  implemented for `List`. For a very common data structure this can be a
+  valid option, but for rare use cases it is often too cumbersome.
 
-* Define a new data type for non-empty lists and use this
-  as the function's argument. This is the approach taken in
-  module `Data.List1`. It allows us to return a pure value
-  (meaning "not wrapped in a failure type" here), because the
-  function cannot possibly fail, but it comes with the
-  burden of reimplementing many of the utility functions and
-  interfaces we already implemented for `List`. For a very common
-  data structure this can be a valid option, but for rare use cases
-  it is often too cumbersome.
+* Use an index to keep track of the property we are interested in. This was
+  the approach we took with type family `List01`, which we saw in several
+  examples and exercises in this guide so far. This is also the approach
+  taken with vectors, where we use the exact length as our index, which is
+  even more expressive. While this allows us to implement many functions
+  only once and with greater precision at the type level, it also comes with
+  the burden of keeping track of changes in the types, making for more
+  complex function types and forcing us to at times return existentially
+  quantified wrappers (for instance, dependent pairs), because the outcome
+  of a computation is not known until runtime.
 
+* Fail with a runtime exception. This is a popular solution in many
+  programming languages (even Haskell), but in Idris we try to avoid this,
+  because it breaks totality in a way, which also affects client
+  code. Luckily, we can make use of our powerful type system to avoid this
+  situation in general.
 
-* Use an index to keep track of the property we are interested
-  in. This was the approach we took with type family `List01`,
-  which we saw in several examples and exercises in this guide
-  so far. This is also the approach taken with vectors,
-  where we use the exact length as our index, which is even
-  more expressive. While this allows us to implement many functions
-  only once and with greater precision at the type level, it
-  also comes with the burden of keeping track of changes
-  in the types, making for more complex function types
-  and forcing us to at times return existentially quantified
-  wrappers (for instance, dependent pairs),
-  because the outcome of a computation is not known until
-  runtime.
+* Take an additional (possibly erased) argument of a type we can use as a
+  witness that the input value is of the correct kind or shape. This is the
+  solution we will discuss in this chapter in great detail. It is an
+  incredibly powerful way to talk about restrictions on values without
+  having to replicate a lot of already existing functionality.
 
-
-* Fail with a runtime exception. This is a popular solution
-  in many programming languages (even Haskell), but in Idris
-  we try to avoid this, because it breaks totality in a way,
-  which also affects client code. Luckily, we can make use of
-  our powerful type system to avoid this situation in general.
-
-
-* Take an additional (possibly erased) argument of a type
-  we can use as a witness that the input value is of the
-  correct kind or shape. This is the solution we will discuss
-  in this chapter in great detail. It is an incredibly powerful way
-  to talk about restrictions on values without having to
-  replicate a lot of already existing functionality.
-
-
-There is a time and place for most if not all of the solutions
-listed above in Idris, but we will often turn to the last one and
-refine function arguments with predicates (so called
-*preconditions*), because it makes our functions nice to use at
-runtime *and* compile time.
+There is a time and place for most if not all of the solutions listed above
+in Idris, but we will often turn to the last one and refine function
+arguments with predicates (so called *preconditions*), because it makes our
+functions nice to use at runtime *and* compile time.
 
 ### Example: Non-empty Lists
 
-Remember how we implemented an indexed data type for
-propositional equality: We restricted the valid
-values of the indices in the constructors. We can do
+Remember how we implemented an indexed data type for propositional equality:
+We restricted the valid values of the indices in the constructors. We can do
 the same thing for a predicate for non-empty lists:
 
 ```idris
@@ -115,10 +96,9 @@ data NotNil : (as : List a) -> Type where
   IsNotNil : NotNil (h :: t)
 ```
 
-This is a single-value data type, so we can always use it
-as an erased function argument and still pattern match on
-it. We can now use this to implement a safe and pure `head`
-function:
+This is a single-value data type, so we can always use it as an erased
+function argument and still pattern match on it. We can now use this to
+implement a safe and pure `head` function:
 
 ```idris
 head1 : (as : List a) -> (0 _ : NotNil as) -> a
@@ -126,20 +106,17 @@ head1 (h :: _) _ = h
 head1 [] IsNotNil impossible
 ```
 
-Note, how value `IsNotNil` is a *witness* that its index,
-which corresponds to our list argument, is indeed non-empty,
-because this is what we specified in its type.
-The impossible case in the implementation of `head1` is not
+Note, how value `IsNotNil` is a *witness* that its index, which corresponds
+to our list argument, is indeed non-empty, because this is what we specified
+in its type.  The impossible case in the implementation of `head1` is not
 strictly necessary here. It was given above for completeness.
 
-We call `NotNil` a *predicate* on lists, as it restricts
-the values allowed in the index. We can express a function's
-preconditions by adding additional (possibly erased) predicates
-to the function's list of arguments.
+We call `NotNil` a *predicate* on lists, as it restricts the values allowed
+in the index. We can express a function's preconditions by adding additional
+(possibly erased) predicates to the function's list of arguments.
 
-The first really cool thing is how we can safely use `head1`,
-if we can at compile-time show that our list argument is
-indeed non-empty:
+The first really cool thing is how we can safely use `head1`, if we can at
+compile-time show that our list argument is indeed non-empty:
 
 ```idris
 headEx1 : Nat
@@ -147,13 +124,12 @@ headEx1 = head1 [1,2,3] IsNotNil
 ```
 
 It is a bit cumbersome that we have to pass the `IsNotNil` proof
-manually. Before we scratch that itch, we will first discuss what
-to do with lists, the values of which are not known until
-runtime. For these cases, we have to try and produce a value
-of the predicate programmatically by inspecting the runtime
-list value. In the most simple case, we can wrap the proof
-in a `Maybe`, but if we can show that our predicate is *decidable*,
-we can get even stronger guarantees by returning a `Dec`:
+manually. Before we scratch that itch, we will first discuss what to do with
+lists, the values of which are not known until runtime. For these cases, we
+have to try and produce a value of the predicate programmatically by
+inspecting the runtime list value. In the most simple case, we can wrap the
+proof in a `Maybe`, but if we can show that our predicate is *decidable*, we
+can get even stronger guarantees by returning a `Dec`:
 
 ```idris
 Uninhabited (NotNil []) where
@@ -164,8 +140,8 @@ nonEmpty (x :: xs) = Yes IsNotNil
 nonEmpty []        = No uninhabited
 ```
 
-With this, we can implement function `headMaybe`, which
-is to be used with lists of unknown origin:
+With this, we can implement function `headMaybe`, which is to be used with
+lists of unknown origin:
 
 ```idris
 headMaybe1 : List a -> Maybe a
@@ -174,24 +150,23 @@ headMaybe1 as = case nonEmpty as of
   No  _   => Nothing
 ```
 
-Of course, for trivial functions like `headMaybe` it makes
-more sense to implement them directly by pattern matching on
-the list argument, but we will soon see examples of predicates
-the values of which are more cumbersome to create.
+Of course, for trivial functions like `headMaybe` it makes more sense to
+implement them directly by pattern matching on the list argument, but we
+will soon see examples of predicates the values of which are more cumbersome
+to create.
 
 ### Auto Implicits
 
-Having to manually pass a proof of being non-empty to
-`head1` makes this function unnecessarily verbose to
-use at compile time. Idris allows us to define implicit
-function arguments, the values of which it tries to assemble
-on its own by means of a technique called *proof search*. This is not
-to be confused with type inference, which means inferring
-values or types from the surrounding context. It's best
-to look at some examples to explain the difference.
+Having to manually pass a proof of being non-empty to `head1` makes this
+function unnecessarily verbose to use at compile time. Idris allows us to
+define implicit function arguments, the values of which it tries to assemble
+on its own by means of a technique called *proof search*. This is not to be
+confused with type inference, which means inferring values or types from the
+surrounding context. It's best to look at some examples to explain the
+difference.
 
-Let us first have a look at the following implementation of
-`replicate` for vectors:
+Let us first have a look at the following implementation of `replicate` for
+vectors:
 
 ```idris
 replicate' : {n : _} -> a -> Vect n a
@@ -199,42 +174,39 @@ replicate' {n = 0}   _ = []
 replicate' {n = S _} v = v :: replicate' v
 ```
 
-Function `replicate'` takes an unerased implicit argument.
-The *value* of this argument must be derivable from the surrounding
-context. For instance, in the following example it is
-immediately clear that `n` equals three, because that is
-the length of the vector we want:
+Function `replicate'` takes an unerased implicit argument.  The *value* of
+this argument must be derivable from the surrounding context. For instance,
+in the following example it is immediately clear that `n` equals three,
+because that is the length of the vector we want:
 
 ```idris
 replicateEx1 : Vect 3 Nat
 replicateEx1 = replicate' 12
 ```
 
-In the next example, the value of `n` is not known at compile time,
-but it is available as an unerased implicit, so this can again
-be passed as is to `replicate'`:
+In the next example, the value of `n` is not known at compile time, but it
+is available as an unerased implicit, so this can again be passed as is to
+`replicate'`:
 
 ```idris
 replicateEx2 : {n : _} -> Vect n Nat
 replicateEx2 = replicate' 12
 ```
 
-However, in the following example, the value of `n` can't
-be inferred, as the intermediary vector is immediately converted
-to a list of unknown length. Although Idris could try and insert
-any value for `n` here, it won't do so, because it can't be
-sure that this is the length we want. We therefore have to pass the
-length explicitly:
+However, in the following example, the value of `n` can't be inferred, as
+the intermediary vector is immediately converted to a list of unknown
+length. Although Idris could try and insert any value for `n` here, it won't
+do so, because it can't be sure that this is the length we want. We
+therefore have to pass the length explicitly:
 
 ```idris
 replicateEx3 : List Nat
 replicateEx3 = toList $ replicate' {n = 17} 12
 ```
 
-Note, how the *value* of `n` had to be inferable in
-these examples, which means it had to make an appearance
-in the surrounding context. With auto implicit arguments,
-this works differently. Here is the `head` example, this
+Note, how the *value* of `n` had to be inferable in these examples, which
+means it had to make an appearance in the surrounding context. With auto
+implicit arguments, this works differently. Here is the `head` example, this
 time with an auto implicit:
 
 ```idris
@@ -243,16 +215,15 @@ head (x :: _) = x
 head [] impossible
 ```
 
-Note the `auto` keyword before the quantity of implicit argument
-`prf`. This means, we want Idris to construct this value
-on its own, without it being visible in the surrounding context.
-In order to do so, Idris will have to at compile time know the
-structure of the list argument `as`. It will then try and build
-such a value from the data type's constructors. If it succeeds,
-this value will then be automatically filled in as the desired argument,
-otherwise, Idris will fail with a type error.
+Note the `auto` keyword before the quantity of implicit argument `prf`. This
+means, we want Idris to construct this value on its own, without it being
+visible in the surrounding context.  In order to do so, Idris will have to
+at compile time know the structure of the list argument `as`. It will then
+try and build such a value from the data type's constructors. If it
+succeeds, this value will then be automatically filled in as the desired
+argument, otherwise, Idris will fail with a type error.
 
-Let's see this in action:
+ちょっとREPLで動かしてみましょう。
 
 ```idris
 headEx3 : Nat
@@ -285,10 +256,9 @@ head' (x :: _) = x
 head' [] impossible
 ```
 
-During proof search, Idris will also look for values of
-the required type in the current function context. This allows
-us to implement `headMaybe` without having to pass on
-the `NotNil` proof manually:
+During proof search, Idris will also look for values of the required type in
+the current function context. This allows us to implement `headMaybe`
+without having to pass on the `NotNil` proof manually:
 
 ```idris
 headMaybe : List a -> Maybe a
@@ -298,83 +268,70 @@ headMaybe as = case nonEmpty as of
   No  _   => Nothing
 ```
 
-To conclude: Predicates allow us to restrict the values
-a function accepts as arguments. At runtime, we need to
-build such *witnesses* by pattern matching on the function
-arguments. These operations can typically fail. At compile
-time, we can let Idris try and build these values for us
-using a technique called *proof search*. This allows us
-to make functions safe and convenient to use at the same
-time.
+To conclude: Predicates allow us to restrict the values a function accepts
+as arguments. At runtime, we need to build such *witnesses* by pattern
+matching on the function arguments. These operations can typically fail. At
+compile time, we can let Idris try and build these values for us using a
+technique called *proof search*. This allows us to make functions safe and
+convenient to use at the same time.
 
 ### 演習 パート1
 
-In these exercises, you'll have to implement several
-functions making use of auto implicits, to constrain
-the values accepted as function arguments. The results
-should be *pure*, that is, not wrapped in a failure type
-like `Maybe`.
+In these exercises, you'll have to implement several functions making use of
+auto implicits, to constrain the values accepted as function arguments. The
+results should be *pure*, that is, not wrapped in a failure type like
+`Maybe`.
 
 1. Implement `tail` for lists.
 
+2. Implement `concat1` and `foldMap1` for lists. These should work like
+   `concat` and `foldMap`, but taking only a `Semigroup` constraint on the
+   element type.
 
-2. Implement `concat1` and `foldMap1` for lists. These
-   should work like `concat` and `foldMap`, but taking only
-   a `Semigroup` constraint on the element type.
+3. Implement functions for returning the largest and smallest element in a
+   list.
 
+4. Define a predicate for strictly positive natural numbers and use it to
+   implement a safe and provably total division function on natural numbers.
 
-3. Implement functions for returning the largest and smallest
-   element in a list.
+5. Define a predicate for a non-empty `Maybe` and use it to safely extract
+   the value stored in a `Just`. Show that this predicate is decidable by
+   implementing a corresponding conversion function.
 
+6. Define and implement functions for safely extracting values from a `Left`
+   and a `Right` by using suitable predicates.  Show again that these
+   predicates are decidable.
 
-4. Define a predicate for strictly positive natural numbers
-   and use it to implement a safe and provably total division
-   function on natural numbers.
-
-
-5. Define a predicate for a non-empty `Maybe` and use it to
-   safely extract the value stored in a `Just`. Show that this
-   predicate is decidable by implementing a corresponding
-   conversion function.
-
-
-6. Define and implement functions for safely extracting values
-   from a `Left` and a `Right` by using suitable predicates.
-   Show again that these predicates are decidable.
-
-
-The predicates you implemented in these exercises are already
-available in the *base* library: `Data.List.NonEmpty`,
-`Data.Maybe.IsJust`, `Data.Either.IsLeft`, `Data.Either.IsRight`,
-and `Data.Nat.IsSucc`.
+The predicates you implemented in these exercises are already available in
+the *base* library: `Data.List.NonEmpty`, `Data.Maybe.IsJust`,
+`Data.Either.IsLeft`, `Data.Either.IsRight`, and `Data.Nat.IsSucc`.
 
 ## Contracts between Values
 
-The predicates we saw so far restricted the values of
-a single type, but it is also possible to define predicates
-describing contracts between several values of possibly
-distinct types.
+The predicates we saw so far restricted the values of a single type, but it
+is also possible to define predicates describing contracts between several
+values of possibly distinct types.
 
 ### The `Elem` Predicate
 
-Assume we'd like to extract a value of a given type from
-a heterogeneous list:
+Assume we'd like to extract a value of a given type from a heterogeneous
+list:
 
 ```idris
 get' : (0 t : Type) -> HList ts -> t
 ```
 
-This can't work in general: If we could implement this we would
-immediately have a proof of void:
+This can't work in general: If we could implement this we would immediately
+have a proof of void:
 
 ```idris
 voidAgain : Void
 voidAgain = get' Void []
 ```
 
-The problem is obvious: The type of which we'd like to extract
-a value must be an element of the index of the heterogeneous list.
-Here is a predicate, with which we can express this:
+The problem is obvious: The type of which we'd like to extract a value must
+be an element of the index of the heterogeneous list.  Here is a predicate,
+with which we can express this:
 
 ```idris
 data Elem : (elem : a) -> (as : List a) -> Type where
@@ -382,18 +339,15 @@ data Elem : (elem : a) -> (as : List a) -> Type where
   There : Elem x xs -> Elem x (y :: xs)
 ```
 
-This is a predicate describing a contract between two values:
-A value of type `a` and a list of `a`s. Values of this predicate
-are witnesses that the value is an element of the list.
-Note, how this is defined recursively: The case
-where the value we look for is at the head of the list is
-handled by the `Here` constructor, where the same variable (`x`) is used
-for the element and the head of the list. The case where the value
-is deeper within  the list is handled by the `There`
-constructor. This can be read as follows: If `x` is and element
-of `xs`, then `x` is also an element of `y :: xs` for any
-value `y`. Let's write down some examples to get a feel
-for these:
+This is a predicate describing a contract between two values: A value of
+type `a` and a list of `a`s. Values of this predicate are witnesses that the
+value is an element of the list.  Note, how this is defined recursively: The
+case where the value we look for is at the head of the list is handled by
+the `Here` constructor, where the same variable (`x`) is used for the
+element and the head of the list. The case where the value is deeper within
+the list is handled by the `There` constructor. This can be read as follows:
+If `x` is and element of `xs`, then `x` is also an element of `y :: xs` for
+any value `y`. Let's write down some examples to get a feel for these:
 
 ```idris
 MyList : List Nat
@@ -406,23 +360,21 @@ sevenElemMyList : Elem 7 MyList
 sevenElemMyList = There $ There Here
 ```
 
-Now, `Elem` is just another way of indexing into a list
-of values. Instead of using a `Fin` index, which is limited
-by the list's length, we use a proof that a value can be found
-at a certain position.
+Now, `Elem` is just another way of indexing into a list of values. Instead
+of using a `Fin` index, which is limited by the list's length, we use a
+proof that a value can be found at a certain position.
 
-We can use the `Elem` predicate to extract a value from
-the desired type of a heterogeneous list:
+We can use the `Elem` predicate to extract a value from the desired type of
+a heterogeneous list:
 
 ```idris
 get : (0 t : Type) -> HList ts -> (prf : Elem t ts) => t
 ```
 
-It is important to note that the auto implicit must not be
-erased in this case. This is no longer a single value data type,
-and we must be able to pattern match on this value in order to
-figure out, how far within the heterogeneous list our value
-is stored:
+It is important to note that the auto implicit must not be erased in this
+case. This is no longer a single value data type, and we must be able to
+pattern match on this value in order to figure out, how far within the
+heterogeneous list our value is stored:
 
 ```idris
 get t (v :: vs) {prf = Here}    = v
@@ -430,9 +382,9 @@ get t (v :: vs) {prf = There p} = get t vs
 get _ [] impossible
 ```
 
-It can be instructive to implement `get` yourself, using holes on
-the right hand side to see the context and types of values Idris
-infers based on the value of the `Elem` predicate.
+It can be instructive to implement `get` yourself, using holes on the right
+hand side to see the context and types of values Idris infers based on the
+value of the `Elem` predicate.
 
 ちょっとREPLで動かしてみましょう。
 
@@ -447,13 +399,12 @@ Error: Can't find an implementation for Elem Nat [String, Maybe String].
      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
 
-With this example we start to appreciate what *proof search*
-actually means: Given a value `v` and a list of values `vs`, Idris tries
-to find a proof that `v` is an element of `vs`.
-Now, before we continue, please note that proof search is
-not a silver bullet. The search algorithm has a reasonably limited
-*search depth*, and will fail with the search if this limit
-is exceeded. For instance:
+With this example we start to appreciate what *proof search* actually means:
+Given a value `v` and a list of values `vs`, Idris tries to find a proof
+that `v` is an element of `vs`.  Now, before we continue, please note that
+proof search is not a silver bullet. The search algorithm has a reasonably
+limited *search depth*, and will fail with the search if this limit is
+exceeded. For instance:
 
 ```idris
 Tps : List Type
@@ -475,13 +426,12 @@ Tutorial.Predicates> get (Maybe String) hlist
 Error: Can't find an implementation for Elem (Maybe String) [Nat,...
 ```
 
-As you can see, Idris fails to find a proof that `Maybe String`
-is an element of `Tps`. The search depth can be increased with
-the `%auto_implicit_depth` directive, which will hold for the
-rest of the source file or until set to a different value.
-The default value is set at 25. In general, it is not advisable
-to set this to a too large value as this can drastically increase
-compile times.
+As you can see, Idris fails to find a proof that `Maybe String` is an
+element of `Tps`. The search depth can be increased with the
+`%auto_implicit_depth` directive, which will hold for the rest of the source
+file or until set to a different value.  The default value is set at 25. In
+general, it is not advisable to set this to a too large value as this can
+drastically increase compile times.
 
 ```idris
 %auto_implicit_depth 100
@@ -493,13 +443,12 @@ aMaybe = get _ hlist
 
 ### Use Case: A nicer Schema
 
-In the chapter about [sigma types](DPair.md), we introduced
-a schema for CSV files. This was not very nice to use, because
-we had to use natural numbers to access a certain column. Even
-worse, users of our small library had to do the same. There was
-no way to define a name for each column and access columns by
-name. We are going to change this. Here is an encoding
-for this use case:
+In the chapter about [sigma types](DPair.md), we introduced a schema for CSV
+files. This was not very nice to use, because we had to use natural numbers
+to access a certain column. Even worse, users of our small library had to do
+the same. There was no way to define a name for each column and access
+columns by name. We are going to change this. Here is an encoding for this
+use case:
 
 ```idris
 data ColType = I64 | Str | Boolean | Float
@@ -536,9 +485,9 @@ showSchema : Schema -> String
 showSchema = concat . intersperse "," . map show
 ```
 
-As you can see, in a schema we now pair a column's type
-with its name. Here is an example schema for a CSV file
-holding information about employees in a company:
+As you can see, in a schema we now pair a column's type with its name. Here
+is an example schema for a CSV file holding information about employees in a
+company:
 
 ```idris
 EmployeeSchema : Schema
@@ -551,12 +500,11 @@ EmployeeSchema = [ "firstName"  :> Str
                  ]
 ```
 
-Such a schema could of course again be read from user
-input, but we will wait with implementing a parser until
-later in this chapter.
-Using this new schema with an `HList` directly led to issues
-with type inference, therefore I quickly wrote a custom
-row type: A heterogeneous list indexed over a schema.
+Such a schema could of course again be read from user input, but we will
+wait with implementing a parser until later in this chapter.  Using this new
+schema with an `HList` directly led to issues with type inference, therefore
+I quickly wrote a custom row type: A heterogeneous list indexed over a
+schema.
 
 ```idris
 data Row : Schema -> Type where
@@ -570,9 +518,8 @@ data Row : Schema -> Type where
 ```
 
 In the signature of *cons*, I list the erased implicit arguments
-explicitly. This is good practice, as otherwise Idris will often
-issue shadowing warnings when using such data constructors in client
-code.
+explicitly. This is good practice, as otherwise Idris will often issue
+shadowing warnings when using such data constructors in client code.
 
 We can now define a type alias for CSV rows representing employees:
 
@@ -584,32 +531,26 @@ hock : Employee
 hock = [ "Stefan", "HÃ¶ck", "hock@foo.com", 46, 5443.2, False ]
 ```
 
-Note, how I gave `Employee` a zero quantity. This means, we are
-only ever allowed to use this function at compile time
-but never at runtime. This is a safe way to make sure
-our type-level functions and aliases do not leak into the
-executable when we build our application. We are allowed
-to use zero-quantity functions and values in type signatures
-and when computing other erased values, but not for runtime-relevant
-computations.
+Note, how I gave `Employee` a zero quantity. This means, we are only ever
+allowed to use this function at compile time but never at runtime. This is a
+safe way to make sure our type-level functions and aliases do not leak into
+the executable when we build our application. We are allowed to use
+zero-quantity functions and values in type signatures and when computing
+other erased values, but not for runtime-relevant computations.
 
-We would now like to access a value in a row based on
-the name given. For this, we write a custom predicate, which
-serves as a witness that a column with the given name is
-part of the schema. Now, here is an important thing to note:
-In this predicate we include an index for the *type* of the
-column with the given name. We need this, because when we
-access a column by name, we need a way to figure out
-the return type. But during proof search, this type will
-have to be derived by Idris based on the column name and
-schema in question (otherwise, the proof search will fail
-unless the return type is known in advance).
-We therefore *must* tell Idris, that
-it can't include this type in the list of search criteria,
-otherwise it will try and infer the column type from the
-context (using type inference) before running the proof
-search. This can be done by listing the indices to be used in
-the search like so: `[search name schema]`.
+We would now like to access a value in a row based on the name given. For
+this, we write a custom predicate, which serves as a witness that a column
+with the given name is part of the schema. Now, here is an important thing
+to note: In this predicate we include an index for the *type* of the column
+with the given name. We need this, because when we access a column by name,
+we need a way to figure out the return type. But during proof search, this
+type will have to be derived by Idris based on the column name and schema in
+question (otherwise, the proof search will fail unless the return type is
+known in advance).  We therefore *must* tell Idris, that it can't include
+this type in the list of search criteria, otherwise it will try and infer
+the column type from the context (using type inference) before running the
+proof search. This can be done by listing the indices to be used in the
+search like so: `[search name schema]`.
 
 ```idris
 data InSchema :  (name    : String)
@@ -625,8 +566,8 @@ Uninhabited (InSchema n [] c) where
   uninhabited (IsThere _) impossible
 ```
 
-With this, we are now ready to access the value
-at a given column based on the column's name:
+With this, we are now ready to access the value at a given column based on
+the column's name:
 
 ```idris
 getAt :  {0 ss : Schema}
@@ -638,14 +579,12 @@ getAt name (v :: vs) {prf = IsHere}    = v
 getAt name (_ :: vs) {prf = IsThere p} = getAt name vs
 ```
 
-Below is an example how to use this at compile time. Note
-the amount of work Idris performs for us: It first comes
-up with proofs that `firstName`, `lastName`, and `age`
-are indeed valid names in the `Employee` schema. From
-these proofs it automatically figures out the return types
-of the calls to `getAt` and extracts the corresponding values
-from the row. All of this happens in a provably total and type
-safe way.
+Below is an example how to use this at compile time. Note the amount of work
+Idris performs for us: It first comes up with proofs that `firstName`,
+`lastName`, and `age` are indeed valid names in the `Employee` schema. From
+these proofs it automatically figures out the return types of the calls to
+`getAt` and extracts the corresponding values from the row. All of this
+happens in a provably total and type safe way.
 
 ```idris
 shoeck : String
@@ -657,14 +596,13 @@ shoeck =  getAt "firstName" hock
        ++ " years old."
 ```
 
-In order to at runtime specify a column name, we need a way
-for computing values of type `InSchema` by comparing
-the column names with the schema in question. Since we have
-to compare two string values for being propositionally equal,
-we use the `DecEq` implementation for `String` here (Idris provides `DecEq`
-implementations for all primitives). We extract the column type
-at the same time and pair this (as a dependent pair) with
-the `InSchema` proof:
+In order to at runtime specify a column name, we need a way for computing
+values of type `InSchema` by comparing the column names with the schema in
+question. Since we have to compare two string values for being
+propositionally equal, we use the `DecEq` implementation for `String` here
+(Idris provides `DecEq` implementations for all primitives). We extract the
+column type at the same time and pair this (as a dependent pair) with the
+`InSchema` proof:
 
 ```idris
 inSchema : (ss : Schema) -> (n : String) -> Maybe (c ** InSchema n ss c)
@@ -676,36 +614,29 @@ inSchema (MkColumn cn t :: xs) n = case decEq cn n of
     Nothing         => Nothing
 ```
 
-At the end of this chapter we will use `InSchema` in
-our CSV command-line application to list all values
-in a column.
+At the end of this chapter we will use `InSchema` in our CSV command-line
+application to list all values in a column.
 
 ### 演習 パート2
 
-1. Show that `InSchema` is decidable by changing the output type
-   of `inSchema` to `Dec (c ** InSchema n ss c)`.
+1. Show that `InSchema` is decidable by changing the output type of
+   `inSchema` to `Dec (c ** InSchema n ss c)`.
 
+2. Declare and implement a function for modifying a field in a row based on
+   the column name given.
 
-2. Declare and implement a function for modifying a field
-   in a row based on the column name given.
-
-
-3. Define a predicate to be used as a witness that one
-   list contains only elements in the second list in the
-   same order and use this predicate to extract several columns
-   from a row at once.
-
+3. Define a predicate to be used as a witness that one list contains only
+   elements in the second list in the same order and use this predicate to
+   extract several columns from a row at once.
 
    For instance, `[2,4,5]` contains elements from
    `[1,2,3,4,5,6]` in the correct order, but `[4,2,5]`
    does not.
 
-4. Improve the functionality from exercise 3 by defining a new
-   predicate, witnessing that all strings in a list correspond
-   to column names in a schema (in arbitrary order).
-   Use this to extract several columns from a row at once in
-   arbitrary order.
-
+4. Improve the functionality from exercise 3 by defining a new predicate,
+   witnessing that all strings in a list correspond to column names in a
+   schema (in arbitrary order).  Use this to extract several columns from a
+   row at once in arbitrary order.
 
    Hint: Make sure to include the resulting schema as an index,
    but search only based on the list of names and the input
@@ -713,23 +644,19 @@ in a column.
 
 ## Use Case: Flexible Error Handling
 
-A recurring pattern when writing larger applications is
-the combination of different parts of a program each with
-their own failure types in a larger effectful computation.
-We saw this, for instance, when implementing a command-line
-tool for handling CSV files. There, we read and wrote data
-from and to files, we parsed column types and schemata,
-we parsed row and column indices and command-line commands.
-All these operations came with the potential of failure and
-might be implemented in different parts of our application.
-In order to unify these different failure types, we wrote
-a custom sum type encapsulating each of them, and wrote a
-single handler for this sum type. This approach was alright
-then, but it does not scale well and is lacking in terms of
-flexibility. We are therefore trying a different
-approach here. Before we continue, we quickly implement a
-couple of functions with the potential of failure plus
-some custom error types:
+A recurring pattern when writing larger applications is the combination of
+different parts of a program each with their own failure types in a larger
+effectful computation.  We saw this, for instance, when implementing a
+command-line tool for handling CSV files. There, we read and wrote data from
+and to files, we parsed column types and schemata, we parsed row and column
+indices and command-line commands.  All these operations came with the
+potential of failure and might be implemented in different parts of our
+application.  In order to unify these different failure types, we wrote a
+custom sum type encapsulating each of them, and wrote a single handler for
+this sum type. This approach was alright then, but it does not scale well
+and is lacking in terms of flexibility. We are therefore trying a different
+approach here. Before we continue, we quickly implement a couple of
+functions with the potential of failure plus some custom error types:
 
 ```idris
 record NoNat where
@@ -751,13 +678,11 @@ readColType' "Float"   = Right Float
 readColType' s         = Left $ MkNoColType s
 ```
 
-However, if we wanted to parse a `Fin n`, there'd be already
-two ways how this could fail: The string in question could not
-represent a natural number (leading to a `NoNat` error), or it
-could be out of bounds (leading to an `OutOfBounds` error).
-We have to somehow encode these two possibilities in the
-return type, for instance, by using an `Either` as the error
-type:
+However, if we wanted to parse a `Fin n`, there'd be already two ways how
+this could fail: The string in question could not represent a natural number
+(leading to a `NoNat` error), or it could be out of bounds (leading to an
+`OutOfBounds` error).  We have to somehow encode these two possibilities in
+the return type, for instance, by using an `Either` as the error type:
 
 ```idris
 record OutOfBounds where
@@ -773,28 +698,25 @@ readFin' s = do
 
 This is incredibly ugly. A custom sum type might have been slightly better,
 but we still would have to use `mapFst` when invoking `readNat'`, and
-writing custom sum types for every possible combination of errors
-will get cumbersome very quickly as well.
-What we are looking for, is a generalized sum type: A type
-indexed by a list of types (the possible choices) holding
-a single value of exactly one of the types in question.
-Here is a first naive try:
+writing custom sum types for every possible combination of errors will get
+cumbersome very quickly as well.  What we are looking for, is a generalized
+sum type: A type indexed by a list of types (the possible choices) holding a
+single value of exactly one of the types in question.  Here is a first naive
+try:
 
 ```idris
 data Sum : List Type -> Type where
   MkSum : (val : t) -> Sum ts
 ```
 
-However, there is a crucial piece of information missing:
-We have not verified that `t` is an element of `ts`, nor
-*which* type it actually is. In fact, this is another case
-of an erased existential, and we will have no way to at runtime
-learn something about `t`. What we need to do is to pair the value
-with a proof, that its type `t` is an element of `ts`.
-We could use `Elem` again for this, but for some use cases
-we will require access to the number of types in the list.
-We will therefore use a vector instead of a list as our index.
-Here is a predicate similar to `Elem` but for vectors:
+However, there is a crucial piece of information missing: We have not
+verified that `t` is an element of `ts`, nor *which* type it actually is. In
+fact, this is another case of an erased existential, and we will have no way
+to at runtime learn something about `t`. What we need to do is to pair the
+value with a proof, that its type `t` is an element of `ts`.  We could use
+`Elem` again for this, but for some use cases we will require access to the
+number of types in the list.  We will therefore use a vector instead of a
+list as our index.  Here is a predicate similar to `Elem` but for vectors:
 
 ```idris
 data Has :  (v : a) -> (vs  : Vect n a) -> Type where
@@ -806,9 +728,9 @@ Uninhabited (Has v []) where
   uninhabited (S _) impossible
 ```
 
-A value of type `Has v vs` is a witness that `v` is an
-element of `vs`. With this, we can now implement an indexed
-sum type (also called an *open union*):
+A value of type `Has v vs` is a witness that `v` is an element of `vs`. With
+this, we can now implement an indexed sum type (also called an *open
+union*):
 
 ```idris
 data Union : Vect n Type -> Type where
@@ -818,20 +740,20 @@ Uninhabited (Union []) where
   uninhabited (U ix _) = absurd ix
 ```
 
-Note the difference between `HList` and `Union`. `HList` is
-a *generalized product type*: It holds a value for each type
-in its index. `Union` is a *generalized sum type*: It holds
-only a single value, which must be of a type listed in the index.
-With this we can now define a much more flexible error type:
+Note the difference between `HList` and `Union`. `HList` is a *generalized
+product type*: It holds a value for each type in its index. `Union` is a
+*generalized sum type*: It holds only a single value, which must be of a
+type listed in the index.  With this we can now define a much more flexible
+error type:
 
 ```idris
 0 Err : Vect n Type -> Type -> Type
 Err ts t = Either (Union ts) t
 ```
 
-A function returning an `Err ts a` describes a computation, which
-can fail with one of the errors listed in `ts`.
-We first need some utility functions.
+A function returning an `Err ts a` describes a computation, which can fail
+with one of the errors listed in `ts`.  We first need some utility
+functions.
 
 ```idris
 inject : (prf : Has t ts) => (v : t) -> Union ts
@@ -844,8 +766,7 @@ failMaybe : Has t ts => (err : Lazy t) -> Maybe a -> Err ts a
 failMaybe err = maybeToEither (inject err)
 ```
 
-Next, we can write more flexible versions of the
-parsers we wrote above:
+Next, we can write more flexible versions of the parsers we wrote above:
 
 ```idris
 readNat : Has NoNat ts => String -> Err ts Nat
@@ -859,8 +780,8 @@ readColType "Float"   = Right Float
 readColType s         = fail $ MkNoColType s
 ```
 
-Before we implement `readFin`, we introduce a short cut for
-specifying that several error types must be present:
+Before we implement `readFin`, we introduce a short cut for specifying that
+several error types must be present:
 
 ```idris
 0 Errs : List Type -> Vect n Type -> Type
@@ -868,10 +789,9 @@ Errs []        _  = ()
 Errs (x :: xs) ts = (Has x ts, Errs xs ts)
 ```
 
-Function `Errs` returns a tuple of constraints. This can
-be used as a witness that all listed types are present
-in the vector of types: Idris will automatically extract
-the proofs from the tuple as needed.
+Function `Errs` returns a tuple of constraints. This can be used as a
+witness that all listed types are present in the vector of types: Idris will
+automatically extract the proofs from the tuple as needed.
 
 
 ```idris
@@ -881,8 +801,7 @@ readFin s = do
   failMaybe (MkOutOfBounds n (S ix)) $ natToFin ix n
 ```
 
-As a last example, here are parsers for schemata and
-CSV rows:
+As a last example, here are parsers for schemata and CSV rows:
 
 ```idris
 fromCSV : String -> List String
@@ -933,10 +852,9 @@ decodeRow row = go 1 s . fromCSV
 ```
 
 Here is an example REPL session, where I test `readSchema`. I defined
-variable `ts` using the `:let` command to make this more convenient.
-Note, how the order of error types is of no importance, as long
-as types `InvalidColumn` and `NoColType` are present in the list of
-errors:
+variable `ts` using the `:let` command to make this more convenient.  Note,
+how the order of error types is of no importance, as long as types
+`InvalidColumn` and `NoColType` are present in the list of errors:
 
 ```repl
 Tutorial.Predicates> :let ts = the (Vect 3 _) [NoColType,NoNat,InvalidColumn]
@@ -950,18 +868,17 @@ Left (U (S (S Z)) (MkInvalidColumn "foo Float"))
 
 ### Error Handling
 
-There are several techniques for handling errors, all of which
-are useful at times. For instance, we might want to handle some
-errors early on and individually, while dealing with others
-much later in our application. Or we might want to handle
-them all in one fell swoop. We look at both approaches here.
+There are several techniques for handling errors, all of which are useful at
+times. For instance, we might want to handle some errors early on and
+individually, while dealing with others much later in our application. Or we
+might want to handle them all in one fell swoop. We look at both approaches
+here.
 
-First, in order to handle a single error individually, we need
-to *split* a union into one of two possibilities: A value of
-the error type in question or a new union, holding one of the
-other error types. We need a new predicate for this, which
-not only encodes the presence of a value in a vector
-but also the result of removing that value:
+First, in order to handle a single error individually, we need to *split* a
+union into one of two possibilities: A value of the error type in question
+or a new union, holding one of the other error types. We need a new
+predicate for this, which not only encodes the presence of a value in a
+vector but also the result of removing that value:
 
 ```idris
 data Rem : (v : a) -> (vs : Vect (S n) a) -> (rem : Vect n a) -> Type where
@@ -970,10 +887,9 @@ data Rem : (v : a) -> (vs : Vect (S n) a) -> (rem : Vect n a) -> Type where
   RS : Rem v vs rem -> Rem v (w :: vs) (w :: rem)
 ```
 
-Once again, we want to use one of the indices (`rem`) in our
-functions' return types, so we only use the other indices during
-proof search. Here is a function for splitting off a value from
-an open union:
+Once again, we want to use one of the indices (`rem`) in our functions'
+return types, so we only use the other indices during proof search. Here is
+a function for splitting off a value from an open union:
 
 ```idris
 split : (prf : Rem t ts rem) => Union ts -> Either t (Union rem)
@@ -985,15 +901,14 @@ split {prf = RS p} (U (S x) val) = case split {prf = p} (U x val) of
   Right (U ix y) => Right $ U (S ix) y
 ```
 
-This tries to extract a value of type `t` from a union. If it works,
-the result is wrapped in a `Left`, otherwise a new union is returned
-in a `Right`, but this one has `t` removed from its list of possible
-types.
+This tries to extract a value of type `t` from a union. If it works, the
+result is wrapped in a `Left`, otherwise a new union is returned in a
+`Right`, but this one has `t` removed from its list of possible types.
 
-With this, we can implement a handler for single errors.
-Error handling often happens in an effectful context (we might want to
-print a message to the console or write the error to a log file), so
-we use an applicative effect type to handle errors in.
+With this, we can implement a handler for single errors.  Error handling
+often happens in an effectful context (we might want to print a message to
+the console or write the error to a log file), so we use an applicative
+effect type to handle errors in.
 
 ```idris
 handle :  Applicative f
@@ -1007,9 +922,8 @@ handle h (Left x)  = case split x of
 handle _ (Right x) = pure $ Right x
 ```
 
-For handling all errors at once, we can use a handler type
-indexed by the vector of errors, and parameterized by the
-output type:
+For handling all errors at once, we can use a handler type indexed by the
+vector of errors, and parameterized by the output type:
 
 ```idris
 namespace Handler
@@ -1028,14 +942,12 @@ handleAll _ (Right v)       = pure v
 handleAll h (Left $ U ix v) = extract h ix v
 ```
 
-Below, we will see an additional way of handling all
-errors at once by defining a custom interface for
-error handling.
+Below, we will see an additional way of handling all errors at once by
+defining a custom interface for error handling.
 
 ### 演習 パート3
 
-1. Implement the following utility functions for `Union`:
-
+1. `List`についての以下の汎化関数を実装してください。
 
    ```idris
    project : (0 t : Type) -> (prf : Has t ts) => Union ts -> Maybe t
@@ -1044,10 +956,8 @@ error handling.
 
    safe : Err [] a -> a
    ```
-2. Implement the following two functions for embedding
-   an open union in a larger set of possibilities.
-   Note the unerased implicit in `extend`!
-
+2. Implement the following two functions for embedding an open union in a
+   larger set of possibilities.  Note the unerased implicit in `extend`!
 
    ```idris
    weaken : Union ts -> Union (ts ++ ss)
@@ -1055,9 +965,8 @@ error handling.
    extend : {m : _} -> {0 pre : Vect m _} -> Union ts -> Union (pre ++ ts)
    ```
 
-3. Find a general way to embed a `Union ts` in a `Union ss`,
-   so that the following is possible:
-
+3. Find a general way to embed a `Union ts` in a `Union ss`, so that the
+   following is possible:
 
    ```idris
    embedTest :  Err [NoNat,NoColType] a
@@ -1065,22 +974,20 @@ error handling.
    embedTest = mapFst embed
    ```
 
-4. Make `handle` more powerful, by letting the handler convert
-   the error in question to an `f (Err rem a)`.
-
+4. Make `handle` more powerful, by letting the handler convert the error in
+   question to an `f (Err rem a)`.
 
 ## The Truth about Interfaces
 
-Well, here it finally is: The truth about interfaces. Internally,
-an interface is just a record data type, with its fields corresponding
-to the members of the interface. An interface implementation is
-a *value* of such a record, annotated with a `%hint` pragma (see
-below) to make the value available during proof search. Finally,
-a constrained function is just a function with one or more auto implicit
-arguments. For instance, here is the same function for looking up
-an element in a list, once with the known syntax for constrained
-functions, and once with an auto implicit argument. The code
-produced by Idris is the same in both cases:
+Well, here it finally is: The truth about interfaces. Internally, an
+interface is just a record data type, with its fields corresponding to the
+members of the interface. An interface implementation is a *value* of such a
+record, annotated with a `%hint` pragma (see below) to make the value
+available during proof search. Finally, a constrained function is just a
+function with one or more auto implicit arguments. For instance, here is the
+same function for looking up an element in a list, once with the known
+syntax for constrained functions, and once with an auto implicit
+argument. The code produced by Idris is the same in both cases:
 
 ```idris
 isElem1 : Eq a => a -> List a -> Bool
@@ -1092,9 +999,8 @@ isElem2 v []        = False
 isElem2 v (x :: xs) = x == v || isElem2 v xs
 ```
 
-Being mere records, we can also take interfaces as
-regular function arguments and dissect them with a pattern
-match:
+Being mere records, we can also take interfaces as regular function
+arguments and dissect them with a pattern match:
 
 ```idris
 eq : Eq a -> a -> a -> Bool
@@ -1103,12 +1009,10 @@ eq (MkEq feq fneq) = feq
 
 ### A manual Interface Definition
 
-I'll now demonstrate how we can achieve the same behavior
-with proof search as with a regular interface definition
-plus implementations. Since I want to finish the CSV
-example with our new error handling tools, we are
-going to implement some error handlers.
-First, an interface is just a record:
+I'll now demonstrate how we can achieve the same behavior with proof search
+as with a regular interface definition plus implementations. Since I want to
+finish the CSV example with our new error handling tools, we are going to
+implement some error handlers.  First, an interface is just a record:
 
 ```idris
 record Print a where
@@ -1116,26 +1020,25 @@ record Print a where
   print' : a -> String
 ```
 
-In order to access the record in a constrained function,
-we use the `%search` keyword, which will try to conjure a
-value of the desired type (`Print a` in this case) by
-means of a proof search:
+In order to access the record in a constrained function, we use the
+`%search` keyword, which will try to conjure a value of the desired type
+(`Print a` in this case) by means of a proof search:
 
 ```idris
 print : Print a => a -> String
 print = print' %search
 ```
 
-As an alternative, we could use a named constraint, and access
-it directly via its name:
+As an alternative, we could use a named constraint, and access it directly
+via its name:
 
 ```idris
 print2 : (impl : Print a) => a -> String
 print2 = print' impl
 ```
 
-As yet another alternative, we could use the syntax for auto
-implicit arguments:
+As yet another alternative, we could use the syntax for auto implicit
+arguments:
 
 ```idris
 print3 : {auto impl : Print a} -> a -> String
@@ -1146,9 +1049,9 @@ All three versions of `print` behave exactly the same at runtime.
 So, whenever we write `{auto x : Foo} ->` we can just as well
 write `(x : Foo) =>` and vice versa.
 
-Interface implementations are just values of the given
-record type, but in order to be available during proof search,
-these need to be annotated with a `%hint` pragma:
+Interface implementations are just values of the given record type, but in
+order to be available during proof search, these need to be annotated with a
+`%hint` pragma:
 
 ```idris
 %hint
@@ -1174,10 +1077,9 @@ rowErrorPrint = MkPrint $
           "Expected end of input in row \{show r}, column \{show c}."
 ```
 
-We can also write an implementation of `Print` for
-a union or errors. For this, we first come up with a
-proof that all types in the union's index come with an
-implementation of `Print`:
+We can also write an implementation of `Print` for a union or errors. For
+this, we first come up with a proof that all types in the union's index come
+with an implementation of `Print`:
 
 ```idris
 0 All : (f : a -> Type) -> Vect n a -> Type
@@ -1193,27 +1095,24 @@ unionPrint : All Print ts => Print (Union ts)
 unionPrint = MkPrint unionPrintImpl
 ```
 
-Defining interfaces this way can be an advantage, as there
-is much less magic going on, and we have more fine grained
-control over the types and values of our fields. Note also,
-that all of the magic comes from the search hints, with
-which our "interface implementations" were annotated.
-These made the corresponding values and functions available
-during proof search.
+Defining interfaces this way can be an advantage, as there is much less
+magic going on, and we have more fine grained control over the types and
+values of our fields. Note also, that all of the magic comes from the search
+hints, with which our "interface implementations" were annotated.  These
+made the corresponding values and functions available during proof search.
 
 #### Parsing CSV Commands
 
-To conclude this chapter, we reimplement our CSV command
-parser, using the flexible error handling approach from
-the last section. While not necessarily less verbose than
-the original parser, this approach decouples the handling
-of errors and printing of error messages from the rest
-of the application: Functions with a possibility of failure
-are reusable in different contexts, as are the pretty
-printers we use for the error messages.
+To conclude this chapter, we reimplement our CSV command parser, using the
+flexible error handling approach from the last section. While not
+necessarily less verbose than the original parser, this approach decouples
+the handling of errors and printing of error messages from the rest of the
+application: Functions with a possibility of failure are reusable in
+different contexts, as are the pretty printers we use for the error
+messages.
 
-First, we repeat some stuff from earlier chapters. I sneaked
-in a new command for printing all values in a column:
+First, we repeat some stuff from earlier chapters. I sneaked in a new
+command for printing all values in a column:
 
 ```idris
 record Table where
@@ -1248,9 +1147,9 @@ applyCommand (MkTable ts n rs) (Delete x)  = case n of
   Z   => absurd x
 ```
 
-Next, below is the command parser reimplemented. In total,
-it can fail in seven different was, at least some of which
-might also be possible in other parts of a larger application.
+Next, below is the command parser reimplemented. In total, it can fail in
+seven different was, at least some of which might also be possible in other
+parts of a larger application.
 
 ```idris
 record UnknownCommand where
@@ -1293,15 +1192,13 @@ readCommand (MkTable ts n _) s         = case words s of
   _               => fail $ MkUnknownCommand s
 ```
 
-Note, how we could invoke functions like `readFin` or
-`readSchema` directly, because the necessary error types
-are part of our list of possible errors.
+Note, how we could invoke functions like `readFin` or `readSchema` directly,
+because the necessary error types are part of our list of possible errors.
 
-To conclude this sections, here is the functionality
-for printing the result of a command plus the application's
-main loop. Most of this is repeated from earlier chapters,
-but note how we can handle all errors at once with a single
-call to `print`:
+To conclude this sections, here is the functionality for printing the result
+of a command plus the application's main loop. Most of this is repeated from
+earlier chapters, but note how we can handle all errors at once with a
+single call to `print`:
 
 ```idris
 encodeField : (t : ColType) -> IdrisType t -> String
@@ -1376,12 +1273,11 @@ Goodbye.
 
 ## まとめ
 
-Predicates allow us to describe contracts between types
-and to refine the values we accept as valid function arguments.
-They allow us to make a function safe and convenient to use
-at runtime *and* compile time by using them as auto implicit
-arguments, which Idris should try to construct on its own if
-it has enough information about the structure of a function's
+Predicates allow us to describe contracts between types and to refine the
+values we accept as valid function arguments.  They allow us to make a
+function safe and convenient to use at runtime *and* compile time by using
+them as auto implicit arguments, which Idris should try to construct on its
+own if it has enough information about the structure of a function's
 arguments.
 
 <!-- vi: filetype=idris2

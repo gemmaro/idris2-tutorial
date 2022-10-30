@@ -1,17 +1,16 @@
-# Functions Part 2
+# 関数 パート2
 
-So far, we learned about the core features of the Idris
-language, which it has in common with several other
-pure, strongly typed programming languages like Haskell:
-(Higher order) Functions, algebraic data types, pattern matching,
-parametric polymorphism (generic types and functions), and
-ad hoc polymorphism (interfaces and constrained functions).
+これまでIdris言語の核となる特徴について学びました。
+この特徴はHaskellのような他の純粋で強く型付けされたプログラミング言語でもよく見られます。
+（高階）関数、代数的データ型、パターン照合、パラメトリック多相（汎化型と汎化関数）、
+そしてアドホック多相（インターフェースと制約付き関数）です。
 
-In this chapter, we start to dissect Idris functions and their types
-for real. We learn about implicit arguments, named arguments, as well
-as erasure and quantities. But first, we'll look at `let` bindings
-and `where` blocks, which help us implement functions too complex
-to fit on a single line of code. Let's get started!
+この章ではIdrisの実践上の関数とその型を解剖し始めます。
+暗黙引数、名前付き引数、そして型消去と数量的型を学びます。
+しかしまずは`let`束縛と`where`ブロックを見ていきます。
+これらのおかげで、複雑すぎて単一行のコードに収まりきらない関数も、
+実装することができるようになります。
+始めましょう！
 
 ```idris
 module Tutorial.Functions2
@@ -19,77 +18,66 @@ module Tutorial.Functions2
 %default total
 ```
 
-## Let Bindings and Local Definitions
+## let束縛と局所定義
 
-The functions we looked at so far were simple enough
-to be implemented directly via pattern matching
-without the need of additional auxiliary functions or
-variables. This is not always the case, and there are two
-important language constructs for introducing and reusing
-new local variables and functions. We'll look at these
-in two case studies.
+これまで見てきた関数はパターン照合で直接実装できる程度には単純なものでした。
+追加の付属関数ないし変数を必要としませんでした。
+いつもこういうわけではなくて、
+新しい局所変数と局所関数を導入したり再利用したりするための、
+2つの大事な言語的構築要素があります。
+これらを2つの事例の観察から見ていきましょう。
 
-### Use Case 1: Arithmetic Mean and Standard Deviation
+### 使用例1：算術平均と標準偏差
 
-In this example, we'd like to calculate the arithmetic
-mean and the standard deviation of a list of floating point values.
-There are several things we need to consider.
+この例では算術平均と標準偏差を浮動小数点数値のリストから計算することを考えます。
 
-First, we need a function for calculating the sum of
-a list of numeric values. The *Prelude* exports function
-`sum` for this:
+まず総和を数値のリストから計算する関数が必要です。
+*Prelude*はこのための関数`sum`を公開しています。
 
 ```repl
 Main> :t sum
 Prelude.sum : Num a => Foldable t => t a -> a
 ```
 
-This is - of course - similar to `sumList` from Exercise 10
-of the [last section](Interfaces.md), but generalized to all
-container types with a `Foldable` implementation. We will
-learn about interface `Foldable` in a later section.
+これは、もちろんのこと、[直前の節](Interfaces.md)の演習10での`sumList`に似たものです。
+しかし`Foldable`の実装がある全ての積載型に汎化されています。
+インターフェース`Foldable`については後の節で学びましょう。
 
-In order to also calculate the variance,
-we need to convert every value in the list to
-a new value, as we have to subtract the mean
-from every value in the list and square the
-result. In the previous section's exercises, we
-defined function `mapList` for this. The *Prelude* - of course -
-already exports a similar function called `map`,
-which is again more general
-and works also like our `mapMaybe` for `Maybe`
-and `mapEither` for `Either e`. Here's its type:
+分散を計算するためにはリストの全ての値を新しい値に計算する必要もあります。
+なぜならリスト中の全ての値から平均を引いて結果を平方する必要があるからです。
+前の節の演習でこのための関数`mapList`を定義しました。
+*Prelude*は、当然、既に似たような関数`map`を公開しています。
+これもまたより汎用的で自前の`Maybe`のための`mapMaybe`や`Either e`のための`mapEither`としても動きます。
+以下が型です。
 
 ```repl
 Main> :t map
 Prelude.map : Functor f => (a -> b) -> f a -> f b
 ```
 
-Interface `Functor` is another one we'll talk about
-in a later section.
+インターフェース`Functor`についても後の節でお話しします。
 
-Finally, we need a way to calculate the length of
-a list of values. We use function `length` for this:
+最後に値のリストの長さを計算する方法が必要です。
+これには関数`length`を使います。
 
 ```repl
 Main> :t List.length
 Prelude.List.length : List a -> Nat
 ```
 
-Here, `Nat` is the type of natural numbers
-(unbounded, unsigned integers). `Nat` is actually not a primitive data
-type but a sum type defined in the *Prelude* with
-data constructors `Z : Nat` (for zero)
-and `S : Nat -> Nat` (for successor). It might seem highly inefficient
-to define natural numbers this way, but the Idris compiler
-treats these and several other *number-like* types specially, and
-replaces them with primitive integers during code generation.
+ここで`Nat`は自然数型です。
+（範囲がなく、符号なしです。）
+`Nat`は実のところ原始的なデータ型ではなくて、
+*Prelude*で定義された直和型で、
+データ構築子`Z : Nat`（ゼロ）と`S : Nat -> Nat`（それ以上）からなります。
+自然数をこうして定義するのはかなり非効率に思えますが、
+Idrisはこうしたものといくつかの他の*数のような*型を特別に扱い、
+コード生成の段階で原始的な整数に置き換えます。
 
-We are now ready to give the implementation of `mean` a go.
-Since this is Idris, and we care about clear semantics, we will
-quickly define a custom record type instead of just returning
-a tuple of `Double`s. This makes it clearer, which floating
-point number corresponds to which statistic entity:
+これで`mean`の実装を与えられるようになります。
+これはIdrisであり、明白な意味論に気をつけているので、
+単に`Double`のタプルを返すのではなく、ささっと自前のレコード型を定義します。
+こうすることでより明白になるのは、どちらの小数点数がどちらの統計的な実態に対応するのかということです。
 
 ```idris
 square : Double -> Double
@@ -109,57 +97,47 @@ stats xs =
    in MkStats mean variance (sqrt variance)
 ```
 
-As usual, we first try this at the REPL:
+いつも通り、まずはREPLで試してみます。
 
 ```repl
 Tutorial.Functions2> stats [2,4,4,4,5,5,7,9]
 MkStats 5.0 4.0 2.0
 ```
 
-Seems to work, so let's digest this step by step.
-We introduce several new local variables
-(`len`, `mean`, and `variance`),
-which all will be used more than once in the remainder
-of the implementation. To do so, we us a `let` binding. This
-consists of the `let` keyword, followed by one or more
-variable assignments, followed by the final expression,
-which has to be prefixed by `in`. Note, that whitespace
-is significant again: We need to properly align the three
-variable names. Go ahead, and try out what happens if
-you remove a space in front of `mean` or `variance`.
-Note also, that the alignment of assignment operators
-`:=` is optional. I do this, since I thinks it helps
-readability.
+動いているようなので1つずつ紐解いていきましょう。
+いくつかの局所変数 (`len`, `mean`, `variance`) を導入し、
+それら全ては実装の残りの部分で1度以上使われます。
+これには`let`束縛を使います。
+順に、`let`キーワード、1つ以上の変数代入が続き、最後の式には`in`が後置していなければいけません。
+空白はここでも重要ですよ。
+3つの変数名は適切に整列していなくてはいけません。
+さあ、`mean`や`variance`の前の空白を削除すると何が起こるのかやってみましょう。
+ただし、代入演算子`:=`は整列していなくても大丈夫です。
+こうしたのは可読性がよくなると思っているからです。
 
-Let's also quickly look at the different variables
-and their types. `len` is the length of the list
-cast to a `Double`, since this is what's needed
-later on, where we divide other values of type `Double`
-by the length. Idris is very strict about this: We are
-not allowed to mix up numeric types without explicit
-casts. Please note, that in this case Idris is able
-to *infer* the type of `len` from the surrounding
-context. `mean` is straight forward: We `sum` up the
-values stored in the list and divide by the list's
-length. `variance` is the most involved of the
-three: We map each item in the list to a new value
-using an anonymous function to subtract the mean
-and square the result. We then sum up the new terms
-and divide again by the number of values.
+それぞれの変数とその型についてもさくっと見ていきましょう。
+`len`はリストの長さで、のちのちのために`Double`に嵌め込まれています。
+というのは、`Double`な他の値を長さで割ることになるからです。
+Idrisはこうしたことに大変厳格です。
+明示的な嵌め込みなくして、数値型を混在させることはできません。
+注意していただきたいのは、この場合はIdrisが`len`の型を周囲の文脈から*推論*することができているということです。
+`mean`は直感的です。
+リストに保管された値を`sum`で合計し、リストの長さで割っています。
+`variance`は3つの中でもっとも込み入っています。
+リストのそれぞれの要素について、
+匿名関数を使って平均を引いたのちに、その平方を取っています。
+そうしてできた値を合計し、再度値の数で割ります。
 
-### Use Case 2: Simulating a Simple Web Server
+### 使用例2：簡素なWebサーバを模擬する
 
-In the second use case, we are going to write a slightly
-larger application. This should give you an idea about how to
-design data types and functions around some business
-logic you'd like to implement.
+2つ目の使用例ではもうちょっと大きいアプリケーションを書いていきます。
+実装したいビジネスロジックに対して、データ型と関数をどのように設計すればよいかを考えられるようになるでしょう。
 
-Assume we run a music streaming web server, where users
-can buy whole albums and listen to them online. We'd
-like to simulate a user connecting to the server and
-getting access to one of the albums they bought.
+音楽配信webサーバを稼動させているのだとします。
+そこでは利用者はアルバム一式を買ってオンラインで聴くことができます。
+サーバに接続して購入したアルバムの1つにアクセスする利用者を模擬したいところです。
 
-We first define a bunch of record types:
+まず沢山のレコード型を定義します。
 
 ```idris
 record Artist where
@@ -187,18 +165,16 @@ record User where
   albums   : List Album
 ```
 
-Most of these should be self-explanatory. Note, however, that
-in several cases (`Email`, `Artist`, `Password`) we wrap a
-single value in a new record type. Of course, we *could* have
-used the unwrapped `String` type instead, but we'd have ended
-up with many `String` fields, which can be hard to disambiguate.
-In order not to confuse an email string with a password string,
-it can therefore be helpful to wrap both of them in a new
-record type to drastically increase type safety at the cost
-of having to reimplement some interfaces.
-Utility function `on` from the *Prelude* is very useful for this. Don't
-forget to inspect its type at the REPL, and try to understand what's
-going on here.
+これらはほぼ見ればわかります。
+ただし、いくつかのレコード型（`Email`, `Artist`, `Password`）で単一の値を新しいレコード型で梱包しているところに注目です。
+当然、剥き出しの`String`型を代わりに使うことも*できはします*が、
+そうすると最終的に`String`のフィールドが沢山あることになるため、
+見分けがつきにくくなるかもしれません。
+Eメールの文字列とパスワードの文字列を混同するなんてことがないように、
+両方を新しいレコード型で梱包しておくと助けになります。
+いくつかのインターフェースを再実装しなければいけない負担と引き換えに、型安全性を劇的に高めますから。
+*Prelude*由来の小間物関数`on`はこうしたとき大変役に立ちます。
+型をREPLで調べて、何をするものなのか理解するのをお忘れなく。
 
 ```idris
 Eq Artist where (==) = (==) `on` name
@@ -210,12 +186,12 @@ Eq Password where (==) = (==) `on` value
 Eq Album where (==) = (==) `on` \a => (a.name, a.artist)
 ```
 
-In case of `Album`, we wrap the two fields of the record in
-a `Pair`, which already comes with an implementation of `Eq`.
-This allows us to again use function `on`, which is very convenient.
+`Album`の場合、レコードの2つのフィールドを`Pair`で梱包しています。
+`Pair`には既に`Eq`の実装が付属しています。
+なのでここでも関数`on`を使います。
+とっても便利。
 
-Next, we have to define the data types representing
-server requests and responses:
+次に、サーバへの要求とサーバからの応答を表現するデータ型を定義します。
 
 ```idris
 record Credentials where
@@ -235,16 +211,13 @@ data Response : Type where
   Success         : Album -> Response
 ```
 
-For server responses, we use a custom sum type encoding
-the possible outcomes of a client request. In practice,
-the `Success` case would return some kind of connection
-to start the actual album stream, but we just
-wrap up the album we found to simulate this behavior.
+サーバの応答については、自前の直和型を使って、顧客の要求に対するありうる出力を符号化します。
+実践の場では、`Success`のときには実際にアルバム配信を開始するための何らかの接続を返すのでしょうが、
+この振舞いを模擬するために、ここでは単に見付かったアルバムを梱包することにします。
 
-We can now go ahead and simulate the handling of
-a request at the server. To emulate our user data base,
-a simple list of users will do. Here's the type of the
-function we'd like to implement:
+これで準備万端、サーバへの要求の制御を模擬できます。
+利用者のデータベースを真似るには、利用者のリストがあれば事足ります。
+こちらが実装したい関数の型です。
 
 ```idris
 DB : Type
@@ -253,26 +226,22 @@ DB = List User
 handleRequest : DB -> Request -> Response
 ```
 
-Note, how we defined a short alias for `List User` called `DB`.
-This is often useful to make lengthy type signatures more readable
-and communicate the meaning of a type in the given context. However,
-this will *not* introduce a new type, nor will it
-increase type safety: `DB` is *identical* to `List User`, and as
-such, a value of type `DB` can be used wherever a `List User` is
-expected and vice versa. In more complex programs it is therefore
-usually preferable to define new types by wrapping values in
-single-field records.
+`DB`という名前で`List User`に短い別名を定義しましたね。
+長めの型処方をより読みやすく、そこでの文脈に即した型の意味を教えてくれるものにするために、こうしておくと役に立つことがよくあります。
+しかし、これはけして新しい型を導入して*いない*ので、
+型安全性を増すこともありません。
+`DB`と`List User`は*同一*であり、額面通りの意味で型`DB`の値は`List
+User`の値が入るよう場所ならどこでも使えますし、逆もまた然りです。
+したがって、より複雑なプログラムではたいてい単一フィールドレコードに値をくるんで新しい型を定義するほうが好ましいです。
 
-The implementation will proceed as follows: It will first
-try and lookup a `User` by is email address in the data
-base. If this is successful, it will compare the provided password
-with the user's actual password. If the two match, it will
-lookup the requested album in the user's list of albums.
-If all of these steps succeed, the result will be an `Album`
-wrapped in a `Success`. If any of the steps fails, the
-result will describe exactly what went wrong.
+この関数の実装での処理は以下のように進行します。
+まずEメールアドレスでデータベースから`User`を見付けだそうとします。
+もしこれが成功したら、与えられたパスワードと利用者の実際のパスワードと比較します。
+もし2つが一致したら、利用者のアルバムのリストから要求されたアルバムを見付けだします。
+もしこれらの過程の全てが成功したら、結果は`Success`にくるまれた`Album`になります。
+もしどれか1つでも過程が失敗したら、正確に何が起こったのかを表現する結果を返します。
 
-Here's a possible implementation:
+考えられる実装はこちらです。
 
 ```idris
 handleRequest db (MkRequest (MkCredentials email pw) album) =
@@ -293,28 +262,24 @@ handleRequest db (MkRequest (MkCredentials email pw) album) =
           if x == album then Success album else lookupAlbum xs
 ```
 
-I'd like to point out several things in this example. First,
-note how we can extract values from nested records in a
-single pattern match.
-Second, we defined two *local* functions in a `where` block: `lookupUser`,
-and `lookupAlbum`. Both of these have access to all variables
-in the surrounding scope. For instance, `lookupUser` uses the
-`album` variable from the pattern match in the implementation's
-first line. Likewise, `lookupAlbum` makes use of the `album`
-variable.
+この例にあるいくつかの点について指摘したいと思います。
+まず、1回のパターン照合で入れ子のレコードから値を抽出することができます。
+2つ目に2つの*局所*関数を`where`ブロック内に定義しました。
+`lookupUser`と`lookupAlbum`です。
+両方の関数は囲まれたスコープにある全ての変数にアクセスできます。
+例えば`lookupUser`は実装の最初の行にあるパターン照合から`album`変数を使います。
+同様に`lookupAlbum`も`album`変数を使用します。
 
-A `where` block introduces new local definitions, accessible
-only from the surrounding scope and from other functions
-defined later in the same `where` block. These need to
-be explicitly typed and indented by the same amount of whitespace.
+`where`ブロックは新しい局所定義を導入し、
+`where`がある周囲のスコープと同じ`where`ブロックにある後に定義された他の関数からのみ、
+この定義にアクセスできます。
+これらの定義は明示的に型付けされ同量の空白で字下げされていなければいけません。
 
-Local definitions can also be introduce *before* a function's
-implementation by using the `let` keyword. This usage
-of `let` is not to be confused with *let bindings* described
-above, which are used to bind and reuse the results of intermediate
-computations. Below is how we could have implemented `handleRequest` with
-local definitions introduced by the `let` keyword. Again,
-all definitions have to be properly typed and indented:
+局所定義は`let`キーワードを用いて関数の実装の*前*で導入しても構いません。
+この`let`の使用法は前述した*let束縛*と混同しないようにしてください。
+let束縛は一時的な計算の結果を束縛して再利用するものでした。
+以下では`handleRequest`を`let`キーワードにより導入された局所定義でどのように実装できるかを示しています。
+繰り返しますが、全ての定義は適切に型付けされ、字下げされている必要があります。
 
 ```idris
 handleRequest' : DB -> Request -> Response
@@ -338,60 +303,46 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
 
 ### 演習
 
-The exercises in this section are supposed to increase
-you experience in writing purely functional code. In some
-cases it might be useful to use `let` expressions or
-`where` blocks, but this will not always be required.
+この節の演習で純粋関数型のコードを書く経験値が上がるでしょう。
+場合によっては`let`式や`where`ブロックを使うと便利かもしれませんが、
+いつも必要というわけではありません。
 
-Exercise 3 is again of utmost importance. `traverseList`
-is a specialized version of the more general `traverse`,
-one of the most powerful and versatile functions
-available in the *Prelude* (check out its type!).
+演習3はまたもや最重要です。
+`traverseList`はより汎用的な`traverse`の特殊版です。
+`traverse`は最も強力で多芸な関数の1つで、*Prelude*にあります（型を確認しましょう！）。
 
-1. Module `Data.List` in *base* exports functions `find` and `elemBy`.
-   Inspect their types and use these in the implementation of
-   `handleRequest`. This should allow you to completely get rid
-   of the `where` block.
+1. *base*のモジュール`Data.List`は関数`find`と`elemBy`を公開しています。
+   型を調べた上で、`handleRequest`の実装で使ってください。
+   これで完全に`where`ブロックを排除できます。
 
+2. DND鎖に表れる4つの[核酸塩基](https://en.wikipedia.org/wiki/Nucleobase)をリストにした列挙型を定義してください。
+   核酸塩基のリストについて、型別称`DNA`も定義してください。
+   単一文字（型`Char`）を核酸塩基に変換する関数`readBase`を宣言・実装してください。
+   実装では`'A'`, `'a'`のように文字リテラルが使えます。
+   この関数は失敗するかもしれないので、
+   結果の型をそれにしたがって調整してください。
 
-2. Define an enumeration type listing the four
-   [nucleobases](https://en.wikipedia.org/wiki/Nucleobase)
-   occurring in DNA strands. Define also a type alias
-   `DNA` for lists of nucleobases.
-   Declare and implement function `readBase`
-   for converting a single character (type `Char`) to a nucleobase.
-   You can use character literals in your implementation like so:
-   `'A'`, `'a'`. Note, that this function might fail, so adjust the
-   result type accordingly.
-
-
-3. Implement the following function, which tries to convert all
-   values in a list with a function, which might fail. The
-   result should be a `Just` holding the list of converted
-   values in unmodified order, if and
-   only if every single conversion was successful.
-
+3. 次の関数を実装してください。
+   リスト中の全ての値を関数で変換しようとするものです。
+   ただし、関数は失敗するかもしれません。
+   全ての変換が成功したときに限って、
+   結果は同じ順序で変換後の値のリストが入った`Just`になります。
 
    ```idris
    traverseList : (a -> Maybe b) -> List a -> Maybe (List b)
    ```
 
-   You can verify, that the function behaves correctly with
-   the following test: `traverseList Just [1,2,3] = Just [1,2,3]`.
+   関数が正しく振る舞うことを以下の検査で確かめられます。
+   `traverseList Just [1,2,3] = Just [1,2,3]`
 
-4. Implement function `readDNA : String -> Maybe DNA`
-   using the functions and types defined in exercises 2 and 3.
-   You will also need function `unpack` from the *Prelude*.
+4. 演習2と3で定義した関数と型を使って、関数`readDNA : String -> Maybe DNA`を実装してください。
+   *Prelude*の関数*unpack*も要ることでしょう。
 
+5. DNA鎖の転写を計算する関数`complement : DNA -> DNA`を実装してください。
 
-5. Implement function `complement : DNA -> DNA` to
-   calculate the complement of a strand of DNA.
+## 関数引数の真実
 
-
-## The Truth about Function Arguments
-
-So far, when we defined a top level function, it looked something
-like the following:
+ここまで、最上位で定義された関数は以下のような見た目をしていました。
 
 ```idris
 zipEitherWith : (a -> b -> c) -> Either e a -> Either e b -> Either e c
@@ -400,15 +351,14 @@ zipEitherWith f (Left e)   _          = Left e
 zipEitherWith f _          (Left e)   = Left e
 ```
 
-Function `zipEitherWith` is a generic higher-order function combining the
-values stored in two `Either`s via a binary function. If either
-of the `Either` arguments is a `Left`, the result is also a `Left`.
+関数`zipEitherWith`は汎化高階関数で、2つの`Either`に保管された値を2引数関数を介して結合します。
+どちらかの`Either`引数が`Left`なら、結果もまた`Left`です。
 
-This is a *generic function* with *type parameters* `a`, `b`, `c`, and `e`.
-However, there is a more verbose type for `zipEitherWith`, which is
-visible in the REPL when entering `:ti zipEitherWith` (the `i` here
-tells Idris to include `implicit` arguments). You will get a type
-similar to this:
+これは*汎化関数*で*型変数*`a`, `b`, `c`, `e`を取ります。
+しかし、もっと冗長な型が`zipEitherWith`にはあります。
+この型はREPLで見ることができ、`:ti
+zipEitherWith`と入力すればよいです（ここで`i`はIdrisが`implicit`（訳註：暗黙の）引数を含めるようにという意味です）。
+こんな感じの型になります。
 
 ```idris
 zipEitherWith' :  {0 a : Type}
@@ -421,12 +371,13 @@ zipEitherWith' :  {0 a : Type}
                -> Either e c
 ```
 
-In order to understand what's going on here, we will have to talk about
-named arguments, implicit arguments, and quantities.
+何が起こっているのかを理解するには、
+名前付き引数、暗黙引数、そして量化子についてお話しせねばなりません。
 
-### Named Arguments
+### 名前付き引数
 
-In a function type, we can give each argument a name. Like so:
+関数の型ではそれぞれの引数に名前を付けられます。
+こんな感じ。
 
 ```idris
 fromMaybe : (deflt : a) -> (ma : Maybe a) -> a
@@ -434,28 +385,28 @@ fromMaybe deflt Nothing = deflt
 fromMaybe _    (Just x) = x
 ```
 
-Here, the first argument is given name `deflt`, the second `ma`. These
-names can be reused in a function's implementation, as was done for `deflt`,
-but this is not mandatory: We are free to use different names in the
-implementation. There are several reasons, why we'd choose to name our
-arguments: It can serve as documentation, but it also
-allows us to pass the arguments to a function in arbitrary order
-when using the following syntax:
+ここで最初の引数は`deflt`と名付けられており、2つ目のほうは`ma`です。
+これらの名前は関数の実装で再利用することができ、
+実際に`deflt`がそうなっています。
+でもこれは必須ではありません。
+実装で違う名前を使うことも自由です。
+なぜ引数のための名前を選ぶのかということには、いくつかの理由があります。
+名前はドキュメントとして機能しますが、
+加えて以下の構文を使うときは任意の順序で関数に引数を渡せます。
 
 ```idris
 extractBool : Maybe Bool -> Bool
 extractBool v = fromMaybe { ma = v, deflt = False }
 ```
 
-Or even :
+さらに言えば以下です。
 
 ```idris
 extractBool2 : Maybe Bool -> Bool
 extractBool2 = fromMaybe { deflt = False }
 ```
 
-The arguments in a record's constructor are automatically named
-in accordance with the field names:
+レコード構築子内の引数はフィールド名にしたがって自動的に名付けられます。
 
 ```idris
 record Dragon where
@@ -468,11 +419,11 @@ gorgar : Dragon
 gorgar = MkDragon { strength = 150, name = "Gorgar", hitPoints = 10000 }
 ```
 
-For the use cases described above, named arguments are merely a
-convenience and completely optional. However, Idris is a *dependently typed*
-programming language: Types can be calculated from and depend on
-values. For instance, the *result type* of a function can *depend* on
-the *value* of one of its arguments. Here's a contrived example:
+上で述べた使用例では、名前付き引数は単に便利というだけで完全にあってもなくてもよいものでした。
+しかし、Idrisは*依存型*プログラミング言語です。
+つまり、型は値から計算することができ、型は値に依存することができます。
+たとえば、関数の*結果の型*はその引数のうちの1つの*値*に*依存*するようにできます。
+以下はわざとらしい例です。
 
 ```idris
 IntOrString : Bool -> Type
@@ -484,33 +435,30 @@ intOrString False = "I'm a String"
 intOrString True  = 1000
 ```
 
-If you see such a thing for the first time, it can be hard to understand
-what's going on here. First, function `IntOrString` computes a `Type`
-from a `Bool` value: If the argument is `True`, it returns type `Integer`,
-if the argument is `False` it returns `String`. We use this to
-calculate the return type of function `intOrString` based on its
-boolean argument `v`: If `v` is `True`, the return type is (in accordance
-with `IntOrString True = Integer`) `Integer`, otherwise it is `String`.
+初めてこれを見ると、何が起こっているのか理解しにくいことでしょう。
+まず、関数`IntOrString`は`Type`を`Bool`値から算出します。
+引数が`True`なら返る型は`Integer`で、引数が`False`なら`String`が返ります。
+これを、真偽値引数`v`に基づいて、関数`intOrString`の返却型を計算するのに使っています。
+`v`が`True`なら返却型は`Integer`で（`IntOrString True =
+Integer`に従っています）、そうでなければ`String`です。
 
-Note, how in the type signature of `intOrString`, we *must* give the
-argument of type `Bool` a name (`v`) in order to reference it in
-the result type `IntOrString v`.
+ここで、`intOrString`の型処方では型`Bool`の引数に名前(`v`)を与える*必要*がありますね。
+返却型`IntOrString v`で参照するためです。
 
-You might wonder at this moment, why this is useful and why we would
-ever want to define a function with such a strange type. We will see
-lots of very useful examples in due time! For now, suffice to say that
-in order to express dependent function types, we need to name
-at least some of the function's arguments and refer to them by name
-in the types of other arguments.
+今の時点では、どうしてこれが便利なのか、どうしてまたそんな妙な型の関数を定義したくなるものか、と怪訝に思われるかもしれません。
+来たるべき時に、とても有用な例を沢山見ていきましょう！
+依存型の関数の型を表現するために、
+少なくともいくつかの関数の引数に名前を付けたり、
+他の引数の型で名付けた引数の名前を参照したりする必要があるのだ、
+ということが伝われば充分です。
 
-### Implicit Arguments
+### 暗黙引数
 
-Implicit arguments are arguments, the values of which the compiler
-should infer and fill in for us automatically. For instance, in
-the following function signature, we expect the compiler to
-infer the value of type parameter `a` automatically from the
-types of the other arguments (ignore the 0 quantity for the moment;
-I'll explain it in the next subsection):
+暗黙引数とは、
+コンパイラが推論して自動的に記入してくれるような値の引数を指します。
+たとえば、以下の関数処方では、コンパイラが型変数`a`の値を他の引数の型から自動的に推定してくれるようになっています。
+（0量化子はここでは無視してください。
+次の小節で説明します。）
 
 ```idris
 maybeToEither : {0 a : Type} -> Maybe a -> Either String a
@@ -524,109 +472,97 @@ maybeToEither' Nothing  = Left "Nope"
 maybeToEither' (Just x) = Right x
 ```
 
-As you can see, implicit arguments are wrapped in curly braces,
-unlike explicit named arguments, which are wrapped in parentheses.
-Inferring the value of an implicit argument is not always possible.
-For instance, if we enter the following
-at the REPL, Idris will fail with an error:
+見てとれるように、暗黙引数は波括弧に囲まれており、明示的な名前付き引数とは違います。
+名前付き引数では丸括弧に囲まれていたのでした。
+暗黙引数の値を推論することはいつもできるわけではありません。
+たとえば、以下をREPLに入力すると、Idrisはエラーを出して実行に失敗します。
 
 ```repl
 Tutorial.Functions2> show (maybeToEither Nothing)
 Error: Can't find an implementation for Show (Either String ?a).
 ```
 
-Idris is unable to find an implementation of `Show (Either String a)`
-without knowing what `a` actually is.
-Note the question mark in front of the
-type parameter: `?a`.
-If this happens, there are several ways to help the type checker.
-We could, for instance, pass a value for the implicit argument
-explicitly. Here's the syntax to do this:
+Idrisは`a`が実際に何であるかを知らずに`Show (Either String a)`の実装を見つけることはできません。
+型変数の前の疑問符がありますね。
+`?a`となっています。
+こうなったら型検査器を手助けする方法がいくつかあります。
+たとえば暗黙引数に値を明示的に渡すことができます。
+以下がそうするための構文です。
 
 ```repl
 Tutorial.Functions2> show (maybeToEither {a = Int8} Nothing)
 "Left "Nope""
 ```
 
-As you can see, we use the same syntax
-as shown above for explicit named arguments and the
-two forms of argument passing can be mixed.
+見てとれるように明示的な名前付き引数のところで前に見たのと同じ文法を使っています。
+また、2種の引数の渡し方は混在させられます。
 
-We could also specify the type of the whole expression using
-utility function `the` from the *Prelude*:
+*Prelude*由来の小間物関数`the`を使って、全体の式の型を指定することもできます。
 
 ```repl
 Tutorial.Functions2> show (the (Either String Int8) (maybeToEither Nothing))
 "Left "Nope""
 ```
 
-It is instructive to have a look at the type of `the`:
+`the`の型を見てみるとわかりやすいです。
 
 ```repl
 Tutorial.Functions2> :ti the
 Prelude.the : (0 a : Type) -> a -> a
 ```
 
-Compare this with the identity function `id`:
+小間物関数`id`と比較してみましょう。
 
 ```repl
 Tutorial.Functions2> :ti id
 Prelude.id : {0 a : Type} -> a -> a
 ```
 
-The only difference between the two: In case of `the`,
-the type parameter `a` is an *explicit* argument, while
-in case of `id`, it is an *implicit* argument. Although
-the two functions have almost identical types (and implementations!),
-they serve quite different purposes: `the` is used to help
-type inference, while `id` is used whenever we'd like
-to return an argument without modifying it at all (which,
-in the presence of higher-order functions,
-happens surprisingly often).
+唯一の2つの違いはというと、
+`the`の場合型変数`a`が*明示的な*引数であるのに対し、
+`id`の場合*暗黙の*引数であることです。
+2つの関数はほぼ同じ型（と実装！）であるにも関わらず、
+かなり異なる目的で使われます。
+`the`は型推論を助けるために使われますが、
+`id`は引数を全く変更することなしに返したいようなときに使います。
+（`id`は高階関数があるときは驚くほどよく使います。）
 
-Both ways to improve type inference shown above
-are used quite often, and must be understood by Idris
-programmers.
+上で見た型推論を向上する両方の手段はかなりよく使います。
+Idrisのプログラマは理解しておく必要があります。
 
-### Multiplicities
+### 多重度
 
-Finally, we need to talk about the zero multiplicity, which appeared
-in several of the type signatures in this section. Idris 2, unlike
-its predecessor Idris 1, is based on a core language called
-*quantitative type theory* (QTT): Every variable in Idris 2 is
-associated with one of three possible multiplicities:
+最後にゼロ多重度について話さねばなりません。
+ゼロ多重度は本節の型処方でちらほら出ていました。
+Idris 2は前作のIdris 1とは異なり、*数量的型理論* (quantitative type theory; QTT)
+と呼ばれる中核言語に基づいています。
+つまり、Idris 2での全ての変数には以下の3つの多重度のうち1つが関係するのです。
 
-* `0`, meaning that the variable is *erased* at runtime.
+* `0`、これは変数が実行時に*消去*されるという意味です。
+* `1`、これは変数が実行時に*ちょうど1回だけ*使われるという意味です。
+* *制限なし*（既定値）、これは変数が実行時に際限なく使えるという意味です。
 
-* `1`, meaning that the variable is used *exactly once* at runtime.
+3つの中で最も複雑な多重度`1`についてはここでは触れません。
+しかし、多重度`0`はよく着目されます。
+多重度`0`の変数は*コンパイル時*のみに関係があります。
+実行時には姿を見せず、その変数の計算はプログラムの実行時効率に何ら影響がありません。
 
-* *Unrestricted* (the default), meaning that the variable is used
-   an arbitrary number of times at runtime.
+`maybeToEither`の型処方では型変数`a`が多重度`0`を持っていましたが、
+それはつまり型変数が消去されコンパイル時にのみ関係するということなのです。
+一方で`Maybe a`引数は*制限なし*多重度です。
 
-We will not talk about the most complex of the three, multiplicity `1`, here.
-We are, however, often interested in multiplicity `0`: A variable with
-multiplicity `0` is only relevant at *compile time*. It will not make
-any appearance at runtime, and the computation of such a variable will
-never affect a program's runtime performance.
+明示的に引数に多重度を註釈することもできます。
+その場合ここでも引数は括弧内になくてはいけません。
+例えば`the`の型処方をもう一度見てみてください。
 
-In the type signature of `maybeToEither` we see that type
-parameter `a` has multiplicity `0`, and will therefore be erased and
-is only relevant at compile time, while the `Maybe a` argument
-has *unrestricted* multiplicity.
+### 下線文字
 
-It is also possible to annotate explicit arguments with multiplicities,
-in which case the argument must again be put in parentheses. For an example,
-look again at the type signature of `the`.
-
-### Underscores
-
-It is often desirable, to only write as little code as necessary
-and let Idris figure out the rest.
-We have already learned about one such occasion: Catch-all patterns.
-If a variable in a pattern match is not used on the right hand side,
-we can't just drop it, as this would make it impossible for
-Idris, which of several arguments we were planning to drop,
-but we can use an underscore as a placeholder instead:
+必要最小限のコードだけを書いて、残りをIdrisに調べさせたいことはよくあります。
+既にそのような状況について学びました。
+全部堰き止めるパターンです。
+パターン照合の変数が右側で使われなければ、
+単に省略するだけということはできないものの（複数の引数のうちどれを省くつもりなのかをIdrisが推定できません）、
+代わりに下線文字で場所取りをすることができます。
 
 ```idris
 isRight : Either a b -> Bool
@@ -634,9 +570,9 @@ isRight (Right _) = True
 isRight _         = False
 ```
 
-But when we look at the type signature of `isRight`, we will note
-that type parameters `a` and `b` are also only used once, and
-are therefore of no importance. Let's get rid of them:
+しかし`isRight`の型処方を見れば、型変数`a`と`b`も1度のみ使われており、
+したがって特に重要ではないことに気付きます。
+型変数を省きましょう。
 
 ```idris
 isRight' : Either _ _ -> Bool
@@ -644,11 +580,10 @@ isRight' (Right _) = True
 isRight' _         = False
 ```
 
-In the detailed type signature of `zipEitherWith`, it should
-be obvious for Idris that the implicit arguments are of type `Type`.
-After all, all of them are later on applied to the `Either` type
-constructor, which is of type `Type -> Type -> Type`. Let's get rid
-of them:
+`zipEitherWith`の詳細な型処方では、Idrisにとって暗黙引数が型`Type`なことは明らかでしょう。
+とどのつまり、全部あとで`Either`型構築子に適用されるのです。
+この型構築子は型が`Type -> Type -> Type`です。
+省いてみましょう。
 
 ```idris
 zipEitherWith'' :  {0 a : _}
@@ -661,55 +596,51 @@ zipEitherWith'' :  {0 a : _}
                 -> Either e c
 ```
 
-Consider the following contrived example:
+以下のわざとらしい例について考えましょう。
 
 ```idris
 foo : Integer -> String
 foo n = show (the (Either String Integer) (Right n))
 ```
 
-Since we wrap an `Integer` in a `Right`, it is obvious
-that the second argument in `Either String Integer` is
-`Integer`. Only the `String` argument can't be inferred
-by Idris. Even better, the `Either` itself is obvious!
-Let's get rid of the unnecessary noise:
+`Integer`を`Right`の中にくるんでいるので、
+`Either String Integer`の2つ目の引数が`Integer`であることは自明です。
+`String`だけIdrisは推論できません。
+さらにいいことに`Either`自体も明らかなのです！
+不必要な雑音を消しましょう。
 
 ```idris
 foo' : Integer -> String
 foo' n = show (the (_ String _) (Right n))
 ```
 
-Please note, that using underscores as in `foo'` is
-not always desirable, as it can quite drastically
-obfuscate the written code. Always use a syntactic
-convenience to make code more readable, and not to
-show people how clever you are.
+注意していただきたいのは、`foo`でのように下線文字を使うことはいつも望ましいものとは限らないということです。
+書かれたコードをかなり劇的に朧気なものにしてしまいかねないからです。
+文法的に便利なものを使うのは常にコードを読みやすくするためにし、
+人々にあなたの賢さを誇示しないようにしましょう。
 
-## Programming with Holes
+## 穴空きプログラミング
 
-Solved all the exercises so far? Got angry at the type checker
-for always complaining and never being really helpful? It's time
-to change that. Idris comes with several highly useful interactive
-editing features. Sometimes, the compiler is able to implement
-complete functions for us (if the types are specific enough). Even
-if that's not possible, there's an incredibly useful and important
-feature, which can help us when the types are getting too complicated: Holes.
-Holes are variables, the names of which are prefixed with a question mark.
-We can use them as placeholders whenever we plan to implement a piece
-of functionality at a later time. In addition, their types and the types
-and quantities of all other variables in scope can be inspected
-at the REPL (or in your editor, if you setup the necessary plugin).
-Let's see them holes in action.
+ここまでの演習を全部解いてきましたか？
+型検査器にいつも小言をくらっていて本当は役に立っていないと腹を立てているでしょうか？
+今それが変わります。
+Idrisにはいくつかの大変役に立つ対話的な編集機能が備わっています。
+（型が充分に特定のものであれば）時々コンパイラは完全な関数を実装できることがあります。
+それができない場合であっても、非常に有用で重要な特徴がIdrisにはあります。
+型が複雑になりすぎたときに手助けしてくれるもの、それが穴です。
+穴は変数で、変数名は疑問符が前に付きます。
+あとで機能の一部を実装するつもりの場所であればどこにでも、穴を仮置場として使えます。
+加えて穴の型と穴のスコープにある他の全ての変数の型と量化子をREPLで（あるいは必要なプラグインが設定できていればエディタで）調べることができます。
+穴あきを実際に見てみましょう。
 
-Remember the `traverseList` example from an Exercise earlier in
-this section? If this was your first encounter with applicative list
-traversals, this might have been a nasty bit of work. Well, let's just
-make it a wee bit harder still. We'd like to implement the same
-piece of functionality for functions returning `Either e`, where
-`e` is a type with a `Semigroup` implementation, and we'd like
-to accumulate the values in all `Left`s we meet along the way.
+本節の前のほうの演習の`traverseList`の例を覚えていますか。
+初めて適用的リスト巡回に出喰わしたのだとしたら、仕組みがちょっと腑に落ちなかったかもしれません。
+そうですね、もう少しつぶさに見てみることにしましょう。
+`Either e`を返す同じ機能の関数を実装することを考えます。
+ここで`e`は`Semigroup`の実装を持つ型であり、
+巡回の道中にある`Left`の全ての値を積み重ねます。
 
-Here's the type of the function:
+以下が関数の型です。
 
 ```idris
 traverseEither :  Semigroup e
@@ -718,17 +649,17 @@ traverseEither :  Semigroup e
                -> Either e (List b)
 ```
 
-Now, in order to follow along, you might want to start your own
-Idris source file, load it into a REPL session and adjust the
-code as described here. The first thing we'll do, is write a
-skeleton implementation with a hole on the right hand side:
+さて、読み進めていくにあたって、
+読者のみなさんは自分でIdrisのソースファイルを書き始めてREPLセッションに読み込まれるとよいでしょう。
+コードはこちらで記述されている内容にしたがって調整していきます。
+最初にすることは右側に穴あきの実装の骨組を書くことです。
 
 ```repl
 traverseEither fun as = ?impl
 ```
 
-When you now go to the REPL and reload the file using command `:r`,
-you can enter `:m` to list all the *metavariables*:
+そうしたらREPLに向かい、コマンド`:r`を使ってファイルを再読み込みします。
+そして`:m`とすれば全ての*メタ変数*が列挙されます。
 
 ```repl
 Tutorial.Functions2> :m
@@ -736,8 +667,8 @@ Tutorial.Functions2> :m
   Tutorial.Functions2.impl : Either e (List b)
 ```
 
-Next, we'd like to display the hole's type (including all variables in the
-surrounding context plus their types):
+次は穴の型を表示したいところです。
+（加えて周囲の文脈にある全ての変数とその型も。）
 
 ```repl
 Tutorial.Functions2> :t impl
@@ -750,22 +681,23 @@ Tutorial.Functions2> :t impl
 impl : Either e (List b)
 ```
 
-So, we have some erased type parameters (`a`, `b`, and `e`), a value
-of type `List a` called `as`, and a function from `a` to
-`Either e b` called `fun`. Our goal is to come up with a value
-of type `Either a (List b)`.
+というわけで、消去された型変数 (`a`, `b`, `e`)、
+型`List a`の`as`という名前の値、
+そして`a`から`Either e b`への関数で名前が`fun`のものがあります。
+目標は型`Either a (List b)`の値を思い付くことです。
 
-We *could* just return a `Right []`, but that only make sense
-if our input list is indeed the empty list. We therefore should
-start with a pattern match on the list:
+単に`Right []`を返すことも*できなくはない*のですが、
+それは入力のリストがまさしく空リストのときのみ当てはまります。
+したがってリストに関してパターン照合するところから始めるとよいでしょう。
 
 ```repl
 traverseEither fun []        = ?impl_0
 traverseEither fun (x :: xs) = ?impl_1
 ```
 
-The result is two holes, which must be given distinct names. When inspecting `impl_0`,
-we get the following result:
+結果は2つの穴で、
+それぞれ別の名前でなくてはいけません。
+`impl_0`を調べると以下の結果になります。
 
 ```repl
 Tutorial.Functions2> :t impl_0
@@ -777,19 +709,19 @@ Tutorial.Functions2> :t impl_0
 impl_0 : Either e (List b)
 ```
 
-Now, this is an interesting situation. We are supposed to come up with a value
-of type `Either e (List b)` with nothing to work with. We know nothing
-about `a`, so we can't provide an argument with which to invoke `fun`.
-Likewise, we know nothing about `e` or `b` either, so we can't produce
-any values of these either. The *only* option we have is to replace `impl_0`
-with an empty list wrapped in a `Right`:
+さあ、ここが面白いところです。
+何にも手を付けることなく型`Either e (List b)`の値を思い付かなければいけません。
+`a`については何も知らないので、その値を`fun`を呼び出すための引数に渡せないのです。
+同様に`e`や`b`についても全然わからないため、
+これらの値はいずれも生み出すことができません。
+取るべき*唯一の*選択肢は`impl_0`を`Right`でくるまれた空リストで置き換えることです。
 
 ```idris
 traverseEither fun []        = Right []
 ```
 
-The non-empty case is of course slightly more involved. Here's the context
-of `?impl_1`:
+非空の場合はもちろんこれより少しだけ込み入っています。
+以下が`?impl_1`の文脈です。
 
 ```repl
 Tutorial.Functions2> :t impl_1
@@ -803,17 +735,17 @@ Tutorial.Functions2> :t impl_1
 impl_1 : Either e (List b)
 ```
 
-Since `x` is of type `a`, we can either us it as an argument
-to `fun` or drop and ignore it. `xs`, on the other hand, is
-the remainder of the list of type `List a`. We could again
-drop it or process it further by invoking `traverseEither`
-recursively. Since the goal is to try and convert *all* values,
-we should drop neither. Since in case of two `Left`s we
-are supposed to accumulate the values, we eventually need to
-run both computations anyway (invoking `fun`, and recursively
-calling `traverseEither`). We therefore can do both at the
-same time and analyze the results in a single pattern match
-by wrapping both in a `Pair`:
+`x`は型が`a`であるため、
+`fun`の引数に使ったり、
+無視してしまったりできます。
+他方で`xs`はリストの残り部分で型が`List a`です。
+これも使わずにおいたり`traverseEither`をさらに再帰的に呼び出したりできます。
+目標は*全ての*値を変換しようとすることですから、いずれも欠かせないことになります。
+2つが`Left`な場合は値を積み重ねなければいけないため、
+何にせよ結局は両方の計算をする必要があります。
+（`fun`を実行し、そして再帰的に`traverseEither`を呼び出します。）
+したがって両方を同時に行い、
+`Pair`に両方をくるむことで1つのパターン照合により結果を分析できます。
 
 ```repl
 traverseEither fun (x :: xs) =
@@ -821,7 +753,7 @@ traverseEither fun (x :: xs) =
    p => ?impl_2
 ```
 
-Once again, we inspect the context:
+もう一度文脈を調べます。
 
 ```repl
 Tutorial.Functions2> :t impl_2
@@ -836,8 +768,8 @@ Tutorial.Functions2> :t impl_2
 impl_2 : Either e (List b)
 ```
 
-We'll definitely need to pattern match on pair `p` next
-to figure out, which of the two computations succeeded:
+間違いなく実装の解明には対`p`をパターン照合する必要があります。
+この対は2つの計算が成功したかを表します。
 
 ```repl
 traverseEither fun (x :: xs) =
@@ -848,9 +780,9 @@ traverseEither fun (x :: xs) =
     (Right y, Right z) => ?impl_9
 ```
 
-At this point we might have forgotten what we actually
-wanted to do (at least to me, this happens annoyingly often),
-so we'll just quickly check what our goal is:
+この時点で実際何をしたかったのかお忘れかもしれません。
+（少なくとも私は、厄介なことにこうしたことがよくあります。）
+なので目標をさくっと確認しましょう。
 
 ```repl
 Tutorial.Functions2> :t impl_6
@@ -866,12 +798,11 @@ Tutorial.Functions2> :t impl_6
 impl_6 : Either e (List b)
 ```
 
-So, we are still looking for a value of type `Either e (List b)`, and
-we have two values of type `e` in scope. According to the spec we
-want to accumulate these using `e`s `Semigroup` implementation.
-We can proceed for the other cases in a similar manner, remembering
-that we should return a `Right`, if and only if all conversions
-where successful:
+つまり、ここでも型`Either e (List b)`の値を追い求めており、
+範疇には型`e`の2つの値があります。
+仕様にしたがうと`e`の`Semigroup`実装を使って積み重ねたいところです。
+他の場合も同様のやり方で進めることができます。
+全ての変換が成功したときに限って`Right`を返す、ということを記憶に留めつつ。
 
 ```idris
 traverseEither fun (x :: xs) =
@@ -882,7 +813,7 @@ traverseEither fun (x :: xs) =
     (Right y, Right z) => Right (y :: z)
 ```
 
-To reap the fruits of our labour, let's show off with a small example:
+これまでの労働の成果をものにするために、小さな例をお見せします。
 
 ```idris
 data Nucleobase = Adenine | Cytosine | Guanine | Thymine
@@ -901,7 +832,7 @@ readDNA : String -> Either (List String) DNA
 readDNA = traverseEither readNucleobase . unpack
 ```
 
-Let's try this at the REPL:
+REPLで試してみましょう。
 
 ```repl
 Tutorial.Functions2> readDNA "CGTTA"
@@ -910,63 +841,55 @@ Tutorial.Functions2> readDNA "CGFTAQ"
 Left ["Unknown nucleobase: 'F'", "Unknown nucleobase: 'Q'"]
 ```
 
-### Interactive Editing
+### 対話的編集
 
-There are plugins available for several editors and
-programming environments, which facilitate interacting
-with the Idris compiler when implementing your functions.
-One editor, which is well supported in the Idris
-community, is Neovim. Since I am a Neovim user myself,
-I added some examples of what's possible to the
-[appendix](../Appendices/Neovim.md). Now would be a good
-time to start using the utilities discussed there.
+いくつかのエディタやプログラミング環境ではプラグインが入手でき、
+関数を実装するときにIdrisコンパイラとのやり取りを手助けしてくれます。
+Idrisコミュニティでよく保証されているエディタの1つはNeovimです。
+私自身Neovim利用者なので、
+[補遺](../Appendices/Neovim.md)にどんなことができるのかについて幾つかの例を加えました。
+そろそろそちらで記載した実用品を使い始めていい頃合いです。
 
-If you use a different editor, probably with less support
-for the Idris programming language, you should at the very
-least have a REPL session open all the time, where the
-source file you are currently working on is loaded. This
-allows you to introduce new metavariables and inspect their
-types and context as you develop your code.
+他のエディタを使っているなら、
+Idrisプログラミング言語をするにはやや保証が薄いかもしれませんが、
+少なくとも常時REPLセッションを開いておくべきです。
+このセッションでは現在取り組んでいるソースファイルを読み込んでおきます。
+こうすればコードを開発しつつ新しいメタ変数を導入しその方と文脈を調べられます。
 
 ## まとめ
 
-We again covered a lot of ground in this section. I can't stress enough that you
-should get yourselves accustomed to programming with holes and let the
-type checker help you figure out what to do next.
+繰り返しになりますが本節では様々な領域の話題を述べました。
+どんなに強調しても足りませんが、
+ぜひ穴あきプログラミングに体を慣らして、
+型検査器に次何をすればよいのかを教えてもらうようにしましょう。
 
-* When in need of local utility functions, consider defining them
-as local definitions in a *where block*.
+* 局所小間物関数が必要なときは、
+  *whereブロック*中の局所定義に書くことを検討してください。
 
-* Use *let expressions* to define and reuse local variables.
+* *let式*を使って局所変数を定義・再利用してください。
 
+* 関数の引数には名前を付けられます。
+  こうすればドキュメントとして残すことができ、
+  好きな順序で引数を渡すのに使え、
+  そして依存型で参照するのに使えます。
 
-* Function arguments can be given a name, which can serve as documentation,
-can be used to pass arguments in any order, and is used to refer to
-them in dependent types.
+* 暗黙引数は波括弧にくるまれます。
+  コンパイラは文脈から型推論できなくてはいけません。
+  それができないときは、明示的に他の名前付き引数として渡すことができます。
 
-* Implicit arguments are wrapped in curly braces. The compiler is
-supposed to infer them from the context. If that's not possible,
-they can be passed explicitly as other named arguments.
+* 可能なときはできるだけIdrisは自動的に全ての型変数について暗黙の消去済み引数を加えようとします。
 
-* Whenever possible, Idris adds implicit erased arguments for all
-type parameters automatically.
+* 量化子はどのくらいの頻度で関数の引数が使われるのかを追跡することができます。
+  量化子0は引数が実行時に消去されることを意味します。
 
-* Quantities allow us to track how often a function argument is
-used. Quantity 0 means, the argument is erased at runtime.
-
-* Use *holes* as placeholders for pieces of code you plan to fill
-in at a later time. Use the REPL (or your editor) to inspect
-the types of holes together with the names, types, and quantities of all
-variables in their context.
+* *穴*をあとで埋める予定のコード片の場所取りに使ってください。
+  REPL（もしくはエディタ）を使って、穴の型とその文脈にある全ての変数の名前、型、量化子を調べてください。
 
 ### お次は？
 
-In the [next chapter](Dependent.md)
-we'll start using dependent types to help us write provably correct code.
-Having a good understanding of how to read
-Idris' type signatures will be of paramount importance there. Whenever
-you feel lost, add one or more holes and inspect their context to decide what to
-do next.
+[次節](Dependent.md)では依存型を使い始め、証明的に正しいコードを書くのに使います。
+Idrisの型処方の読み方をよく理解しておくことは、そこでは最重要となります。
+道を見失ったように感じたら、いくつか穴を加えてみてその文脈を調べ、次何をすべきかを決めましょう。
 
 <!-- vi: filetype=idris2
 -->
