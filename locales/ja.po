@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: idris 2-tutorial\n"
 "POT-Creation-Date: 2022-06-26 20:00+0900\n"
-"PO-Revision-Date: 2022-07-15 10:59+0900\n"
+"PO-Revision-Date: 2022-07-28 08:31+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -6143,7 +6143,7 @@ msgid ""
 msgstr ""
 "2つの型変数`a`と`b`は無視できます。\n"
 "ただの汎化関数なので。\n"
-"（ただ、同じ型と量化子の引数を単一対の波括弧内にまとめられることは覚えておい"
+"（ただ、同じ型と数量子の引数を単一対の波括弧内にまとめられることは覚えておい"
 "てください。\n"
 "これはやってもやらなくてもいいですが、型処方を少しだけ短くできることもありま"
 "す。）\n"
@@ -6632,7 +6632,7 @@ msgid ""
 "\".  Idris is powerful, but it is not a clairvoyant."
 msgstr ""
 "この型は以下のように読めます。\n"
-"あらゆる型`a`とあらゆる自然数`n`（量化子ゼロなので実行時には*何にも*わかりま"
+"あらゆる型`a`とあらゆる自然数`n`（数量子ゼロなので実行時には*何にも*わかりま"
 "せん）について、\n"
 "型`a`の値が与えられたとき、ちょうど`n`個の型`a`の要素を保管するベクタを渡して"
 "くれる、と。\n"
@@ -7487,7 +7487,7 @@ msgid ""
 "pass `n` as an implicit argument of *unrestricted* quantity:"
 msgstr ""
 "したがって`replicate`の代わりの版を実装でき、\n"
-"*制約なし*量化子の暗黙引数として`n`を渡すようにできます。"
+"*制約なし*数量子の暗黙引数として`n`を渡すようにできます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Dependent.md:806
@@ -7560,7 +7560,7 @@ msgid ""
 msgstr ""
 "`replicate'`の実装は関数`replicate`を使い、そこで明示引数`n`でのパターン照合"
 "をしているのでした。\n"
-"しかし、暗黙子、つまり非ゼロの量化子の名前付き引数でパターン照合することもで"
+"しかし、暗黙子、つまり非ゼロの数量子の名前付き引数でパターン照合することもで"
 "きます。"
 
 #. type: Fenced code block (idris)
@@ -9050,6 +9050,11 @@ msgid ""
 "     Read   : (id : i) -> Crud i a\n"
 "     Delete : (id : i) -> Crud i a\n"
 msgstr ""
+"   data Crud : (i : Type) -> (a : Type) -> Type where\n"
+"     Create : (value : a) -> Crud i a\n"
+"     Update : (id : i) -> (value : a) -> Crud i a\n"
+"     Read   : (id : i) -> Crud i a\n"
+"     Delete : (id : i) -> Crud i a\n"
 
 #. type: Bullet: '6. '
 #: src/Tutorial/Eq.md:851
@@ -11049,6 +11054,12 @@ msgid ""
 "     Deleted : (id : i) -> Response e i a\n"
 "     Error   : (err : e) -> Response e i a\n"
 msgstr ""
+"   data Response : (e, i, a : Type) -> Type where\n"
+"     Created : (id : i) -> (value : a) -> Response e i a\n"
+"     Updated : (id : i) -> (value : a) -> Response e i a\n"
+"     Found   : (values : List a) -> Response e i a\n"
+"     Deleted : (id : i) -> Response e i a\n"
+"     Error   : (err : e) -> Response e i a\n"
 
 #. type: Bullet: '3. '
 #: src/Tutorial/Folds.md:1018
@@ -13388,7 +13399,7 @@ msgid ""
 "named arguments, implicit arguments, and quantities."
 msgstr ""
 "何が起こっているのかを理解するには、\n"
-"名前付き引数、暗黙引数、そして量化子についてお話しせねばなりません。"
+"名前付き引数、暗黙引数、そして数量子についてお話しせねばなりません。"
 
 #. type: Title ###
 #: src/Tutorial/Functions2.md:422
@@ -13593,7 +13604,7 @@ msgstr ""
 "コンパイラが推論して自動的に記入してくれるような値の引数を指します。\n"
 "たとえば、以下の関数処方では、コンパイラが型変数`a`の値を他の引数の型から自動"
 "的に推定してくれるようになっています。\n"
-"（0量化子はここでは無視してください。\n"
+"（0数量子はここでは無視してください。\n"
 "次の小節で説明します。）"
 
 #. type: Fenced code block (idris)
@@ -14019,7 +14030,7 @@ msgstr ""
 "穴は変数で、変数名は疑問符が前に付きます。\n"
 "あとで機能の一部を実装するつもりの場所であればどこにでも、穴を仮置場として使"
 "えます。\n"
-"加えて穴の型と穴のスコープにある他の全ての変数の型と量化子をREPLで（あるいは"
+"加えて穴の型と穴のスコープにある他の全ての変数の型と数量子をREPLで（あるいは"
 "必要なプラグインが設定できていればエディタで）調べることができます。\n"
 "穴あきを実際に見てみましょう。"
 
@@ -14589,8 +14600,8 @@ msgid ""
 "* Quantities allow us to track how often a function argument is\n"
 "used. Quantity 0 means, the argument is erased at runtime.\n"
 msgstr ""
-"* 量化子はどのくらいの頻度で関数の引数が使われるのかを追跡することができます。\n"
-"  量化子0は引数が実行時に消去されることを意味します。\n"
+"* 数量子はどのくらいの頻度で関数の引数が使われるのかを追跡することができます。\n"
+"  数量子0は引数が実行時に消去されることを意味します。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:953
@@ -14602,7 +14613,7 @@ msgid ""
 "variables in their context.\n"
 msgstr ""
 "* *穴*をあとで埋める予定のコード片の場所取りに使ってください。\n"
-"  REPL（もしくはエディタ）を使って、穴の型とその文脈にある全ての変数の名前、型、量化子を調べてください。\n"
+"  REPL（もしくはエディタ）を使って、穴の型とその文脈にある全ての変数の名前、型、数量子を調べてください。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functions2.md:962
@@ -14623,7 +14634,7 @@ msgstr ""
 #: src/Tutorial/Functor.md:1
 #, no-wrap
 msgid "Functor and Friends"
-msgstr ""
+msgstr "関手と仲間達"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:6
@@ -14631,6 +14642,8 @@ msgid ""
 "Programming, like mathematics, is about abstraction. We try to model parts "
 "of the real world, reusing recurring patterns by abstracting over them."
 msgstr ""
+"プログラミングとは、数学がそうであるように、抽象化そのものです。\n"
+"現実世界の一部をモデル化しようとし、抽象化によって繰り返されるパターンを再利用します。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:17
@@ -14644,6 +14657,14 @@ msgid ""
 "start feeling natural to you. You will then realize that their initial "
 "complexity has vanished."
 msgstr ""
+"この章ではいくつかの関連し合うインターフェースについて学びます。\n"
+"これらは全て抽象化についてのものなので、最初のうちは理解するのが難しいかもしれません。\n"
+"特に*なぜ*役に立つのか、*いつ*使うのかがわかるには時間と経験が必要です。\n"
+"したがってこの章は山ほど演習が付属しており、\n"
+"ほとんどはごく少ない行のコードで解くことができます。\n"
+"演習を飛ばさないでください。\n"
+"内容が自然に感じられるまで何度も立ち返ってください。\n"
+"そうすれば当初感じていた複雑さが消えていることに気付くでしょう。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:18
@@ -14669,7 +14690,7 @@ msgstr ""
 #: src/Tutorial/Functor.md:28
 #, no-wrap
 msgid "Functor"
-msgstr ""
+msgstr "関手"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:42
@@ -14688,6 +14709,15 @@ msgid ""
 "are much smaller: Zero or one. With `IO`, the context is a different one:\n"
 "Arbitrary side effects.\n"
 msgstr ""
+"一般に、`List`、`List1`、`Maybe`、`IO`のような型構築子はどのような型を持っているのでしたっけ。\n"
+"一つ目に、すべて型`Type -> Type`です。\n"
+"二つ目に、すべて与えられた型の値を何らかの*文脈*の中に入れます。\n"
+"`List`については、*文脈*は*非決定論的*です。\n"
+"つまり、ゼロ以上の値があることはわかりますが、\n"
+"パターン照合によってリストを分解しない限り正確な数はわかりません。\n"
+"`List1`も同様ですが、こちらは1つは値があることが確かです。\n"
+"`Maybe`についても何個の値があるのかは定かではありませんが、選択肢はずっと小さく、ゼロか1です。\n"
+"`IO`についての文脈は違ったものであり、それはあらゆる副作用です。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:49
@@ -14698,13 +14728,16 @@ msgid ""
 "pure function over the data type, without affecting its underlying "
 "structure*."
 msgstr ""
+"上で議論した型構築子は振舞いや便利になるときがかなり異なりますが、\n"
+"これらに取り組んでいると何らかの操作は頭に上ってきます。\n"
+"そのような操作の1つ目は*土台の構造に影響することなく、純粋な関数をデータ型に写す*ことです。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:53
 msgid ""
 "For instance, given a list of numbers, we'd like to multiply each number by "
 "two, without changing their order or removing any values:"
-msgstr ""
+msgstr "例えば数字のリストが与えられたとき、順番や値の削除なしに、それぞれの数を2倍したいとします。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:54
@@ -14714,13 +14747,16 @@ msgid ""
 "multBy2List []        = []\n"
 "multBy2List (x :: xs) = 2 * x :: multBy2List xs\n"
 msgstr ""
+"multBy2List : Num a => List a -> List a\n"
+"multBy2List []        = []\n"
+"multBy2List (x :: xs) = 2 * x :: multBy2List xs\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:62
 msgid ""
 "But we might just as well convert every string in a list of strings to upper "
 "case characters:"
-msgstr ""
+msgstr "でもちょうど同じように文字列リスト中の全ての文字列を大文字に変換したいかもしれません。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:63
@@ -14730,6 +14766,9 @@ msgid ""
 "toUpperList []        = []\n"
 "toUpperList (x :: xs) = toUpper x :: toUpperList xs\n"
 msgstr ""
+"toUpperList : List String -> List String\n"
+"toUpperList []        = []\n"
+"toUpperList (x :: xs) = toUpper x :: toUpperList xs\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:72
@@ -14737,6 +14776,8 @@ msgid ""
 "Sometimes, the type of the stored value changes. In the next example, we "
 "calculate the lengths of the strings stored in a list:"
 msgstr ""
+"保管している値の種類が変わることもあります。\n"
+"次の例ではリストに保管されている文字列の長さを計算しています。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:73
@@ -14746,6 +14787,9 @@ msgid ""
 "toLengthList []        = []\n"
 "toLengthList (x :: xs) = length x :: toLengthList xs\n"
 msgstr ""
+"toLengthList : List String -> List Nat\n"
+"toLengthList []        = []\n"
+"toLengthList (x :: xs) = length x :: toLengthList xs\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:83
@@ -14754,6 +14798,9 @@ msgid ""
 "almost identical, with the only interesting part being the function we apply "
 "to each element. Surely, there must be a pattern to abstract over:"
 msgstr ""
+"これらの関数がどれほど退屈かよくお分かりいただけたでしょう。\n"
+"ほとんど同じものであり、関心がある部分はそれぞれの要素に適用している関数なのです。\n"
+"もちろんこれを抽象化するパターンがあるはずです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:84
@@ -14763,6 +14810,9 @@ msgid ""
 "mapList f []        = []\n"
 "mapList f (x :: xs) = f x :: mapList f xs\n"
 msgstr ""
+"mapList : (a -> b) -> List a -> List b\n"
+"mapList f []        = []\n"
+"mapList f (x :: xs) = f x :: mapList f xs\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:94
@@ -14771,6 +14821,9 @@ msgid ""
 "a (possibly generic) higher-order function.  We can now concisely implement "
 "all examples shown above in terms of `mapList`:"
 msgstr ""
+"これはよく関数型プログラミングで行われる抽象化の初めの一歩です。\n"
+"つまり高階関数（汎化も可）を書くということです。\n"
+"これで上で示した全ての例を`mapList`を使って簡潔に実装することができます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:95
@@ -14785,6 +14838,14 @@ msgid ""
 "toLengthList' : List String -> List Nat\n"
 "toLengthList' = mapList length\n"
 msgstr ""
+"multBy2List' : Num a => List a -> List a\n"
+"multBy2List' = mapList (2 *)\n"
+"\n"
+"toUpperList' : List String -> List String\n"
+"toUpperList' = mapList toUpper\n"
+"\n"
+"toLengthList' : List String -> List Nat\n"
+"toLengthList' = mapList length\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:110
@@ -14793,6 +14854,9 @@ msgid ""
 "After all, they are just container types like `List`, the only difference "
 "being some detail about the number of values they can or can't hold:"
 msgstr ""
+"しかしきっと同じ類のことを`List1`や`Maybe`でもしたいでしょう！\n"
+"結局はちょうど`List`のような容器型なのです。\n"
+"単に値の数で保管できたりできなかったりする違いがあるだけで。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:111
@@ -14802,6 +14866,9 @@ msgid ""
 "mapMaybe f Nothing  = Nothing\n"
 "mapMaybe f (Just v) = Just (f v)\n"
 msgstr ""
+"mapMaybe : (a -> b) -> Maybe a -> Maybe b\n"
+"mapMaybe f Nothing  = Nothing\n"
+"mapMaybe f (Just v) = Just (f v)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:125
@@ -14814,6 +14881,12 @@ msgid ""
 "`fromPrim`, however, for converting `IO` from and to `PrimIO`, which we can "
 "freely dissect:"
 msgstr ""
+"`IO`であっても純粋な関数を作用付き計算に写せるようにしたいです。\n"
+"入れ子の層になったデータ構築子があるため、実装はもう少し込み入っていますが、\n"
+"疑問に思ったときは型がきっと導いてくれます。\n"
+"ただしかし、`IO`は公に公開されていないので、データ構築子は使えません。\n"
+"ですが`IO`を`PrimIO`と相互に変換するために関数`toPrim`や`fromPrim`を使えるので、\n"
+"これらを使えば自由に解剖できます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:126
@@ -14826,6 +14899,12 @@ msgid ""
 "          let MkIORes va w2 = prim w\n"
 "           in MkIORes (f va) w2\n"
 msgstr ""
+"mapIO : (a -> b) -> IO a -> IO b\n"
+"mapIO f io = fromPrim $ mapPrimIO (toPrim io)\n"
+"  where mapPrimIO : PrimIO a -> PrimIO b\n"
+"        mapPrimIO prim w =\n"
+"          let MkIORes va w2 = prim w\n"
+"           in MkIORes (f va) w2\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:138
@@ -14834,6 +14913,8 @@ msgid ""
 "follow some derived functions, which are often useful. Here are some of them "
 "for `IO`:"
 msgstr ""
+"*純粋な関数を文脈に写す*という概念からいくつか派生する関数が出てきますが、便利なことがよくあります。\n"
+"以下は`IO`からいくつか取ってきたものです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:139
@@ -14845,6 +14926,11 @@ msgid ""
 "forgetIO : IO a -> IO ()\n"
 "forgetIO = mapConstIO ()\n"
 msgstr ""
+"mapConstIO : b -> IO a -> IO b\n"
+"mapConstIO = mapIO . const\n"
+"\n"
+"forgetIO : IO a -> IO ()\n"
+"forgetIO = mapConstIO ()\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:151
@@ -14854,6 +14940,9 @@ msgid ""
 "some kind of mapping function), and they'd all look the same and be equally "
 "boring."
 msgstr ""
+"もちろん`mapConst`や`forget`を\n"
+"`List`、`List1`、`Maybe`（そして他にも山程ある何らかの類の写す関数がある型構築子）にも同様に実装したいですし、\n"
+"見た目が全部同じなのでこれもまた退屈です。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:161
@@ -14869,6 +14958,12 @@ msgid ""
 "from parametrizing an interface over something else than\n"
 "a `Type`.\n"
 msgstr ""
+"関数といくつかの派生した有用な関数の集まりが繰り返される場面に出喰わしたときは、\n"
+"インターフェースを定義することを検討すべきです。\n"
+"しかしここではどのようにすればよいのでしょうか。\n"
+"`mapList`、`mapMaybe`、`mapIO`の型を見ると、除去する必要があるのは`List`、`List1`、`IO`型であるとわかります。\n"
+"これらは型`Type`ではなく型`Type -> Type`です。\n"
+"運が良いことにインターフェースが`Type`以外の何かを変数に取るようにするのに支障はありません。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:166
@@ -14878,6 +14973,9 @@ msgid ""
 "the names for them not to overlap with the interface and functions exported "
 "by the *Prelude*):"
 msgstr ""
+"探しているインターフェースは`Functor`と呼ばれます。\n"
+"以下はその定義と実装例です。\n"
+"（名前のあとに印を付けて*Prelude*から輸出されているインターフェースと関数と重ならないようにしました。）"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:167
@@ -14890,6 +14988,12 @@ msgid ""
 "  map' _ Nothing  = Nothing\n"
 "  map' f (Just v) = Just $ f v\n"
 msgstr ""
+"interface Functor' (0 f : Type -> Type) where\n"
+"  map' : (a -> b) -> f a -> f b\n"
+"\n"
+"implementation Functor' Maybe where\n"
+"  map' _ Nothing  = Nothing\n"
+"  map' f (Just v) = Just $ f v\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:179
@@ -14898,6 +15002,9 @@ msgid ""
 "case it needs to be annotated with quantity zero if you want it to be erased "
 "at runtime (which you almost always want)."
 msgstr ""
+"なお、変数`f`の型を明示的に与えなくてはいけず、\n"
+"その場合実行時に消去されていてほしければ数量子ゼロで註釈を付ける必要があります。\n"
+"（ほぼ常にそうであってほしいものです。）"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:186
@@ -14908,6 +15015,10 @@ msgid ""
 "helpful to inspect these signatures together with all implicit arguments at "
 "the REPL (I formatted the output to make it more readable):"
 msgstr ""
+"さて、`map'`のように型変数のみからなる型処方を読むのは慣れるまで時間が掛かるかもしれません。\n"
+"`f a`のように型変数が他の変数に提供されているときは特にそうです。\n"
+"REPLでこれらの処方を全ての暗黙子とともに調べると大変理解の助けになります。\n"
+"（出力を読みやすいように整形しました。）"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:187
@@ -14922,13 +15033,21 @@ msgid ""
 "                      -> f a\n"
 "                      -> f b\n"
 msgstr ""
+"Tutorial.Functor> :ti map'\n"
+"Tutorial.Functor.map' :  {0 b : Type}\n"
+"                      -> {0 a : Type}\n"
+"                      -> {0 f : Type -> Type}\n"
+"                      -> Functor' f\n"
+"                      => (a -> b)\n"
+"                      -> f a\n"
+"                      -> f b\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:200
 msgid ""
 "It can also be helpful to replace type parameter `f` with a concrete value "
 "of the same type:"
-msgstr ""
+msgstr "型変数`f`を同じ型の形がある値に置き換えるのもよいかもしれません。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:201
@@ -14937,6 +15056,8 @@ msgid ""
 "Tutorial.Functor> :t map' {f = Maybe}\n"
 "map' : (?a -> ?b) -> Maybe ?a -> Maybe ?b\n"
 msgstr ""
+"Tutorial.Functor> :t map' {f = Maybe}\n"
+"map' : (?a -> ?b) -> Maybe ?a -> Maybe ?b\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:209
@@ -14945,12 +15066,14 @@ msgid ""
 "understanding what's going on in an Idris declaration. You *must* practice "
 "this and make use of the tools and utilities given to you."
 msgstr ""
+"覚えておいてほしいのですが、型処方を解釈できることはIdrisの宣言で起こっていることを理解する上での最重要事項です。\n"
+"これを練習し与えられたツールや小間物を活用する*必要*があります。"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:210
 #, no-wrap
 msgid "Derived Functions"
-msgstr ""
+msgstr "導出される関数"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:215
@@ -14959,6 +15082,9 @@ msgid ""
 "`Functor`. Eventually, you should know and remember all of them as they are "
 "highly useful. Here they are together with their types:"
 msgstr ""
+"インターフェース`Functor`から直接導出できる関数や演算子はいくつかあります。\n"
+"これらは大変有用なので、最終的には全てを知り記憶するべきです。\n"
+"以下は型と共に見たものです。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:216
@@ -14979,6 +15105,20 @@ msgid ""
 "Tutorial.Functor> :t ignore\n"
 "Prelude.ignore : Functor f => f a -> f ()\n"
 msgstr ""
+"Tutorial.Functor> :t (<$>)\n"
+"Prelude.<$> : Functor f => (a -> b) -> f a -> f b\n"
+"\n"
+"Tutorial.Functor> :t (<&>)\n"
+"Prelude.<&> : Functor f => f a -> (a -> b) -> f b\n"
+"\n"
+"Tutorial.Functor> :t ($>)\n"
+"Prelude.$> : Functor f => f a -> b -> f b\n"
+"\n"
+"Tutorial.Functor> :t (<$)\n"
+"Prelude.<$ : Functor f => b -> f a -> f b\n"
+"\n"
+"Tutorial.Functor> :t ignore\n"
+"Prelude.ignore : Functor f => f a -> f ()\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:235
@@ -14987,6 +15127,8 @@ msgid ""
 "`(<$>)` is an operator alias for `map` and allows you to sometimes\n"
 "drop some parentheses. For instance:\n"
 msgstr ""
+"`(<$>)`は`map`の演算子別称で括弧を省略できるときがあります。\n"
+"例えば以下。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:236
@@ -14998,6 +15140,11 @@ msgid ""
 "tailShowReverse : Show a => List1 a -> List String\n"
 "tailShowReverse xs = reverse . show <$> tail xs\n"
 msgstr ""
+"tailShowReversNoOp : Show a => List1 a -> List String\n"
+"tailShowReversNoOp xs = map (reverse . show) (tail xs)\n"
+"\n"
+"tailShowReverse : Show a => List1 a -> List String\n"
+"tailShowReverse xs = reverse . show <$> tail xs\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:249
@@ -15009,12 +15156,15 @@ msgid ""
 "when you don't care about the values themselves but\n"
 "want to keep the underlying structure.\n"
 msgstr ""
+"`(<&>)`は引数が入れ替わっていることを除けば`(<$>)`の別称と言えます。\n"
+"他の3つ (`ignore`, `($>)`, `(<$)`) は全て、定数で文脈中の値を置き換えるために使われます。\n"
+"値そのものには関心がないものの土台の構造を維持したいときによく使います。\n"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:250
 #, no-wrap
 msgid "Functors with more than one Type Parameter"
-msgstr ""
+msgstr "1つ以上の型変数がある関手"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:259
@@ -15028,6 +15178,11 @@ msgid ""
 "`Functor` implementation for `Either e` (note, that `Either e`\n"
 "has of course type `Type -> Type` as required):\n"
 msgstr ""
+"これまで見てきた型構築子は全て型が`Type -> Type`でした。\n"
+"しかし`Functor`を他の型構築子に実装することもできます。\n"
+"唯一の事前要件は、関数`map`で変化させたい型変数が引数リストの最後になければいけないことです。\n"
+"例えば以下が`Either e`のための`Functor`の実装です。\n"
+"（なお、`Either e`はもちろん必要とされている型`Type -> Type`を持ちます。）\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:260
@@ -15037,6 +15192,9 @@ msgid ""
 "  map' _ (Left ve)  = Left ve\n"
 "  map' f (Right va) = Right $ f va\n"
 msgstr ""
+"implementation Functor' (Either e) where\n"
+"  map' _ (Left ve)  = Left ve\n"
+"  map' f (Right va) = Right $ f va\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:269
@@ -15046,6 +15204,8 @@ msgid ""
 "type `Bool -> Type -> Type` (you might remember this from\n"
 "the exercises in the [last chapter](IO.md)):\n"
 msgstr ""
+"以下は別の例で、この場合型構築子は`Bool -> Type -> Type`です。\n"
+"（[直近の章](IO.md)の演習でこれを覚えているかもしれません。）\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:270
@@ -15059,19 +15219,26 @@ msgid ""
 "  map _ []        = []\n"
 "  map f (x :: xs) = f x :: map f xs\n"
 msgstr ""
+"data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
+"  Nil  : List01 False a\n"
+"  (::) : a -> List01 False a -> List01 ne a\n"
+"\n"
+"implementation Functor (List01 ne) where\n"
+"  map _ []        = []\n"
+"  map f (x :: xs) = f x :: map f xs\n"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:280
 #, no-wrap
 msgid "Functor Composition"
-msgstr ""
+msgstr "関手の組み合わせ"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:284
 msgid ""
 "The nice thing about functors is how they can be paired and nested with "
 "other functors and the results are functors again:"
-msgstr ""
+msgstr "関手の良いところは他の関手と対にしたり入れ子にしたりできることで、結果もまた関手になります。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:285
@@ -15085,6 +15252,13 @@ msgid ""
 "implementation Functor f => Functor g => Functor (Product f g) where\n"
 "  map f (MkProduct l r) = MkProduct (map f l) (map f r)\n"
 msgstr ""
+"record Product (f,g : Type -> Type) (a : Type) where\n"
+"  constructor MkProduct\n"
+"  fst : f a\n"
+"  snd : g a\n"
+"\n"
+"implementation Functor f => Functor g => Functor (Product f g) where\n"
+"  map f (MkProduct l r) = MkProduct (map f l) (map f r)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:297
@@ -15092,6 +15266,8 @@ msgid ""
 "The above allows us to conveniently map over a pair of functors. Note, "
 "however, that Idris needs some help with inferring the types involved:"
 msgstr ""
+"上のコードにより、便利に関手の対の上で写せます。\n"
+"ただしかし、Idrisが関係する型を推論するのに手助けが要ることがあります。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:298
@@ -15108,6 +15284,16 @@ msgid ""
 "               -> (Either e String, List String)\n"
 "productExample = toPair . map show . fromPair {f = Either e, g = List}\n"
 msgstr ""
+"toPair : Product f g a -> (f a, g a)\n"
+"toPair (MkProduct fst snd) = (fst, snd)\n"
+"\n"
+"fromPair : (f a, g a) -> Product f g a\n"
+"fromPair (x,y) = MkProduct x y\n"
+"\n"
+"productExample :  Show a\n"
+"               => (Either e a, List a)\n"
+"               -> (Either e String, List String)\n"
+"productExample = toPair . map show . fromPair {f = Either e, g = List}\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:313
@@ -15115,6 +15301,8 @@ msgid ""
 "More often, we'd like to map over several layers of nested functors at once. "
 "Here's how to do this with an example:"
 msgstr ""
+"もっとよくあるのは一度に何層かの入れ子になった関手の上で写したいときです。\n"
+"以下は一例です。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:314
@@ -15130,12 +15318,21 @@ msgid ""
 "compExample :  Show a => List (Either e a) -> List (Either e String)\n"
 "compExample = unComp . map show . MkComp {f = List, g = Either e}\n"
 msgstr ""
+"record Comp (f,g : Type -> Type) (a : Type) where\n"
+"  constructor MkComp\n"
+"  unComp  : f (g a)\n"
+"\n"
+"implementation Functor f => Functor g => Functor (Comp f g) where\n"
+"  map f (MkComp v) = MkComp $ map f <$> v\n"
+"\n"
+"compExample :  Show a => List (Either e a) -> List (Either e String)\n"
+"compExample = unComp . map show . MkComp {f = List, g = Either e}\n"
 
 #. type: Title ####
 #: src/Tutorial/Functor.md:326
 #, no-wrap
 msgid "Named Implementations"
-msgstr ""
+msgstr "名前付き実装"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:334
@@ -15146,6 +15343,10 @@ msgid ""
 "can be interpreted as a mapping over only the first layer of values, or a "
 "mapping over several layers of values."
 msgstr ""
+"時には与えられた型により多くの実装方法があることがあります。\n"
+"例えば数値型については、加算を表現する`Monoid`と乗算を表現するものを用意できます。\n"
+"同様に入れ子の関手については`map`の解釈として値の最初の層の上のみで写すことも、\n"
+"値のいくつかの層の上で写すこともできます。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:339
@@ -15154,6 +15355,10 @@ msgid ""
 "data type `Comp` above. However, Idris also allows us to define additional "
 "interface implementations, which must then be given a name. For instance:"
 msgstr ""
+"こうするための1つの方法は単一フィールドの梱包を定義することで、上で見たデータ型`Comp`のような感じです。\n"
+"しかしIdrisでは追加のインターフェース実装を定義することもでき、\n"
+"それには名前が与えられている必要があります。\n"
+"例えば以下。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:340
@@ -15162,6 +15367,8 @@ msgid ""
 "[Compose'] Functor f => Functor g => Functor (f . g) where\n"
 "  map f = (map . map) f\n"
 msgstr ""
+"[Compose'] Functor f => Functor g => Functor (f . g) where\n"
+"  map f = (map . map) f\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:350
@@ -15171,6 +15378,11 @@ msgid ""
 "However, it is possible to explicitly choose to use this implementation by "
 "passing it as an explicit argument to `map`, prefixed with an `@`:"
 msgstr ""
+"なお、これは`Functor`の新しい実装を定義していますが、\n"
+"曖昧さを回避するための暗黙裡に行われる解決中には考慮され*ません*。\n"
+"しかし、この実装を明示的に選ぶことはでき、\n"
+"明示的な引数として`map`に渡せばよいです。\n"
+"この引数には`@`が前置されます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:351
@@ -15179,6 +15391,8 @@ msgid ""
 "compExample2 :  Show a => List (Either e a) -> List (Either e String)\n"
 "compExample2 = map @{Compose} show\n"
 msgstr ""
+"compExample2 :  Show a => List (Either e a) -> List (Either e String)\n"
+"compExample2 = map @{Compose} show\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:358
@@ -15186,12 +15400,14 @@ msgid ""
 "In the example above, we used `Compose` instead of `Compose'`, since the "
 "former is already exported by the *Prelude*."
 msgstr ""
+"上の例では`Compose'`の代わりに`Compose`を使いました。\n"
+"なぜなら前者は既に*Prelude*により輸出されているからです。"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:359
 #, no-wrap
 msgid "Functor Laws"
-msgstr ""
+msgstr "関手則"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:365
@@ -15200,6 +15416,9 @@ msgid ""
 "like implementations of `Eq` or `Ord`. Again, these laws are not verified by "
 "Idris, although it would be possible (and often cumbersome) to do so."
 msgstr ""
+"ちょうど`Eq`や`Ord`の実装と同じように、`Functor`の実装にはある法則の遵守が必要です。\n"
+"繰り返しますがこれらの法則はIdrisによって検証されません。\n"
+"可能（で、よくややこしくなる）ではあるでしょうけれども。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:370
@@ -15210,6 +15429,9 @@ msgid ""
 "    structure or affecting the side effects perfomed when\n"
 "    running an `IO` action.\n"
 msgstr ""
+"1. `map id = id`：関手の上で同一関数を写すことで、\n"
+"   容器の構造を変えたり`IO`アクションを走らせるときに生じる副作用で影響を与えたりするような、\n"
+"   目に見えるいかなる作用もあってはならない。\n"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/Functor.md:373
@@ -15217,6 +15439,8 @@ msgid ""
 "`map (f . g) = map f . map g`: Sequencing two mappings must be identical to "
 "a single mapping using the composition of the two functions."
 msgstr ""
+"`map (f . g) = map f . map g`：2回の写しの連続は、\n"
+"2つの関数の組合せを使って1回で写すことと同一でなければいけない。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:380
@@ -15227,6 +15451,12 @@ msgid ""
 "wrapped value, nor - in case of `List` - change their order. With `IO`, this "
 "can best be described as `map` not performing additional side effects."
 msgstr ""
+"これら両方の法則が要求しているのは、\n"
+"`map`が値の*構造*を保存しているということです。\n"
+"`List`, `Maybe`, `Either e`のような容器型だとより理解しやすいです。\n"
+"ここで`map`は梱包された値に追加したりそこから削除したりすることは許しておらず、\n"
+"`List`の場合は順番を変えることもできません。\n"
+"`IO`については`map`により余剰の副作用を生じないことがこれをよく表しています。"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/Functor.md:385
@@ -15234,6 +15464,8 @@ msgid ""
 "Write your own implementations of `Functor'` for `Maybe`, `List`, `List1`, "
 "`Vect n`, `Either e`, and `Pair a`."
 msgstr ""
+"`Maybe`, `List`, `List1`, `Vect n`, `Either e`, `Pair a`に対して、\n"
+"自力で`Functor'`のの実装を書いてください。"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/Functor.md:388
@@ -15241,6 +15473,8 @@ msgid ""
 "Write a named implementation of `Functor` for pairs of functors (similar to "
 "the one implemented for `Product`)."
 msgstr ""
+"関手の対について、`Functor`の名前付き実装を書いてください。\n"
+"（`Product`に実装したものと似ています。）"
 
 #. type: Bullet: '3. '
 #: src/Tutorial/Functor.md:391
@@ -15248,6 +15482,8 @@ msgid ""
 "Implement `Functor` for data type `Identity` (which is available from "
 "`Control.Monad.Identity` in *base*):"
 msgstr ""
+"データ型`Identity`に`Functor`を実装してください。\n"
+"（これは*base*の`Control.Monad.Identity`から手に入ります。）"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:392
@@ -15257,6 +15493,9 @@ msgid ""
 "     constructor Id\n"
 "     value : a\n"
 msgstr ""
+"   record Identity a where\n"
+"     constructor Id\n"
+"     value : a\n"
 
 #. type: Bullet: '4. '
 #: src/Tutorial/Functor.md:404
@@ -15268,6 +15507,12 @@ msgid ""
 "*phantom types*. They can be quite useful for tagging values with additional "
 "typing information."
 msgstr ""
+"これは興味深い問題です：`Const e`に`Functor`を実装してください。\n"
+"（これも*base*の`Control.Application.Const`から手に入ります。）\n"
+"2つ目の型変数が絶対に実行時に関係しないところに当惑されるかもしれません、\n"
+"というのはその型の値が1つもないからです。\n"
+"そのような型は*幽霊型*と呼ばれるときがあります。\n"
+"幽霊型は値に追加の型情報を札付けするのにかなり便利です。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:407
@@ -15276,6 +15521,9 @@ msgid ""
 "   Don't let the above confuse you: There is only one possible implementation.\n"
 "   As usual, use holes and let the compiler guide you if you get lost.\n"
 msgstr ""
+"   上記で混乱しないようにしてください。\n"
+"   可能な実装は1つしかありません。\n"
+"   いつも通り穴開きを使い、道を見失ったときはコンパイラに導いてもらいましょう。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:408
@@ -15285,35 +15533,38 @@ msgid ""
 "     constructor MkConst\n"
 "     value : e\n"
 msgstr ""
+"   record Const (e,a : Type) where\n"
+"     constructor MkConst\n"
+"     value : e\n"
 
 #. type: Bullet: '5. '
 #: src/Tutorial/Functor.md:416
 msgid ""
 "Here is a sum type for describing CRUD operations (Create, Read, Update, and "
 "Delete) in a data store:"
-msgstr ""
+msgstr "以下はデータ保管所でのCRUD操作（Create, Read, Update, Delete）を記述する直和型です。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:426
 #, no-wrap
 msgid "   Implement `Functor` for `Crud i`.\n"
-msgstr ""
+msgstr "   `Functor`を`Crud i`に実装してください。\n"
 
 #. type: Bullet: '6. '
 #: src/Tutorial/Functor.md:428
 msgid "Here is a sum type for describing responses from a data server:"
-msgstr ""
+msgstr "以下はデータサーバからの応答を記述する直和型です。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:439
 #, no-wrap
 msgid "   Implement `Functor` for `Repsonse e i`.\n"
-msgstr ""
+msgstr "   `Functor`を`Response e i`に実装してください。\n"
 
 #. type: Bullet: '7. '
 #: src/Tutorial/Functor.md:441
 msgid "Implement `Functor` for `Validated e`:"
-msgstr ""
+msgstr "`Functor`を`Vaidated e`に実装してください。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:442
@@ -15323,12 +15574,15 @@ msgid ""
 "     Invalid : (err : e) -> Validated e a\n"
 "     Valid   : (val : a) -> Validated e a\n"
 msgstr ""
+"   data Validated : (e,a : Type) -> Type where\n"
+"     Invalid : (err : e) -> Validated e a\n"
+"     Valid   : (val : a) -> Validated e a\n"
 
 #. type: Title ##
 #: src/Tutorial/Functor.md:448
 #, no-wrap
 msgid "Applicative"
-msgstr ""
+msgstr "アプリカティブ"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:453
@@ -15337,11 +15591,13 @@ msgid ""
 "context, it doesn't allow us to combine n such values under an n-ary "
 "function."
 msgstr ""
+"`Functor`は純粋な1引数関数で文脈中の1つの値を写すことができますが、\n"
+"n個のそのような値をn引数関数に結び付けることはできません。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:455
 msgid "For instance, consider the following functions:"
-msgstr ""
+msgstr "例えば以下の関数を考えてください。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:456
@@ -15363,6 +15619,21 @@ msgid ""
 "              MkIORes vb w3 = pb w2\n"
 "           in MkIORes (f va vb) w3\n"
 msgstr ""
+"liftMaybe2 : (a -> b -> c) -> Maybe a -> Maybe b -> Maybe c\n"
+"liftMaybe2 f (Just va) (Just vb) = Just $ f va vb\n"
+"liftMaybe2 _ _         _         = Nothing\n"
+"\n"
+"liftVect2 : (a -> b -> c) -> Vect n a -> Vect n b -> Vect n c\n"
+"liftVect2 _ []        []        = []\n"
+"liftVect2 f (x :: xs) (y :: ys) = f x y :: liftVect2 f xs ys\n"
+"\n"
+"liftIO2 : (a -> b -> c) -> IO a -> IO b -> IO c\n"
+"liftIO2 f ioa iob = fromPrim $ go (toPrim ioa) (toPrim iob)\n"
+"  where go : PrimIO a -> PrimIO b -> PrimIO c\n"
+"        go pa pb w =\n"
+"          let MkIORes va w2 = pa w\n"
+"              MkIORes vb w3 = pb w2\n"
+"           in MkIORes (f va vb) w3\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:478
@@ -15372,6 +15643,9 @@ msgid ""
 "(both operations might fail), calculating the product of the two. Here's the "
 "code:"
 msgstr ""
+"この振舞いは`Functor`が押さえていないものの、とてもよく見かけるものです。\n"
+"例えば2つの数字を標準入力から読んで（両方とも操作は失敗しえます）、2つの積を計算したいかもしれません。\n"
+"以下がそのコードです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:479
@@ -15383,6 +15657,11 @@ msgid ""
 "  s2 <- getLine\n"
 "  pure $ liftMaybe2 (*) (parseInteger s1) (parseInteger s2)\n"
 msgstr ""
+"multNumbers : Num a => Neg a => IO (Maybe a)\n"
+"multNumbers = do\n"
+"  s1 <- getLine\n"
+"  s2 <- getLine\n"
+"  pure $ liftMaybe2 (*) (parseInteger s1) (parseInteger s2)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:490
@@ -15391,6 +15670,9 @@ msgid ""
 "ternary functions and three `Maybe` arguments and so on, for arbitrary "
 "numbers of arguments."
 msgstr ""
+"そしてここで終わりではありません。\n"
+"同様にして、3つの`Maybe`な引数を取る3引数関数のための`liftMaybe3`など、\n"
+"好きな個数の引数についての関数が欲しくなります。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:493
@@ -15398,6 +15680,9 @@ msgid ""
 "But there is more: We'd also like to lift pure values into the context in "
 "question. With this, we could do the following:"
 msgstr ""
+"でもまだあります。\n"
+"純粋な値を問題の文脈に持ち上げたくもあるのです。\n"
+"以下のようにできます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:494
@@ -15415,6 +15700,17 @@ msgid ""
 "  where calc : a -> a -> a -> a\n"
 "        calc x y z = x * y + z\n"
 msgstr ""
+"liftMaybe3 : (a -> b -> c -> d) -> Maybe a -> Maybe b -> Maybe c -> Maybe d\n"
+"liftMaybe3 f (Just va) (Just vb) (Just vc) = Just $ f va vb vc\n"
+"liftMaybe3 _ _         _         _         = Nothing\n"
+"\n"
+"pureMaybe : a -> Maybe a\n"
+"pureMaybe = Just\n"
+"\n"
+"multAdd100 : Num a => Neg a => String -> String -> Maybe a\n"
+"multAdd100 s t = liftMaybe3 calc (parseInteger s) (parseInteger t) (pure 100)\n"
+"  where calc : a -> a -> a -> a\n"
+"        calc x y z = x * y + z\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:511
@@ -15423,6 +15719,9 @@ msgid ""
 "to encapsulate this behavior. It's called `Applicative`.  Here is its "
 "definition and an example implementation:"
 msgstr ""
+"もちろん既にお察しの通り、これからこの振舞いを内蔵化する新しいインターフェースをお見せします。\n"
+"それは`Applicative`と呼ばれます。\n"
+"以下はその定義と実装例です。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:512
@@ -15438,6 +15737,15 @@ msgid ""
 "\n"
 "  pure' = Just\n"
 msgstr ""
+"interface Functor' f => Applicative' f where\n"
+"  app   : f (a -> b) -> f a -> f b\n"
+"  pure' : a -> f a\n"
+"\n"
+"implementation Applicative' Maybe where\n"
+"  app (Just fun) (Just val) = Just $ fun val\n"
+"  app _          _          = Nothing\n"
+"\n"
+"  pure' = Just\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:527
@@ -15447,6 +15755,8 @@ msgid ""
 "There, function `app` is an operator sometimes called *app* or *apply*:\n"
 "`(<*>)`.\n"
 msgstr ""
+"`Applicative`インターフェースはもちろんもう*Prelude*から輸出されています。\n"
+"ここでは関数`app`は時々*app*や*apply*と呼ばれる`(<*>)`演算子の姿を取ります。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:530
@@ -15454,6 +15764,8 @@ msgid ""
 "You may wonder, how functions like `liftMaybe2` or `liftIO3` are related to "
 "operator *apply*. Let me demonstrate this:"
 msgstr ""
+"どうして`liftMaybe2`や`liftIO3`のような関数が*適用*演算子に関係あるのか、不思議に思われるかもしれません。\n"
+"次のように実演してみます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:531
@@ -15465,6 +15777,11 @@ msgid ""
 "liftA3 : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d\n"
 "liftA3 fun fa fb fc = pure fun <*> fa <*> fb <*> fc\n"
 msgstr ""
+"liftA2 : Applicative f => (a -> b -> c) -> f a -> f b -> f c\n"
+"liftA2 fun fa fb = pure fun <*> fa <*> fb\n"
+"\n"
+"liftA3 : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d\n"
+"liftA3 fun fa fb fc = pure fun <*> fa <*> fb <*> fc\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:544
@@ -15476,6 +15793,11 @@ msgid ""
 "is of type `Maybe (b -> c)`, as `(<*>)` will apply the value stored\n"
 "in `fa` to the function stored in `pure fun` (currying!).\n"
 msgstr ""
+"ここで起こっていることを理解するのは本当に大切ですから、これらを分解していきましょう。\n"
+"`liftA2`について`f`を`Maybe`に特化させると、`pure fun`は型`Maybe (a -> b -> c)`になります。\n"
+"同様に`pure fun <*> fa`は型`Maybe (b -> c)`ですが、\n"
+"これは`(<*>)`が`fa`の中に格納された値を`pure fun`に格納された関数に適用しているからです。\n"
+"（カリー化ですね！）\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:550
@@ -15485,6 +15807,10 @@ msgid ""
 "sometimes also see the following, which allows us to drop the initial call "
 "to `pure`, and use the operator version of `map` instead:"
 msgstr ""
+"そのような*apply*の適用の連鎖はよく見掛けることになるでしょうが、\n"
+"*適用*している数は持ち上げている関数の引数の数に一致するのです。\n"
+"時々以下を見掛けることもあるでしょうが、\n"
+"こうすると最初の`pure`の呼び出しを省けて、代わりに`map`の演算子版を使うことができます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:551
@@ -15496,6 +15822,11 @@ msgid ""
 "liftA3' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d\n"
 "liftA3' fun fa fb fc = fun <$> fa <*> fb <*> fc\n"
 msgstr ""
+"liftA2' : Applicative f => (a -> b -> c) -> f a -> f b -> f c\n"
+"liftA2' fun fa fb = fun <$> fa <*> fb\n"
+"\n"
+"liftA3' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d\n"
+"liftA3' fun fa fb fc = fun <$> fa <*> fb <*> fc\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:564
@@ -15505,12 +15836,16 @@ msgid ""
 "we will see an extended example why this is useful, I'll quickly introduce "
 "some syntactic sugar for working with applicative functors."
 msgstr ""
+"というわけで、インターフェース`Applicative`があると値（と関数も！）計算上の文脈に持ち上げることができ、\n"
+"同じ文脈で値に適用させることができるのです。\n"
+"より大きな例でなぜこれが便利なのかを見る前に、\n"
+"アプリカティブ関手に取り組む際のいくつかの糖衣構文を手短かにご紹介します。"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:565
 #, no-wrap
 msgid "Idiom Brackets"
-msgstr ""
+msgstr "慣用括弧"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:571
@@ -15519,6 +15854,8 @@ msgid ""
 "referred to as *applicative style* and is used a lot in Haskell for "
 "combining several effectful computations with a single pure function."
 msgstr ""
+"`liftA2`や`liftA3`を実装するのに使ったプログラミングの流儀は*アプリカティブスタイル*としても知られ、\n"
+"Haskellで複数の作用のある計算を単一の純粋な関数で結合するために多用されます。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:575
@@ -15527,6 +15864,9 @@ msgid ""
 "applications: Idiom brackets. Here's another reimplementation of `liftA2` "
 "and `liftA3`:"
 msgstr ""
+"Idrisではそのような演算子適用の連鎖を使う代わりの方法があります。\n"
+"慣用括弧です。\n"
+"以下は`liftA2`と`liftA3`の別の再実装です。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:576
@@ -15538,6 +15878,11 @@ msgid ""
 "liftA3'' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d\n"
 "liftA3'' fun fa fb fc = [| fun fa fb fc |]\n"
 msgstr ""
+"liftA2'' : Applicative f => (a -> b -> c) -> f a -> f b -> f c\n"
+"liftA2'' fun fa fb = [| fun fa fb |]\n"
+"\n"
+"liftA3'' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d\n"
+"liftA3'' fun fa fb fc = [| fun fa fb fc |]\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:590
@@ -15550,12 +15895,16 @@ msgid ""
 "for `pure` and `(<*>)`, and Idris will use these if it\n"
 "can disambiguate between the overloaded function names.\n"
 msgstr ""
+"上記の実装は`liftA2`や`liftA3`に与えた実装と同じように脱糖されます。\n"
+"繰り返しますが、この脱糖は*曖昧解決や型検査、そして暗黙の値を埋める前*に行われます。\n"
+"*束縛*演算子と同じように、`pure`や`(<*>)`のための自前の実装を書くことができ、\n"
+"その場合オーバーロードされた関数名の曖昧解決ができればIdrisはその実装を使います。\n"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:591
 #, no-wrap
 msgid "Use Case: CSV Reader"
-msgstr ""
+msgstr "用例：CSV読取器"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:604
@@ -15569,6 +15918,13 @@ msgid ""
 "lines in a CSV file and store the result in custom records, where each "
 "record field corresponds to a column in the table."
 msgstr ""
+"アプリカティブ関手の持つ強力さと多芸さを実感するために、ほんの少し大きめの例を見ていきます。\n"
+"CSVファイルから内容をパースしたりデコードしたりする小間物です。\n"
+"ここでのCSVファイルはそれぞれの行にコンマ（あるいは他の区切文字）で区切られた値のリストがあるものです。\n"
+"よくあるのがこれらを表のデータを格納するのに使うというもので、\n"
+"例えばスプレッドシートアプリケーションから用います。\n"
+"やりたいことはCSVファイル中の行を変換して自前のレコードに保管するというもので、\n"
+"それぞれのレコードのフィールドは表中の列に対応します。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:609
@@ -15577,6 +15933,8 @@ msgid ""
 "information from a web store: First name, last name, age (optional), email "
 "address, gender, and password."
 msgstr ""
+"例えば以下は単純なファイルの例で、webストアの利用者情報の表が含まれています。\n"
+"まず名前があり、名字、年齢（空欄可）、Eメールアドレス、性別、そしてパスワードがあります。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:610
@@ -15586,6 +15944,9 @@ msgid ""
 "Jane,Doe,,jane@doe.ch,f,aa433sd112\n"
 "Stefan,Hoeck,,nope@goaway.ch,m,password123\n"
 msgstr ""
+"Jon,Doe,42,jon@doe.ch,m,weijr332sdk\n"
+"Jane,Doe,,jane@doe.ch,f,aa433sd112\n"
+"Stefan,Hoeck,,nope@goaway.ch,m,password123\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:621
@@ -15595,6 +15956,9 @@ msgid ""
 "because it will allow us to define for each data type what we consider to be "
 "valid input:"
 msgstr ""
+"そして以下がこの情報を実行時に持つのに必要なIdrisのデータ型です。\n"
+"ここでも型安全性を向上させるために自前の文字列の梱包を使いましたが、\n"
+"こうすることでそれぞれのデータ型について妥当と考えられる入力を定義できます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:622
@@ -15623,6 +15987,28 @@ msgid ""
 "  gender    : Gender\n"
 "  password  : Password\n"
 msgstr ""
+"data Gender = Male | Female | Other\n"
+"\n"
+"record Name where\n"
+"  constructor MkName\n"
+"  value : String\n"
+"\n"
+"record Email where\n"
+"  constructor MkEmail\n"
+"  value : String\n"
+"\n"
+"record Password where\n"
+"  constructor MkPassword\n"
+"  value : String\n"
+"\n"
+"record User where\n"
+"  constructor MkUser\n"
+"  firstName : Name\n"
+"  lastName  : Name\n"
+"  age       : Maybe Nat\n"
+"  email     : Email\n"
+"  gender    : Gender\n"
+"  password  : Password\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:650
@@ -15630,6 +16016,8 @@ msgid ""
 "We start by defining an interface for reading fields in a CSV file and "
 "writing implementations for the data types we'd like to read:"
 msgstr ""
+"CSVファイル中のフィールドを読むのにインターフェースを定義することから始め、\n"
+"読み込みたいデータ型に実装を書いていきます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:651
@@ -15638,6 +16026,8 @@ msgid ""
 "interface CSVField a where\n"
 "  read : String -> Maybe a\n"
 msgstr ""
+"interface CSVField a where\n"
+"  read : String -> Maybe a\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:659
@@ -15645,6 +16035,8 @@ msgid ""
 "Below are implementations for `Gender` and `Bool`. I decided to in these "
 "cases encode each value with a single lower case character:"
 msgstr ""
+"以下は`Gender`と`Bool`向けの実装です。\n"
+"それぞれ小文字1文字でそれぞれの値を符号化することに決めました。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:660
@@ -15661,11 +16053,21 @@ msgid ""
 "  read \"f\" = Just False\n"
 "  read _   = Nothing\n"
 msgstr ""
+"CSVField Gender where\n"
+"  read \"m\" = Just Male\n"
+"  read \"f\" = Just Female\n"
+"  read \"o\" = Just Other\n"
+"  read _   = Nothing\n"
+"\n"
+"CSVField Bool where\n"
+"  read \"t\" = Just True\n"
+"  read \"f\" = Just False\n"
+"  read _   = Nothing\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:675
 msgid "For numeric types, we can use the parsing functions from `Data.String`:"
-msgstr ""
+msgstr "数値型については`Data.String`由来のパースする関数が使えます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:676
@@ -15680,6 +16082,14 @@ msgid ""
 "CSVField Double where\n"
 "  read = parseDouble\n"
 msgstr ""
+"CSVField Nat where\n"
+"  read = parsePositive\n"
+"\n"
+"CSVField Integer where\n"
+"  read = parseInteger\n"
+"\n"
+"CSVField Double where\n"
+"  read = parseDouble\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:692
@@ -15691,6 +16101,10 @@ msgid ""
 "string will be passed to the encapsulated type's field reader.\n"
 "(Remember that `(<$>)` is an alias for `map`.)\n"
 msgstr ""
+"オプショナルな値については、格納される型自身が`CSVField`のインスタンスでなければいけません。\n"
+"そこで空文字列`\"\"`を`Nothing`として扱うことにし、\n"
+"非空文字列を内蔵化された型のフィールドの読取器に渡すことにします。\n"
+"（`(<$>)`が`map`の別称なことを思い出してください。）\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:693
@@ -15700,6 +16114,9 @@ msgid ""
 "  read \"\" = Just Nothing\n"
 "  read s  = Just <$> read s\n"
 msgstr ""
+"CSVField a => CSVField (Maybe a) where\n"
+"  read \"\" = Just Nothing\n"
+"  read s  = Just <$> read s\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:703
@@ -15708,6 +16125,8 @@ msgid ""
 "valid values. For simplicity, I decided to limit the length of allowed "
 "strings and the set of valid characters."
 msgstr ""
+"最後に文字列の梱包について、妥当な値だと考えられるものを決める必要があります。\n"
+"簡単のために許される文字列の長さと妥当な文字集合で制限することに決めました。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:704
@@ -15749,13 +16168,48 @@ msgid ""
 "CSVField Password where\n"
 "  read = readIf isValidPassword MkPassword\n"
 msgstr ""
+"readIf : (String -> Bool) -> (String -> a) -> String -> Maybe a\n"
+"readIf p mk s = if p s then Just (mk s) else Nothing\n"
+"\n"
+"isValidName : String -> Bool\n"
+"isValidName s =\n"
+"  let len = length s\n"
+"   in 0 < len && len <= 100 && all isAlpha (unpack s)\n"
+"\n"
+"CSVField Name where\n"
+"  read = readIf isValidName MkName\n"
+"\n"
+"isEmailChar : Char -> Bool\n"
+"isEmailChar '.' = True\n"
+"isEmailChar '@' = True\n"
+"isEmailChar c   = isAlphaNum c\n"
+"\n"
+"isValidEmail : String -> Bool\n"
+"isValidEmail s =\n"
+"  let len = length s\n"
+"   in 0 < len && len <= 100 && all isEmailChar (unpack s)\n"
+"\n"
+"CSVField Email where\n"
+"  read = readIf isValidEmail MkEmail\n"
+"\n"
+"isPasswordChar : Char -> Bool\n"
+"isPasswordChar ' ' = True\n"
+"isPasswordChar c   = not (isControl c) && not (isSpace c)\n"
+"\n"
+"isValidPassword : String -> Bool\n"
+"isValidPassword s =\n"
+"  let len = length s\n"
+"   in 8 < len && len <= 100 && all isPasswordChar (unpack s)\n"
+"\n"
+"CSVField Password where\n"
+"  read = readIf isValidPassword MkPassword\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:745
 msgid ""
 "In a later chapter, we will learn about refinement types and how to store an "
 "erased proof of validity together with a validated value."
-msgstr ""
+msgstr "後の章で、精錬型と、消去される妥当性の証明を検証された値とともに保管する方法とを学びます。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:749
@@ -15763,6 +16217,8 @@ msgid ""
 "We can now start to decode whole lines in a CSV file.  In order to do so, we "
 "first introduce a custom error type encapsulating how things can go wrong:"
 msgstr ""
+"これでCSVファイルの行全体を復号化し始められます。\n"
+"そうするためにまず自前のエラー型を導入して、どう物事が失敗しうるかを内蔵化します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:750
@@ -15773,6 +16229,10 @@ msgid ""
 "  UnexpectedEndOfInput : (line, column : Nat) -> CSVError\n"
 "  ExpectedEndOfInput   : (line, column : Nat) -> CSVError\n"
 msgstr ""
+"data CSVError : Type where\n"
+"  FieldError           : (line, column : Nat) -> (str : String) -> CSVError\n"
+"  UnexpectedEndOfInput : (line, column : Nat) -> CSVError\n"
+"  ExpectedEndOfInput   : (line, column : Nat) -> CSVError\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:760
@@ -15780,6 +16240,8 @@ msgid ""
 "We can now use `CSVField` to read a single field at a given line and "
 "position in a CSV file, and return a `FieldError` in case of a failure."
 msgstr ""
+"これで`CSVField`を使って、CSVファイル中の与えられた行と位置での単一のフィールドを読み、\n"
+"失敗したときは`FieldError`を返します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:761
@@ -15789,6 +16251,9 @@ msgid ""
 "readField line col str =\n"
 "  maybe (Left $ FieldError line col str) Right (read str)\n"
 msgstr ""
+"readField : CSVField a => (line, column : Nat) -> String -> Either CSVError a\n"
+"readField line col str =\n"
+"  maybe (Left $ FieldError line col str) Right (read str)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:772
@@ -15798,6 +16263,10 @@ msgid ""
 "reading record values of a known number of fields, as we get the correct "
 "number of string variables when pattern matching on the vector:"
 msgstr ""
+"予め読み込む必要があるフィールドの数を知っていれば、\n"
+"文字列のリストを与えられた長さの`Vect`に変換を試みることができます。\n"
+"こうすることで既知の数のフィールド分のレコード値を円滑に読み込むことができますが、\n"
+"それはベクタにパターン照合するときに正しい数の文字列変数を得られるからです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:773
@@ -15809,13 +16278,18 @@ msgid ""
 "toVect (S k) line col []        = Left (UnexpectedEndOfInput line col)\n"
 "toVect (S k) line col (x :: xs) = (x ::) <$> toVect k line (S col) xs\n"
 msgstr ""
+"toVect : (n : Nat) -> (line, col : Nat) -> List a -> Either CSVError (Vect n a)\n"
+"toVect 0     line _   []        = Right []\n"
+"toVect 0     line col _         = Left (ExpectedEndOfInput line col)\n"
+"toVect (S k) line col []        = Left (UnexpectedEndOfInput line col)\n"
+"toVect (S k) line col (x :: xs) = (x ::) <$> toVect k line (S col) xs\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:783
 msgid ""
 "Finally, we can implement function `readUser` to try and convert a single "
 "line in a CSV-file to a value of type `User`:"
-msgstr ""
+msgstr "最後にCSVファイル中の単一行を型`User`の値に変換しようとする関数`readUser`を実装することができます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:784
@@ -15834,6 +16308,18 @@ msgid ""
 "readUser : (line : Nat) -> String -> Either CSVError User\n"
 "readUser line = readUser' line . forget . split (',' ==)\n"
 msgstr ""
+"readUser' : (line : Nat) -> List String -> Either CSVError User\n"
+"readUser' line ss = do\n"
+"  [fn,ln,a,em,g,pw] <- toVect 6 line 0 ss\n"
+"  [| MkUser (readField line 1 fn)\n"
+"            (readField line 2 ln)\n"
+"            (readField line 3 a)\n"
+"            (readField line 4 em)\n"
+"            (readField line 5 g)\n"
+"            (readField line 6 pw) |]\n"
+"\n"
+"readUser : (line : Nat) -> String -> Either CSVError User\n"
+"readUser line = readUser' line . forget . split (',' ==)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:800 src/Tutorial/Traverse.md:122
@@ -15850,6 +16336,11 @@ msgid ""
 "Tutorial.Functor> readUser 7 \"Joe,Foo,46,j@f.ch,m,shortPW\"\n"
 "Left (FieldError 7 6 \"shortPW\")\n"
 msgstr ""
+"Tutorial.Functor> readUser 1 \"Joe,Foo,46,j@f.ch,m,pw1234567\"\n"
+"Right (MkUser (MkName \"Joe\") (MkName \"Foo\")\n"
+"  (Just 46) (MkEmail \"j@f.ch\") Male (MkPassword \"pw1234567\"))\n"
+"Tutorial.Functor> readUser 7 \"Joe,Foo,46,j@f.ch,m,shortPW\"\n"
+"Left (FieldError 7 6 \"shortPW\")\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:816
@@ -15861,6 +16352,10 @@ msgid ""
 "in much less readable code to implement `readUser'` with a succession of six "
 "nested pattern matches."
 msgstr ""
+"なお、`readUser'`の実装で慣用括弧を使い、6引数関数 (`MkUser`) を型`Either CSVError`の6つの値に写しました。\n"
+"これは全てのパースが成功したとき、またそのときに限って、自動的に成功します。\n"
+"もし立て続けに6重に入れ子になったパターン照合で`readUser'`を実装していたら、\n"
+"考えるまでもなく面倒ではるかに読みづらいコードになっていたでしょう。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:819
@@ -15868,12 +16363,14 @@ msgid ""
 "However, the idiom bracket above looks still quite repetitive.  Surely, we "
 "can do better?"
 msgstr ""
+"しかし上の慣用括弧はまだかなり繰り返しがあります。\n"
+"きっと、もっと良くできますよね？"
 
 #. type: Title ####
 #: src/Tutorial/Functor.md:820
 #, no-wrap
 msgid "A Case for Heterogeneous Lists"
-msgstr ""
+msgstr "混成リストの用例"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:827
@@ -15883,6 +16380,9 @@ msgid ""
 "read rows in heterogeneous tables with a minimal amount of code: "
 "Heterogeneous lists."
 msgstr ""
+"型族を学ぶときが来ました。\n"
+"型族はレコード型の汎化表現として使うことができ、\n"
+"また最小量のコードで混成になっている表中の行を表現したり読み取ったりすることができます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:828
@@ -15894,6 +16394,11 @@ msgid ""
 "    Nil  : HList Nil\n"
 "    (::) : (v : t) -> (vs : HList ts) -> HList (t :: ts)\n"
 msgstr ""
+"namespace HList\n"
+"  public export\n"
+"  data HList : (ts : List Type) -> Type where\n"
+"    Nil  : HList Nil\n"
+"    (::) : (v : t) -> (vs : HList ts) -> HList (t :: ts)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:841
@@ -15903,6 +16408,9 @@ msgid ""
 "in the list index. For instance, here is a variant, which stores three "
 "values of types `Bool`, `Nat`, and `Maybe String` (in that order):"
 msgstr ""
+"混成リストは*型のリスト*で指標付けされたリスト型です。\n"
+"これによりそれぞれの位置にリストの指標中の同じ位置にある型の値を格納することができます。\n"
+"例えば以下の例では型`Bool`、`Nat`、`Maybe String`の3つの値を（この順で）格納します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:842
@@ -15911,6 +16419,8 @@ msgid ""
 "hlist1 : HList [Bool, Nat, Maybe String]\n"
 "hlist1 = [True, 12, Nothing]\n"
 msgstr ""
+"hlist1 : HList [Bool, Nat, Maybe String]\n"
+"hlist1 = [True, 12, Nothing]\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:854
@@ -15921,6 +16431,10 @@ msgid ""
 "computations on `HList`, for instance when concatenating two such lists to "
 "keep track of the types stored in the result at the same time."
 msgstr ""
+"混成リストは与えられた型の値を格納するただのタプルだと言い張ることもできるでしょう。\n"
+"それはもちろん正しいのですが、演習で苦しみながら学ぶことになるように、\n"
+"リスト指標を使って`HList`についてのコンパイル時計算を行うことができるのです。\n"
+"例えば2つのリストを結合するときに、同時に結果で保管される型へ追従するなどです。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:859
@@ -15929,6 +16443,8 @@ msgid ""
 "lines. In order to do that, we need to introduce a new interface for types "
 "corresponding to whole lines in a CSV-file:"
 msgstr ""
+"しかしまずは`HList`を簡潔にCSVの行をパースする手段として活用します。\n"
+"そうするためにはCSVファイル中の全行に対応する型のための、新しいインターフェースを導入する必要があります。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:860
@@ -15937,6 +16453,8 @@ msgid ""
 "interface CSVLine a where\n"
 "  decodeAt : (line, col : Nat) -> List String -> Either CSVError a\n"
 msgstr ""
+"interface CSVLine a where\n"
+"  decodeAt : (line, col : Nat) -> List String -> Either CSVError a\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:871
@@ -15947,6 +16465,10 @@ msgid ""
 "from the head of the list and the remainder from its tail. We use again an "
 "idiom bracket to concatenate the results:"
 msgstr ""
+"これから`HList`のための`CSVLine`の2つの実装を書いていきます。\n"
+"1つは`Nil`の場合のもので、文字列からなる現在のリストが空のとき、またそのときに限り成功します。\n"
+"もう1つは*cons*の場合のもので、リストの先頭と尾っぽの残りから単一のフィールドを読もうとします。\n"
+"ここでも結果を結合するのに慣用括弧を使います。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:872
@@ -15960,6 +16482,13 @@ msgid ""
 "  decodeAt l c []        = Left (UnexpectedEndOfInput l c)\n"
 "  decodeAt l c (s :: ss) = [| readField l c s :: decodeAt l (S c) ss |]\n"
 msgstr ""
+"CSVLine (HList []) where\n"
+"  decodeAt _ _ [] = Right Nil\n"
+"  decodeAt l c _  = Left (ExpectedEndOfInput l c)\n"
+"\n"
+"CSVField t => CSVLine (HList ts) => CSVLine (HList (t :: ts)) where\n"
+"  decodeAt l c []        = Left (UnexpectedEndOfInput l c)\n"
+"  decodeAt l c (s :: ss) = [| readField l c s :: decodeAt l (S c) ss |]\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:887
@@ -15969,6 +16498,11 @@ msgid ""
 "to `HList` and takes an erased list of types as argument to make it more "
 "convenient to use at the REPL:"
 msgstr ""
+"これでおしまいです！\n"
+"加える必要があるのは2つの小間物関数だけです。\n"
+"いずれも字句に分割されたあとに行全体を復号化するもので、\n"
+"一方は`HList`に特化されており、引数に消去されたリスト型を取ります。\n"
+"これはREPLで使うのにより便利にするものです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:888
@@ -15984,12 +16518,21 @@ msgid ""
 "        -> Either CSVError (HList ts)\n"
 "hdecode _ = decode\n"
 msgstr ""
+"decode : CSVLine a => (line : Nat) -> String -> Either CSVError a\n"
+"decode line = decodeAt line 1 . forget . split (',' ==)\n"
+"\n"
+"hdecode :  (0 ts : List Type)\n"
+"        -> CSVLine (HList ts)\n"
+"        => (line : Nat)\n"
+"        -> String\n"
+"        -> Either CSVError (HList ts)\n"
+"hdecode _ = decode\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:902
 msgid ""
 "It's time to reap the fruits of our labour and give this a go at the REPL:"
-msgstr ""
+msgstr "骨折りの成果を得るために、REPLで試すときが来ました。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:903
@@ -16000,25 +16543,31 @@ msgid ""
 "Tutorial.Functor> hdecode [Name,Name,Gender] 3 \"Idris,,f\"\n"
 "Left (FieldError 3 2 \"\")\n"
 msgstr ""
+"Tutorial.Functor> hdecode [Bool,Nat,Double] 1 \"f,100,12.123\"\n"
+"Right [False, 100, 12.123]\n"
+"Tutorial.Functor> hdecode [Name,Name,Gender] 3 \"Idris,,f\"\n"
+"Left (FieldError 3 2 \"\")\n"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:910
 #, no-wrap
 msgid "Applicative Laws"
-msgstr ""
+msgstr "アプリカティブ則"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:914
 msgid ""
 "Again, `Applicative` implementations must follow certain laws. Here they are:"
 msgstr ""
+"繰り返しになりますが、`Applicative`の実装もいくつかの法則に従います。\n"
+"以下の通りです。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:917
 msgid ""
 "`pure id <*> fa = fa`: Lifting and applying the identity function has no "
 "visible effect."
-msgstr ""
+msgstr "`pure id <*> fa = fa`: 持ち上げて同値関数を適用しても目に見える効果はない。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:922
@@ -16026,7 +16575,7 @@ msgid ""
 "`[| f . g |] <*> v = f <*> (g <*> v)`: I must not matter, whether we compose "
 "our functions first and then apply them, or whether we apply our functions "
 "first and then compose them."
-msgstr ""
+msgstr "`[| f . g |] <*> v = f <*> (g <*> v)`: 関数を合成してから適用しても、関数を適用してから合成しても同じである。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:925
@@ -16035,6 +16584,8 @@ msgid ""
 "  The above might be hard to understand, so here\n"
 "  they are again with explicit types and implementations:\n"
 msgstr ""
+"  上記は理解しづらいかもしれないので、\n"
+"  以下に再びはっきりした型と実装を置いておきます。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:926
@@ -16046,6 +16597,11 @@ msgid ""
 "  compR : Maybe (b -> c) -> Maybe (a -> b) -> Maybe a -> Maybe c\n"
 "  compR f g v = f <*> (g <*> v)\n"
 msgstr ""
+"  compL : Maybe (b -> c) -> Maybe (a -> b) -> Maybe a -> Maybe c\n"
+"  compL f g v = [| f . g |] <*> v\n"
+"\n"
+"  compR : Maybe (b -> c) -> Maybe (a -> b) -> Maybe a -> Maybe c\n"
+"  compR f g v = f <*> (g <*> v)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:936
@@ -16053,7 +16609,7 @@ msgstr ""
 msgid ""
 "  The second applicative law states, that the two implementations\n"
 "  `compL` and `compR` should behave identically.\n"
-msgstr ""
+msgstr "  2つ目のアプリカティブ則が主張しているのは、2つの実装`compL`と`compR`が等価に振る舞うということです。\n"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:939
@@ -16061,18 +16617,20 @@ msgid ""
 "`pure f <*> pure x = pure (f x)`. This is also called the *homomorphism* "
 "law. It should be pretty self-explaining."
 msgstr ""
+"`pure f <*> pure x = pure (f x)`。これは*準同型写像*の法則とも呼ばれます。\n"
+"これ自体はかなりわかりやすいでしょう。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:942
 msgid ""
 "`f <*> pure v = pure ($ v) <*> f`. This is called the law of *interchange*."
-msgstr ""
+msgstr "`f <*> pure v = pure ($ v) <*> f`。これは*交換*の法則と呼ばれます。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:944
 #, no-wrap
 msgid "  This should again be explained with a concrete example:\n"
-msgstr ""
+msgstr "  これも具体例で説明します。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:945
@@ -16084,6 +16642,11 @@ msgid ""
 "  interR : Maybe (a -> b) -> a -> Maybe b\n"
 "  interR f v = pure ($ v) <*> f\n"
 msgstr ""
+"  interL : Maybe (a -> b) -> a -> Maybe b\n"
+"  interL f v = f <*> pure v\n"
+"\n"
+"  interR : Maybe (a -> b) -> a -> Maybe b\n"
+"  interR f v = pure ($ v) <*> f\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:957
@@ -16094,6 +16657,8 @@ msgid ""
 "  a function of type `a -> b` wrapped in a `Maybe`\n"
 "  context.\n"
 msgstr ""
+"  なお、`($ v)`は型`(a -> b) -> b`なので、`f`に適用される関数型です。\n"
+"  `f`は型`a -> b`の関数が`Maybe`の文脈に包まれたものです。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:961
@@ -16102,12 +16667,12 @@ msgid ""
 "  The law of interchange states that it must not matter\n"
 "  whether we apply a pure value from the left or\n"
 "  right of the *apply* operator.\n"
-msgstr ""
+msgstr "  交換法則が主張していることは、純粋な値を*適用*演算子の左右どちらから適用しても変わってはいけないということです。\n"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/Functor.md:965
 msgid "Implement `Applicative'` for `Either e` and `Identity`."
-msgstr ""
+msgstr "`Applicative`を`Either e`と`Identity`に実装してください。"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/Functor.md:970
@@ -16116,24 +16681,31 @@ msgid ""
 "the length must be known at runtime.  This can be done by passing it as an "
 "unerased implicit to the interface implementation:"
 msgstr ""
+"`Applicative`を`Vect n`に実装してください。\n"
+"補足：`pure`を実装するためには、実行時に長さがわかっていなくてはいけません。\n"
+"これは長さを消去されない暗黙子としてインターフェースの実装に渡すことでできます。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:971
 #, no-wrap
 msgid "   implementation {n : _} -> Applicative' (Vect n) where\n"
-msgstr ""
+msgstr "   implementation {n : _} -> Applicative' (Vect n) where\n"
 
 #. type: Bullet: '3. '
 #: src/Tutorial/Functor.md:977
 msgid ""
 "Implement `Applicative'` for `Pair e`, with `e` having a `Monoid` constraint."
 msgstr ""
+"`Applicative`を`Pair e`に実装してください。\n"
+"ただし`e`は`Monoid`制約を満たします。"
 
 #. type: Bullet: '4. '
 #: src/Tutorial/Functor.md:980
 msgid ""
 "Implement `Applicative` for `Const e`, with `e` having a `Monoid` constraint."
 msgstr ""
+"`Const e`に`Applicative`を実装してください。\n"
+"ただし`e`は`Monoid`制約を満たします。"
 
 #. type: Bullet: '5. '
 #: src/Tutorial/Functor.md:985
@@ -16142,6 +16714,9 @@ msgid ""
 "constraint. This will allow us to use `(<+>)` to accumulate errors in case "
 "of two `Invalid` values in the implementation of *apply*."
 msgstr ""
+"`Applicative`を`Validated e`に実装してください。\n"
+"ただし`e`は`Semigroup`制約を満たします。\n"
+"これがあると*apply*の実装で2つの`Invalid`な値になったときに、`(<+>)`を使ってエラーを積み重ねることができます。"
 
 #. type: Bullet: '6. '
 #: src/Tutorial/Functor.md:990
@@ -16149,6 +16724,8 @@ msgid ""
 "Add an additional data constructor of type `CSVError -> CSVError -> "
 "CSVError` to `CSVError` and use this to implement `Semigroup` for `CSVError`."
 msgstr ""
+"型が`CSVError -> CSVError -> CSVError`のデータ構築子を追加し、\n"
+"これを使って`Semigroup`を`CSVError`に実装してください。"
 
 #. type: Bullet: '7. '
 #: src/Tutorial/Functor.md:994
@@ -16157,6 +16734,8 @@ msgid ""
 "`Validated` instead of `Either`. This will only work, if you solved exercise "
 "6."
 msgstr ""
+"CSVパーサと全ての関係する関数を、`Either`の代わりに`Validated`を返すようにしてリファクタしてください。\n"
+"これは演習6を解いたあとでないと動きません。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1000
@@ -16168,6 +16747,10 @@ msgid ""
 "   with the ability of error accumulation. Here are some examples\n"
 "   from a REPL session:\n"
 msgstr ""
+"   2点補足：既存のコードを調整する必要があるのはごく一部ですが、\n"
+"   これは`Validated`のアプリカティブ構文をそのまま使うことができるからです。\n"
+"   また、この変更によりCSVパーサのエラー累積能力を向上させることができます。\n"
+"   以下はREPLセッションでのいくつかの例です。\n"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:1001
@@ -16181,6 +16764,13 @@ msgid ""
 "   Invalid (App (FieldError 1 1 \"o\")\n"
 "     (App (FieldError 1 2 \"-12\") (FieldError 1 3 \"foo\")))\n"
 msgstr ""
+"   Solutions.Functor> hdecode [Bool,Nat,Gender] 1 \"t,12,f\"\n"
+"   Valid [True, 12, Female]\n"
+"   Solutions.Functor> hdecode [Bool,Nat,Gender] 1 \"o,-12,f\"\n"
+"   Invalid (App (FieldError 1 1 \"o\") (FieldError 1 2 \"-12\"))\n"
+"   Solutions.Functor> hdecode [Bool,Nat,Gender] 1 \"o,-12,foo\"\n"
+"   Invalid (App (FieldError 1 1 \"o\")\n"
+"     (App (FieldError 1 2 \"-12\") (FieldError 1 3 \"foo\")))\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1015
@@ -16191,13 +16781,17 @@ msgid ""
 "   parser with error accumulation for lines in CSV-files, which is\n"
 "   very convenient to use at the same time!\n"
 msgstr ""
+"   アプリカティブ関手と混成リストの強力さにご注目。\n"
+"   たった数行のコードだけで、CSVファイル中の行にあるエラーの累積を含む、\n"
+"   純粋で、型安全で、全域なパーサを書きました。\n"
+"   それにこのパーサはとても使いやすいです！\n"
 
 #. type: Bullet: '8. '
 #: src/Tutorial/Functor.md:1018
 msgid ""
 "Since we introduced heterogeneous lists in this chapter, it would be a pity "
 "not to experiment with them a little."
-msgstr ""
+msgstr "この章で混成リストを紹介したので、ちょっと実験してみないと損でしょう。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1027
@@ -16212,21 +16806,29 @@ msgid ""
 "   Only if you truly run out of ideas should you have a glance\n"
 "   at the solutions (and then, only at the types at first!)\n"
 msgstr ""
+"   この演習の目的は型の妙義における読者の技能を研ぎ澄ますことです。\n"
+"   したがって解決の糸口はほとんど付属しません。\n"
+"   自力で与えられた関数からどんな振舞いが期待されるか、\n"
+"   その振舞いをどう型で表現するか、そしてその後でどう実装するか、決めてみてください。\n"
+"   型が正しく充分に精緻であれば、実装は実質無料で手に入ります。\n"
+"   行き詰まっても早々に諦めないでください。\n"
+"   本当に万策尽きたときだけ解法を一瞥すること。\n"
+"   （そのときは、まずは型だけ見るようにしてください！）\n"
 
 #. type: Bullet: '   1. '
 #: src/Tutorial/Functor.md:1029
 msgid "Implement `head` for `HList`."
-msgstr ""
+msgstr "`head`を`HList`に実装してください。"
 
 #. type: Bullet: '   2. '
 #: src/Tutorial/Functor.md:1031
 msgid "Implement `tail` for `HList`."
-msgstr ""
+msgstr "`tail`を`HList`に実装してください。"
 
 #. type: Bullet: '   3. '
 #: src/Tutorial/Functor.md:1033
 msgid "Implement `(++)` for `HList`."
-msgstr ""
+msgstr "`(++)`を`HList`に実装してください。"
 
 #. type: Bullet: '   4. '
 #: src/Tutorial/Functor.md:1037
@@ -16235,6 +16837,9 @@ msgid ""
 "Go back and look how we implemented `indexList` in an [earlier exercise]"
 "(Dependent.md) and start from there."
 msgstr ""
+"`index`を`HList`に実装してください。\n"
+"これは他の3つより歯応えがあるかもしれません。\n"
+"[前の演習](Dependent.md)でいかにして`indexList`を実装したかに立ち返り、そこから始めましょう。"
 
 #. type: Bullet: '   5. '
 #: src/Tutorial/Functor.md:1043
@@ -16245,6 +16850,10 @@ msgid ""
 "list of types. This makes it easier to express certain operations at the "
 "type level."
 msgstr ""
+"パッケージ*contrib*……これはIdrisプロジェクトの一部ですが……\n"
+"は混成ベクタのデータ型である`Data.HVect.HVect`を提供します。\n"
+"私達の`HList`との唯一の相違点は`HVect`が型リストの代わりに型ベクタに指標付けられていることです。\n"
+"これによりいくつかの操作を型段階で表現することがより簡単になっています。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1046
@@ -16252,7 +16861,7 @@ msgstr ""
 msgid ""
 "      Write your own implementation of `HVect` together with functions\n"
 "      `head`, `tail`, `(++)`, and `index`.\n"
-msgstr ""
+msgstr "      自力で`HVect`と関数`head`、`tail`、`(++)`、そして`index`関数の実装を書いてください。\n"
 
 #. type: Bullet: '   6. '
 #: src/Tutorial/Functor.md:1050
@@ -16261,6 +16870,8 @@ msgid ""
 "(HVect ts)`. You'll first have to be creative about how to even express this "
 "in the types."
 msgstr ""
+"真の挑戦として、`Vect m (HVect ts)`を転地する関数を実装してみてください。\n"
+"まずはこの型をどのようにさえすれば表現できるかというところから思索することになるでしょう。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1057
@@ -16273,6 +16884,10 @@ msgid ""
 "      *unless* the structure of the value being matched on can be derived\n"
 "      from another, un-erased argument.\n"
 msgstr ""
+"      補足：これを実装するには、少なくとも1つの場合分けでIdrisの型推論を手助けするために、\n"
+"      消去される引数でのパターン照合が必要になるでしょう。\n"
+"      消去される引数でパターン照合することは禁止されていますが、\n"
+"      その照合される値の構造が他所の消去されない引数から導出できる場合は*その限りではありません*。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1061
@@ -16282,6 +16897,9 @@ msgid ""
 "      tries to figure it out. But I enjoyed the experience, so I just *had*\n"
 "      to include it here. :-)\n"
 msgstr ""
+"      また、この問題で行き詰まっても心配しないでください。\n"
+"      筆者も理解するまで何度も試行しましたから。\n"
+"      でもこの体験は楽しかったので、ここに含めない*わけにはいきません*でした。:-)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1065
@@ -16291,6 +16909,8 @@ msgid ""
 "      CSV-files, as it allows us to convert a table represented as\n"
 "      rows (a vector of tuples) to one represented as columns (a tuple of vectors).\n"
 msgstr ""
+"      ただ、このような関数がCSVファイルを扱うのに便利であろうことには頭に入れておきましょう。\n"
+"      行の集まりからなる表（タプルのベクタ）を列の集まりからなる表（ベクタのタプル）に変換できるからです。\n"
 
 #. type: Bullet: '9. '
 #: src/Tutorial/Functor.md:1069
@@ -16298,6 +16918,8 @@ msgid ""
 "Show, that the composition of two applicative functors is again an "
 "applicative functor by implementing `Applicative` for `Comp f g`."
 msgstr ""
+"アプリカティブ関手の合成がこれまたアプリカティブ関手になることを、\n"
+"`Applicative`を`Comp f g`に実装することで示してください。"
 
 #. type: Bullet: '10. '
 #: src/Tutorial/Functor.md:1073
@@ -16305,12 +16927,14 @@ msgid ""
 "Show, that the product of two applicative functors is again an applicative "
 "functor by implementing `Applicative` for `Prod f g`."
 msgstr ""
+"2つのアプリカティブ関手の積がこれまたアプリカティブ関手になることを、\n"
+"`Applicative`を`Prod f g`に実装することで示してください。"
 
 #. type: Title ##
 #: src/Tutorial/Functor.md:1074
 #, no-wrap
 msgid "Monad"
-msgstr ""
+msgstr "モナド"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1081
@@ -16322,6 +16946,13 @@ msgid ""
 "`Applicative` and adds two new related functions: The *bind*\n"
 "operator (`(>>=)`) and function `join`. Here is its definition:\n"
 msgstr ""
+"ついに`Monad`です。\n"
+"これには多くの紙幅が割かれてきたものでした。\n"
+"しかし既に[`IO`についての章](IO.md)で見てきたあとであり、\n"
+"ここでお伝えすべきことはそれほど残っていません。\n"
+"`Monad`は`Applicative`を拡張し2つの新しい関連する関数を追加します。\n"
+"*束縛*演算子 (`(>>=)`) と関数`join`です。\n"
+"以下がその定義です。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1082
@@ -16331,6 +16962,9 @@ msgid ""
 "  bind  : m a -> (a -> m b) -> m b\n"
 "  join' : m (m a) -> m a\n"
 msgstr ""
+"interface Applicative' m => Monad' m where\n"
+"  bind  : m a -> (a -> m b) -> m b\n"
+"  join' : m (m a) -> m a\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1091
@@ -16340,6 +16974,8 @@ msgid ""
 "`(>>=)` or `join` or both. You will show in an exercise, how\n"
 "`join` can be implemented in terms of *bind* and vice versa.\n"
 msgstr ""
+"`Monad`の実装者は`(>>=)`と`join`のどちらを実装するか、もしくは両方を実装するかを自由に選べます。\n"
+"どうやって`join`が*束縛*を使って実装されるのか、またその逆については、演習で見ることになるでしょう。\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1099
@@ -16351,12 +16987,17 @@ msgid ""
 "(reading some user input) will affect, which `IO` action to run next.  This "
 "is not possible with the *apply* operator:"
 msgstr ""
+"`Monad`と`Applicative`の大きな違いは、\n"
+"前者では何らかの計算がその前の計算の結果に依存することができる点にあります。\n"
+"例えば標準入力から読んだ文字列に基づいてファイルを削除するか歌を流すかを決めることができます。\n"
+"最初の`IO`行動（利用者の入力を読む）が、次に走る`IO`行動に影響するのです。\n"
+"これは*適用*演算子ではできません。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:1100
 #, no-wrap
 msgid "(<*>) : IO (a -> b) -> IO a -> IO b\n"
-msgstr ""
+msgstr "(<*>) : IO (a -> b) -> IO a -> IO b\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1115
@@ -16374,6 +17015,13 @@ msgid ""
 "question was `Maybe`, `List`, or `Vector`, no such thing\n"
 "would be possible.)\n"
 msgstr ""
+"`(<*>)`への引数として渡される時分には、2つの`IO`行動は既に決定されています。\n"
+"1つ目の結果は……一般的な場合において……2つ目に走る計算に影響することはありません。\n"
+"（実は`IO`については副作用を介せば理論上可能です。\n"
+"最初の行動が何らかの命令をファイルまたは何らかの可変な状態に上書きすれば、\n"
+"2つ目の行動がそのファイルや状態から読むことができるので、次にすべきことを決定することができるのです。\n"
+"しかしこれは`IO`に限った話であって、アプリカティブ関手一般の話ではありません。\n"
+"もし問題の関手が`Maybe`や`List`や`Vector`だったら、そのようなことはできません。）\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1121
@@ -16383,6 +17031,9 @@ msgid ""
 "type. For instance, we'd like to decode CRUD requests from the lines of a "
 "CSV-file:"
 msgstr ""
+"例で相違点を実演しましょう。\n"
+"CSV読み取り機を改善して字句からなる行を直和型に復号化できるようにしたいとします。\n"
+"例えばCSVファイルの行からCRUDリクエストを復号化したいとしましょう。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1122
@@ -16394,6 +17045,11 @@ msgid ""
 "  Read   : (id : i) -> Crud i a\n"
 "  Delete : (id : i) -> Crud i a\n"
 msgstr ""
+"data Crud : (i : Type) -> (a : Type) -> Type where\n"
+"  Create : (value : a) -> Crud i a\n"
+"  Update : (id : i) -> (value : a) -> Crud i a\n"
+"  Read   : (id : i) -> Crud i a\n"
+"  Delete : (id : i) -> Crud i a\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1134
@@ -16402,6 +17058,8 @@ msgid ""
 "our decoding. One way to do this is to put the name of the data constructor "
 "(or some other tag of identification) in the first column of the CSV-file:"
 msgstr ""
+"それぞれの行で復号にどのデータ構築子を選ぶべきか決める方法が必要です。\n"
+"1つの方法はデータ構築子の名前（やその他の識別用の札）をCSVファイルの最初の行に置いておくことです。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1135
@@ -16429,6 +17087,27 @@ msgid ""
 "       \"Delete\" => hlift  Delete  <$> decodeAt l 2 t\n"
 "       _        => Left (FieldError l 1 n)\n"
 msgstr ""
+"hlift : (a -> b) -> HList [a] -> b\n"
+"hlift f [x] = f x\n"
+"\n"
+"hlift2 : (a -> b -> c) -> HList [a,b] -> c\n"
+"hlift2 f [x,y] = f x y\n"
+"\n"
+"decodeCRUD :  CSVField i\n"
+"           => CSVField a\n"
+"           => (line : Nat)\n"
+"           -> (s    : String)\n"
+"           -> Either CSVError (Crud i a)\n"
+"decodeCRUD l s =\n"
+"  let h ::: t = split (',' ==) s\n"
+"   in do\n"
+"     MkName n <- readField l 1 h\n"
+"     case n of\n"
+"       \"Create\" => hlift  Create  <$> decodeAt l 2 t\n"
+"       \"Update\" => hlift2 Update  <$> decodeAt l 2 t\n"
+"       \"Read\"   => hlift  Read    <$> decodeAt l 2 t\n"
+"       \"Delete\" => hlift  Delete  <$> decodeAt l 2 t\n"
+"       _        => Left (FieldError l 1 n)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1164
@@ -16438,11 +17117,14 @@ msgid ""
 "on the result of the first parsing function to decide on the data "
 "constructor and thus the next parsing function to use."
 msgstr ""
+"2つの小間物関数を加えて型推論を手助けしたり若干いい感じの構文になるようにしました。\n"
+"大事なのは、いかにして最初の構文解析関数の結果でパターン照合し、\n"
+"データ構築子と次に使う構文解析関数を決定しているか、というところです。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1166
 msgid "Here's how this works at the REPL:"
-msgstr "REPLで試してみましょう。"
+msgstr "以下はREPLで動かした様子です。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:1167
@@ -16455,6 +17137,12 @@ msgid ""
 "Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 \"Delete,jon@doe.ch\"\n"
 "Left (FieldError 1 2 \"jon@doe.ch\")\n"
 msgstr ""
+"Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 \"Create,jon@doe.ch\"\n"
+"Right (Create (MkEmail \"jon@doe.ch\"))\n"
+"Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 \"Update,12,jane@doe.ch\"\n"
+"Right (Update 12 (MkEmail \"jane@doe.ch\"))\n"
+"Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 \"Delete,jon@doe.ch\"\n"
+"Left (FieldError 1 2 \"jon@doe.ch\")\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1184
@@ -16466,6 +17154,11 @@ msgid ""
 "sufficient. If, however, you want to decide based on the result of an "
 "effectful computation what computation to run next, you need a `Monad`."
 msgstr ""
+"まとめると`Monad`は`Applicative`とは異なり計算を順番に連鎖させられます。\n"
+"この連鎖では中間結果が後の計算に影響を与えられます。\n"
+"なので、もしn個の関連のない作用付き計算があり、純粋でn引数の関数のもとに束ねたいなら、\n"
+"`Applicative`で充分でしょう。\n"
+"しかしもし、ある作用付き計算の結果に基づいて次にどの計算を走らせるか決めたいときは、`Monad`を使う必要があります。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1190
@@ -16475,17 +17168,21 @@ msgid ""
 "`Monad` instance for `Either e . IO`.  We will later learn about monad "
 "transformers, which can be composed with other monads."
 msgstr ""
+"しかし注意ですが、`Monad`は`Applicative`に比べて重要な欠点があります。\n"
+"一般にモナドは組み合わさりません。\n"
+"例えば`Either e . IO`への`Monad`インスタンスはありません。\n"
+"あとでモナド変換子について学びますが、これがあると他のモナドと組み合わせられます。"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:1191
 #, no-wrap
 msgid "Monad Laws"
-msgstr ""
+msgstr "モナド則"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1194
 msgid "Without further ado, here are the laws for `Monad`:"
-msgstr ""
+msgstr "早速ですが以下が`Monad`の法則です。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1198
@@ -16493,6 +17190,9 @@ msgid ""
 "`ma >>= pure = ma` and `pure v >>= f = f v`.  These are monad's identity "
 "laws. Here they are as concrete examples:"
 msgstr ""
+"`ma >>= pure = ma`と`pure v >>= f = f v`。\n"
+"これらはモナドの等価法則です。\n"
+"以下が具体例です。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1199
@@ -16507,6 +17207,14 @@ msgid ""
 "  id2R : a -> (a -> Maybe b) -> Maybe b\n"
 "  id2R v f = f v\n"
 msgstr ""
+"  id1L : Maybe a -> Maybe a\n"
+"  id1L ma = ma >>= pure\n"
+"\n"
+"  id2L : a -> (a -> Maybe b) -> Maybe b\n"
+"  id2L v f = pure v >>= f\n"
+"\n"
+"  id2R : a -> (a -> Maybe b) -> Maybe b\n"
+"  id2R v f = f v\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1212
@@ -16514,7 +17222,7 @@ msgstr ""
 msgid ""
 "  These two laws state that `pure` should behave\n"
 "  neutrally w.r.t. *bind*.\n"
-msgstr ""
+msgstr "  これら2つの法則は`pure`が*束縛*に対して中立にはたらくべきだと主張しています。\n"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1218
@@ -16523,6 +17231,10 @@ msgid ""
 "monad.  You might not have seen the second operator `(>=>)`.  It can be used "
 "to sequence effectful computations and has the following type:"
 msgstr ""
+"`(m >>= f) >>= g = m >>= (f >=> g)`。\n"
+"これはモナドの結合性の法則です。\n"
+"2つ目の演算子`(>=>)`を見掛けたことがないかもしれません。\n"
+"これは作用付き計算を連接するのに使え、以下の型を持ちます。"
 
 #. type: Fenced code block (repl)
 #: src/Tutorial/Functor.md:1219
@@ -16531,6 +17243,8 @@ msgid ""
 "  Tutorial.Functor> :t (>=>)\n"
 "  Prelude.>=> : Monad m => (a -> m b) -> (b -> m c) -> a -> m c\n"
 msgstr ""
+"  Tutorial.Functor> :t (>=>)\n"
+"  Prelude.>=> : Monad m => (a -> m b) -> (b -> m c) -> a -> m c\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1229
@@ -16542,11 +17256,16 @@ msgid ""
 "in terms of `(>>=)`, the actual implementation of `(<*>)`\n"
 "must behave the same as the implementation in terms of `(>>=)`:\n"
 msgstr ""
+"上記は*公式の*モナド則です。\n"
+"しかし、Idris（やHaskell）では`Monad`が`Applicative`を拡張していることからすれば、\n"
+"3つ目の法則についても考える必要があります。\n"
+"`(<*>)`が`(>>=)`を使って実装できるため、\n"
+"`(<*>)`の実際の実装は`(>>=)`を使って実装と同じように振る舞わなくてはいけません。\n"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1231
 msgid "`mf <*> ma = mf >>= (\\fun => map (fun $) ma)`."
-msgstr ""
+msgstr "`mf <*> ma = mf >>= (\\fun => map (fun $) ma)`"
 
 #. type: Bullet: '1. '
 #: src/Tutorial/Functor.md:1237
@@ -16554,6 +17273,8 @@ msgid ""
 "`Applicative` extends `Functor`, because every `Applicative` is also a "
 "`Functor`. Proof this by implementing `map` in terms of `pure` and `(<*>)`."
 msgstr ""
+"あらゆる`Applicative`は`Functor`でもあるので、`Applicative`は`Functor`の拡張です。\n"
+"このことを`map`を`pure`と`(<*>)`を使って実装することで証明してください。"
 
 #. type: Bullet: '2. '
 #: src/Tutorial/Functor.md:1241
@@ -16562,25 +17283,29 @@ msgid ""
 "`Applicative`. Proof this by implementing `(<*>)` in terms of `(>>=)` and "
 "`pure`."
 msgstr ""
+"あらゆる`Monad`は`Applicative`でもあるので、`Monad`は`Applicative`の拡張です。\n"
+"このことを`(<*>)`を`(>>=)`と`pure`を使って実装することで証明してください。"
 
 #. type: Bullet: '3. '
 #: src/Tutorial/Functor.md:1244
 msgid ""
 "Implement `(>>=)` in terms of `join` and other functions in the `Monad` "
 "hierarchy."
-msgstr ""
+msgstr "`(>>=)`を`join`と`Monad`にある他の関数を使って階層的に実装してください。"
 
 #. type: Bullet: '4. '
 #: src/Tutorial/Functor.md:1247
 msgid ""
 "Implement `join` in terms of `(>>=)` and other functions in the `Monad` "
 "hierarchy."
-msgstr ""
+msgstr "`join`を`(>>=)`と`Monad`にある他の関数を使って階層的に実装してください。"
 
 #. type: Bullet: '5. '
 #: src/Tutorial/Functor.md:1250
 msgid "There is no lawful `Monad` implementation for `Validated e`.  Why?"
 msgstr ""
+"`Validated e`への合法な`Monad`実装はありません。\n"
+"なぜですか？"
 
 #. type: Bullet: '6. '
 #: src/Tutorial/Functor.md:1256
@@ -16590,6 +17315,9 @@ msgid ""
 "from the *base* library)  holding a list of `User`s paired with a unique ID "
 "of type `Nat` as our user data base:"
 msgstr ""
+"この若干発展的な演習では、データ保管所でのCRUD操作を模擬していきます。\n"
+"可変参照（*base*ライブラリの`Data.IORef`からインポートされます）を使い、\n"
+"利用者データベースとして`User`とこれに紐付く一意の`Nat`型のIDのリストを保持します。"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1257
@@ -16598,6 +17326,8 @@ msgid ""
 "   DB : Type\n"
 "   DB = IORef (List (Nat,User))\n"
 msgstr ""
+"   DB : Type\n"
+"   DB = IORef (List (Nat,User))\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1267
@@ -16609,6 +17339,11 @@ msgid ""
 "   with the given email address might already exist. Here is\n"
 "   a custom error type to deal with this:\n"
 msgstr ""
+"  データベース上のほとんどの操作は失敗する危険性が付いて回ります。\n"
+"  利用者を更新したり削除したりしようとするときには、\n"
+"  対象のエントリがもはやそこにいないかもしれません。\n"
+"  新しい利用者を加える際、与えられたEmailアドレスを持つ利用者が既に存在するかもしれません。\n"
+"  以下がこれを扱う自前のエラー型です。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1268
@@ -16619,6 +17354,10 @@ msgid ""
 "     UserNotFound      : Nat -> DBError\n"
 "     SizeLimitExceeded : DBError\n"
 msgstr ""
+"   data DBError : Type where\n"
+"     UserExists        : Email -> Nat -> DBError\n"
+"     UserNotFound      : Nat -> DBError\n"
+"     SizeLimitExceeded : DBError\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1277
@@ -16626,13 +17365,13 @@ msgstr ""
 msgid ""
 "   In general, our functions will therefore have a\n"
 "   type similar to the following:\n"
-msgstr ""
+msgstr "  したがって一般にここでの関数は以下のような型を持ちます。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1278
 #, no-wrap
 msgid "   someDBProg : arg1 -> arg2 -> DB -> IO (Either DBError a)\n"
-msgstr ""
+msgstr "   someDBProg : arg1 -> arg2 -> DB -> IO (Either DBError a)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1284
@@ -16640,7 +17379,7 @@ msgstr ""
 msgid ""
 "   We'd like to abstract over this, by introducing a new wrapper\n"
 "   type:\n"
-msgstr ""
+msgstr "  新しい梱包型を導入することで、これを抽象化したいと思います。\n"
 
 #. type: Fenced code block (idris)
 #: src/Tutorial/Functor.md:1285
@@ -16650,6 +17389,9 @@ msgid ""
 "     constructor MkProg\n"
 "     runProg : DB -> IO (Either DBError a)\n"
 msgstr ""
+"   record Prog a where\n"
+"     constructor MkProg\n"
+"     runProg : DB -> IO (Either DBError a)\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1294
@@ -16659,6 +17401,8 @@ msgid ""
 "   to follow the following business rules when implementing the\n"
 "   functions below:\n"
 msgstr ""
+"  これでいくつかの小間物関数を書く準備ができました。\n"
+"  以下の関数を実装するときには次の取り決めにしたがうようにしてください。\n"
 
 #. type: Bullet: '   * '
 #: src/Tutorial/Functor.md:1297
@@ -16666,18 +17410,20 @@ msgid ""
 "Email addresses in the DB must be unique. (Consider implementing `Eq Email` "
 "to verify this)."
 msgstr ""
+"DB中のEmailアドレスは一意でなくてはならない。\n"
+"（これを検証するために`Eq Email`を実装することを検討してください。）"
 
 #. type: Bullet: '   * '
 #: src/Tutorial/Functor.md:1299
 msgid "The size limit of 1000 entries must not be exceeded."
-msgstr ""
+msgstr "上限1000項目の大きさを超過してはいけない。"
 
 #. type: Bullet: '   * '
 #: src/Tutorial/Functor.md:1303
 msgid ""
 "Operations trying to lookup a user by their ID must fail with `UserNotFound` "
 "in case no entry was found in the DB."
-msgstr ""
+msgstr "利用者をIDで見付けだそうとする操作は、DBに項目が見付からなかった場合は`UserNotFound`で失敗しなければいけない。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1308
@@ -16688,21 +17434,24 @@ msgid ""
 "   In addition, functions `Data.List.lookup` and `Data.List.find` might\n"
 "   be useful to implement some of the functions below.\n"
 msgstr ""
+"  可変参照を扱う際は`Data.IORef`の次の関数が必要になるでしょう。\n"
+"  すなわち、`newIORef`、`readIORef`、そして`writeIORef`です。\n"
+"  加えて関数`Data.List.lookup`と`Data.List.find`は以降の関数を実装するのに便利なことなことがあります。\n"
 
 #. type: Bullet: '   1. '
 #: src/Tutorial/Functor.md:1310
 msgid "Implement interfaces `Functor`, `Applicative`, and `Monad` for `Prog`."
-msgstr ""
+msgstr "インターフェース`Functor`、`Applicative`、`Monad`を`Prog`に実装してください。"
 
 #. type: Bullet: '   2. '
 #: src/Tutorial/Functor.md:1312
 msgid "Implement interface `HasIO` for `Prog`."
-msgstr ""
+msgstr "インターフェース`HasIO`を`Prog`に実装してください。"
 
 #. type: Bullet: '   3. '
 #: src/Tutorial/Functor.md:1314
 msgid "Implement the following utility functions:"
-msgstr "`List`についての以下の汎化関数を実装してください。"
+msgstr "以下の小間物関数を実装してください。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1317
@@ -16711,12 +17460,14 @@ msgid ""
 "      ```idris\n"
 "      throw : DBError -> Prog a\n"
 msgstr ""
+"      ```idris\n"
+"      throw : DBError -> Prog a\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1319
 #, no-wrap
 msgid "      getUsers : Prog (List (Nat,User))\n"
-msgstr ""
+msgstr "      getUsers : Prog (List (Nat,User))\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1322
@@ -16725,6 +17476,8 @@ msgid ""
 "      -- check the size limit!\n"
 "      putUsers : List (Nat,User) -> Prog ()\n"
 msgstr ""
+"      -- 項目数の上限をを検査してください！\n"
+"      putUsers : List (Nat,User) -> Prog ()\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1326
@@ -16734,6 +17487,9 @@ msgid ""
 "      modifyDB : (List (Nat,User) -> List (Nat,User)) -> Prog ()\n"
 "      ```\n"
 msgstr ""
+"      -- `getUsers`と`putUsers`を使ってこれを実装してください。\n"
+"      modifyDB : (List (Nat,User) -> List (Nat,User)) -> Prog ()\n"
+"      ```\n"
 
 #. type: Bullet: '   4. '
 #: src/Tutorial/Functor.md:1330
@@ -16741,6 +17497,8 @@ msgid ""
 "Implement function `lookupUser`. This should fail with an appropriate error, "
 "if a user with the given ID cannot be found."
 msgstr ""
+"関数`lookupUser`を実装してください。\n"
+"この関数は与えられたIDに紐付く利用者が見付からなかったときは適切なエラーで失敗します。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1334
@@ -16750,6 +17508,9 @@ msgid ""
 "      lookupUser : (id : Nat) -> Prog User\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      lookupUser : (id : Nat) -> Prog User\n"
+"      ```\n"
 
 #. type: Bullet: '   5. '
 #: src/Tutorial/Functor.md:1339
@@ -16758,6 +17519,9 @@ msgid ""
 "if a user with the given ID cannot be found. Make use of `lookupUser` in "
 "your implementation."
 msgstr ""
+"関数`deleteUser`を実装してください。\n"
+"この関数は与えられたIDに紐付く利用者が見付からなかったときは適切なエラーで失敗します。\n"
+"実装では`lookupUser`を使ってください。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1343
@@ -16767,6 +17531,9 @@ msgid ""
 "      deleteUser : (id : Nat) -> Prog ()\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      deleteUser : (id : Nat) -> Prog ()\n"
+"      ```\n"
 
 #. type: Bullet: '   6. '
 #: src/Tutorial/Functor.md:1349
@@ -16776,6 +17543,10 @@ msgid ""
 "exceeded.  In addition, this should create and return a unique ID for the "
 "new user entry."
 msgstr ""
+"関数`addUser`を実装してください。\n"
+"与えられた`Email`に紐付く利用者が既に存在していたり、\n"
+"データバンクの項目数上限である1000項目を超過したりした場合は、この関数は失敗します。\n"
+"加えてこの関数は新しい利用者の項目についての一意なIDを作って返します。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1353
@@ -16785,6 +17556,9 @@ msgid ""
 "      addUser : (new : User) -> Prog Nat\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      addUser : (new : User) -> Prog Nat\n"
+"      ```\n"
 
 #. type: Bullet: '   7. '
 #: src/Tutorial/Functor.md:1358
@@ -16793,6 +17567,9 @@ msgid ""
 "cannot be found or a user with the updated user's `Email` already exists.  "
 "The returned value should be the updated user."
 msgstr ""
+"関数`updateUser`を実装してください。\n"
+"問題の利用者が見付からなかったり更新された利用者の`Email`が既に存在している場合は失敗します。\n"
+"返値は更新された利用者です。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1362
@@ -16802,6 +17579,9 @@ msgid ""
 "      updateUser : (id : Nat) -> (mod : User -> User) -> Prog User\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      updateUser : (id : Nat) -> (mod : User -> User) -> Prog User\n"
+"      ```\n"
 
 #. type: Bullet: '   8. '
 #: src/Tutorial/Functor.md:1366
@@ -16809,6 +17589,8 @@ msgid ""
 "Data type `Prog` is actually too specific. We could just as well abstract "
 "over the error type and the `DB` environment:"
 msgstr ""
+"実はデータ型`Prog`は限定的すぎます。\n"
+"エラー型と`DB`環境を抽象化することができます。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1372
@@ -16820,6 +17602,11 @@ msgid ""
 "        runProg' : env -> IO (Either err a)\n"
 "      ```\n"
 msgstr ""
+"      ```idris\n"
+"      record Prog' env err a where\n"
+"        constructor MkProg\n"
+"        runProg' : env -> IO (Either err a)\n"
+"      ```\n"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1378
@@ -16831,12 +17618,15 @@ msgid ""
 "      `throw` with only a slight adjustment in the function's\n"
 "      type.\n"
 msgstr ""
+"      `Prog`に書いた全てのインターフェースの実装が、\n"
+"      そのまま`Prog' env err`への同じインターフェースを実装するのに使えることを確認してください。\n"
+"      関数の型に僅かに調整が必要ですが、それ以外は`throw`についても同じことが言えます。\n"
 
 #. type: Title ##
 #: src/Tutorial/Functor.md:1379
 #, no-wrap
 msgid "Background and further Reading"
-msgstr ""
+msgstr "背景とさらなる文献"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1388
@@ -16849,6 +17639,10 @@ msgid ""
 "Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-"
 "programmers-the-preface/)."
 msgstr ""
+"*関手*や*モナド*といった概念は数学の一分野である*圏論*に起源があります。\n"
+"それぞれの法則が来ているのもそこからです。\n"
+"圏論はプログラミング言語理論への応用が発見されていますが、特に関数型言語で顕著です。\n"
+"高度に抽象的な話題ですが、[Bartosz Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)によって書かれたプログラマにとってかなり手を出しやすい導入があります。"
 
 #. type: Plain text
 #: src/Tutorial/Functor.md:1394
@@ -16859,6 +17653,10 @@ msgid ""
 "with Effects*](https://www.staff.city.ac.uk/~ross/papers/Applicative.html), "
 "which is freely available online and a highly recommended read."
 msgstr ""
+"関手とモナドの中間地点としてのアプリカティブ関手の実用性は、\n"
+"Haskellで既にモナドが使われるようになってから数年後に発見されました。\n"
+"こちらは記事[*作用つきアプリカティブプログラミング* (Applicative Programming with Effects)](https://www.staff.city.ac.uk/~ross/papers/Applicative.html)で紹介されています。\n"
+"オンラインで自由に見ることができ、読まれることを強くお勧めします。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1401
@@ -16868,13 +17666,16 @@ msgid ""
 "Type`. Such data types are also referred to as *values in a context*, or "
 "*effectful computations*."
 msgstr ""
+"インターフェース`Functor`、`Applicative`、そして`Monad`は、\n"
+"型`Type -> Type`の型構築子を扱うときに引き合いに出されるプログラミング様式を抽象化します。\n"
+"そのようなデータ型は*文脈付きの値*や*作用付き計算*としても参照されます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1404
 msgid ""
 "`Functor` allows us to *map* over values in a context without affecting the "
 "context's underlying structure."
-msgstr ""
+msgstr "`Functor`があれば、文脈に土台の構造に影響することなく、文脈中の値を*写す*ことができます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1407
@@ -16882,6 +17683,8 @@ msgid ""
 "`Applicative` allows us to apply n-ary functions to n effectful computations "
 "and to lift pure values into a context."
 msgstr ""
+"`Applicative`があれば、\n"
+"n個の作用付き計算にn引数関数を適用したり、純粋な値を文脈に持ち上げたりすることができます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1411
@@ -16889,6 +17692,8 @@ msgid ""
 "`Monad` allows us to chain effectful computations, where the intermediary "
 "results can affect, which computation to run further down the chain."
 msgstr ""
+"`Monad`があれば作用付き計算を連鎖させることができます。\n"
+"この連鎖では中間結果がその後どの計算を走らせるかに影響させられます。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1415
@@ -16897,6 +17702,8 @@ msgid ""
 "composition of two functors or applicatives are again functors or "
 "applicatives, respectively."
 msgstr ""
+"`Monad`とは異なり、`Functor`と`Applicative`は組み合わさります。\n"
+"2つの関手やアプリカティブの積や合成はこれまたそれぞれ関手やアプリカティブとなります。"
 
 #. type: Bullet: '* '
 #: src/Tutorial/Functor.md:1419
@@ -16905,6 +17712,8 @@ msgid ""
 "presented here: Idiom brackets for `Applicative`, *do blocks* and the bang "
 "operator for `Monad`."
 msgstr ""
+"Idrisはここで提示したインターフェースのいくつかについて扱うための糖衣構文を提供します。\n"
+"`Applicative`の慣用括弧や*do記法*、そして`Monad`のびっくり演算子です。"
 
 #. type: Title ###
 #: src/Tutorial/Functor.md:1420 src/Tutorial/Intro.md:430
@@ -16919,6 +17728,8 @@ msgid ""
 "totality checking, and an interface for collapsing container types: "
 "`Foldable`."
 msgstr ""
+"[次章](Folds.md)では再帰、全域性検査、\n"
+"そして容器型を折り畳むインターフェースである`Foldable`について学び始めます。"
 
 #. type: Title #
 #: src/Tutorial/IO.md:1
