@@ -1,33 +1,31 @@
 # Interactive Editing in Neovim
 
-Idris provides extensive capabilities to interactively
-analyze the types of values and expressions in our programs
-and fill out skeleton implementations and sometimes even whole
-programs for us based on the types provided. These interactive
-editing features are available via plugins in different editors.
-Since I am a Neovim user, I explain the Idris related parts of
-my own setup in detail here.
+Idris provides extensive capabilities to interactively analyze the types of
+values and expressions in our programs and fill out skeleton implementations
+and sometimes even whole programs for us based on the types provided. These
+interactive editing features are available via plugins in different
+editors.  Since I am a Neovim user, I explain the Idris related parts of my
+own setup in detail here.
 
-The main component required to get all these features to run
-in Neovim is an executable provided by the
-[idris2-lsp](https://github.com/idris-community/idris2-lsp) project.
-This executable makes use of the Idris compiler API (application
-programming interface) internally and can check the syntax and
-types of the source code we are working on. It communicates with
-Neovim via the language server protocol (LSP). This communication
-is setup through the [idris2-nvim](https://github.com/ShinKage/idris2-nvim)
-plugin.
+The main component required to get all these features to run in Neovim is an
+executable provided by the
+[idris2-lsp](https://github.com/idris-community/idris2-lsp) project.  This
+executable makes use of the Idris compiler API (application programming
+interface) internally and can check the syntax and types of the source code
+we are working on. It communicates with Neovim via the language server
+protocol (LSP). This communication is setup through the
+[idris2-nvim](https://github.com/ShinKage/idris2-nvim)  plugin.
 
 As we will see in this tutorial, the `idris2-lsp` executable not only
 supports syntax and type checking, but comes also with additional
 interactive editing features. Finally, the Idris compiler API supports
-semantic highlighting of Idris source code: Identifiers and keywords
-are highlighted not only based on the language's syntax (that would
-be *syntax highlighting*, a feature expected from all modern
-programming environments and editors), but also based on their
-*semantics*. For instance, a local variable in a function implementation
-gets highlighted differently than the name of a top level function,
-although syntactically these are both just identifiers.
+semantic highlighting of Idris source code: Identifiers and keywords are
+highlighted not only based on the language's syntax (that would be *syntax
+highlighting*, a feature expected from all modern programming environments
+and editors), but also based on their *semantics*. For instance, a local
+variable in a function implementation gets highlighted differently than the
+name of a top level function, although syntactically these are both just
+identifiers.
 
 ```idris
 module Appendices.Neovim
@@ -39,54 +37,46 @@ import Data.Vect
 
 ## Setup
 
-In order to make full use of interactive Idris editing in
-Neovim, at least the following tools need to be installed:
+In order to make full use of interactive Idris editing in Neovim, at least
+the following tools need to be installed:
 
 * A recent version of Neovim (version 0.5 or later).
-
 * A recent version of the Idris compiler (at least version 0.5.1).
-
 * IdrisコンパイラのAPI
-
 * [idris2-lsp](https://github.com/idris-community/idris2-lsp)パッケージ
-
 * The following Neovim plugins:
-
+  * [idris2-nvim](https://github.com/ShinKage/idris2-nvim)
   * [idris2-nvim](https://github.com/ShinKage/idris2-nvim)
 
-  * [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+The `idris2-lsp` project gives detailed instructions about how to install
+Idris 2 together with its standard libraries and compiler API. Make sure to
+follow these instructions so that your compiler and `idris2-lsp` executable
+are in sync.
 
-
-The `idris2-lsp` project gives detailed instructions about how
-to install Idris 2 together with its standard libraries and compiler
-API. Make sure to follow these instructions so that your compiler
-and `idris2-lsp` executable are in sync.
-
-If you are new to Neovim, you might want to use the `init.vim`
-file provided in the `resources` folder. In that case, the
-necessary Neovim plugins are already included, but you need to install
+If you are new to Neovim, you might want to use the `init.vim` file provided
+in the `resources` folder. In that case, the necessary Neovim plugins are
+already included, but you need to install
 [vim-plug](https://github.com/junegunn/vim-plug), a plugin manager.
 Afterwards, copy all or parts of `resources/init.vim` to your own `init.vim`
-file. (Use `:help init.vim` from within Neovim in order to find
-out where to look for this file.). After setting up your `init.vim`
-file, restart Neovim and run `:PlugUpdate` to install the
-necessary plugins.
+file. (Use `:help init.vim` from within Neovim in order to find out where to
+look for this file.). After setting up your `init.vim` file, restart Neovim
+and run `:PlugUpdate` to install the necessary plugins.
 
 ## A Typical Workflow
 
-In order to checkout the interactive editing features
-available to us, we will reimplement some small utilities
-from the *Prelude*. To follow along, you should have
-already worked through the [Introduction](../Tutorial/Intro.md),
-[Functions Part 1](../Tutorial/Functions1.md), and at least
-parts of [Algebraic Data Types](../Tutorial/DataTypes.md), otherwise
-it will be hard to understand what's going on here.
+In order to checkout the interactive editing features available to us, we
+will reimplement some small utilities from the *Prelude*. To follow along,
+you should have already worked through the
+[Introduction](../Tutorial/Intro.md), [Functions Part
+1](../Tutorial/Functions1.md), and at least parts of [Algebraic Data
+Types](../Tutorial/DataTypes.md), otherwise it will be hard to understand
+what's going on here.
 
-Before we begin, note that the commands and actions shown in this
-tutorial might not work correctly after you edited a source file
-but did not write your changes to disk. Therefore, the first thing
-you should try if the things described here do not work, is to
-quickly safe the current file (`:w`).
+Before we begin, note that the commands and actions shown in this tutorial
+might not work correctly after you edited a source file but did not write
+your changes to disk. Therefore, the first thing you should try if the
+things described here do not work, is to quickly safe the current file
+(`:w`).
 
 Let's start with negation of a boolean value:
 
@@ -94,18 +84,16 @@ Let's start with negation of a boolean value:
 negate1 : Bool -> Bool
 ```
 
-Typically, when writing Idris code we follow the mantra
-"types first". Although you might already have an idea about
-how to implement a certain piece of functionality, you still
-need to provide an accurate type before you can start writing
-your implementation. This means, when programming in Idris, we have
-to mentally keep track of the implementation of an algorithm
-and the types involved at the same time, both of which can
-become arbitrarily complex. Or do we? Remember that Idris knows
-at least as much about the variables and their types available
-in the current context of a function implementation as we do,
-so we probably should ask it for guidance instead of trying
-to do everything on our own.
+Typically, when writing Idris code we follow the mantra "types
+first". Although you might already have an idea about how to implement a
+certain piece of functionality, you still need to provide an accurate type
+before you can start writing your implementation. This means, when
+programming in Idris, we have to mentally keep track of the implementation
+of an algorithm and the types involved at the same time, both of which can
+become arbitrarily complex. Or do we? Remember that Idris knows at least as
+much about the variables and their types available in the current context of
+a function implementation as we do, so we probably should ask it for
+guidance instead of trying to do everything on our own.
 
 So, in order to proceed, we ask Idris for a skeleton function
 body: In normal editor mode, move your cursor on the line where
@@ -117,8 +105,7 @@ the comma character (`,`), in which case the above command
 consists of a comma quickly followed by the lowercase letter "a".
 See also `:help leader` and `:help localleader` in Neovim
 
-Idris will generate a skeleton implementation similar to the
-following:
+Idris will generate a skeleton implementation similar to the following:
 
 ```idris
 negate2 : Bool -> Bool
@@ -159,23 +146,21 @@ negate3 False = ?negate3_rhs_0
 negate3 True = ?negate3_rhs_1
 ```
 
-As you can see, Idris inserted a hole for each of the cases on the
-right hand side. We can again inspect their types or
-replace them with a proper implementation directly.
+As you can see, Idris inserted a hole for each of the cases on the right
+hand side. We can again inspect their types or replace them with a proper
+implementation directly.
 
-This concludes the introduction of the (in my opinion) core
-features of interactive editing: Hovering on metavariables,
-adding skeleton function implementations, and case splitting
-(which also works in case blocks and for nested pattern
-matches). You should start using these all the time *now*!
+This concludes the introduction of the (in my opinion) core features of
+interactive editing: Hovering on metavariables, adding skeleton function
+implementations, and case splitting (which also works in case blocks and for
+nested pattern matches). You should start using these all the time *now*!
 
 ## 式検索
 
-Sometimes, Idris knows enough about the types involved to
-come up with a function implementation on its own. For instance,
-let us implement function `either` from the *Prelude*.
-After giving its type, creating a skeleton implementation,
-and case splitting on the `Either` argument, we arrive at
+Sometimes, Idris knows enough about the types involved to come up with a
+function implementation on its own. For instance, let us implement function
+`either` from the *Prelude*.  After giving its type, creating a skeleton
+implementation, and case splitting on the `Either` argument, we arrive at
 something similar to the following:
 
 ```idris
@@ -191,9 +176,9 @@ the cursor onto one of the metavariables and enter
 a selection of possible expressions (only one in this case),
 of which you can choose a fitting one (or abort with `q`).
 
-Here is another example: A reimplementation of function `maybe`.
-If you run an expression search on `?maybe2_rhs1`, you will
-get a larger list of choices.
+Here is another example: A reimplementation of function `maybe`.  If you run
+an expression search on `?maybe2_rhs1`, you will get a larger list of
+choices.
 
 ```idris
 maybe2 : b -> (a -> b) -> Maybe a -> b
@@ -225,8 +210,8 @@ function declaration.
 
 ## More Code Actions
 
-There are other shortcuts available for generating part of your code,
-two of which I'll explain here.
+There are other shortcuts available for generating part of your code, two of
+which I'll explain here.
 
 First, it is possible to add a new case block by entering
 `<LocalLeader>mc` in normal mode when on a metavariable.
@@ -277,11 +262,10 @@ traverseEither f [] = Right []
 traverseEither f (x :: xs) = ?whatNow x xs f (f x) (traverseEither f xs)
 ```
 
-Idris will create a new function declaration with the
-type and name of `?whatNow`, which takes as arguments
-all variables currently in scope. It also replaces the hole in
-`traverseEither` with a call to this new function. Typically,
-you will have to manually remove unneeded arguments
+Idris will create a new function declaration with the type and name of
+`?whatNow`, which takes as arguments all variables currently in scope. It
+also replaces the hole in `traverseEither` with a call to this new
+function. Typically, you will have to manually remove unneeded arguments
 afterwards. This led me to the following version:
 
 ```idris
@@ -294,55 +278,45 @@ traverseEither2 f (x :: xs) = whatNow2 (f x) (traverseEither f xs)
 
 ## Getting Information
 
-The `idris2-lsp` executable and through it, the `idris2-nvim` plugin,
-not only supports the code actions described above. Here is a
-non-comprehensive list of other capabilities. I suggest you try
-out each of them from within this source file.
+The `idris2-lsp` executable and through it, the `idris2-nvim` plugin, not
+only supports the code actions described above. Here is a non-comprehensive
+list of other capabilities. I suggest you try out each of them from within
+this source file.
 
 * Typing `K` when on an identifier or operator in normal mode shows its type
-  and namespace (if any). In case of a metavariable, variables
-  in the current context are displayed as well together with their
-  types and quantities (quantities will be explained in
-  [Functions Part 2](../Tutorial/Functions2.md)).
-  If you don't like popups, enter `<LocalLeader>so` to open a new window where
-  this information is displayed and semantically highlighted instead.
-
-* Typing `gd` on a function, operator, data constructor or type
-  constructor in normal mode jumps to the item's definition.
-  For external modules, this works only if the
-  module in question has been installed together with its source code
-  (by using the `idris2 --install-with-src` command).
-
-* Typing `<LocalLeader>mm` opens a popup window listing all metavariables
-  in the current module. You can place the cursor on an entry and
-  jump to its location by pressing `<Enter>`.
-
-* Typing `<LocalLeader>mn` (or `<LocalLeader>mp`) jumps to the next
-  (or previous) metavariable in the current module.
-
+  and namespace (if any). In case of a metavariable, variables in the
+  current context are displayed as well together with their types and
+  quantities (quantities will be explained in [Functions Part
+  2](../Tutorial/Functions2.md)).  If you don't like popups, enter
+  `<LocalLeader>so` to open a new window where this information is displayed
+  and semantically highlighted instead.
+* Typing `gd` on a function, operator, data constructor or type constructor
+  in normal mode jumps to the item's definition.  For external modules, this
+  works only if the module in question has been installed together with its
+  source code (by using the `idris2 --install-with-src` command).
+* Typing `<LocalLeader>mm` opens a popup window listing all metavariables in
+  the current module. You can place the cursor on an entry and jump to its
+  location by pressing `<Enter>`.
+* Typing `<LocalLeader>mn` (or `<LocalLeader>mp`) jumps to the next (or
+  previous) metavariable in the current module.
 * Typing `<LocalLeader>br` opens a popup where you can enter a
-  namespace. Idris will then show all functions (plus their types)
-  exported from that namespace in a popup window, and you can
-  jump to a function's definition by pressing enter on one of the
-  entries. Note: The module in question must be imported in the
-  current source file.
+  namespace. Idris will then show all functions (plus their types)  exported
+  from that namespace in a popup window, and you can jump to a function's
+  definition by pressing enter on one of the entries. Note: The module in
+  question must be imported in the current source file.
+* Typing `<LocalLeader>x` opens a popup where you can enter a REPL command
+  or Idris expression, and the plugin will reply with a response from the
+  REPL. Whenever REPL examples are shown in the main part of this guide, you
+  can try them from within Neovim with this shortcut if you like.
+* Typing `<LocalLeader><LocalLeader>e` will display the error message from
+  the current line in a popup window. This can be highly useful, if error
+  messages are too long to fit on a single line. Likewise, `<LocalLeader>el`
+  will list all error messages from the current buffer in a new window. You
+  can then select an error message and jump to its origin by pressing
+  `<Enter>`.
 
-* Typing `<LocalLeader>x` opens a popup where you can enter
-  a REPL command or Idris expression, and the plugin will reply
-  with a response from the REPL. Whenever REPL examples are shown
-  in the main part of this guide, you can try them from within
-  Neovim with this shortcut if you like.
-
-* Typing `<LocalLeader><LocalLeader>e` will display the error message
-  from the current line in a popup window. This can be highly useful,
-  if error messages are too long to fit on a single line. Likewise,
-  `<LocalLeader>el` will list all error messages from the current
-  buffer in a new window. You can then select an error message and
-  jump to its origin by pressing `<Enter>`.
-
-
-Other use cases and examples are described on the GitHub page
-of the `idris2-nvim` plugin and can be included as described there.
+Other use cases and examples are described on the GitHub page of the
+`idris2-nvim` plugin and can be included as described there.
 
 ## The `%name` Pragma
 
@@ -365,10 +339,10 @@ data Element = H | He | C | N | O | F | Ne
 %name Element e,f
 ```
 
-Idris will then use these names (followed by these names postfixed
-with increasing integers), when it has to come up with variable names of this
-type on its own. For instance, here is a test function and the
-result of adding a skeleton definition to it:
+Idris will then use these names (followed by these names postfixed with
+increasing integers), when it has to come up with variable names of this
+type on its own. For instance, here is a test function and the result of
+adding a skeleton definition to it:
 
 ```idris
 test : Element -> Element -> Element -> Element -> Element -> Element
@@ -377,12 +351,11 @@ test e f e1 f1 e2 = ?test_rhs
 
 ## まとめ
 
-Neovim, together with the `idris2-lsp` executable and the
-`idris2-nvim` editor plugin, provides extensive utilities for
-interactive editing when programming in Idris. Similar functionality
-is available for some other editors, so feel free to ask what's
-available for your editor of choice, for instance on the
-[Idris 2 Discord channel](https://discord.gg/UX68fDs2jc).
+Neovim, together with the `idris2-lsp` executable and the `idris2-nvim`
+editor plugin, provides extensive utilities for interactive editing when
+programming in Idris. Similar functionality is available for some other
+editors, so feel free to ask what's available for your editor of choice, for
+instance on the [Idris 2 Discord channel](https://discord.gg/UX68fDs2jc).
 
 <!-- vi: filetype=idris2
 -->

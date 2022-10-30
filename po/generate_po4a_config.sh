@@ -1,9 +1,13 @@
 #!/bin/sh
 
-config=po4a.cfg
-
-echo '[po_directory] po/' > $config
+echo '[po_directory] po/'
 
 for markdown in src/**/*.md; do
-	echo "[type: text] $markdown \$lang:po/\$lang/$markdown opt:\"--option markdown --option neverwrap --keep 0\"" >> $config
+  cat << END_OF_CFG
+
+[type: text] \\
+  $markdown \\
+  \$lang:po/\$lang/$markdown \\
+  opt:"--option markdown --keep 0"
+END_OF_CFG
 done

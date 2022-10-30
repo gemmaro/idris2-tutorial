@@ -1,19 +1,16 @@
 # Functor and Friends
 
-Programming, like mathematics, is about abstraction. We
-try to model parts of the real world, reusing recurring
-patterns by abstracting over them.
+Programming, like mathematics, is about abstraction. We try to model parts
+of the real world, reusing recurring patterns by abstracting over them.
 
-In this chapter, we will learn about several related interfaces,
-which are all about abstraction and therefore can be hard to
-understand at the beginning. Especially figuring out
-*why* they are useful and *when* to use them will take
-time and experience. This chapter therefore comes
-with tons of exercises, most of which can be solved
-with only a few short lines of code. Don't skip them.
-Come back to them several times until these things start
-feeling natural to you. You will then realize that their
-initial complexity has vanished.
+In this chapter, we will learn about several related interfaces, which are
+all about abstraction and therefore can be hard to understand at the
+beginning. Especially figuring out *why* they are useful and *when* to use
+them will take time and experience. This chapter therefore comes with tons
+of exercises, most of which can be solved with only a few short lines of
+code. Don't skip them.  Come back to them several times until these things
+start feeling natural to you. You will then realize that their initial
+complexity has vanished.
 
 ```idris
 module Tutorial.Functor
@@ -40,16 +37,14 @@ sure about how many values there are, but the possibilities
 are much smaller: Zero or one. With `IO`, the context is a different one:
 Arbitrary side effects.
 
-Although the type constructors discussed above are quite
-different in how they behave and when they are useful,
-there are certain operations that keep coming up
-when working with them. The first such operation
-is *mapping a pure function over the data type, without
-affecting its underlying structure*.
+Although the type constructors discussed above are quite different in how
+they behave and when they are useful, there are certain operations that keep
+coming up when working with them. The first such operation is *mapping a
+pure function over the data type, without affecting its underlying
+structure*.
 
-For instance, given a list of numbers, we'd like to multiply
-each number by two, without changing their order or removing
-any values:
+For instance, given a list of numbers, we'd like to multiply each number by
+two, without changing their order or removing any values:
 
 ```idris
 multBy2List : Num a => List a -> List a
@@ -57,8 +52,8 @@ multBy2List []        = []
 multBy2List (x :: xs) = 2 * x :: multBy2List xs
 ```
 
-But we might just as well convert every string in a
-list of strings to upper case characters:
+But we might just as well convert every string in a list of strings to upper
+case characters:
 
 ```idris
 toUpperList : List String -> List String
@@ -66,9 +61,8 @@ toUpperList []        = []
 toUpperList (x :: xs) = toUpper x :: toUpperList xs
 ```
 
-Sometimes, the type of the stored value changes. In the
-next example, we calculate the lengths of the strings stored
-in a list:
+Sometimes, the type of the stored value changes. In the next example, we
+calculate the lengths of the strings stored in a list:
 
 ```idris
 toLengthList : List String -> List Nat
@@ -76,10 +70,9 @@ toLengthList []        = []
 toLengthList (x :: xs) = length x :: toLengthList xs
 ```
 
-I'd like you to appreciate, just how boring these functions are. They
-are almost identical, with the only interesting part being
-the function we apply to each element. Surely, there must be a
-pattern to abstract over:
+I'd like you to appreciate, just how boring these functions are. They are
+almost identical, with the only interesting part being the function we apply
+to each element. Surely, there must be a pattern to abstract over:
 
 ```idris
 mapList : (a -> b) -> List a -> List b
@@ -87,10 +80,9 @@ mapList f []        = []
 mapList f (x :: xs) = f x :: mapList f xs
 ```
 
-This is often the first step of abstraction in functional
-programming: Write a (possibly generic) higher-order function.
-We can now concisely implement all examples shown above in
-terms of `mapList`:
+This is often the first step of abstraction in functional programming: Write
+a (possibly generic) higher-order function.  We can now concisely implement
+all examples shown above in terms of `mapList`:
 
 ```idris
 multBy2List' : Num a => List a -> List a
@@ -103,10 +95,9 @@ toLengthList' : List String -> List Nat
 toLengthList' = mapList length
 ```
 
-But surely we'd like to do the same kind of thing with
-`List1` and `Maybe`! After all, they are just container
-types like `List`, the only difference being some detail
-about the number of values they can or can't hold:
+But surely we'd like to do the same kind of thing with `List1` and `Maybe`!
+After all, they are just container types like `List`, the only difference
+being some detail about the number of values they can or can't hold:
 
 ```idris
 mapMaybe : (a -> b) -> Maybe a -> Maybe b
@@ -114,14 +105,13 @@ mapMaybe f Nothing  = Nothing
 mapMaybe f (Just v) = Just (f v)
 ```
 
-Even with `IO`, we'd like to be able to map pure functions
-over effectful computations. The implementation is
-a bit more involved, due to the nested layers of
-data constructors, but if in doubt, the types will surely
-guide us. Note, however, that `IO` is not publicly exported,
-so its data constructor is unavailable to us. We can use
-functions `toPrim` and `fromPrim`, however, for converting
-`IO` from and to `PrimIO`, which we can freely dissect:
+Even with `IO`, we'd like to be able to map pure functions over effectful
+computations. The implementation is a bit more involved, due to the nested
+layers of data constructors, but if in doubt, the types will surely guide
+us. Note, however, that `IO` is not publicly exported, so its data
+constructor is unavailable to us. We can use functions `toPrim` and
+`fromPrim`, however, for converting `IO` from and to `PrimIO`, which we can
+freely dissect:
 
 ```idris
 mapIO : (a -> b) -> IO a -> IO b
@@ -132,9 +122,9 @@ mapIO f io = fromPrim $ mapPrimIO (toPrim io)
            in MkIORes (f va) w2
 ```
 
-From the concept of *mapping a pure function over
-values in a context* follow some derived functions, which are
-often useful. Here are some of them for `IO`:
+From the concept of *mapping a pure function over values in a context*
+follow some derived functions, which are often useful. Here are some of them
+for `IO`:
 
 ```idris
 mapConstIO : b -> IO a -> IO b
@@ -144,10 +134,10 @@ forgetIO : IO a -> IO ()
 forgetIO = mapConstIO ()
 ```
 
-Of course, we'd want to implement `mapConst` and `forget` as well
-for `List`, `List1`, and `Maybe` (and dozens of other type
-constructors with some kind of mapping function), and they'd
-all look the same and be equally boring.
+Of course, we'd want to implement `mapConst` and `forget` as well for
+`List`, `List1`, and `Maybe` (and dozens of other type constructors with
+some kind of mapping function), and they'd all look the same and be equally
+boring.
 
 When we come upon a recurring class of functions with
 several useful derived functions, we should consider defining
@@ -159,10 +149,10 @@ need to get rid of. These are not of type `Type` but of type
 from parametrizing an interface over something else than
 a `Type`.
 
-The interface we are looking for is called `Functor`.
-Here is its definition and an example implementation (I appended
-a tick at the end of the names for them not to overlap with
-the interface and functions exported by the *Prelude*):
+The interface we are looking for is called `Functor`.  Here is its
+definition and an example implementation (I appended a tick at the end of
+the names for them not to overlap with the interface and functions exported
+by the *Prelude*):
 
 ```idris
 interface Functor' (0 f : Type -> Type) where
@@ -173,16 +163,15 @@ implementation Functor' Maybe where
   map' f (Just v) = Just $ f v
 ```
 
-Note, that we had to give the type of parameter `f` explicitly,
-and in that case it needs to be annotated with quantity zero if
-you want it to be erased at runtime (which you almost always want).
+Note, that we had to give the type of parameter `f` explicitly, and in that
+case it needs to be annotated with quantity zero if you want it to be erased
+at runtime (which you almost always want).
 
-Now, reading type signatures consisting only of type parameters
-like the one of `map'` can take some time to get used to, especially
-when some type parameters are applied to other parameters as in
-`f a`. It can be very helpful to inspect these signatures together
-with all implicit arguments at the REPL (I formatted the output to
-make it more readable):
+Now, reading type signatures consisting only of type parameters like the one
+of `map'` can take some time to get used to, especially when some type
+parameters are applied to other parameters as in `f a`. It can be very
+helpful to inspect these signatures together with all implicit arguments at
+the REPL (I formatted the output to make it more readable):
 
 ```repl
 Tutorial.Functor> :ti map'
@@ -195,8 +184,8 @@ Tutorial.Functor.map' :  {0 b : Type}
                       -> f b
 ```
 
-It can also be helpful to replace type parameter `f` with a concrete
-value of the same type:
+It can also be helpful to replace type parameter `f` with a concrete value
+of the same type:
 
 ```repl
 Tutorial.Functor> :t map' {f = Maybe}
@@ -204,14 +193,14 @@ map' : (?a -> ?b) -> Maybe ?a -> Maybe ?b
 ```
 
 Remember, being able to interpret type signatures is paramount to
-understanding what's going on in an Idris declaration. You *must*
-practice this and make use of the tools and utilities given to you.
+understanding what's going on in an Idris declaration. You *must* practice
+this and make use of the tools and utilities given to you.
 
 ### Derived Functions
 
 There are several functions and operators directly derivable from interface
-`Functor`. Eventually, you should know and remember all of them as
-they are highly useful. Here they are together with their types:
+`Functor`. Eventually, you should know and remember all of them as they are
+highly useful. Here they are together with their types:
 
 ```repl
 Tutorial.Functor> :t (<$>)
@@ -279,8 +268,8 @@ implementation Functor (List01 ne) where
 
 ### Functor Composition
 
-The nice thing about functors is how they can be paired and
-nested with other functors and the results are functors again:
+The nice thing about functors is how they can be paired and nested with
+other functors and the results are functors again:
 
 ```idris
 record Product (f,g : Type -> Type) (a : Type) where
@@ -308,8 +297,8 @@ productExample :  Show a
 productExample = toPair . map show . fromPair {f = Either e, g = List}
 ```
 
-More often, we'd like to map over several layers of nested functors
-at once. Here's how to do this with an example:
+More often, we'd like to map over several layers of nested functors at
+once. Here's how to do this with an example:
 
 ```idris
 record Comp (f,g : Type -> Type) (a : Type) where
@@ -325,43 +314,40 @@ compExample = unComp . map show . MkComp {f = List, g = Either e}
 
 #### Named Implementations
 
-Sometimes, there are more ways to implement an interface for
-a given type. For instance, for numeric types we can have
-a `Monoid` representing addition and one representing multiplication.
-Likewise, for nested functors, `map` can be interpreted as a mapping
-over only the first layer of values, or a mapping over several layers
-of values.
+Sometimes, there are more ways to implement an interface for a given
+type. For instance, for numeric types we can have a `Monoid` representing
+addition and one representing multiplication.  Likewise, for nested
+functors, `map` can be interpreted as a mapping over only the first layer of
+values, or a mapping over several layers of values.
 
-One way to go about this is to define single-field wrappers as
-shown with data type `Comp` above. However, Idris also allows us
-to define additional interface implementations, which must then
-be given a name. For instance:
+One way to go about this is to define single-field wrappers as shown with
+data type `Comp` above. However, Idris also allows us to define additional
+interface implementations, which must then be given a name. For instance:
 
 ```idris
 [Compose'] Functor f => Functor g => Functor (f . g) where
   map f = (map . map) f
 ```
 
-Note, that this defines a new implementation of `Functor`, which will
-*not* be considered during implicit resolution in order
-to avoid ambiguities. However,
-it is possible to explicitly choose to use this implementation
-by passing it as an explicit argument to `map`, prefixed with an `@`:
+Note, that this defines a new implementation of `Functor`, which will *not*
+be considered during implicit resolution in order to avoid
+ambiguities. However, it is possible to explicitly choose to use this
+implementation by passing it as an explicit argument to `map`, prefixed with
+an `@`:
 
 ```idris
 compExample2 :  Show a => List (Either e a) -> List (Either e String)
 compExample2 = map @{Compose} show
 ```
 
-In the example above, we used `Compose` instead of `Compose'`, since
-the former is already exported by the *Prelude*.
+In the example above, we used `Compose` instead of `Compose'`, since the
+former is already exported by the *Prelude*.
 
 ### Functor Laws
 
-Implementations of `Functor` are supposed to adhere to certain laws,
-just like implementations of `Eq` or `Ord`. Again, these laws are
-not verified by Idris, although it would be possible (and
-often cumbersome) to do so.
+Implementations of `Functor` are supposed to adhere to certain laws, just
+like implementations of `Eq` or `Ord`. Again, these laws are not verified by
+Idris, although it would be possible (and often cumbersome) to do so.
 
 1. `map id = id`: Mapping the identity function over a functor
     must not have any visible effect such as changing a container's
@@ -371,27 +357,22 @@ often cumbersome) to do so.
 2. `map (f . g) = map f . map g`: Sequencing two mappings must be identical
    to a single mapping using the composition of the two functions.
 
-
-Both of these laws request, that `map` is preserving the *structure*
-of values. This is easier to understand with container types like
-`List`, `Maybe`, or `Either e`, where `map` is not allowed to
-add or remove any wrapped value, nor - in case of `List` -
-change their order. With `IO`, this can best be described as `map`
-not performing additional side effects.
+Both of these laws request, that `map` is preserving the *structure* of
+values. This is easier to understand with container types like `List`,
+`Maybe`, or `Either e`, where `map` is not allowed to add or remove any
+wrapped value, nor - in case of `List` - change their order. With `IO`, this
+can best be described as `map` not performing additional side effects.
 
 ### 演習 パート1
 
 1. Write your own implementations of `Functor'` for `Maybe`, `List`,
    `List1`, `Vect n`, `Either e`, and `Pair a`.
 
+2. Write a named implementation of `Functor` for pairs of functors (similar
+   to the one implemented for `Product`).
 
-2. Write a named implementation of `Functor` for pairs of functors
-   (similar to the one implemented for `Product`).
-
-
-3. Implement `Functor` for data type `Identity` (which is available
-   from `Control.Monad.Identity` in *base*):
-
+3. Implement `Functor` for data type `Identity` (which is available from
+   `Control.Monad.Identity` in *base*):
 
    ```idris
    record Identity a where
@@ -401,11 +382,10 @@ not performing additional side effects.
 
 4. Here is a curious one: Implement `Functor` for `Const e` (which is also
    available from `Control.Applicative.Const` in *base*). You might be
-   confused about the fact that the second type parameter has absolutely
-   no relevance at runtime, as there is no value of that type. Such
-   types are sometimes called *phantom types*. They can be quite useful
-   for tagging values with additional typing information.
-
+   confused about the fact that the second type parameter has absolutely no
+   relevance at runtime, as there is no value of that type. Such types are
+   sometimes called *phantom types*. They can be quite useful for tagging
+   values with additional typing information.
 
    Don't let the above confuse you: There is only one possible implementation.
    As usual, use holes and let the compiler guide you if you get lost.
@@ -416,9 +396,8 @@ not performing additional side effects.
      value : e
    ```
 
-5. Here is a sum type for describing CRUD operations
-   (Create, Read, Update, and Delete) in a data store:
-
+5. Here is a sum type for describing CRUD operations (Create, Read, Update,
+   and Delete) in a data store:
 
    ```idris
    data Crud : (i : Type) -> (a : Type) -> Type where
@@ -431,7 +410,6 @@ not performing additional side effects.
    Implement `Functor` for `Crud i`.
 
 6. Here is a sum type for describing responses from a data server:
-
 
    ```idris
    data Response : (e, i, a : Type) -> Type where
@@ -446,7 +424,6 @@ not performing additional side effects.
 
 7. Implement `Functor` for `Validated e`:
 
-
    ```idris
    data Validated : (e,a : Type) -> Type where
      Invalid : (err : e) -> Validated e a
@@ -455,9 +432,9 @@ not performing additional side effects.
 
 ## Applicative
 
-While `Functor` allows us to map a pure, unary function
-over a value in a context, it doesn't allow us to combine
-n such values under an n-ary function.
+While `Functor` allows us to map a pure, unary function over a value in a
+context, it doesn't allow us to combine n such values under an n-ary
+function.
 
 For instance, consider the following functions:
 
@@ -479,10 +456,10 @@ liftIO2 f ioa iob = fromPrim $ go (toPrim ioa) (toPrim iob)
            in MkIORes (f va vb) w3
 ```
 
-This behavior is not covered by `Functor`, yet it is a very
-common thing to do. For instance, we might want to read two numbers
-from standard input (both operations might fail), calculating the
-product of the two. Here's the code:
+This behavior is not covered by `Functor`, yet it is a very common thing to
+do. For instance, we might want to read two numbers from standard input
+(both operations might fail), calculating the product of the two. Here's the
+code:
 
 ```idris
 multNumbers : Num a => Neg a => IO (Maybe a)
@@ -492,12 +469,12 @@ multNumbers = do
   pure $ liftMaybe2 (*) (parseInteger s1) (parseInteger s2)
 ```
 
-And it won't stop here. We might just as well want to have
-`liftMaybe3` for ternary functions and three `Maybe` arguments
-and so on, for arbitrary numbers of arguments.
+And it won't stop here. We might just as well want to have `liftMaybe3` for
+ternary functions and three `Maybe` arguments and so on, for arbitrary
+numbers of arguments.
 
-But there is more: We'd also like to lift pure values into
-the context in question. With this, we could do the following:
+But there is more: We'd also like to lift pure values into the context in
+question. With this, we could do the following:
 
 ```idris
 liftMaybe3 : (a -> b -> c -> d) -> Maybe a -> Maybe b -> Maybe c -> Maybe d
@@ -513,9 +490,9 @@ multAdd100 s t = liftMaybe3 calc (parseInteger s) (parseInteger t) (pure 100)
         calc x y z = x * y + z
 ```
 
-As you'll of course already know, I am now going to present a new
-interface to encapsulate this behavior. It's called `Applicative`.
-Here is its definition and an example implementation:
+As you'll of course already know, I am now going to present a new interface
+to encapsulate this behavior. It's called `Applicative`.  Here is its
+definition and an example implementation:
 
 ```idris
 interface Functor' f => Applicative' f where
@@ -533,8 +510,8 @@ Interface `Applicative` is of course already exported by the *Prelude*.
 There, function `app` is an operator sometimes called *app* or *apply*:
 `(<*>)`.
 
-You may wonder, how functions like `liftMaybe2` or `liftIO3` are related
-to operator *apply*. Let me demonstrate this:
+You may wonder, how functions like `liftMaybe2` or `liftIO3` are related to
+operator *apply*. Let me demonstrate this:
 
 ```idris
 liftA2 : Applicative f => (a -> b -> c) -> f a -> f b -> f c
@@ -550,11 +527,10 @@ break these down. If we specialize `liftA2` to use `Maybe` for `f`,
 is of type `Maybe (b -> c)`, as `(<*>)` will apply the value stored
 in `fa` to the function stored in `pure fun` (currying!).
 
-You'll often see such chains of applications of *apply*, the number
-of *applies* corresponding to the arity of the function we lift.
-You'll sometimes also see the following, which allows us to drop
-the initial call to `pure`, and use the operator version of `map`
-instead:
+You'll often see such chains of applications of *apply*, the number of
+*applies* corresponding to the arity of the function we lift.  You'll
+sometimes also see the following, which allows us to drop the initial call
+to `pure`, and use the operator version of `map` instead:
 
 ```idris
 liftA2' : Applicative f => (a -> b -> c) -> f a -> f b -> f c
@@ -564,22 +540,20 @@ liftA3' : Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 liftA3' fun fa fb fc = fun <$> fa <*> fb <*> fc
 ```
 
-So, interface `Applicative` allows us to lift values (and functions!)
-into computational contexts and apply them to values in the same
-contexts. Before we will see an extended example why this is
-useful, I'll quickly introduce some syntactic sugar for working
-with applicative functors.
+So, interface `Applicative` allows us to lift values (and functions!)  into
+computational contexts and apply them to values in the same contexts. Before
+we will see an extended example why this is useful, I'll quickly introduce
+some syntactic sugar for working with applicative functors.
 
 ### Idiom Brackets
 
-The programming style used for implementing `liftA2'` and `liftA3'`
-is also referred to as *applicative style* and is used a lot
-in Haskell for combining several effectful computations
-with a single pure function.
+The programming style used for implementing `liftA2'` and `liftA3'` is also
+referred to as *applicative style* and is used a lot in Haskell for
+combining several effectful computations with a single pure function.
 
-In Idris, there is an alternative to using such chains of
-operator applications: Idiom brackets. Here's another
-reimplementation of `liftA2` and `liftA3`:
+In Idris, there is an alternative to using such chains of operator
+applications: Idiom brackets. Here's another reimplementation of `liftA2`
+and `liftA3`:
 
 ```idris
 liftA2'' : Applicative f => (a -> b -> c) -> f a -> f b -> f c
@@ -598,22 +572,18 @@ can disambiguate between the overloaded function names.
 
 ### Use Case: CSV Reader
 
-In order to understand the power and versatility that comes
-with applicative functors, we will look at a slightly
-extended example. We are going to write some utilities
-for parsing and decoding content from CSV files. These
-are files where each line holds a list of values separated
-by commas (or some other delimiter). Typically, they are
-used to store tabular data, for instance from spread sheet
-applications. What we would like to do is convert
-lines in a CSV file and store the result in custom
-records, where each record field corresponds to a column
-in the table.
+In order to understand the power and versatility that comes with applicative
+functors, we will look at a slightly extended example. We are going to write
+some utilities for parsing and decoding content from CSV files. These are
+files where each line holds a list of values separated by commas (or some
+other delimiter). Typically, they are used to store tabular data, for
+instance from spread sheet applications. What we would like to do is convert
+lines in a CSV file and store the result in custom records, where each
+record field corresponds to a column in the table.
 
-For instance, here is a simple example
-file, containing tabular user information from a web
-store: First name, last name, age (optional), email address,
-gender, and password.
+For instance, here is a simple example file, containing tabular user
+information from a web store: First name, last name, age (optional), email
+address, gender, and password.
 
 ```repl
 Jon,Doe,42,jon@doe.ch,m,weijr332sdk
@@ -621,11 +591,10 @@ Jane,Doe,,jane@doe.ch,f,aa433sd112
 Stefan,Hoeck,,nope@goaway.ch,m,password123
 ```
 
-And here are the Idris data types necessary to hold
-this information at runtime. We use again custom
-string wrappers for increased type safety and
-because it will allow us to define for each data type
-what we consider to be valid input:
+And here are the Idris data types necessary to hold this information at
+runtime. We use again custom string wrappers for increased type safety and
+because it will allow us to define for each data type what we consider to be
+valid input:
 
 ```idris
 data Gender = Male | Female | Other
@@ -652,18 +621,16 @@ record User where
   password  : Password
 ```
 
-We start by defining an interface for reading fields
-in a CSV file and writing implementations for
-the data types we'd like to read:
+We start by defining an interface for reading fields in a CSV file and
+writing implementations for the data types we'd like to read:
 
 ```idris
 interface CSVField a where
   read : String -> Maybe a
 ```
 
-Below are implementations for `Gender` and `Bool`. I decided
-to in these cases encode each value with a single lower
-case character:
+Below are implementations for `Gender` and `Bool`. I decided to in these
+cases encode each value with a single lower case character:
 
 ```idris
 CSVField Gender where
@@ -678,8 +645,7 @@ CSVField Bool where
   read _   = Nothing
 ```
 
-For numeric types, we can use the parsing functions
-from `Data.String`:
+For numeric types, we can use the parsing functions from `Data.String`:
 
 ```idris
 CSVField Nat where
@@ -704,10 +670,9 @@ CSVField a => CSVField (Maybe a) where
   read s  = Just <$> read s
 ```
 
-Finally, for our string wrappers, we need to decide what
-we consider to be valid values. For simplicity, I decided
-to limit the length of allowed strings and the set of
-valid characters.
+Finally, for our string wrappers, we need to decide what we consider to be
+valid values. For simplicity, I decided to limit the length of allowed
+strings and the set of valid characters.
 
 ```idris
 readIf : (String -> Bool) -> (String -> a) -> String -> Maybe a
@@ -747,13 +712,11 @@ CSVField Password where
   read = readIf isValidPassword MkPassword
 ```
 
-In a later chapter, we will learn about refinement types and
-how to store an erased proof of validity together with
-a validated value.
+In a later chapter, we will learn about refinement types and how to store an
+erased proof of validity together with a validated value.
 
-We can now start to decode whole lines in a CSV file.
-In order to do so, we first introduce a custom error
-type encapsulating how things can go wrong:
+We can now start to decode whole lines in a CSV file.  In order to do so, we
+first introduce a custom error type encapsulating how things can go wrong:
 
 ```idris
 data CSVError : Type where
@@ -762,9 +725,8 @@ data CSVError : Type where
   ExpectedEndOfInput   : (line, column : Nat) -> CSVError
 ```
 
-We can now use `CSVField` to read a single field at a given
-line and position in a CSV file, and return a `FieldError` in case
-of a failure.
+We can now use `CSVField` to read a single field at a given line and
+position in a CSV file, and return a `FieldError` in case of a failure.
 
 ```idris
 readField : CSVField a => (line, column : Nat) -> String -> Either CSVError a
@@ -772,11 +734,10 @@ readField line col str =
   maybe (Left $ FieldError line col str) Right (read str)
 ```
 
-If we know in advance the number of fields we need to read,
-we can try and convert a list of strings to a `Vect` of
-the given length. This facilitates reading record values of
-a known number of fields, as we get the correct number
-of string variables when pattern matching on the vector:
+If we know in advance the number of fields we need to read, we can try and
+convert a list of strings to a `Vect` of the given length. This facilitates
+reading record values of a known number of fields, as we get the correct
+number of string variables when pattern matching on the vector:
 
 ```idris
 toVect : (n : Nat) -> (line, col : Nat) -> List a -> Either CSVError (Vect n a)
@@ -786,8 +747,8 @@ toVect (S k) line col []        = Left (UnexpectedEndOfInput line col)
 toVect (S k) line col (x :: xs) = (x ::) <$> toVect k line (S col) xs
 ```
 
-Finally, we can implement function `readUser` to try and convert
-a single line in a CSV-file to a value of type `User`:
+Finally, we can implement function `readUser` to try and convert a single
+line in a CSV-file to a value of type `User`:
 
 ```idris
 readUser' : (line : Nat) -> List String -> Either CSVError User
@@ -804,7 +765,7 @@ readUser : (line : Nat) -> String -> Either CSVError User
 readUser line = readUser' line . forget . split (',' ==)
 ```
 
-Let's give this a go at the REPL:
+ちょっとREPLで動かしてみましょう。
 
 ```repl
 Tutorial.Functor> readUser 1 "Joe,Foo,46,j@f.ch,m,pw1234567"
@@ -814,24 +775,22 @@ Tutorial.Functor> readUser 7 "Joe,Foo,46,j@f.ch,m,shortPW"
 Left (FieldError 7 6 "shortPW")
 ```
 
-Note, how in the implementation of `readUser'` we used
-an idiom bracket to map a function of six arguments (`MkUser`)
-over six values of type `Either CSVError`. This will automatically
-succeed, if and only if all of the parsings have
-succeeded. It would have been notoriously cumbersome resulting
-in much less readable code to implement
-`readUser'` with a succession of six nested pattern matches.
+Note, how in the implementation of `readUser'` we used an idiom bracket to
+map a function of six arguments (`MkUser`)  over six values of type `Either
+CSVError`. This will automatically succeed, if and only if all of the
+parsings have succeeded. It would have been notoriously cumbersome resulting
+in much less readable code to implement `readUser'` with a succession of six
+nested pattern matches.
 
-However, the idiom bracket above looks still quite repetitive.
-Surely, we can do better?
+However, the idiom bracket above looks still quite repetitive.  Surely, we
+can do better?
 
 #### A Case for Heterogeneous Lists
 
-It is time to learn about a family of types, which can
-be used as a generic representation for record types, and
-which will allow us to represent and read rows in
-heterogeneous tables with a minimal amount of code: Heterogeneous
-lists.
+It is time to learn about a family of types, which can be used as a generic
+representation for record types, and which will allow us to represent and
+read rows in heterogeneous tables with a minimal amount of code:
+Heterogeneous lists.
 
 ```idris
 namespace HList
@@ -841,41 +800,36 @@ namespace HList
     (::) : (v : t) -> (vs : HList ts) -> HList (t :: ts)
 ```
 
-A heterogeneous list is a list type indexed over a *list of types*.
-This allows us to at each position store a value of the
-type at the same position in the list index. For instance,
-here is a variant, which stores three values of types
-`Bool`, `Nat`, and `Maybe String` (in that order):
+A heterogeneous list is a list type indexed over a *list of types*.  This
+allows us to at each position store a value of the type at the same position
+in the list index. For instance, here is a variant, which stores three
+values of types `Bool`, `Nat`, and `Maybe String` (in that order):
 
 ```idris
 hlist1 : HList [Bool, Nat, Maybe String]
 hlist1 = [True, 12, Nothing]
 ```
 
-You could argue that heterogeneous lists are just tuples
-storing values of the given types. That's right, of course,
-however, as you'll learn the hard way in the exercises,
-we can use the list index to perform compile-time computations
-on `HList`, for instance when concatenating two such lists
-to keep track of the types stored in the result at the
-same time.
+You could argue that heterogeneous lists are just tuples storing values of
+the given types. That's right, of course, however, as you'll learn the hard
+way in the exercises, we can use the list index to perform compile-time
+computations on `HList`, for instance when concatenating two such lists to
+keep track of the types stored in the result at the same time.
 
-But first, we'll make use of `HList` as a means to
-concisely parse CSV-lines. In order to do that, we
-need to introduce a new interface for types corresponding
-to whole lines in a CSV-file:
+But first, we'll make use of `HList` as a means to concisely parse
+CSV-lines. In order to do that, we need to introduce a new interface for
+types corresponding to whole lines in a CSV-file:
 
 ```idris
 interface CSVLine a where
   decodeAt : (line, col : Nat) -> List String -> Either CSVError a
 ```
 
-We'll now write two implementations of `CSVLine` for `HList`:
-One for the `Nil` case, which will succeed if and only if
-the current list of strings is empty. The other for the *cons*
-case, which will try and read a single field from the head
-of the list and the remainder from its tail. We use
-again an idiom bracket to concatenate the results:
+We'll now write two implementations of `CSVLine` for `HList`: One for the
+`Nil` case, which will succeed if and only if the current list of strings is
+empty. The other for the *cons* case, which will try and read a single field
+from the head of the list and the remainder from its tail. We use again an
+idiom bracket to concatenate the results:
 
 ```idris
 CSVLine (HList []) where
@@ -887,11 +841,10 @@ CSVField t => CSVLine (HList ts) => CSVLine (HList (t :: ts)) where
   decodeAt l c (s :: ss) = [| readField l c s :: decodeAt l (S c) ss |]
 ```
 
-And that's it! All we need to add is two utility function
-for decoding whole lines before they have been split into
-tokens, one of which is specialized to `HList` and takes an
-erased list of types as argument to make it more convenient to
-use at the REPL:
+And that's it! All we need to add is two utility function for decoding whole
+lines before they have been split into tokens, one of which is specialized
+to `HList` and takes an erased list of types as argument to make it more
+convenient to use at the REPL:
 
 ```idris
 decode : CSVLine a => (line : Nat) -> String -> Either CSVError a
@@ -905,8 +858,7 @@ hdecode :  (0 ts : List Type)
 hdecode _ = decode
 ```
 
-It's time to reap the fruits of our labour and give this a go at
-the REPL:
+It's time to reap the fruits of our labour and give this a go at the REPL:
 
 ```repl
 Tutorial.Functor> hdecode [Bool,Nat,Double] 1 "f,100,12.123"
@@ -917,18 +869,15 @@ Left (FieldError 3 2 "")
 
 ### Applicative Laws
 
-Again, `Applicative` implementations must follow certain
-laws. Here they are:
+Again, `Applicative` implementations must follow certain laws. Here they
+are:
 
-* `pure id <*> fa = fa`: Lifting and applying the identity
-  function has no visible effect.
+* `pure id <*> fa = fa`: Lifting and applying the identity function has no
+  visible effect.
 
-
-* `[| f . g |] <*> v = f <*> (g <*> v)`:
-  I must not matter, whether we compose our functions
-  first and then apply them, or whether we apply
-  our functions first and then compose them.
-
+* `[| f . g |] <*> v = f <*> (g <*> v)`: I must not matter, whether we
+  compose our functions first and then apply them, or whether we apply our
+  functions first and then compose them.
 
   The above might be hard to understand, so here
   they are again with explicit types and implementations:
@@ -944,13 +893,11 @@ laws. Here they are:
   The second applicative law states, that the two implementations
   `compL` and `compR` should behave identically.
 
-* `pure f <*> pure x = pure (f x)`. This is also called the
-  *homomorphism* law. It should be pretty self-explaining.
+* `pure f <*> pure x = pure (f x)`. This is also called the *homomorphism*
+  law. It should be pretty self-explaining.
 
-
-* `f <*> pure v = pure ($ v) <*> f`. This is called the law
-  of *interchange*.
-
+* `f <*> pure v = pure ($ v) <*> f`. This is called the law of
+  *interchange*.
 
   This should again be explained with a concrete example:
 
@@ -975,41 +922,31 @@ laws. Here they are:
 
 1. Implement `Applicative'` for `Either e` and `Identity`.
 
-
-2. Implement `Applicative'` for `Vect n`. Note: In order to
-   implement `pure`, the length must be known at runtime.
-   This can be done by passing it as an unerased implicit
-   to the interface implementation:
-
+2. Implement `Applicative'` for `Vect n`. Note: In order to implement
+   `pure`, the length must be known at runtime.  This can be done by passing
+   it as an unerased implicit to the interface implementation:
 
    ```idris
    implementation {n : _} -> Applicative' (Vect n) where
    ```
 
-3. Implement `Applicative'` for `Pair e`, with `e` having
-   a `Monoid` constraint.
+3. Implement `Applicative'` for `Pair e`, with `e` having a `Monoid`
+   constraint.
 
+4. Implement `Applicative` for `Const e`, with `e` having a `Monoid`
+   constraint.
 
-4. Implement `Applicative` for `Const e`, with `e` having
-   a `Monoid` constraint.
+5. Implement `Applicative` for `Validated e`, with `e` having a `Semigroup`
+   constraint. This will allow us to use `(<+>)` to accumulate errors in
+   case of two `Invalid` values in the implementation of *apply*.
 
-
-5. Implement `Applicative` for `Validated e`, with `e` having
-   a `Semigroup` constraint. This will allow us to use `(<+>)`
-   to accumulate errors in case of two `Invalid` values in
-   the implementation of *apply*.
-
-
-6. Add an additional data constructor of
-   type `CSVError -> CSVError -> CSVError`
-   to `CSVError` and use this to implement `Semigroup` for
+6. Add an additional data constructor of type `CSVError -> CSVError ->
+   CSVError` to `CSVError` and use this to implement `Semigroup` for
    `CSVError`.
 
-
-7. Refactor our CSV-parsers and all related functions so that
-   they return `Validated` instead of `Either`. This will only
-   work, if you solved exercise 6.
-
+7. Refactor our CSV-parsers and all related functions so that they return
+   `Validated` instead of `Either`. This will only work, if you solved
+   exercise 6.
 
    Two things to note: You will have to adjust very little of
    the existing code, as we can still use applicative syntax
@@ -1032,9 +969,8 @@ laws. Here they are:
    parser with error accumulation for lines in CSV-files, which is
    very convenient to use at the same time!
 
-8. Since we introduced heterogeneous lists in this chapter, it
-   would be a pity not to experiment with them a little.
-
+8. Since we introduced heterogeneous lists in this chapter, it would be a
+   pity not to experiment with them a little.
 
    This exercise is meant to sharpen your skills in type wizardry.
    It therefore comes with very few hints. Try to decide yourself
@@ -1047,32 +983,26 @@ laws. Here they are:
 
    1. Implement `head` for `HList`.
 
-
    2. Implement `tail` for `HList`.
-
 
    3. Implement `(++)` for `HList`.
 
-
-   4. Implement `index` for `HList`. This might be harder than the other three.
-      Go back and look how we implemented `indexList` in an
-      [earlier exercise](Dependent.md) and start from there.
-
+   4. Implement `index` for `HList`. This might be harder than the other
+      three.  Go back and look how we implemented `indexList` in an [earlier
+      exercise](Dependent.md) and start from there.
 
    5. Package *contrib*, which is part of the Idris project, provides
-      `Data.HVect.HVect`, a data type for heterogeneous vectors. The only difference
-      to our own `HList` is, that `HVect` is indexed over a vector of
-      types instead of a list of types. This makes it easier to express certain
-      operations at the type level.
-
+      `Data.HVect.HVect`, a data type for heterogeneous vectors. The only
+      difference to our own `HList` is, that `HVect` is indexed over a
+      vector of types instead of a list of types. This makes it easier to
+      express certain operations at the type level.
 
       Write your own implementation of `HVect` together with functions
       `head`, `tail`, `(++)`, and `index`.
 
-   6. For a real challenge, try implementing a function for
-      transposing a `Vect m (HVect ts)`. You'll first have to
-      be creative about how to even express this in the types.
-
+   6. For a real challenge, try implementing a function for transposing a
+      `Vect m (HVect ts)`. You'll first have to be creative about how to
+      even express this in the types.
 
       Note: In order to implement this, you'll need to pattern match
       on an erased argument in at least one case to help Idris with
@@ -1089,15 +1019,11 @@ laws. Here they are:
       CSV-files, as it allows us to convert a table represented as
       rows (a vector of tuples) to one represented as columns (a tuple of vectors).
 
-9. Show, that the composition of two applicative functors is
-   again an applicative functor by implementing `Applicative`
-   for `Comp f g`.
+9. Show, that the composition of two applicative functors is again an
+   applicative functor by implementing `Applicative` for `Comp f g`.
 
-
-10. Show, that the product of two applicative functors is
-    again an applicative functor by implementing `Applicative`
-    for `Prod f g`.
-
+10. Show, that the product of two applicative functors is again an
+    applicative functor by implementing `Applicative` for `Prod f g`.
 
 ## Monad
 
@@ -1117,13 +1043,12 @@ Implementers of `Monad` are free to choose to either implement
 `(>>=)` or `join` or both. You will show in an exercise, how
 `join` can be implemented in terms of *bind* and vice versa.
 
-The big difference between `Monad` and `Applicative` is, that the
-former allows a computation to depend on the result of an
-earlier computation. For instance, we could decide based on
-a string read from standard input whether to delete a file
-or play a song. The result of the first `IO` action
-(reading some user input) will affect, which `IO` action to run next.
-This is not possible with the *apply* operator:
+The big difference between `Monad` and `Applicative` is, that the former
+allows a computation to depend on the result of an earlier computation. For
+instance, we could decide based on a string read from standard input whether
+to delete a file or play a song. The result of the first `IO` action
+(reading some user input) will affect, which `IO` action to run next.  This
+is not possible with the *apply* operator:
 
 ```repl
 (<*>) : IO (a -> b) -> IO a -> IO b
@@ -1141,10 +1066,9 @@ of `IO`, not of applicative functors in general. If the functor in
 question was `Maybe`, `List`, or `Vector`, no such thing
 would be possible.)
 
-Let's demonstrate the difference with an example. Assume
-we'd like to enhance our CSV-reader with the ability to
-decode a line of tokens to a sum type. For instance,
-we'd like to decode CRUD requests from the lines of a
+Let's demonstrate the difference with an example. Assume we'd like to
+enhance our CSV-reader with the ability to decode a line of tokens to a sum
+type. For instance, we'd like to decode CRUD requests from the lines of a
 CSV-file:
 
 ```idris
@@ -1155,10 +1079,9 @@ data Crud : (i : Type) -> (a : Type) -> Type where
   Delete : (id : i) -> Crud i a
 ```
 
-We need a way to on each line decide, which data constructor
-to choose for our decoding. One way to do this is to
-put the name of the data constructor (or some other
-tag of identification) in the first column of the CSV-file:
+We need a way to on each line decide, which data constructor to choose for
+our decoding. One way to do this is to put the name of the data constructor
+(or some other tag of identification) in the first column of the CSV-file:
 
 ```idris
 hlift : (a -> b) -> HList [a] -> b
@@ -1184,13 +1107,12 @@ decodeCRUD l s =
        _        => Left (FieldError l 1 n)
 ```
 
-I added two utility function for helping with type inference
-and to get slightly nicer syntax. The important thing to note
-is, how we pattern match on the result of the first
-parsing function to decide on the data constructor
-and thus the next parsing function to use.
+I added two utility function for helping with type inference and to get
+slightly nicer syntax. The important thing to note is, how we pattern match
+on the result of the first parsing function to decide on the data
+constructor and thus the next parsing function to use.
 
-Here's how this works at the REPL:
+REPLで試してみましょう。
 
 ```repl
 Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 "Create,jon@doe.ch"
@@ -1201,29 +1123,24 @@ Tutorial.Functor> decodeCRUD {i = Nat} {a = Email} 1 "Delete,jon@doe.ch"
 Left (FieldError 1 2 "jon@doe.ch")
 ```
 
-To conclude, `Monad`, unlike `Applicative`, allows us to
-chain computations sequentially, where intermediary
-results can affect the behavior of later computations.
-So, if you have n unrelated effectful computations and want
-to combine them under a pure, n-ary function, `Applicative`
-will be sufficient. If, however, you want to decide
-based on the result of an effectful computation what
-computation to run next, you need a `Monad`.
+To conclude, `Monad`, unlike `Applicative`, allows us to chain computations
+sequentially, where intermediary results can affect the behavior of later
+computations.  So, if you have n unrelated effectful computations and want
+to combine them under a pure, n-ary function, `Applicative` will be
+sufficient. If, however, you want to decide based on the result of an
+effectful computation what computation to run next, you need a `Monad`.
 
-Note, however, that `Monad` has one important drawback
-compared to `Applicative`: In general, monads don't compose.
-For instance, there is no `Monad` instance for `Either e . IO`.
-We will later learn about monad transformers, which can
-be composed with other monads.
+Note, however, that `Monad` has one important drawback compared to
+`Applicative`: In general, monads don't compose.  For instance, there is no
+`Monad` instance for `Either e . IO`.  We will later learn about monad
+transformers, which can be composed with other monads.
 
 ### Monad Laws
 
 Without further ado, here are the laws for `Monad`:
 
-* `ma >>= pure = ma` and `pure v >>= f = f v`.
-  These are monad's identity laws. Here they are as
-  concrete examples:
-
+* `ma >>= pure = ma` and `pure v >>= f = f v`.  These are monad's identity
+  laws. Here they are as concrete examples:
 
   ```idris
   id1L : Maybe a -> Maybe a
@@ -1239,12 +1156,9 @@ Without further ado, here are the laws for `Monad`:
   These two laws state that `pure` should behave
   neutrally w.r.t. *bind*.
 
-* (m >>= f) >>= g = m >>= (f >=> g)
-  This is the law of associativity for monad.
-  You might not have seen the second operator `(>=>)`.
-  It can be used to sequence effectful computations
-  and has the following type:
-
+* (m >>= f) >>= g = m >>= (f >=> g)  This is the law of associativity for
+  monad.  You might not have seen the second operator `(>=>)`.  It can be
+  used to sequence effectful computations and has the following type:
 
   ```repl
   Tutorial.Functor> :t (>=>)
@@ -1259,37 +1173,28 @@ must behave the same as the implementation in terms of `(>>=)`:
 
 * `mf <*> ma = mf >>= (\fun => map (fun $) ma)`.
 
-
 ### 演習 パート3
 
-1. `Applicative` extends `Functor`, because every `Applicative`
-   is also a `Functor`. Proof this by implementing `map` in
-   terms of `pure` and `(<*>)`.
+1. `Applicative` extends `Functor`, because every `Applicative` is also a
+   `Functor`. Proof this by implementing `map` in terms of `pure` and
+   `(<*>)`.
 
+2. `Monad` extends `Applicative`, because every `Monad` is also an
+   `Applicative`. Proof this by implementing `(<*>)` in terms of `(>>=)` and
+   `pure`.
 
-2. `Monad` extends `Applicative`, because every `Monad` is
-   also an `Applicative`. Proof this by implementing
-   `(<*>)` in terms of `(>>=)` and `pure`.
+3. Implement `(>>=)` in terms of `join` and other functions in the `Monad`
+   hierarchy.
 
+4. Implement `join` in terms of `(>>=)` and other functions in the `Monad`
+   hierarchy.
 
-3. Implement `(>>=)` in terms of `join` and other functions
-   in the `Monad` hierarchy.
+5. There is no lawful `Monad` implementation for `Validated e`.  Why?
 
-
-4. Implement `join` in terms of `(>>=)` and other functions
-   in the `Monad` hierarchy.
-
-
-5. There is no lawful `Monad` implementation for `Validated e`.
-   Why?
-
-
-6. In this slightly extended exercise, we are going to simulate
-   CRUD operations on a data store. We will use a mutable
-   reference (imported from `Data.IORef` from the *base* library)
-   holding a list of `User`s paired with a unique ID
-   of type `Nat` as our user data base:
-
+6. In this slightly extended exercise, we are going to simulate CRUD
+   operations on a data store. We will use a mutable reference (imported
+   from `Data.IORef` from the *base* library)  holding a list of `User`s
+   paired with a unique ID of type `Nat` as our user data base:
 
    ```idris
    DB : Type
@@ -1329,17 +1234,13 @@ must behave the same as the implementation in terms of `(>>=)`:
    to follow the following business rules when implementing the
    functions below:
 
-   * Email addresses in the DB must be unique. (Consider
-     implementing `Eq Email` to verify this).
-
+   * Email addresses in the DB must be unique. (Consider implementing `Eq
+     Email` to verify this).
 
    * The size limit of 1000 entries must not be exceeded.
 
-
-   * Operations trying to lookup a user by their ID must
-     fail with `UserNotFound` in case no entry was found
-     in the DB.
-
+   * Operations trying to lookup a user by their ID must fail with
+     `UserNotFound` in case no entry was found in the DB.
 
    You'll need the following functions from `Data.IORef` when working
    with mutable references: `newIORef`, `readIORef`, and `writeIORef`.
@@ -1348,12 +1249,9 @@ must behave the same as the implementation in terms of `(>>=)`:
 
    1. Implement interfaces `Functor`, `Applicative`, and `Monad` for `Prog`.
 
-
    2. Implement interface `HasIO` for `Prog`.
 
-
-   3. Implement the following utility functions:
-
+   3. `List`についての以下の汎化関数を実装してください。
 
       ```idris
       throw : DBError -> Prog a
@@ -1367,50 +1265,40 @@ must behave the same as the implementation in terms of `(>>=)`:
       modifyDB : (List (Nat,User) -> List (Nat,User)) -> Prog ()
       ```
 
-   4. Implement function `lookupUser`. This should fail
-      with an appropriate error, if a user with the given ID
-      cannot be found.
-
+   4. Implement function `lookupUser`. This should fail with an appropriate
+      error, if a user with the given ID cannot be found.
 
       ```idris
       lookupUser : (id : Nat) -> Prog User
       ```
 
-   5. Implement function `deleteUser`. This should fail
-      with an appropriate error, if a user with the given ID
-      cannot be found. Make use of `lookupUser` in your
-      implementation.
-
+   5. Implement function `deleteUser`. This should fail with an appropriate
+      error, if a user with the given ID cannot be found. Make use of
+      `lookupUser` in your implementation.
 
       ```idris
       deleteUser : (id : Nat) -> Prog ()
       ```
 
-   6. Implement function `addUser`. This should fail, if
-      a user with the given `Email` already exists, or
-      if the data banks size limit of 1000 entries is exceeded.
-      In addition, this should create and return a unique
-      ID for the new user entry.
-
+   6. Implement function `addUser`. This should fail, if a user with the
+      given `Email` already exists, or if the data banks size limit of 1000
+      entries is exceeded.  In addition, this should create and return a
+      unique ID for the new user entry.
 
       ```idris
       addUser : (new : User) -> Prog Nat
       ```
 
-   7. Implement function `updateUser`. This should fail, if
-      the user in question cannot be found or
-      a user with the updated user's `Email` already exists.
-      The returned value should be the updated user.
-
+   7. Implement function `updateUser`. This should fail, if the user in
+      question cannot be found or a user with the updated user's `Email`
+      already exists.  The returned value should be the updated user.
 
       ```idris
       updateUser : (id : Nat) -> (mod : User -> User) -> Prog User
       ```
 
-   8. Data type `Prog` is actually too specific. We could just
-      as well abstract over the error type and the `DB`
-      environment:
-
+   8. Data type `Prog` is actually too specific. We could just as well
+      abstract over the error type and the `DB` environment:
 
       ```idris
       record Prog' env err a where
@@ -1427,55 +1315,47 @@ must behave the same as the implementation in terms of `(>>=)`:
 ## Background and further Reading
 
 Concepts like *functor* and *monad* have their origin in *category theory*,
-a branch of mathematics. That is also where their laws come from.
-Category theory was found to have applications in
-programming language theory, especially functional programming.
-It is a highly abstract topic, but there is a pretty accessible
-introduction for programmers, written by
-[Bartosz Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/).
+a branch of mathematics. That is also where their laws come from.  Category
+theory was found to have applications in programming language theory,
+especially functional programming.  It is a highly abstract topic, but there
+is a pretty accessible introduction for programmers, written by [Bartosz
+Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/).
 
-The usefulness of applicative functors as a middle ground between
-functor and monad was discovered several years after monads had
-already been in use in Haskell. They where introduced in the
-article [*Applicative Programming with Effects*](https://www.staff.city.ac.uk/~ross/papers/Applicative.html),
+The usefulness of applicative functors as a middle ground between functor
+and monad was discovered several years after monads had already been in use
+in Haskell. They where introduced in the article [*Applicative Programming
+with Effects*](https://www.staff.city.ac.uk/~ross/papers/Applicative.html),
 which is freely available online and a highly recommended read.
 
 ## まとめ
 
-* Interfaces `Functor`, `Applicative`, and `Monad` abstract over
-  programming patterns that come up when working with type
-  constructors of type `Type -> Type`. Such data types are also
-  referred to as *values in a context*, or *effectful computations*.
+* Interfaces `Functor`, `Applicative`, and `Monad` abstract over programming
+  patterns that come up when working with type constructors of type `Type ->
+  Type`. Such data types are also referred to as *values in a context*, or
+  *effectful computations*.
 
-
-* `Functor` allows us to *map* over values in a context without
-  affecting the context's underlying structure.
-
+* `Functor` allows us to *map* over values in a context without affecting
+  the context's underlying structure.
 
 * `Applicative` allows us to apply n-ary functions to n effectful
   computations and to lift pure values into a context.
 
+* `Monad` allows us to chain effectful computations, where the intermediary
+  results can affect, which computation to run further down the chain.
 
-* `Monad` allows us to chain effectful computations, where the
-  intermediary results can affect, which computation to run
-  further down the chain.
+* Unlike `Monad`, `Functor` and `Applicative` compose: The product and
+  composition of two functors or applicatives are again functors or
+  applicatives, respectively.
 
-
-* Unlike `Monad`, `Functor` and `Applicative` compose: The
-  product and composition of two functors or applicatives
-  are again functors or applicatives, respectively.
-
-
-* Idris provides syntactic sugar for working with some of
-  the interfaces presented here: Idiom brackets for `Applicative`,
-  *do blocks* and the bang operator for `Monad`.
-
+* Idris provides syntactic sugar for working with some of the interfaces
+  presented here: Idiom brackets for `Applicative`, *do blocks* and the bang
+  operator for `Monad`.
 
 ### お次は？
 
-In the [next chapter](Folds.md) we get to learn more about
-recursion, totality checking, and an interface for
-collapsing container types: `Foldable`.
+In the [next chapter](Folds.md) we get to learn more about recursion,
+totality checking, and an interface for collapsing container types:
+`Foldable`.
 
 <!-- vi: filetype=idris2
 -->
