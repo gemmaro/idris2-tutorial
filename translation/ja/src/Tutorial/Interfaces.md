@@ -461,7 +461,7 @@ showExample : Maybe (Either String (List (Maybe Integer))) -> String
 showExample = show
 ```
 
-そしてREPLで……。
+そしてREPLで次のようにします。
 
 ```repl
 Tutorial.Interfaces> showExample (Just (Right [Just 12, Nothing]))

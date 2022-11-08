@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2022-10-30 20:50+0900\n"
-"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"PO-Revision-Date: 2022-11-08 09:18+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -434,7 +434,7 @@ msgstr ""
 #: ../src/Tutorial/Interfaces.md:504 ../src/Tutorial/Predicates.md:461
 #: ../src/Tutorial/Prim.md:646
 msgid "And at the REPL:"
-msgstr "そしてREPLで……。"
+msgstr "そしてREPLで次のようにします。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functions1.md:165
@@ -867,15 +867,12 @@ msgstr ""
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functions1.md:358
-#, fuzzy, no-wrap
-#| msgid ""
-#| "Tutorial.Functions1> applyToThen (* 2)\n"
-#| "20\n"
+#, no-wrap
 msgid ""
 "Tutorial.Functions1> applyToTen (* 2)\n"
 "20\n"
 msgstr ""
-"Tutorial.Functions1> applyToThen (* 2)\n"
+"Tutorial.Functions1> applyToTen (* 2)\n"
 "20\n"
 
 #. type: Plain text

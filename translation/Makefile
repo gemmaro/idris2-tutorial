@@ -8,7 +8,7 @@ po4a = po4a.cfg
 
 .PHONY: translate
 translate: ${po4a}
-	po4a $<
+	po4a $< # --debug
 
 ${po4a}: gen-po4a-cfg
 	./$< > $@

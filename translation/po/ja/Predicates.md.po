@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
 "POT-Creation-Date: 2022-10-20 20:24+0900\n"
-"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"PO-Revision-Date: 2022-11-08 08:27+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -82,13 +82,13 @@ msgstr "演習 その3"
 #: ../src/Tutorial/Interfaces.md:504 ../src/Tutorial/Predicates.md:461
 #: ../src/Tutorial/Prim.md:646
 msgid "And at the REPL:"
-msgstr "そしてREPLで……。"
+msgstr "そしてREPLで次のようにします。"
 
 #. type: Title #
 #: ../src/Tutorial/Predicates.md:1
 #, no-wrap
 msgid "Predicates and Proof Search"
-msgstr ""
+msgstr "前提条件と証明検索"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:12
@@ -101,10 +101,16 @@ msgid ""
 "allow us to restrict the values we accept as a function's arguments or the "
 "values returned by functions."
 msgstr ""
+"[前の章](Eq.md)で命題の等価性を学びました。これにより2つの値が等価であ\n"
+"ることを証明することができるようになりました。等価性は値間の関係であり、\n"
+"指標付けられたデータ型を使って指標の自由度を制限して唯一のデータ構築子\n"
+"に狭めることでこの関係を符号化しました。このようにして符号化できるよう\n"
+"な別の関係や契約が存在します。これらによって関数引数として受け付ける値\n"
+"や関数から返される値を制限することができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:13
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "module Tutorial.Predicates\n"
 "\n"
@@ -120,57 +126,25 @@ msgid ""
 "\n"
 "%default total\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.IO\n"
+"module Tutorial.Predicates\n"
 "\n"
+"import Data.Either\n"
 "import Data.List1\n"
 "import Data.String\n"
 "import Data.Vect\n"
+"import Data.HList\n"
+"import Decidable.Equality\n"
 "\n"
+"import Text.CSV\n"
 "import System.File\n"
 "\n"
 "%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Functor\n"
-"\n"
-"import Data.List1\n"
-"import Data.String\n"
-"import Data.Vect\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"module Tutorial.Folds\n"
-"\n"
-"import Data.List1\n"
-"import Data.Maybe\n"
-"import Data.Vect\n"
-"import Debug.Trace\n"
-"\n"
-"%default total\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
 
 #. type: Title ##
 #: ../src/Tutorial/Predicates.md:29
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Preconditions"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"もっとコードアクション\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "前提条件"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:38
@@ -182,6 +156,11 @@ msgid ""
 "*precondition* on a function argument comes up pretty often, and there are "
 "several ways to go about this."
 msgstr ""
+"しばしば与えられた型の値を操作する関数を実装するとき、問題の関数に関し\n"
+"て全ての値が妥当とは考えられないことがあります。例えばゼロ除算を許さな\n"
+"いことはよくありますが、それは一般的な場合で結果が未定義であるためです。\n"
+"関数引数に*前提条件*を置くという概念はかなり頻繁に発生するものであり、\n"
+"これをするためのいくつかの方法があります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:45
@@ -192,6 +171,11 @@ msgid ""
 "the list must not be empty. Here are a couple of ways to encode and "
 "implement this, each with its own advantages and disadvantages:"
 msgstr ""
+"リストや他の容器型に取り組む際にとてもよくある操作は並びの中の最初の値\n"
+"を取り出すことです。この関数はしかし、一般的な場合には動きません。なぜ\n"
+"ならリストから値を取り出すためにはリストが空であってはならないからです。\n"
+"以下はこれを符号化し実装するいくつかの方法であり、それぞれに利点と欠点\n"
+"があります。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Predicates.md:57
@@ -206,6 +190,14 @@ msgid ""
 "value in such a way that we can be sure it is not empty (due to an earlier "
 "pattern match, for instance)."
 msgstr ""
+"結果を失敗型に包む、`Maybe`や何らかの自前のエラー型`e`を伴う`Either e`\n"
+"といったもの。こうすると直ちに関数が結果を返せないことがあるかもしれ\n"
+"ないということが明確になります。不明な源からの未検証の入力を扱う自然な\n"
+"方法です。この手法の短所は*nil*の場合が不可能だと*知っている*状況でさ\n"
+"え、`Maybe`の染みが付いた結果を運ぶことになる点です。例えばリスト引数\n"
+"の値をコンパイル時に知っていたり、既に空でないことを確かめられるような\n"
+"やり方（例えばその前のパターン照合からなど）で入力値を*精錬*した後であっ\n"
+"たりなどの経緯でこの状況になります。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Predicates.md:67
@@ -218,6 +210,13 @@ msgid ""
 "implemented for `List`. For a very common data structure this can be a valid "
 "option, but for rare use cases it is often too cumbersome."
 msgstr ""
+"空でないリスト用の新しいデータ型を定義し、これを関数引数として使うもの。\n"
+"これはモジュール`Data.List1`で採られた手法です。これにより純粋な値（こ\n"
+"こでは「失敗型に包まれていない」の意）を返すことができますが、それは関\n"
+"数は決して失敗する可能性がないためです。しかし既に`List`に実装した便利\n"
+"関数やインターフェースの多くを再実装する負担が付いてきます。よくあるデー\n"
+"タ型については妥当な選択肢になりえますが、稀な用例向けにはしばしば面倒\n"
+"になります。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Predicates.md:81
@@ -233,6 +232,14 @@ msgid ""
 "(for instance, dependent pairs), because the outcome of a computation is not "
 "known until runtime."
 msgstr ""
+"指標を使って関心のある性質を把握するもの。これは型族`List01`で採った手\n"
+"法です。このデータ型については本手引きのこれまでの例や演習でいくつか見\n"
+"てきました。これはまたベクタでも採られている手法であり、指標として厳密\n"
+"な長さを使うことでさらに表現力を増すものです。こうすると多くの関数を一\n"
+"度だけ実装すればよくなり型水準でより良い精度が得られます。一方で、型で\n"
+"変化を把握することになり、より複雑な関数型になり、計算の出力が実行時ま\n"
+"で知られないために時々存在量化された梱包を返すようになる、という負担も\n"
+"付いてきます。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Predicates.md:87
@@ -243,6 +250,10 @@ msgid ""
 "Luckily, we can make use of our powerful type system to avoid this situation "
 "in general."
 msgstr ""
+"実行時例外と共に失敗するもの。これは多くのプログラミング言語（Haskell\n"
+"でさえそう）でよく用いられる解決策です。しかしIdrisではこれを避けよう\n"
+"とします。なぜなら自身のコードも使い手のコードも全域性が壊れるからです。\n"
+"幸運にも一般的には強力な型システムを使ってこの状況を避けられます。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Predicates.md:94
@@ -253,6 +264,10 @@ msgid ""
 "incredibly powerful way to talk about restrictions on values without having "
 "to replicate a lot of already existing functionality."
 msgstr ""
+"入力値が正しい種類や形状であることの証人として使える型を追加の（消去可\n"
+"能な）引数として取るもの。これは本章で深堀りしてお話しする解決策です。\n"
+"既存の機能の多くを複製することなく値への制限があることを言いたいときに\n"
+"極めて強力な方法です。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:100
@@ -262,12 +277,16 @@ msgid ""
 "arguments with predicates (so called *preconditions*), because it makes our "
 "functions nice to use at runtime *and* compile time."
 msgstr ""
+"Idrisで上に挙げた解決策が全てかどうかには議論の余地があるものの、最後\n"
+"の選択肢に至り述語（いわゆる*前提条件*）で関数引数を精錬することがしば\n"
+"しばでしょう。なぜなら関数が実行時*及び*コンパイル時に使いやすくなるか\n"
+"らです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:101
 #, no-wrap
 msgid "Example: Non-empty Lists"
-msgstr ""
+msgstr "例：非空リスト"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:107
@@ -276,6 +295,9 @@ msgid ""
 "We restricted the valid values of the indices in the constructors. We can do "
 "the same thing for a predicate for non-empty lists:"
 msgstr ""
+"命題的等値性のための指標付けられたデータ型を実装したやり方を思い出して\n"
+"ください。構築子で指標の妥当な値を制限したのでした。同じことが非空リス\n"
+"ト用の述語にも行えます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:108
@@ -284,6 +306,8 @@ msgid ""
 "data NotNil : (as : List a) -> Type where\n"
 "  IsNotNil : NotNil (h :: t)\n"
 msgstr ""
+"data NotNil : (as : List a) -> Type where\n"
+"  IsNotNil : NotNil (h :: t)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:117
@@ -292,6 +316,9 @@ msgid ""
 "function argument and still pattern match on it. We can now use this to "
 "implement a safe and pure `head` function:"
 msgstr ""
+"これは単一値データ型なので、常に消去された関数引数として使うことができ、\n"
+"それでいてパターン照合することができます。これで安全で純粋な`head`関数\n"
+"を実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:118
@@ -301,6 +328,9 @@ msgid ""
 "head1 (h :: _) _ = h\n"
 "head1 [] IsNotNil impossible\n"
 msgstr ""
+"head1 : (as : List a) -> (0 _ : NotNil as) -> a\n"
+"head1 (h :: _) _ = h\n"
+"head1 [] IsNotNil impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:129
@@ -310,6 +340,10 @@ msgid ""
 "in its type.  The impossible case in the implementation of `head1` is not "
 "strictly necessary here. It was given above for completeness."
 msgstr ""
+"値`IsNotNil`がどのように指標の*目撃者*となっているかという点に注目して\n"
+"ください。この指標はリスト引数に対応しており当然非空です。なぜなら型で\n"
+"指定していることだからです。`head1`の実装の中の不可能の場合はここでは\n"
+"厳密には必要ではありません。上では完全のために与えられています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:134
@@ -318,6 +352,9 @@ msgid ""
 "in the index. We can express a function's preconditions by adding additional "
 "(possibly erased) predicates to the function's list of arguments."
 msgstr ""
+"`NotNil`はリストにおける*述語*と呼びます。なぜなら指標で許される値を制\n"
+"限するからです。追加の（消去されうる）述語を関数の引数リストに加えるこ\n"
+"とにより関数の前提条件を表現できるのです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:138
@@ -325,6 +362,8 @@ msgid ""
 "The first really cool thing is how we can safely use `head1`, if we can at "
 "compile-time show that our list argument is indeed non-empty:"
 msgstr ""
+"1つ目の実に粋な点は、コンパイル時にリスト引数が確かに非空であれば\n"
+"`head1`を安全に使うことができる有り様にあります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:139
@@ -333,6 +372,8 @@ msgid ""
 "headEx1 : Nat\n"
 "headEx1 = head1 [1,2,3] IsNotNil\n"
 msgstr ""
+"headEx1 : Nat\n"
+"headEx1 = head1 [1,2,3] IsNotNil\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:152
@@ -345,6 +386,12 @@ msgid ""
 "`Maybe`, but if we can show that our predicate is *decidable*, we can get "
 "even stronger guarantees by returning a `Dec`:"
 msgstr ""
+"`IsNotNil`の証明を手動で渡さねばならないのは少し面倒です。その痒みを掻\n"
+"く前にまず、値が実行時まで知られていないリストの扱い方について話しましょ\n"
+"う。そのような場合、実行時のリストの値を調べることによって述語の値をプ\n"
+"ログラミング的に生成しようとしなければなりません。最も単純な場合では証\n"
+"明を`Maybe`に包むことができますが、述語が*決定可能*であることを示せれ\n"
+"ば、`Dec`を返すことによりさらに強力な保証が得られます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:153
@@ -357,6 +404,12 @@ msgid ""
 "nonEmpty (x :: xs) = Yes IsNotNil\n"
 "nonEmpty []        = No uninhabited\n"
 msgstr ""
+"Uninhabited (NotNil []) where\n"
+"  uninhabited IsNotNil impossible\n"
+"\n"
+"nonEmpty : (as : List a) -> Dec (NotNil as)\n"
+"nonEmpty (x :: xs) = Yes IsNotNil\n"
+"nonEmpty []        = No uninhabited\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:164
@@ -364,6 +417,8 @@ msgid ""
 "With this, we can implement function `headMaybe`, which is to be used with "
 "lists of unknown origin:"
 msgstr ""
+"これを携えれば関数`headMaybe`を実装できます。この関数は出所不明なリス\n"
+"トに使うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:165
@@ -374,6 +429,10 @@ msgid ""
 "  Yes prf => Just $ head1 as prf\n"
 "  No  _   => Nothing\n"
 msgstr ""
+"headMaybe1 : List a -> Maybe a\n"
+"headMaybe1 as = case nonEmpty as of\n"
+"  Yes prf => Just $ head1 as prf\n"
+"  No  _   => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:176
@@ -383,34 +442,15 @@ msgid ""
 "will soon see examples of predicates the values of which are more cumbersome "
 "to create."
 msgstr ""
+"もちろん`headMaybe`のような自明な関数についてはリスト引数に直接パター\n"
+"ン照合することで実装するのが理に適っています。しかしすぐ後でよりつくる\n"
+"のが面倒な値の述語の例を見ていきます。"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:177
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Auto Implicits"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"多重度\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"制約なし暗黙子\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "自動暗黙子"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:187
@@ -423,72 +463,31 @@ msgid ""
 "surrounding context. It's best to look at some examples to explain the "
 "difference."
 msgstr ""
+"手動で非空であることの証明を`head1`に渡さねばならないことは、コンパイ\n"
+"ル時に用いる上でこの関数を不必要に冗長にしています。Idrisでは暗黙関数\n"
+"引数を定義することができ、この値は*証明検索*と呼ばれる技術を活用してひ\n"
+"とりでに組み合わせられます。これは型推論と混同すべきではなく、そちらは\n"
+"周囲の文脈から値や型を推論する意味でした。違いを説明するにはいくつかの\n"
+"例を見るのが一番です。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:190
 msgid ""
 "Let us first have a look at the following implementation of `replicate` for "
 "vectors:"
-msgstr ""
+msgstr "最初に以下のベクタ用の`replicate`の実装を眺めてみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:191
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "replicate' : {n : _} -> a -> Vect n a\n"
 "replicate' {n = 0}   _ = []\n"
 "replicate' {n = S _} v = v :: replicate' v\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicateVect : (n : Nat) -> a -> Vect n a\n"
-"replicateVect 0     _ = []\n"
-"replicateVect (S k) x = x :: replicateVect k x\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate'' : {n : _} -> a -> Vect n a\n"
-"replicate'' {n = Z}   _ = Nil\n"
-"replicate'' {n = S _} v = v :: replicate'' v\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"covering\n"
-"replicatePrim : Bits32 -> a -> List a\n"
-"replicatePrim 0 v = []\n"
-"replicatePrim x v = v :: replicatePrim (x - 1) v\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate'' : {n : _} -> a -> Vect n a\n"
-"replicate'' {n = Z}   _ = Nil\n"
-"replicate'' {n = S _} v = v :: replicate'' v\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"replicate' : {n : _} -> a -> Vect n a\n"
+"replicate' {n = 0}   _ = []\n"
+"replicate' {n = S _} v = v :: replicate' v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:202
@@ -498,36 +497,20 @@ msgid ""
 "in the following example it is immediately clear that `n` equals three, "
 "because that is the length of the vector we want:"
 msgstr ""
+"関数`replicate`は消去されていない暗黙引数を取ります。この引数の*値*は\n"
+"周囲の文脈から導出できなくてはなりません。例えば以下の例では直ちに\n"
+"`n`が3であることが明らかですが、それは欲しいベクタの長さがそれだからで\n"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:203
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "replicateEx1 : Vect 3 Nat\n"
 "replicateEx1 = replicate' 12\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate' : {n : _} -> a -> Vect n a\n"
-"replicate' = replicate n\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"replicateEx1 : Vect 3 Nat\n"
+"replicateEx1 = replicate' 12\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:211
@@ -536,36 +519,19 @@ msgid ""
 "is available as an unerased implicit, so this can again be passed as is to "
 "`replicate'`:"
 msgstr ""
+"次の例では`n`の値はコンパイル時に知られていませんが、消去されていない\n"
+"暗黙子として使うことができるので、これもまた`replicate`にそのまま渡す\n"
+"ことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:212
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "replicateEx2 : {n : _} -> Vect n Nat\n"
 "replicateEx2 = replicate' 12\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate' : {n : _} -> a -> Vect n a\n"
-"replicate' = replicate n\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"replicateEx2 : {n : _} -> Vect n Nat\n"
+"replicateEx2 = replicate' 12\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:223
@@ -576,6 +542,11 @@ msgid ""
 "do so, because it can't be sure that this is the length we want. We "
 "therefore have to pass the length explicitly:"
 msgstr ""
+"しかし以下の例では`n`の値は推論することはできません。中間結果のベクタ\n"
+"が直ちに不明な長さのリストに変換されているからです。Idrisは`n`にあらゆ\n"
+"る値を挿入してみることはできるものの、そうすることは決してありません。\n"
+"なぜならこれが欲しい長さであると確かめることができないからです。したがっ\n"
+"て長さを明示的に渡さねばなりません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:224
@@ -584,6 +555,8 @@ msgid ""
 "replicateEx3 : List Nat\n"
 "replicateEx3 = toList $ replicate' {n = 17} 12\n"
 msgstr ""
+"replicateEx3 : List Nat\n"
+"replicateEx3 = toList $ replicate' {n = 17} 12\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:234
@@ -593,6 +566,10 @@ msgid ""
 "implicit arguments, this works differently. Here is the `head` example, this "
 "time with an auto implicit:"
 msgstr ""
+"`n`の値がこれらの例で推論されねばならなかったことに注目してください。\n"
+"つまりその値が周囲の文脈に姿を現すようにしなければならなかったというこ\n"
+"とです。自動暗黙引数では違った動作をします。以下は`head`の例ですが、今\n"
+"回は自動暗黙子を使っています。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:235
@@ -602,6 +579,9 @@ msgid ""
 "head (x :: _) = x\n"
 "head [] impossible\n"
 msgstr ""
+"head : (as : List a) -> {auto 0 prf : NotNil as} -> a\n"
+"head (x :: _) = x\n"
+"head [] impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:249
@@ -614,11 +594,18 @@ msgid ""
 "succeeds, this value will then be automatically filled in as the desired "
 "argument, otherwise, Idris will fail with a type error."
 msgstr ""
+"暗黙引数`prf`の数量子の前の`auto`キーワードに注目してください。これが\n"
+"意味するところは、周囲の文脈で目に触れることなく、この値をIdrisに自力\n"
+"で構築してもらいたいということです。そうするためにはIdrisはコンパイル\n"
+"時にリスト引数`as`の構造を知っていなければなりません。それからそのよう\n"
+"な値をデータ型の構築子から構築しようとします。もし成功したらこの値は所\n"
+"望された引数として自動的に埋められます。そうでなければIdrisは型エラー\n"
+"と共に失敗します。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:251
 msgid "Let's see this in action:"
-msgstr "ちょっとREPLで動かしてみましょう。"
+msgstr "これを実際に見てみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:252
@@ -627,22 +614,13 @@ msgid ""
 "headEx3 : Nat\n"
 "headEx3 = Predicates.head [1,2,3]\n"
 msgstr ""
+"headEx3 : Nat\n"
+"headEx3 = Predicates.head [1,2,3]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:258
-#, fuzzy
 msgid "The following example fails with an error:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"以下のプログラム例について考えます。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "以下の例はエラーとなり失敗します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:259
@@ -652,6 +630,9 @@ msgid ""
 "  errHead : Nat\n"
 "  errHead = Predicates.head []\n"
 msgstr ""
+"failing \"Can't find an implementation\\nfor NotNil [].\"\n"
+"  errHead : Nat\n"
+"  errHead = Predicates.head []\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:276
@@ -669,6 +650,15 @@ msgid ""
 "function body by its name (if any). Here is another implementation\n"
 "of `head`:\n"
 msgstr ""
+"待った！「Can't find an implementation for...」だって？これはインター\n"
+"フェースの実装が欠けているときのエラー文言じゃないか。その通り、そして\n"
+"本章の末尾でインターフェースの解決が証明検索に過ぎないことをお見せしま\n"
+"す。既にお見せしてきたことは、毎度毎度長ったらしく`{auto prf :\n"
+"t} ->`と書くことは面倒かもしれないということです。したがってIdrisでは\n"
+"代わりに制約付き関数用の同じ構文を使うことができるのです。`(prf : t)\n"
+"=>`、さらに制約の名前を付ける必要がなければ`t =>`でさえ構いません。そ\n"
+"こからはいつも通り、（もしあれば）名前によって、関数の本体で制約を扱え\n"
+"ます。以下は`head`の別実装です。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:277
@@ -678,6 +668,9 @@ msgid ""
 "head' (x :: _) = x\n"
 "head' [] impossible\n"
 msgstr ""
+"head' : (as : List a) -> (0 _ : NotNil as) => a\n"
+"head' (x :: _) = x\n"
+"head' [] impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:287
@@ -686,6 +679,9 @@ msgid ""
 "the current function context. This allows us to implement `headMaybe` "
 "without having to pass on the `NotNil` proof manually:"
 msgstr ""
+"証明検索中にIdrisは現在の関数の文脈の中で必要とされている型の値を探す\n"
+"こともします。これにより`headMaybe`を実装するのに手動で`NotNil`の証明\n"
+"を渡す必要はなくなります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:288
@@ -697,6 +693,11 @@ msgid ""
 "  Yes prf => Just $ Predicates.head as\n"
 "  No  _   => Nothing\n"
 msgstr ""
+"headMaybe : List a -> Maybe a\n"
+"headMaybe as = case nonEmpty as of\n"
+"  -- `prf` is available during proof seach\n"
+"  Yes prf => Just $ Predicates.head as\n"
+"  No  _   => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:304
@@ -708,6 +709,12 @@ msgid ""
 "technique called *proof search*. This allows us to make functions safe and "
 "convenient to use at the same time."
 msgstr ""
+"まとめるとこうなります。述語があれば関数が引数として受け付ける値を制限\n"
+"することができます。実行時にそのような*証拠*を関数引数でのパターン照合\n"
+"により構築する必要があります。こうした操作は一般には失敗しうるものです。\n"
+"コンパイル時に*証明検索*と呼ばれる技術を使ってIdrisにこれらの値を構築\n"
+"してみてもらうことができます。これにより関数を安全にしつつ、それと同時\n"
+"に使うのに便利になります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:312
@@ -717,47 +724,14 @@ msgid ""
 "results should be *pure*, that is, not wrapped in a failure type like "
 "`Maybe`."
 msgstr ""
+"これらの演習では関数引数として受け付ける値に制約を課すために自動暗黙子\n"
+"を活用した関数を複数実装せねばなりません。結果は*純粋*でなければなりま\n"
+"せん。つまり`Maybe`のような失敗型に包まれていてはなりません。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Predicates.md:314
-#, fuzzy
 msgid "Implement `tail` for lists."
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`tail`を`HList`に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インスタンス`Eq`を木薔薇に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   `Functor`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Foldable`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "リストに`tail`を実装してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Predicates.md:318
@@ -766,12 +740,15 @@ msgid ""
 "`concat` and `foldMap`, but taking only a `Semigroup` constraint on the "
 "element type."
 msgstr ""
+"`concat1`と`foldMap1`をリストに実装してください。これらは`concat`や\n"
+"`foldMap`と同じように動作しますが、要素型への`Semigroup`制約のみを取り\n"
+"ます。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Predicates.md:321
 msgid ""
 "Implement functions for returning the largest and smallest element in a list."
-msgstr ""
+msgstr "リスト中の最大と最小の要素を返す関数を実装してください。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Predicates.md:325
@@ -779,6 +756,8 @@ msgid ""
 "Define a predicate for strictly positive natural numbers and use it to "
 "implement a safe and provably total division function on natural numbers."
 msgstr ""
+"厳密に正の自然数のための述語を定義し、それを使って安全で証明上全域な自\n"
+"然数における除算関数を実装してください。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Predicates.md:330
@@ -787,6 +766,9 @@ msgid ""
 "value stored in a `Just`. Show that this predicate is decidable by "
 "implementing a corresponding conversion function."
 msgstr ""
+"非空の`Maybe`のための述語を定義し、安全に`Just`の中に保管されてている\n"
+"値を取り出してください。この述語が決定可能であることを対応する変換関数\n"
+"を実装することによって示してください。"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/Predicates.md:334
@@ -795,6 +777,8 @@ msgid ""
 "and a `Right` by using suitable predicates.  Show again that these "
 "predicates are decidable."
 msgstr ""
+"`Left`と`Right`から安全に値を取り出す関数を相応しい述語を使って定義し\n"
+"実装してください。再びこれらの述語が決定可能であることを示してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:339
@@ -803,12 +787,15 @@ msgid ""
 "the *base* library: `Data.List.NonEmpty`, `Data.Maybe.IsJust`, `Data.Either."
 "IsLeft`, `Data.Either.IsRight`, and `Data.Nat.IsSucc`."
 msgstr ""
+"これらの演習で実装した熟語は既に*base*ライブラリから手に入ります。\n"
+"`Data.List.NonEmpty`、`Data.Maybe.IsJust`、`Data.Either.IsLeft`、\n"
+"`Data.Either.IsRight`、`Data.Nat.IsSucc`がそれです。"
 
 #. type: Title ##
 #: ../src/Tutorial/Predicates.md:340
 #, no-wrap
 msgid "Contracts between Values"
-msgstr ""
+msgstr "値間契約"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:346
@@ -817,25 +804,28 @@ msgid ""
 "is also possible to define predicates describing contracts between several "
 "values of possibly distinct types."
 msgstr ""
+"これまで見てきた述語は値の型は単一のものに制限されていました。しかし相\n"
+"異なる型を持ちうる複数の値の間の契約を記述する述語を定義することもでき\n"
+"ます。"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:347
 #, no-wrap
 msgid "The `Elem` Predicate"
-msgstr ""
+msgstr "`Elem`述語"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:351
 msgid ""
 "Assume we'd like to extract a value of a given type from a heterogeneous "
 "list:"
-msgstr ""
+msgstr "混成リストから与えられた型の値を取り出したいとします。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:352
 #, no-wrap
 msgid "get' : (0 t : Type) -> HList ts -> t\n"
-msgstr ""
+msgstr "get' : (0 t : Type) -> HList ts -> t\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:358
@@ -843,6 +833,8 @@ msgid ""
 "This can't work in general: If we could implement this we would immediately "
 "have a proof of void:"
 msgstr ""
+"これは一般にはうまくいきません。これを実装できたとすると直ちにvoidの証\n"
+"明が得られてしまいます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:359
@@ -851,6 +843,8 @@ msgid ""
 "voidAgain : Void\n"
 "voidAgain = get' Void []\n"
 msgstr ""
+"voidAgain : Void\n"
+"voidAgain = get' Void []\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:367
@@ -859,38 +853,21 @@ msgid ""
 "be an element of the index of the heterogeneous list.  Here is a predicate, "
 "with which we can express this:"
 msgstr ""
+"問題点は明らかです。値を取り出したい型は混成リストの指標の要素でなけれ\n"
+"ばなりません。以下はとある述語で、これがあればこの要件を表現することが\n"
+"できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:368
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "data Elem : (elem : a) -> (as : List a) -> Type where\n"
 "  Here  : Elem x (x :: xs)\n"
 "  There : Elem x xs -> Elem x (y :: xs)\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"data Vect : (len : Nat) -> (a : Type) -> Type where\n"
-"  Nil  : Vect 0 a\n"
-"  (::) : (x : a) -> (xs : Vect n a) -> Vect (S n) a\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"data Elem : (elem : a) -> (as : List a) -> Type where\n"
+"  Here  : Elem x (x :: xs)\n"
+"  There : Elem x xs -> Elem x (y :: xs)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:386
@@ -905,6 +882,14 @@ msgid ""
 "If `x` is and element of `xs`, then `x` is also an element of `y :: xs` for "
 "any value `y`. Let's write down some examples to get a feel for these:"
 msgstr ""
+"これは2つの値、すなわち型`a`と`a`のリストの値、の間の契約を記述する述\n"
+"語です。この契約の値は値がリストの要素であることの証拠です。これが再帰\n"
+"的に定義されていることに注目してください。探している値がリストの先頭に\n"
+"ある場合は`Here`構築子で扱われ、要素とリストの先頭とで同じ変数 (`x`)\n"
+"が使われます。値がリスト中のより深くにある場合は`There`構築子によって\n"
+"扱われます。これは以下のように読むことができます。もし`x`が`xs`の要素\n"
+"であれば、あらゆる`y`の値について、`x`もまた`y :: xs`の要素です。この\n"
+"契約の感覚を掴むためにいくつかの例を書き下しましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:387
@@ -919,6 +904,14 @@ msgid ""
 "sevenElemMyList : Elem 7 MyList\n"
 "sevenElemMyList = There $ There Here\n"
 msgstr ""
+"MyList : List Nat\n"
+"MyList = [1,3,7,8,4,12]\n"
+"\n"
+"oneElemMyList : Elem 1 MyList\n"
+"oneElemMyList = Here\n"
+"\n"
+"sevenElemMyList : Elem 7 MyList\n"
+"sevenElemMyList = There $ There Here\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:402
@@ -927,6 +920,9 @@ msgid ""
 "of using a `Fin` index, which is limited by the list's length, we use a "
 "proof that a value can be found at a certain position."
 msgstr ""
+"ここで`Elem`は値のリストを指標で探り入れる単なる別の方法です。リストの\n"
+"長さで制限された`Fin`指標を使う代わりに、値が特定の位置で見付けられる\n"
+"ことの証明を使います。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:405
@@ -934,12 +930,13 @@ msgid ""
 "We can use the `Elem` predicate to extract a value from the desired type of "
 "a heterogeneous list:"
 msgstr ""
+"`Elem`述語を使うことで混成リストの望んだ型から値を取り出すことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:406
 #, no-wrap
 msgid "get : (0 t : Type) -> HList ts -> (prf : Elem t ts) => t\n"
-msgstr ""
+msgstr "get : (0 t : Type) -> HList ts -> (prf : Elem t ts) => t\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:415
@@ -949,6 +946,10 @@ msgid ""
 "pattern match on this value in order to figure out, how far within the "
 "heterogeneous list our value is stored:"
 msgstr ""
+"大事なのは自動暗黙子がこの場合には消してはならないということに注意する\n"
+"ことです。もはやこれが単一値データ型ではなく、混成リストの中のどれほど\n"
+"深いところに値が格納されているのかを解明するために、この値でパターン照\n"
+"合できなくてはならないのです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:416
@@ -958,6 +959,9 @@ msgid ""
 "get t (v :: vs) {prf = There p} = get t vs\n"
 "get _ [] impossible\n"
 msgstr ""
+"get t (v :: vs) {prf = Here}    = v\n"
+"get t (v :: vs) {prf = There p} = get t vs\n"
+"get _ [] impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:425
@@ -966,6 +970,8 @@ msgid ""
 "hand side to see the context and types of values Idris infers based on the "
 "value of the `Elem` predicate."
 msgstr ""
+"右側で穴開きを使い、`Elem`述語の値に基づいてIdrisが推論した値の文脈と\n"
+"型を見つつ、自力で`get`を実装するとわかりやすいかもしれません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:427
@@ -985,6 +991,14 @@ msgid ""
 " 1 | get Nat [\"foo\", Just \"bar\"]\n"
 "     ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
 msgstr ""
+"Tutorial.Predicates> get Nat [\"foo\", Just \"bar\", S Z]\n"
+"1\n"
+"Tutorial.Predicates> get Nat [\"foo\", Just \"bar\"]\n"
+"Error: Can't find an implementation for Elem Nat [String, Maybe String].\n"
+"\n"
+"(Interactive):1:1--1:28\n"
+" 1 | get Nat [\"foo\", Just \"bar\"]\n"
+"     ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:446
@@ -996,6 +1010,11 @@ msgid ""
 "limited *search depth*, and will fail with the search if this limit is "
 "exceeded. For instance:"
 msgstr ""
+"この例で*証明検索*が実際のところ意味するところが分かり始めます。値\n"
+"`v`と値のリスト`vs`が与えられると、Idrisは`v`が`vs`の要素である証明を\n"
+"見付けようとします。さて、話を進める前に証明検索が銀の弾丸ではないこと\n"
+"に注意してください。検索アルゴリズムには合理的に制限された*探索深度*が\n"
+"あり、この制限を超過すると探索が失敗します。例えば以下です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:447
@@ -1012,29 +1031,26 @@ msgid ""
 "        , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
 "        , Nothing ]\n"
 msgstr ""
+"Tps : List Type\n"
+"Tps = List.replicate 50 Nat ++ [Maybe String]\n"
+"\n"
+"hlist : HList Tps\n"
+"hlist = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
+"        , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
+"        , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
+"        , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
+"        , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n"
+"        , Nothing ]\n"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Predicates.md:462
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Tutorial.Predicates> get (Maybe String) hlist\n"
 "Error: Can't find an implementation for Elem (Maybe String) [Nat,...\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Tutorial.Functions2> show (maybeToEither Nothing)\n"
-"Error: Can't find an implementation for Show (Either String ?a).\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Tutorial.Predicates> get (Maybe String) hlist\n"
+"Error: Can't find an implementation for Elem (Maybe String) [Nat,...\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:474
@@ -1046,6 +1062,11 @@ msgid ""
 "general, it is not advisable to set this to a too large value as this can "
 "drastically increase compile times."
 msgstr ""
+"見ての通りIdrisは`Maybe String`が`Tps`の要素であるという証明を見付ける\n"
+"ことに失敗します。検索深度は`%auto_implicit_depth`命令で増加させること\n"
+"ができ、ソースファイルの以降ないし異なる値が設定されるまでは保たれます。\n"
+"既定値は25に設定されています。これを大きすぎる値に設定することは、劇的\n"
+"にコンパイル時間を増加させかねないので、一般にはお勧めできません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:475
@@ -1057,12 +1078,17 @@ msgid ""
 "\n"
 "%auto_implicit_depth 25\n"
 msgstr ""
+"%auto_implicit_depth 100\n"
+"aMaybe : Maybe String\n"
+"aMaybe = get _ hlist\n"
+"\n"
+"%auto_implicit_depth 25\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:483
 #, no-wrap
 msgid "Use Case: A nicer Schema"
-msgstr ""
+msgstr "用例：より良いスキーマ"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:492
@@ -1074,6 +1100,12 @@ msgid ""
 "columns by name. We are going to change this. Here is an encoding for this "
 "use case:"
 msgstr ""
+"[依存和型](DPair.md)についての章でCSVファイル用のスキーマを導入しまし\n"
+"た。これは使う上であまりよくありませんでした。なぜなら特定の列にアクセ\n"
+"スするために自然数を使わねばならなかったからです。さらに悪いことにこの\n"
+"小さなライブラリの利用者も同じことをしなければならないのです。それぞれ\n"
+"の列に名前を定義したり名前で列にアクセスする方法がありませんでした。こ\n"
+"れを変えていくつもりです。以下はこの用例を符号化したものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:493
@@ -1112,6 +1144,38 @@ msgid ""
 "showSchema : Schema -> String\n"
 "showSchema = concat . intersperse \",\" . map show\n"
 msgstr ""
+"data ColType = I64 | Str | Boolean | Float\n"
+"\n"
+"IdrisType : ColType -> Type\n"
+"IdrisType I64     = Int64\n"
+"IdrisType Str     = String\n"
+"IdrisType Boolean = Bool\n"
+"IdrisType Float   = Double\n"
+"\n"
+"record Column where\n"
+"  constructor MkColumn\n"
+"  name : String\n"
+"  type : ColType\n"
+"\n"
+"infixr 8 :>\n"
+"\n"
+"(:>) : String -> ColType -> Column\n"
+"(:>) = MkColumn\n"
+"\n"
+"Schema : Type\n"
+"Schema = List Column\n"
+"\n"
+"Show ColType where\n"
+"  show I64     = \"I64\"\n"
+"  show Str     = \"Str\"\n"
+"  show Boolean = \"Boolean\"\n"
+"  show Float   = \"Float\"\n"
+"\n"
+"Show Column where\n"
+"  show (MkColumn n ct) = \"\\{n}:\\{show ct}\"\n"
+"\n"
+"showSchema : Schema -> String\n"
+"showSchema = concat . intersperse \",\" . map show\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:531
@@ -1120,6 +1184,8 @@ msgid ""
 "is an example schema for a CSV file holding information about employees in a "
 "company:"
 msgstr ""
+"見ての通り、スキーマ中で列の型と名前を対にしました。以下は会社の従業員\n"
+"の情報を保管するCSVファイル用のスキーマの例です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:532
@@ -1134,6 +1200,14 @@ msgid ""
 "                 , \"management\" :> Boolean\n"
 "                 ]\n"
 msgstr ""
+"EmployeeSchema : Schema\n"
+"EmployeeSchema = [ \"firstName\"  :> Str\n"
+"                 , \"lastName\"   :> Str\n"
+"                 , \"email\"      :> Str\n"
+"                 , \"age\"        :> I64\n"
+"                 , \"salary\"     :> Float\n"
+"                 , \"management\" :> Boolean\n"
+"                 ]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:549
@@ -1144,6 +1218,10 @@ msgid ""
 "I quickly wrote a custom row type: A heterogeneous list indexed over a "
 "schema."
 msgstr ""
+"そのようなスキーマは当然ここでも利用者の入力から読み取れますが、構文解\n"
+"析器を実装するのは本章の後半まで待つことにします。この新しいスキーマを\n"
+"`HList`と直接使うと型推論の問題が生じるので、手早く自前の行の型を書き\n"
+"ました。スキーマ上に指標付けられた混成リストです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:550
@@ -1158,6 +1236,14 @@ msgid ""
 "       -> Row ss\n"
 "       -> Row (name :> type :: ss)\n"
 msgstr ""
+"data Row : Schema -> Type where\n"
+"  Nil  : Row []\n"
+"\n"
+"  (::) :  {0 name : String}\n"
+"       -> {0 type : ColType}\n"
+"       -> (v : IdrisType type)\n"
+"       -> Row ss\n"
+"       -> Row (name :> type :: ss)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:565
@@ -1166,11 +1252,14 @@ msgid ""
 "This is good practice, as otherwise Idris will often issue shadowing "
 "warnings when using such data constructors in client code."
 msgstr ""
+"*cons*の処方では消去された暗黙引数を明示的に列挙しています。これは良い\n"
+"習慣です。というのもそうしないと使い手のコードでこのようなデータ構築子\n"
+"を使うときに、Idrisがよく陰に隠されている旨の警告を出すからです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:567
 msgid "We can now define a type alias for CSV rows representing employees:"
-msgstr ""
+msgstr "これで従業員を表現するCSVの行の型別称を定義できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:568
@@ -1182,6 +1271,11 @@ msgid ""
 "hock : Employee\n"
 "hock = [ \"Stefan\", \"Höck\", \"hock@foo.com\", 46, 5443.2, False ]\n"
 msgstr ""
+"0 Employee : Type\n"
+"Employee = Row EmployeeSchema\n"
+"\n"
+"hock : Employee\n"
+"hock = [ \"Stefan\", \"Höck\", \"hock@foo.com\", 46, 5443.2, False ]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:584
@@ -1193,6 +1287,12 @@ msgid ""
 "quantity functions and values in type signatures and when computing other "
 "erased values, but not for runtime-relevant computations."
 msgstr ""
+"なお、`Employee`にゼロ数量子を与えました。つまり、この関数を使うのは必\n"
+"ずコンパイル時にのみ許されており、実行時には決して使えません。これはア\n"
+"プリケーションを構築する際に型水準関数とその別称を実行可能物に確実に漏\n"
+"れ出させないようにするための安全な方法です。ゼロ数量子の関数と値は型処\n"
+"方や他の消去される値の計算時に使うことができますが、実行時関連の計算で\n"
+"はできません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:602
@@ -1211,6 +1311,18 @@ msgid ""
 "proof search. This can be done by listing the indices to be used in the "
 "search like so: `[search name schema]`."
 msgstr ""
+"さて、行の中の値に与えられた名前に基づいてアクセスしたいと思っています。\n"
+"このためには自前の述語を書きます。この述語は与えられた名前を持つ列がス\n"
+"キーマの一部であることの証拠として供されます。ここで、以下は注意すべき\n"
+"重要な点です。この述語では与えられた名前を持つ列の*型*用の指標を含めま\n"
+"す。こうする必要があるのですが、その理由は名前で列にアクセスする際に返\n"
+"却型を調べる方法が必要だからです。しかし証明検索中はこの型はIdrisによっ\n"
+"て列の名前と問題のスキーマに基づいて導出されなければなりません（さもな\n"
+"いと返却型が前もって知られていない限り証明検索が失敗します）。したがっ\n"
+"て、この型を検索判定基準の一覧に含められないことをIdrisに教える*必要*\n"
+"があります。でないと証明検索を走らせる前に（型推論を使って）文脈から列\n"
+"の型を推論しようとします。これは`[search name schema]`のように、検索で\n"
+"使う指標を列挙することによって行うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:603
@@ -1228,6 +1340,17 @@ msgid ""
 "  uninhabited IsHere impossible\n"
 "  uninhabited (IsThere _) impossible\n"
 msgstr ""
+"data InSchema :  (name    : String)\n"
+"              -> (schema  : Schema)\n"
+"              -> (colType : ColType)\n"
+"              -> Type where\n"
+"  [search name schema]\n"
+"  IsHere  : InSchema n (n :> t :: ss) t\n"
+"  IsThere : InSchema n ss t -> InSchema n (fld :: ss) t\n"
+"\n"
+"Uninhabited (InSchema n [] c) where\n"
+"  uninhabited IsHere impossible\n"
+"  uninhabited (IsThere _) impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:619
@@ -1235,6 +1358,8 @@ msgid ""
 "With this, we are now ready to access the value at a given column based on "
 "the column's name:"
 msgstr ""
+"これを使うことで、列の名前に基づいて与えられた列にある値にアクセスする準備が"
+"整いました。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:620
@@ -1248,6 +1373,13 @@ msgid ""
 "getAt name (v :: vs) {prf = IsHere}    = v\n"
 "getAt name (_ :: vs) {prf = IsThere p} = getAt name vs\n"
 msgstr ""
+"getAt :  {0 ss : Schema}\n"
+"      -> (name : String)\n"
+"      -> (row  : Row ss)\n"
+"      -> (prf  : InSchema name ss c)\n"
+"      => IdrisType c\n"
+"getAt name (v :: vs) {prf = IsHere}    = v\n"
+"getAt name (_ :: vs) {prf = IsThere p} = getAt name vs\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:638
@@ -1259,6 +1391,12 @@ msgid ""
 "`getAt` and extracts the corresponding values from the row. All of this "
 "happens in a provably total and type safe way."
 msgstr ""
+"以下はこれをコンパイル時に使う方法の一例です。どれほどのことをIdrisが\n"
+"してくれているかに注目してください。まず、`firstName`、`lastName`、\n"
+"`age`が確かに`Employee`スキーマ中の妥当な名前であるという証明を考え付\n"
+"いています。これらの証明から自動的に`getAt`の呼び出しによる返却型を解\n"
+"明し、列から対応する値を抽出します。この全てが証明上全域で型安全なやり\n"
+"方で行われるのです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:639
@@ -1272,6 +1410,13 @@ msgid ""
 "       ++ show (getAt \"age\" hock)\n"
 "       ++ \" years old.\"\n"
 msgstr ""
+"shoeck : String\n"
+"shoeck =  getAt \"firstName\" hock\n"
+"       ++ \" \"\n"
+"       ++ getAt \"lastName\" hock\n"
+"       ++ \": \"\n"
+"       ++ show (getAt \"age\" hock)\n"
+"       ++ \" years old.\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:657
@@ -1284,6 +1429,12 @@ msgid ""
 "column type at the same time and pair this (as a dependent pair) with the "
 "`InSchema` proof:"
 msgstr ""
+"実行時に列の名前を指定するためには、列の名前と問題のスキーマを比較する\n"
+"ことによって型`InSchema`の値を計算する方法が必要です。命題上等しくある\n"
+"ために2つの文字列値を比較せねばならないため、ここでは`String`用の\n"
+"`DecEq`実装を使います（Idrisは全ての原始型用に`DecEq`実装を提供してい\n"
+"ます）。同時に列の型を取り出し、（依存対として）これと`InSchema`証明と\n"
+"を対にしています。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:658
@@ -1297,6 +1448,13 @@ msgid ""
 "    Just (t ** prf) => Just $ (t ** IsThere prf)\n"
 "    Nothing         => Nothing\n"
 msgstr ""
+"inSchema : (ss : Schema) -> (n : String) -> Maybe (c ** InSchema n ss c)\n"
+"inSchema []                    _ = Nothing\n"
+"inSchema (MkColumn cn t :: xs) n = case decEq cn n of\n"
+"  Yes Refl   => Just (t ** IsHere)\n"
+"  No  contra => case inSchema xs n of\n"
+"    Just (t ** prf) => Just $ (t ** IsThere prf)\n"
+"    Nothing         => Nothing\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:671
@@ -1304,6 +1462,8 @@ msgid ""
 "At the end of this chapter we will use `InSchema` in our CSV command-line "
 "application to list all values in a column."
 msgstr ""
+"本章の終わりには、CSVコマンドラインアプリケーションで列の中の全ての値\n"
+"を列挙するために`InSchema`を使っていきます。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Predicates.md:676
@@ -1311,25 +1471,16 @@ msgid ""
 "Show that `InSchema` is decidable by changing the output type of `inSchema` "
 "to `Dec (c ** InSchema n ss c)`."
 msgstr ""
+"`InSchema`が決定可能であることを、`inSchema`の出力型を`Dec (c **\n"
+"InSchema n ss c)`に変えることで示してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Predicates.md:679
-#, fuzzy
 msgid ""
 "Declare and implement a function for modifying a field in a row based on the "
 "column name given."
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"あらゆる`List01 ne a`を同じ長さと値の順番の`List01 False a`に変換する関数"
-"`weaken`を宣言し実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"与えられた列名に基づいてフィールドを変更する関数を宣言し実装してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Predicates.md:684
@@ -1338,6 +1489,9 @@ msgid ""
 "elements in the second list in the same order and use this predicate to "
 "extract several columns from a row at once."
 msgstr ""
+"1つ目のリストが2つ目のリスト中の要素をこの順で含んでいるという証拠とし\n"
+"て使われる述語を定義し、この述語を使って複数列を行から一度に抽出するの\n"
+"に使ってください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:688
@@ -1347,6 +1501,8 @@ msgid ""
 "   `[1,2,3,4,5,6]` in the correct order, but `[4,2,5]`\n"
 "   does not.\n"
 msgstr ""
+"   例えば`[2,4,5]`には`[1,2,3,4,5,6]`から正しい順序で要素を含んでいますが、\n"
+"   `[4,2,5]`はそうではありません。\n"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Predicates.md:694
@@ -1356,6 +1512,10 @@ msgid ""
 "(in arbitrary order).  Use this to extract several columns from a row at "
 "once in arbitrary order."
 msgstr ""
+"演習3を元に新しい述語を定義することによって機能を向上させてください。\n"
+"この述語はリスト中の全ての文字列がスキーマ中の列名に（任意の順序で）対\n"
+"応するという証拠です。これを使って行から複数列を任意の順序で一度に取り\n"
+"出してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:698
@@ -1365,12 +1525,14 @@ msgid ""
 "   but search only based on the list of names and the input\n"
 "   schema.\n"
 msgstr ""
+"   手掛かり：必ず結果のスキーマを指標として含めてください。ただし名前\n"
+"   のリストと入力スキーマのみに基づいて検索してください。\n"
 
 #. type: Title ##
 #: ../src/Tutorial/Predicates.md:699
 #, no-wrap
 msgid "Use Case: Flexible Error Handling"
-msgstr ""
+msgstr "用例：柔軟なエラー制御"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:718
@@ -1389,6 +1551,19 @@ msgid ""
 "approach here. Before we continue, we quickly implement a couple of "
 "functions with the potential of failure plus some custom error types:"
 msgstr ""
+"大き目のアプリケーションを書いているときに繰り返されるパターンとして、\n"
+"独自の失敗型を持つプログラムのそれぞれの部品を、より大きな作用付き計算\n"
+"に組み合わせることがあります。これについては例えばCSVファイルを取り扱\n"
+"うコマンドラインツールを実装したときに見ました。そこではデータをファイ\n"
+"ルについて読み書きし、列の型とスキーマを構文解析し、行と列の指標とコマ\n"
+"ンドラインの命令を構文解析しました。これら全ての操作は潜在的な失敗が付\n"
+"き物であり、アプリケーションをなす異なる部品において実装されることがあ\n"
+"ります。これらの異なる失敗型を統一するためにそれぞれを内蔵化する自前の\n"
+"直和型を書き、この直和型用の単一の制御子を書きました。この手法はそのと\n"
+"きは良かったのですが、充分な規模拡大にはなりませんし、柔軟性の観点から\n"
+"は欠けているところがありました。したがってここでは違う手法を試していき\n"
+"ます。先に進む前に手短かに潜在的な失敗を伴ういくつかの関数といくつかの\n"
+"自前のエラー型を実装します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:719
@@ -1412,6 +1587,23 @@ msgid ""
 "readColType' \"Float\"   = Right Float\n"
 "readColType' s         = Left $ MkNoColType s\n"
 msgstr ""
+"record NoNat where\n"
+"  constructor MkNoNat\n"
+"  str : String\n"
+"\n"
+"readNat' : String -> Either NoNat Nat\n"
+"readNat' s = maybeToEither (MkNoNat s) $ parsePositive s\n"
+"\n"
+"record NoColType where\n"
+"  constructor MkNoColType\n"
+"  str : String\n"
+"\n"
+"readColType' : String -> Either NoColType ColType\n"
+"readColType' \"I64\"     = Right I64\n"
+"readColType' \"Str\"     = Right Str\n"
+"readColType' \"Boolean\" = Right Boolean\n"
+"readColType' \"Float\"   = Right Float\n"
+"readColType' s         = Left $ MkNoColType s\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:746
@@ -1422,6 +1614,12 @@ msgid ""
 "`OutOfBounds` error).  We have to somehow encode these two possibilities in "
 "the return type, for instance, by using an `Either` as the error type:"
 msgstr ""
+"ところが`Fin n`を構文解析したいとなるとこの時点でどう失敗しうるかにつ\n"
+"いて2通りあることになります。1つは問題の文字列が自然数を表現していない\n"
+"とき（`NoNat`エラーに繋がります）、もう1つは範囲外であるとき\n"
+"（`OutOfBounds`エラーに繋がります）です。どうにかしてこれら2つの可能性\n"
+"を返却型に符号化せねばなりません。例えば`Either`をエラー型として使うこ\n"
+"とはできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:747
@@ -1437,6 +1635,15 @@ msgid ""
 "  ix <- mapFst Left (readNat' s)\n"
 "  maybeToEither (Right $ MkOutOfBounds n ix) $ natToFin ix n\n"
 msgstr ""
+"record OutOfBounds where\n"
+"  constructor MkOutOfBounds\n"
+"  size  : Nat\n"
+"  index : Nat\n"
+"\n"
+"readFin' : {n : _} -> String -> Either (Either NoNat OutOfBounds) (Fin n)\n"
+"readFin' s = do\n"
+"  ix <- mapFst Left (readNat' s)\n"
+"  maybeToEither (Right $ MkOutOfBounds n ix) $ natToFin ix n\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:767
@@ -1449,43 +1656,22 @@ msgid ""
 "single value of exactly one of the types in question.  Here is a first naive "
 "try:"
 msgstr ""
+"これは非常に見辛いです。自前の直和型は僅かにマシかもしれませんが、それ\n"
+"でも`readNat'`を呼び出すときに`mapFst`を使う必要があるでしょうし、全て\n"
+"の取り得るエラーの組み合わせについて直和型を書くこともまたとても速やか\n"
+"に面倒なことになるでしょう。ここで追い求めていたものは一般化された直和\n"
+"型です。型のリスト（取り得る選択肢）によって指標付けられちょうど1つの\n"
+"問題の型の単一値を保有する型なのです。以下は最初の素朴な試みです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:768
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "data Sum : List Type -> Type where\n"
 "  MkSum : (val : t) -> Sum ts\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
-"     Nil  : List01 False a\n"
-"     (::) : a -> List01 False a -> List01 ne a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
-"     Nil  : List01 False a\n"
-"     (::) : a -> List01 False a -> List01 ne a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"data Vect : (len : Nat) -> (a : Type) -> Type where\n"
-"  Nil  : Vect 0 a\n"
-"  (::) : (x : a) -> (xs : Vect n a) -> Vect (S n) a\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"data Sum : List Type -> Type where\n"
+"  MkSum : (val : t) -> Sum ts\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:783
@@ -1499,6 +1685,14 @@ msgid ""
 "number of types in the list.  We will therefore use a vector instead of a "
 "list as our index.  Here is a predicate similar to `Elem` but for vectors:"
 msgstr ""
+"しかし決定的な情報が欠けています。それは、`t`が`ts`の要素なのか、そし\n"
+"て実際に*どの*型なのかをまだ確証していないことです。実際これは消去され\n"
+"た存在量化子の別の場合であり、実行時に`t`について何かを知る術は1つもあ\n"
+"りません。しなければならないことは値を証明と対にすることで、その証明は\n"
+"型`t`が`ts`の要素であることについてのものです。このために再び`Elem`を\n"
+"使うこともできるでしょうが、リスト中にある型の数にアクセスする必要があ\n"
+"る用例もあります。したがってリストの代わりにベクタを指標として使います。\n"
+"以下は`Elem`に似ていつつもベクタ用の述語です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:784
@@ -1512,6 +1706,13 @@ msgid ""
 "  uninhabited Z impossible\n"
 "  uninhabited (S _) impossible\n"
 msgstr ""
+"data Has :  (v : a) -> (vs  : Vect n a) -> Type where\n"
+"  Z : Has v (v :: vs)\n"
+"  S : Has v vs -> Has v (w :: vs)\n"
+"\n"
+"Uninhabited (Has v []) where\n"
+"  uninhabited Z impossible\n"
+"  uninhabited (S _) impossible\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:797
@@ -1519,6 +1720,8 @@ msgid ""
 "A value of type `Has v vs` is a witness that `v` is an element of `vs`. With "
 "this, we can now implement an indexed sum type (also called an *open union*):"
 msgstr ""
+"型`Has v vs`の値は`v`が`vs`の要素であることの証拠です。これを使えば今\n"
+"や指標付けられた直和型（*開合併型*とも呼ばれます）を実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:798
@@ -1530,6 +1733,11 @@ msgid ""
 "Uninhabited (Union []) where\n"
 "  uninhabited (U ix _) = absurd ix\n"
 msgstr ""
+"data Union : Vect n Type -> Type where\n"
+"  U : (ix : Has t ts) -> (val : t) -> Union ts\n"
+"\n"
+"Uninhabited (Union []) where\n"
+"  uninhabited (U ix _) = absurd ix\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:811
@@ -1540,6 +1748,10 @@ msgid ""
 "type listed in the index.  With this we can now define a much more flexible "
 "error type:"
 msgstr ""
+"`HList`と`Union`の間の違いに注目してください。`HList`は*生成された直積\n"
+"型*です。指標にそれぞれの型の値を保有しています。`Union`は*生成された\n"
+"直和型*です。単一値のみを持ち、指標に挙げられている型でなればなりませ\n"
+"ん。これがあれば今や遥かに柔軟なエラー型を定義できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:812
@@ -1548,6 +1760,8 @@ msgid ""
 "0 Err : Vect n Type -> Type -> Type\n"
 "Err ts t = Either (Union ts) t\n"
 msgstr ""
+"0 Err : Vect n Type -> Type -> Type\n"
+"Err ts t = Either (Union ts) t\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:820
@@ -1555,6 +1769,9 @@ msgid ""
 "A function returning an `Err ts a` describes a computation, which can fail "
 "with one of the errors listed in `ts`.  We first need some utility functions."
 msgstr ""
+"`Err ts a`を返す関数はある計算を記述しています。その計算とは`ts`で挙げ\n"
+"られたエラーのうちの1つで失敗しうるというものです。最初にいくつかの便\n"
+"利関数が必要です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:821
@@ -1569,12 +1786,20 @@ msgid ""
 "failMaybe : Has t ts => (err : Lazy t) -> Maybe a -> Err ts a\n"
 "failMaybe err = maybeToEither (inject err)\n"
 msgstr ""
+"inject : (prf : Has t ts) => (v : t) -> Union ts\n"
+"inject v = U prf v\n"
+"\n"
+"fail : Has t ts => (err : t) -> Err ts a\n"
+"fail err = Left $ inject err\n"
+"\n"
+"failMaybe : Has t ts => (err : Lazy t) -> Maybe a -> Err ts a\n"
+"failMaybe err = maybeToEither (inject err)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:834
 msgid ""
 "Next, we can write more flexible versions of the parsers we wrote above:"
-msgstr ""
+msgstr "次に以前書いた構文解析器のより柔軟なバージョンを書くことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:835
@@ -1590,6 +1815,15 @@ msgid ""
 "readColType \"Float\"   = Right Float\n"
 "readColType s         = fail $ MkNoColType s\n"
 msgstr ""
+"readNat : Has NoNat ts => String -> Err ts Nat\n"
+"readNat s = failMaybe (MkNoNat s) $ parsePositive s\n"
+"\n"
+"readColType : Has NoColType ts => String -> Err ts ColType\n"
+"readColType \"I64\"     = Right I64\n"
+"readColType \"Str\"     = Right Str\n"
+"readColType \"Boolean\" = Right Boolean\n"
+"readColType \"Float\"   = Right Float\n"
+"readColType s         = fail $ MkNoColType s\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:849
@@ -1597,6 +1831,8 @@ msgid ""
 "Before we implement `readFin`, we introduce a short cut for specifying that "
 "several error types must be present:"
 msgstr ""
+"`readFin`を実装する前に、複数のエラー型が存在していなければならないこ\n"
+"とを指定する早道を導入します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:850
@@ -1606,6 +1842,9 @@ msgid ""
 "Errs []        _  = ()\n"
 "Errs (x :: xs) ts = (Has x ts, Errs xs ts)\n"
 msgstr ""
+"0 Errs : List Type -> Vect n Type -> Type\n"
+"Errs []        _  = ()\n"
+"Errs (x :: xs) ts = (Has x ts, Errs xs ts)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:860
@@ -1614,6 +1853,9 @@ msgid ""
 "witness that all listed types are present in the vector of types: Idris will "
 "automatically extract the proofs from the tuple as needed."
 msgstr ""
+"関数`Errs`は制約のタプルを返します。これは全ての列挙された型が型のベク\n"
+"タにあることの証拠として使えます。Idrisは自動的にタプルから証明を必要\n"
+"に応じて取り出します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:862
@@ -1624,11 +1866,15 @@ msgid ""
 "  S ix <- readNat s | Z => fail (MkOutOfBounds n Z)\n"
 "  failMaybe (MkOutOfBounds n (S ix)) $ natToFin ix n\n"
 msgstr ""
+"readFin : {n : _} -> Errs [NoNat, OutOfBounds] ts => String -> Err ts (Fin n)\n"
+"readFin s = do\n"
+"  S ix <- readNat s | Z => fail (MkOutOfBounds n Z)\n"
+"  failMaybe (MkOutOfBounds n (S ix)) $ natToFin ix n\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:871
 msgid "As a last example, here are parsers for schemata and CSV rows:"
-msgstr ""
+msgstr "最後の例として以下はスキーマとCSVの行のための構文解析器です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:872
@@ -1680,6 +1926,51 @@ msgid ""
 "        go k (MkColumn n c :: cs) (s :: ss) =\n"
 "          [| decodeField row k c s :: go (S k) cs ss |]\n"
 msgstr ""
+"fromCSV : String -> List String\n"
+"fromCSV = forget . split (',' ==)\n"
+"\n"
+"record InvalidColumn where\n"
+"  constructor MkInvalidColumn\n"
+"  str : String\n"
+"\n"
+"readColumn : Errs [InvalidColumn, NoColType] ts => String -> Err ts Column\n"
+"readColumn s = case forget $ split (':' ==) s of\n"
+"  [n,ct] => MkColumn n <$> readColType ct\n"
+"  _      => fail $ MkInvalidColumn s\n"
+"\n"
+"readSchema : Errs [InvalidColumn, NoColType] ts => String -> Err ts Schema\n"
+"readSchema = traverse readColumn . fromCSV\n"
+"\n"
+"data RowError : Type where\n"
+"  InvalidField  : (row, col : Nat) -> (ct : ColType) -> String -> RowError\n"
+"  UnexpectedEOI : (row, col : Nat) -> RowError\n"
+"  ExpectedEOI   : (row, col : Nat) -> RowError\n"
+"\n"
+"decodeField :  Has RowError ts\n"
+"            => (row,col : Nat)\n"
+"            -> (c : ColType)\n"
+"            -> String\n"
+"            -> Err ts (IdrisType c)\n"
+"decodeField row col c s =\n"
+"  let err = InvalidField row col c s\n"
+"   in case c of\n"
+"        I64     => failMaybe err $ read s\n"
+"        Str     => failMaybe err $ read s\n"
+"        Boolean => failMaybe err $ read s\n"
+"        Float   => failMaybe err $ read s\n"
+"\n"
+"decodeRow :  Has RowError ts\n"
+"          => {s : _}\n"
+"          -> (row : Nat)\n"
+"          -> (str : String)\n"
+"          -> Err ts (Row s)\n"
+"decodeRow row = go 1 s . fromCSV\n"
+"  where go : Nat -> (cs : Schema) -> List String -> Err ts (Row cs)\n"
+"        go k []       []                    = Right []\n"
+"        go k []       (_ :: _)              = fail $ ExpectedEOI row k\n"
+"        go k (_ :: _) []                    = fail $ UnexpectedEOI row k\n"
+"        go k (MkColumn n c :: cs) (s :: ss) =\n"
+"          [| decodeField row k c s :: go (S k) cs ss |]\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:925
@@ -1689,6 +1980,10 @@ msgid ""
 "how the order of error types is of no importance, as long as types "
 "`InvalidColumn` and `NoColType` are present in the list of errors:"
 msgstr ""
+"以下はREPLセッションの一例です。ここでは`readSchema`を試しました。\n"
+"`:let`命令を使って変数`ts`を定義し、より便利にしています。型\n"
+"`InvalidColumn`と`NoColType`がエラーのリスト中にある限り、エラー型の順\n"
+"番には何ら重要性はないことに注意してください。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Predicates.md:926
@@ -1702,22 +1997,19 @@ msgid ""
 "Tutorial.Predicates> readSchema {ts} \"foo Float\"\n"
 "Left (U (S (S Z)) (MkInvalidColumn \"foo Float\"))\n"
 msgstr ""
+"Tutorial.Predicates> :let ts = the (Vect 3 _) [NoColType,NoNat,InvalidColumn]\n"
+"Tutorial.Predicates> readSchema {ts} \"foo:bar\"\n"
+"Left (U Z (MkNoColType \"bar\"))\n"
+"Tutorial.Predicates> readSchema {ts} \"foo:Float\"\n"
+"Right [MkColumn \"foo\" Float]\n"
+"Tutorial.Predicates> readSchema {ts} \"foo Float\"\n"
+"Left (U (S (S Z)) (MkInvalidColumn \"foo Float\"))\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:936
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Error Handling"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"安全な資源制御\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "エラー制御"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:943
@@ -1728,6 +2020,10 @@ msgid ""
 "might want to handle them all in one fell swoop. We look at both approaches "
 "here."
 msgstr ""
+"エラー制御にはいくつかの技法があり、それら全てがその時々で役に立ちます。\n"
+"例えば何らかのエラーを個別かつ早めに扱いつつ、他のものはアプリケーショ\n"
+"ンのもっと後で対処したいことがあるかもしれません。あるいはそれらを一挙\n"
+"に扱いたいかもしれません。ここでは両方の手法を見ていきます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:950
@@ -1738,6 +2034,11 @@ msgid ""
 "predicate for this, which not only encodes the presence of a value in a "
 "vector but also the result of removing that value:"
 msgstr ""
+"まず単一のエラーを個別に扱うためには、合併を二者択一の可能性に*分割*す\n"
+"る必要があります。ここでの二者とは、問題のエラー型または新しい合併の値\n"
+"のことで、後者は他のエラー型を持ちます。このためには新しい述語が必要で\n"
+"あり、この述語はベクタ中に値があることだけではなく、その値を削除する結\n"
+"果についても符号化するものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:951
@@ -1748,6 +2049,10 @@ msgid ""
 "  RZ : Rem v (v :: rem) rem\n"
 "  RS : Rem v vs rem -> Rem v (w :: vs) (w :: rem)\n"
 msgstr ""
+"data Rem : (v : a) -> (vs : Vect (S n) a) -> (rem : Vect n a) -> Type where\n"
+"  [search v vs]\n"
+"  RZ : Rem v (v :: rem) rem\n"
+"  RS : Rem v vs rem -> Rem v (w :: vs) (w :: rem)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:962
@@ -1756,6 +2061,9 @@ msgid ""
 "return types, so we only use the other indices during proof search. Here is "
 "a function for splitting off a value from an open union:"
 msgstr ""
+"繰り返しますが関数の返却型では指標 (`rem`) のうち1つを使いたいので、証\n"
+"明検索中では他の指標のみを使います。以下は開合併から値を分離する関数で\n"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:963
@@ -1769,6 +2077,13 @@ msgid ""
 "  Left vt        => Left vt\n"
 "  Right (U ix y) => Right $ U (S ix) y\n"
 msgstr ""
+"split : (prf : Rem t ts rem) => Union ts -> Either t (Union rem)\n"
+"split {prf = RZ}   (U Z     val) = Left val\n"
+"split {prf = RZ}   (U (S x) val) = Right (U x val)\n"
+"split {prf = RS p} (U Z     val) = Right (U Z val)\n"
+"split {prf = RS p} (U (S x) val) = case split {prf = p} (U x val) of\n"
+"  Left vt        => Left vt\n"
+"  Right (U ix y) => Right $ U (S ix) y\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:977
@@ -1777,6 +2092,10 @@ msgid ""
 "result is wrapped in a `Left`, otherwise a new union is returned in a "
 "`Right`, but this one has `t` removed from its list of possible types."
 msgstr ""
+"これは型`t`の値を合併から取り出そうとするものです。もしうまくいけば結\n"
+"果は`Left`に包まれ、そうでなければ`Right`の中に入れた新しい合併が返さ\n"
+"れます。ただしこの合併については取り得る型のリストから`t`は削除されて\n"
+"います。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:982
@@ -1786,6 +2105,10 @@ msgid ""
 "the console or write the error to a log file), so we use an applicative "
 "effect type to handle errors in."
 msgstr ""
+"これがあれば単一エラー用の制御子を実装できます。エラー制御はしばしば作\n"
+"用付きの文脈で置こるため（文言をコンソールに印字したりエラーをログファ\n"
+"イルに書き込んだりしたいかもしれません）、アプリカティブ作用型を使って\n"
+"中のエラーを扱います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:983
@@ -1801,6 +2124,15 @@ msgid ""
 "  Right err => pure $ Left err\n"
 "handle _ (Right x) = pure $ Right x\n"
 msgstr ""
+"handle :  Applicative f\n"
+"       => Rem t ts rem\n"
+"       => (h : t -> f a)\n"
+"       -> Err ts a\n"
+"       -> f (Err rem a)\n"
+"handle h (Left x)  = case split x of\n"
+"  Left v    => Right <$> h v\n"
+"  Right err => pure $ Left err\n"
+"handle _ (Right x) = pure $ Right x\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:998
@@ -1808,6 +2140,8 @@ msgid ""
 "For handling all errors at once, we can use a handler type indexed by the "
 "vector of errors, and parameterized by the output type:"
 msgstr ""
+"全てのエラーを一度に扱うためにはエラーのベクタによって指標付けられた制\n"
+"御子型を使うことができ、出力型を変数に取ります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:999
@@ -1828,6 +2162,20 @@ msgid ""
 "handleAll _ (Right v)       = pure v\n"
 "handleAll h (Left $ U ix v) = extract h ix v\n"
 msgstr ""
+"namespace Handler\n"
+"  public export\n"
+"  data Handler : (ts : Vect n Type) -> (a : Type) -> Type where\n"
+"    Nil  : Handler [] a\n"
+"    (::) : (t -> a) -> Handler ts a -> Handler (t :: ts) a\n"
+"\n"
+"extract : Handler ts a -> Has t ts -> t -> a\n"
+"extract (f :: _)  Z     val = f val\n"
+"extract (_ :: fs) (S y) val = extract fs y val\n"
+"extract []        ix    _   = absurd ix\n"
+"\n"
+"handleAll : Applicative f => Handler ts (f a) -> Err ts a -> f a\n"
+"handleAll _ (Right v)       = pure v\n"
+"handleAll h (Left $ U ix v) = extract h ix v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1019
@@ -1835,11 +2183,13 @@ msgid ""
 "Below, we will see an additional way of handling all errors at once by "
 "defining a custom interface for error handling."
 msgstr ""
+"以下では、自前のエラー制御用のインターフェースを定義することによって一\n"
+"度に全てのエラーを扱う追加の方法を見ていきます。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Predicates.md:1023
 msgid "Implement the following utility functions for `Union`:"
-msgstr "`List`についての以下の汎化関数を実装してください。"
+msgstr "`Union`用の以下の便利関数を実装してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1024
@@ -1851,6 +2201,11 @@ msgid ""
 "\n"
 "   safe : Err [] a -> a\n"
 msgstr ""
+"   project : (0 t : Type) -> (prf : Has t ts) => Union ts -> Maybe t\n"
+"\n"
+"   project1 : Union [t] -> t\n"
+"\n"
+"   safe : Err [] a -> a\n"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Predicates.md:1034
@@ -1858,6 +2213,8 @@ msgid ""
 "Implement the following two functions for embedding an open union in a "
 "larger set of possibilities.  Note the unerased implicit in `extend`!"
 msgstr ""
+"開合併をより大きな可能性の集合に組込む以下の2関数を実装してください。\n"
+"`extend`中の消去されない暗黙子に注意してください！"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1035
@@ -1867,6 +2224,9 @@ msgid ""
 "\n"
 "   extend : {m : _} -> {0 pre : Vect m _} -> Union ts -> Union (pre ++ ts)\n"
 msgstr ""
+"   weaken : Union ts -> Union (ts ++ ss)\n"
+"\n"
+"   extend : {m : _} -> {0 pre : Vect m _} -> Union ts -> Union (pre ++ ts)\n"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Predicates.md:1043
@@ -1874,6 +2234,8 @@ msgid ""
 "Find a general way to embed a `Union ts` in a `Union ss`, so that the "
 "following is possible:"
 msgstr ""
+"`Union ts`を`Union ss`中に組込む汎用的な方法を見付けて、以下ができるよ\n"
+"うにしてください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1044
@@ -1883,6 +2245,9 @@ msgid ""
 "             -> Err [FileError, NoColType, OutOfBounds, NoNat] a\n"
 "   embedTest = mapFst embed\n"
 msgstr ""
+"   embedTest :  Err [NoNat,NoColType] a\n"
+"             -> Err [FileError, NoColType, OutOfBounds, NoNat] a\n"
+"   embedTest = mapFst embed\n"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Predicates.md:1052
@@ -1890,27 +2255,14 @@ msgid ""
 "Make `handle` more powerful, by letting the handler convert the error in "
 "question to an `f (Err rem a)`."
 msgstr ""
+"制御子に問題のエラーを`f (Err rem a)`へ変換させるようにすることで、\n"
+"`handle`をより強力にしてください。"
 
 #. type: Title ##
 #: ../src/Tutorial/Predicates.md:1053
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The Truth about Interfaces"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"もっとインターフェース\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"関数引数の真実\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "インターフェースの真実"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1065
@@ -1925,6 +2277,15 @@ msgid ""
 "syntax for constrained functions, and once with an auto implicit argument. "
 "The code produced by Idris is the same in both cases:"
 msgstr ""
+"さて、遂にここまで来ました。インターフェースについての真実です。内部的\n"
+"にはインターフェースは単なるレコードデータ型で、インターフェースのメン\n"
+"バーに対応するフィールドを持ちます。インターフェースの実装はそのような\n"
+"レコードの*値*であり、証明検索の最中に値が入手できるよう`%hint`プラグ\n"
+"マ（後述）で註釈付けられています。とどのつまり制約付き関数は単なる1つ\n"
+"以上の自動暗黙引数を持つ関数なのです。例えば以下はリスト中の要素を見つ\n"
+"け出す同じ関数で、一方は既に見た構文の制約付き関数であり、もう一方は自\n"
+"動暗黙引数を持つものです。Idrisによって生成されるコードは両方とも同じ\n"
+"です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1066
@@ -1938,6 +2299,13 @@ msgid ""
 "isElem2 v []        = False\n"
 "isElem2 v (x :: xs) = x == v || isElem2 v xs\n"
 msgstr ""
+"isElem1 : Eq a => a -> List a -> Bool\n"
+"isElem1 v []        = False\n"
+"isElem1 v (x :: xs) = x == v || isElem1 v xs\n"
+"\n"
+"isElem2 : {auto _ : Eq a} -> a -> List a -> Bool\n"
+"isElem2 v []        = False\n"
+"isElem2 v (x :: xs) = x == v || isElem2 v xs\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1079
@@ -1945,6 +2313,8 @@ msgid ""
 "Being mere records, we can also take interfaces as regular function "
 "arguments and dissect them with a pattern match:"
 msgstr ""
+"ただのレコードであるために、インターフェースを通常の関数引数として見做\n"
+"しパターン照合で解剖することもできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1080
@@ -1953,12 +2323,14 @@ msgid ""
 "eq : Eq a -> a -> a -> Bool\n"
 "eq (MkEq feq fneq) = feq\n"
 msgstr ""
+"eq : Eq a -> a -> a -> Bool\n"
+"eq (MkEq feq fneq) = feq\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:1085
 #, no-wrap
 msgid "A manual Interface Definition"
-msgstr ""
+msgstr "手動インターフェース定義"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1093
@@ -1968,51 +2340,22 @@ msgid ""
 "finish the CSV example with our new error handling tools, we are going to "
 "implement some error handlers.  First, an interface is just a record:"
 msgstr ""
+"ここでは証明検索が通常のインターフェース定義および実装を使うのと同じ振\n"
+"舞いを実現する方法を実演していきます。新しいエラー制御ツールを使った\n"
+"CSVの例を終わらせたいので、いくつかのエラー制御子を実装していきます。\n"
+"最初にインターフェースは単なるレコードです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1094
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "record Print a where\n"
 "  constructor MkPrint\n"
 "  print' : a -> String\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record First a where\n"
-"     constructor MkFirst\n"
-"     value : Maybe a\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Prog a where\n"
-"     constructor MkProg\n"
-"     runProg : DB -> IO (Either DBError a)\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  DataTypes.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record User where\n"
-"  constructor MkUser\n"
-"  name  : String\n"
-"  title : Title\n"
-"  age   : Bits8\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"record Charge where\n"
-"  constructor MkCharge\n"
-"  value : Integer\n"
+"record Print a where\n"
+"  constructor MkPrint\n"
+"  print' : a -> String\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1104
@@ -2021,6 +2364,9 @@ msgid ""
 "`%search` keyword, which will try to conjure a value of the desired type "
 "(`Print a` in this case) by means of a proof search:"
 msgstr ""
+"制約付き関数中のレコードにアクセスするためには`%search`キーワードを使\n"
+"います。このキーワードは証明検索によって所望の型（この場合`Print a`）\n"
+"の値を出そうとします。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1105
@@ -2029,6 +2375,8 @@ msgid ""
 "print : Print a => a -> String\n"
 "print = print' %search\n"
 msgstr ""
+"print : Print a => a -> String\n"
+"print = print' %search\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1112
@@ -2036,6 +2384,8 @@ msgid ""
 "As an alternative, we could use a named constraint, and access it directly "
 "via its name:"
 msgstr ""
+"代替案として名前付き制約を使うこともでき、直接その名前を介してアクセスできま"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1113
@@ -2044,13 +2394,15 @@ msgid ""
 "print2 : (impl : Print a) => a -> String\n"
 "print2 = print' impl\n"
 msgstr ""
+"print2 : (impl : Print a) => a -> String\n"
+"print2 = print' impl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1120
 msgid ""
 "As yet another alternative, we could use the syntax for auto implicit "
 "arguments:"
-msgstr ""
+msgstr "更に別の代替案として、自動暗黙子用の構文を使うこともできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1121
@@ -2059,6 +2411,8 @@ msgid ""
 "print3 : {auto impl : Print a} -> a -> String\n"
 "print3 = print' impl\n"
 msgstr ""
+"print3 : {auto impl : Print a} -> a -> String\n"
+"print3 = print' impl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1129
@@ -2068,6 +2422,9 @@ msgid ""
 "So, whenever we write `{auto x : Foo} ->` we can just as well\n"
 "write `(x : Foo) =>` and vice versa.\n"
 msgstr ""
+"3バージョン全ての`print`は実行時にはちょうど同じ振舞いをします。ですか\n"
+"ら`{auto x : Foo}`と書くときは単に`(x : Foo) =>`とも書くことができます\n"
+"し、逆もまた然りです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1133
@@ -2076,6 +2433,9 @@ msgid ""
 "order to be available during proof search, these need to be annotated with a "
 "`%hint` pragma:"
 msgstr ""
+"インターフェース実装は単に与えられたレコード型の値ですが、証明検索中で\n"
+"使えるようにするには、`%hint`プラグマで註釈付けられている必要がありま\n"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1134
@@ -2103,6 +2463,27 @@ msgid ""
 "        ExpectedEOI r c =>\n"
 "          \"Expected end of input in row \\{show r}, column \\{show c}.\"\n"
 msgstr ""
+"%hint\n"
+"noNatPrint : Print NoNat\n"
+"noNatPrint = MkPrint $ \\e => \"Not a natural number: \\{e.str}\"\n"
+"\n"
+"%hint\n"
+"noColTypePrint : Print NoColType\n"
+"noColTypePrint = MkPrint $ \\e => \"Not a column type: \\{e.str}\"\n"
+"\n"
+"%hint\n"
+"outOfBoundsPrint : Print OutOfBounds\n"
+"outOfBoundsPrint = MkPrint $ \\e => \"Index is out of bounds: \\{show e.index}\"\n"
+"\n"
+"%hint\n"
+"rowErrorPrint : Print RowError\n"
+"rowErrorPrint = MkPrint $\n"
+"  \\case InvalidField r c ct s =>\n"
+"          \"Not a \\{show ct} in row \\{show r}, column \\{show c}. \\{s}\"\n"
+"        UnexpectedEOI r c =>\n"
+"          \"Unexpected end of input in row \\{show r}, column \\{show c}.\"\n"
+"        ExpectedEOI r c =>\n"
+"          \"Expected end of input in row \\{show r}, column \\{show c}.\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1162
@@ -2111,6 +2492,9 @@ msgid ""
 "this, we first come up with a proof that all types in the union's index come "
 "with an implementation of `Print`:"
 msgstr ""
+"合併やエラー用の`Print`の実装を書くこともできます。このためには最初に\n"
+"合併の指標中の全ての型に`Print`の実装が付いて来ていることの証明を思い\n"
+"付くことになります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1163
@@ -2128,6 +2512,17 @@ msgid ""
 "unionPrint : All Print ts => Print (Union ts)\n"
 "unionPrint = MkPrint unionPrintImpl\n"
 msgstr ""
+"0 All : (f : a -> Type) -> Vect n a -> Type\n"
+"All f []        = ()\n"
+"All f (x :: xs) = (f x, All f xs)\n"
+"\n"
+"unionPrintImpl : All Print ts => Union ts -> String\n"
+"unionPrintImpl (U Z val)     = print val\n"
+"unionPrintImpl (U (S x) val) = unionPrintImpl $ U x val\n"
+"\n"
+"%hint\n"
+"unionPrint : All Print ts => Print (Union ts)\n"
+"unionPrint = MkPrint unionPrintImpl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1184
@@ -2138,12 +2533,18 @@ msgid ""
 "hints, with which our \"interface implementations\" were annotated.  These "
 "made the corresponding values and functions available during proof search."
 msgstr ""
+"このようにインターフェースを定義することは利点になりえます。というのも\n"
+"魔法のような要素は遥かに少なく、フィールドの型と値に関してより微に入る\n"
+"制御できるからです。また、こうした魔法全てが証明手掛かりから来ているこ\n"
+"とにも注目です。この手掛かりは「インターフェース実装」に註釈付けられる\n"
+"ものです。これらは対応する値と関数を証明検索中に使えるようにするもので\n"
+"す。"
 
 #. type: Title ####
 #: ../src/Tutorial/Predicates.md:1185
 #, no-wrap
 msgid "Parsing CSV Commands"
-msgstr ""
+msgstr "CSVの命令を構文解析する"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1195
@@ -2155,6 +2556,12 @@ msgid ""
 "application: Functions with a possibility of failure are reusable in "
 "different contexts, as are the pretty printers we use for the error messages."
 msgstr ""
+"本章の締め括りとして、前節の柔軟なエラー制御手法を使い、CSVの命令の構\n"
+"文解析器を再実装します。元の構文解析器より冗長でなくなるとは限らないも\n"
+"のの、この手法はエラーの制御とエラー文言の印字をアプリケーションの残り\n"
+"の部分から分離します。失敗の可能性を持つ関数は異なる文脈で再利用ができ\n"
+"ますが、それはエラー文言用に使うプリティープリンターもまた再利用できる\n"
+"ためです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1198
@@ -2162,6 +2569,8 @@ msgid ""
 "First, we repeat some stuff from earlier chapters. I sneaked in a new "
 "command for printing all values in a column:"
 msgstr ""
+"最初に以前の章にあったいくつかのものを繰り返し書きます。列中の全ての値\n"
+"を印字する新しい命令を忍ばせました。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1199
@@ -2198,6 +2607,36 @@ msgid ""
 "  S k => MkTable ts k (deleteAt x rs)\n"
 "  Z   => absurd x\n"
 msgstr ""
+"record Table where\n"
+"  constructor MkTable\n"
+"  schema : Schema\n"
+"  size   : Nat\n"
+"  rows   : Vect size (Row schema)\n"
+"\n"
+"data Command : (t : Table) -> Type where\n"
+"  PrintSchema :  Command t\n"
+"  PrintSize   :  Command t\n"
+"  New         :  (newSchema : Schema) -> Command t\n"
+"  Prepend     :  Row (schema t) -> Command t\n"
+"  Get         :  Fin (size t) -> Command t\n"
+"  Delete      :  Fin (size t) -> Command t\n"
+"  Col         :  (name : String)\n"
+"              -> (tpe  : ColType)\n"
+"              -> (prf  : InSchema name t.schema tpe)\n"
+"              -> Command t\n"
+"  Quit        : Command t\n"
+"\n"
+"applyCommand : (t : Table) -> Command t -> Table\n"
+"applyCommand t                 PrintSchema = t\n"
+"applyCommand t                 PrintSize   = t\n"
+"applyCommand _                 (New ts)    = MkTable ts _ []\n"
+"applyCommand (MkTable ts n rs) (Prepend r) = MkTable ts _ $ r :: rs\n"
+"applyCommand t                 (Get x)     = t\n"
+"applyCommand t                 Quit        = t\n"
+"applyCommand t                 (Col _ _ _) = t\n"
+"applyCommand (MkTable ts n rs) (Delete x)  = case n of\n"
+"  S k => MkTable ts k (deleteAt x rs)\n"
+"  Z   => absurd x\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1235
@@ -2206,6 +2645,9 @@ msgid ""
 "seven different was, at least some of which might also be possible in other "
 "parts of a larger application."
 msgstr ""
+"次に、以下は再実装された命令の構文解析器です。全体としては7つの異なる\n"
+"原因で失敗しうるものですが、少なくともそのうちのいくつかはより大きなア\n"
+"プリケーションの他の部分でも使うことができる可能性があります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1236
@@ -2250,6 +2692,44 @@ msgid ""
 "    Nothing          => fail $ MkNoColName str\n"
 "  _               => fail $ MkUnknownCommand s\n"
 msgstr ""
+"record UnknownCommand where\n"
+"  constructor MkUnknownCommand\n"
+"  str : String\n"
+"\n"
+"%hint\n"
+"unknownCommandPrint : Print UnknownCommand\n"
+"unknownCommandPrint = MkPrint $ \\v => \"Unknown command: \\{v.str}\"\n"
+"\n"
+"record NoColName where\n"
+"  constructor MkNoColName\n"
+"  str : String\n"
+"\n"
+"%hint\n"
+"noColNamePrint : Print NoColName\n"
+"noColNamePrint = MkPrint $ \\v => \"Unknown column: \\{v.str}\"\n"
+"\n"
+"0 CmdErrs : Vect 7 Type\n"
+"CmdErrs = [ InvalidColumn\n"
+"          , NoColName\n"
+"          , NoColType\n"
+"          , NoNat\n"
+"          , OutOfBounds\n"
+"          , RowError\n"
+"          , UnknownCommand ]\n"
+"\n"
+"readCommand : (t : Table) -> String -> Err CmdErrs (Command t)\n"
+"readCommand _                \"schema\"  = Right PrintSchema\n"
+"readCommand _                \"size\"    = Right PrintSize\n"
+"readCommand _                \"quit\"    = Right Quit\n"
+"readCommand (MkTable ts n _) s         = case words s of\n"
+"  [\"new\",    str] => New     <$> readSchema str\n"
+"  \"add\" ::   ss   => Prepend <$> decodeRow 1 (unwords ss)\n"
+"  [\"get\",    str] => Get     <$> readFin str\n"
+"  [\"delete\", str] => Delete  <$> readFin str\n"
+"  [\"column\", str] => case inSchema ts str of\n"
+"    Just (ct ** prf) => Right $ Col str ct prf\n"
+"    Nothing          => fail $ MkNoColName str\n"
+"  _               => fail $ MkUnknownCommand s\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1280
@@ -2257,6 +2737,9 @@ msgid ""
 "Note, how we could invoke functions like `readFin` or `readSchema` directly, "
 "because the necessary error types are part of our list of possible errors."
 msgstr ""
+"`readFin`や`readSchema`といった関数を直接呼び出せているところに注目し\n"
+"てください。これは必要なエラー型が起こりうるエラーのリストの一部にある\n"
+"からです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1286
@@ -2266,6 +2749,10 @@ msgid ""
 "earlier chapters, but note how we can handle all errors at once with a "
 "single call to `print`:"
 msgstr ""
+"本節のまとめとして、以下は命令の結果を印字する機能とアプリケーションの\n"
+"メインループです。このほとんどは以前の章からの繰り返しですが、単一の\n"
+"`print`の呼び出しで全てのエラーを一度に扱えていることに着目してくださ\n"
+"い。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1287
@@ -2317,35 +2804,56 @@ msgid ""
 "main : IO ()\n"
 "main = runProg $ MkTable [] _ []\n"
 msgstr ""
+"encodeField : (t : ColType) -> IdrisType t -> String\n"
+"encodeField I64     x     = show x\n"
+"encodeField Str     x     = show x\n"
+"encodeField Boolean True  = \"t\"\n"
+"encodeField Boolean False = \"f\"\n"
+"encodeField Float   x     = show x\n"
+"\n"
+"encodeRow : (s : Schema) -> Row s -> String\n"
+"encodeRow s = concat . intersperse \",\" . go s\n"
+"  where go : (s' : Schema) -> Row s' -> Vect (length s') String\n"
+"        go []        []        = []\n"
+"        go (MkColumn _ c :: cs) (v :: vs) = encodeField c v :: go cs vs\n"
+"\n"
+"encodeCol :  (name : String)\n"
+"          -> (c    : ColType)\n"
+"          -> InSchema name s c\n"
+"          => Vect n (Row s)\n"
+"          -> String\n"
+"encodeCol name c = unlines . toList . map (\\r => encodeField c $ getAt name r)\n"
+"\n"
+"result :  (t : Table) -> Command t -> String\n"
+"result t PrintSchema   = \"Current schema: \\{showSchema t.schema}\"\n"
+"result t PrintSize     = \"Current size: \\{show t.size}\"\n"
+"result _ (New ts)      = \"Created table. Schema: \\{showSchema ts}\"\n"
+"result t (Prepend r)   = \"Row prepended: \\{encodeRow t.schema r}\"\n"
+"result _ (Delete x)    = \"Deleted row: \\{show $ FS x}.\"\n"
+"result _ Quit          = \"Goodbye.\"\n"
+"result t (Col n c prf) = \"Column \\{n}:\\n\\{encodeCol n c t.rows}\"\n"
+"result t (Get x)       =\n"
+"  \"Row \\{show $ FS x}: \\{encodeRow t.schema (index x t.rows)}\"\n"
+"\n"
+"covering\n"
+"runProg : Table -> IO ()\n"
+"runProg t = do\n"
+"  putStr \"Enter a command: \"\n"
+"  str <- getLine\n"
+"  case readCommand t str of\n"
+"    Left err   => putStrLn (print err) >> runProg t\n"
+"    Right Quit => putStrLn (result t Quit)\n"
+"    Right cmd  => putStrLn (result t cmd) >>\n"
+"                  runProg (applyCommand t cmd)\n"
+"\n"
+"covering\n"
+"main : IO ()\n"
+"main = runProg $ MkTable [] _ []\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1336
-#, fuzzy
 msgid "Here is an example REPL session:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"以下は別の例です。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"以下はいくつかの例です。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"私の実装はこうです。\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "以下はREPLセッションの例です。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Predicates.md:1337
@@ -2370,6 +2878,24 @@ msgid ""
 "Enter a command: quit\n"
 "Goodbye.\n"
 msgstr ""
+"Tutorial.Predicates> :exec main\n"
+"Enter a command: new name:Str,age:Int64,salary:Float\n"
+"Not a column type: Int64\n"
+"Enter a command: new name:Str,age:I64,salary:Float\n"
+"Created table. Schema: name:Str,age:I64,salary:Float\n"
+"Enter a command: add John Doe,44,3500\n"
+"Row prepended: \"John Doe\",44,3500.0\n"
+"Enter a command: add Jane Doe,50,4000\n"
+"Row prepended: \"Jane Doe\",50,4000.0\n"
+"Enter a command: get 1\n"
+"Row 1: \"Jane Doe\",50,4000.0\n"
+"Enter a command: column salary\n"
+"Column salary:\n"
+"4000.0\n"
+"3500.0\n"
+"\n"
+"Enter a command: quit\n"
+"Goodbye.\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:1367
@@ -2381,3 +2907,8 @@ msgid ""
 "own if it has enough information about the structure of a function's "
 "arguments."
 msgstr ""
+"述語のお陰で型の間の契約を記述し、妥当な関数引数として受け付ける値を精\n"
+"錬することができます。述語を自動暗黙引数として使うことにより、関数を安\n"
+"全で、且つ実行時*と*コンパイル時に使うのに便利なものにしてくれます。自\n"
+"動暗黙引数とは、関数引数の構造について充分な情報があればIdrisが自力で\n"
+"構築しようとするものでした。"
