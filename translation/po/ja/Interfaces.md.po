@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-08-17 08:59+0900\n"
+"POT-Creation-Date: 2022-10-08 16:04+0900\n"
 "PO-Revision-Date: 2022-08-17 09:36+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -90,7 +90,7 @@ msgstr "お次は？"
 #: ../src/Tutorial/Interfaces.md:504 ../src/Tutorial/Predicates.md:461
 #: ../src/Tutorial/Prim.md:646
 msgid "And at the REPL:"
-msgstr "そしてREPLで……。"
+msgstr "そしてREPLで次のようにします。"
 
 #. type: Title #
 #: ../src/Tutorial/Interfaces.md:1

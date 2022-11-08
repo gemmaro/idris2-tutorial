@@ -1957,14 +1957,7 @@ msgstr "REPLで型を見るのは大事です。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/DataTypes.md:840
-#, fuzzy, no-wrap
-#| msgid ""
-#| "Tutorial.DataTypes> :t Some\n"
-#| "Tutorial.DataTypes.Some : a -> Option a\n"
-#| "Tutorial.DataTypes> :t None\n"
-#| "Tutorial.DataTypes.None : Optin a\n"
-#| "Tutorial.DataTypes> :t Option\n"
-#| "Tutorial.DataTypes.Option : Type -> Type\n"
+#, no-wrap
 msgid ""
 "Tutorial.DataTypes> :t Some\n"
 "Tutorial.DataTypes.Some : a -> Option a\n"

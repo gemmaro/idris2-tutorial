@@ -70,7 +70,7 @@ msgstr "演習 その3"
 #: ../src/Tutorial/Interfaces.md:504 ../src/Tutorial/Predicates.md:461
 #: ../src/Tutorial/Prim.md:646
 msgid "And at the REPL:"
-msgstr "そしてREPLで……。"
+msgstr "そしてREPLで次のようにします。"
 
 #. type: Title #
 #: ../src/Tutorial/Prim.md:1

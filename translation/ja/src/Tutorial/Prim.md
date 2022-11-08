@@ -614,7 +614,7 @@ seen as a division by a power of two:
 22 `shiftR` 1 in binary: 0  0  0  0    1  0  1  1
 ```
 
-そしてREPLで……。
+そしてREPLで次のようにします。
 
 ```repl
 Tutorial.Prim> the Bits8 22 `shiftL` 2

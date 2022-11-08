@@ -155,7 +155,7 @@ twice : (Integer -> Integer) -> Integer -> Integer
 twice f n = f (f n)
 ```
 
-そしてREPLで……。
+そしてREPLで次のようにします。
 
 ```repl
 Tutorial.Functions1> twice square 2
@@ -213,7 +213,7 @@ partialExample : Integer -> Bool
 partialExample = isTriple 3 4
 ```
 
-そしてREPLで……。
+そしてREPLで次のようにします。
 
 ```repl
 Tutorial.Functions1> partialExample 5

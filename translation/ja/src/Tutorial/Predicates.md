@@ -1,12 +1,11 @@
-# Predicates and Proof Search
+# 前提条件と証明検索
 
-In the [last chapter](Eq.md) we learned about propositional equality, which
-allowed us to proof that two values are equal. Equality is a relation
-between values, and we used an indexed data type to encode this relation by
-limiting the degrees of freedom of the indices in the sole data
-constructor. There are other relations and contracts we can encode this
-way. This will allow us to restrict the values we accept as a function's
-arguments or the values returned by functions.
+[前の章](Eq.md)で命題の等価性を学びました。これにより2つの値が等価であ
+ることを証明することができるようになりました。等価性は値間の関係であり、
+指標付けられたデータ型を使って指標の自由度を制限して唯一のデータ構築子
+に狭めることでこの関係を符号化しました。このようにして符号化できるよう
+な別の関係や契約が存在します。これらによって関数引数として受け付ける値
+や関数から返される値を制限することができます。
 
 ```idris
 module Tutorial.Predicates
@@ -24,81 +23,75 @@ import System.File
 %default total
 ```
 
-## Preconditions
+## 前提条件
 
-Often, when we implement functions operating on values of a given type, not
-all values are considered to be valid arguments for the function in
-question. For instance, we typically do not allow division by zero, as the
-result is undefined in the general case. This concept of putting a
-*precondition* on a function argument comes up pretty often, and there are
-several ways to go about this.
+しばしば与えられた型の値を操作する関数を実装するとき、問題の関数に関し
+て全ての値が妥当とは考えられないことがあります。例えばゼロ除算を許さな
+いことはよくありますが、それは一般的な場合で結果が未定義であるためです。
+関数引数に*前提条件*を置くという概念はかなり頻繁に発生するものであり、
+これをするためのいくつかの方法があります。
 
-A very common operation when working with lists or other container types is
-to extract the first value in the sequence.  This function, however, cannot
-work in the general case, because in order to extract a value from a list,
-the list must not be empty. Here are a couple of ways to encode and
-implement this, each with its own advantages and disadvantages:
+リストや他の容器型に取り組む際にとてもよくある操作は並びの中の最初の値
+を取り出すことです。この関数はしかし、一般的な場合には動きません。なぜ
+ならリストから値を取り出すためにはリストが空であってはならないからです。
+以下はこれを符号化し実装するいくつかの方法であり、それぞれに利点と欠点
+があります。
 
-* Wrap the result in a failure type, such as a `Maybe` or `Either e` with
-  some custom error type `e`. This makes it immediately clear that the
-  function might not be able to return a result. It is a natural way to deal
-  with unvalidated input from unknown sources. The drawback of this approach
-  is that results will carry the `Maybe` stain, even in situations when we
-  *know* that the *nil* case is impossible, for instance because we know the
-  value of the list argument at compile-time, or because we already
-  *refined* the input value in such a way that we can be sure it is not
-  empty (due to an earlier pattern match, for instance).
+* 結果を失敗型に包む、`Maybe`や何らかの自前のエラー型`e`を伴う`Either e`
+  といったもの。こうすると直ちに関数が結果を返せないことがあるかもしれ
+  ないということが明確になります。不明な源からの未検証の入力を扱う自然な
+  方法です。この手法の短所は*nil*の場合が不可能だと*知っている*状況でさ
+  え、`Maybe`の染みが付いた結果を運ぶことになる点です。例えばリスト引数
+  の値をコンパイル時に知っていたり、既に空でないことを確かめられるような
+  やり方（例えばその前のパターン照合からなど）で入力値を*精錬*した後であっ
+  たりなどの経緯でこの状況になります。
 
-* Define a new data type for non-empty lists and use this as the function's
-  argument. This is the approach taken in module `Data.List1`. It allows us
-  to return a pure value (meaning "not wrapped in a failure type" here),
-  because the function cannot possibly fail, but it comes with the burden of
-  reimplementing many of the utility functions and interfaces we already
-  implemented for `List`. For a very common data structure this can be a
-  valid option, but for rare use cases it is often too cumbersome.
+* 空でないリスト用の新しいデータ型を定義し、これを関数引数として使うもの。
+  これはモジュール`Data.List1`で採られた手法です。これにより純粋な値（こ
+  こでは「失敗型に包まれていない」の意）を返すことができますが、それは関
+  数は決して失敗する可能性がないためです。しかし既に`List`に実装した便利
+  関数やインターフェースの多くを再実装する負担が付いてきます。よくあるデー
+  タ型については妥当な選択肢になりえますが、稀な用例向けにはしばしば面倒
+  になります。
 
-* Use an index to keep track of the property we are interested in. This was
-  the approach we took with type family `List01`, which we saw in several
-  examples and exercises in this guide so far. This is also the approach
-  taken with vectors, where we use the exact length as our index, which is
-  even more expressive. While this allows us to implement many functions
-  only once and with greater precision at the type level, it also comes with
-  the burden of keeping track of changes in the types, making for more
-  complex function types and forcing us to at times return existentially
-  quantified wrappers (for instance, dependent pairs), because the outcome
-  of a computation is not known until runtime.
+* 指標を使って関心のある性質を把握するもの。これは型族`List01`で採った手
+  法です。このデータ型については本手引きのこれまでの例や演習でいくつか見
+  てきました。これはまたベクタでも採られている手法であり、指標として厳密
+  な長さを使うことでさらに表現力を増すものです。こうすると多くの関数を一
+  度だけ実装すればよくなり型水準でより良い精度が得られます。一方で、型で
+  変化を把握することになり、より複雑な関数型になり、計算の出力が実行時ま
+  で知られないために時々存在量化された梱包を返すようになる、という負担も
+  付いてきます。
 
-* Fail with a runtime exception. This is a popular solution in many
-  programming languages (even Haskell), but in Idris we try to avoid this,
-  because it breaks totality in a way, which also affects client
-  code. Luckily, we can make use of our powerful type system to avoid this
-  situation in general.
+* 実行時例外と共に失敗するもの。これは多くのプログラミング言語（Haskell
+  でさえそう）でよく用いられる解決策です。しかしIdrisではこれを避けよう
+  とします。なぜなら自身のコードも使い手のコードも全域性が壊れるからです。
+  幸運にも一般的には強力な型システムを使ってこの状況を避けられます。
 
-* Take an additional (possibly erased) argument of a type we can use as a
-  witness that the input value is of the correct kind or shape. This is the
-  solution we will discuss in this chapter in great detail. It is an
-  incredibly powerful way to talk about restrictions on values without
-  having to replicate a lot of already existing functionality.
+* 入力値が正しい種類や形状であることの証人として使える型を追加の（消去可
+  能な）引数として取るもの。これは本章で深堀りしてお話しする解決策です。
+  既存の機能の多くを複製することなく値への制限があることを言いたいときに
+  極めて強力な方法です。
 
-There is a time and place for most if not all of the solutions listed above
-in Idris, but we will often turn to the last one and refine function
-arguments with predicates (so called *preconditions*), because it makes our
-functions nice to use at runtime *and* compile time.
+Idrisで上に挙げた解決策が全てかどうかには議論の余地があるものの、最後
+の選択肢に至り述語（いわゆる*前提条件*）で関数引数を精錬することがしば
+しばでしょう。なぜなら関数が実行時*及び*コンパイル時に使いやすくなるか
+らです。
 
-### Example: Non-empty Lists
+### 例：非空リスト
 
-Remember how we implemented an indexed data type for propositional equality:
-We restricted the valid values of the indices in the constructors. We can do
-the same thing for a predicate for non-empty lists:
+命題的等値性のための指標付けられたデータ型を実装したやり方を思い出して
+ください。構築子で指標の妥当な値を制限したのでした。同じことが非空リス
+ト用の述語にも行えます。
 
 ```idris
 data NotNil : (as : List a) -> Type where
   IsNotNil : NotNil (h :: t)
 ```
 
-This is a single-value data type, so we can always use it as an erased
-function argument and still pattern match on it. We can now use this to
-implement a safe and pure `head` function:
+これは単一値データ型なので、常に消去された関数引数として使うことができ、
+それでいてパターン照合することができます。これで安全で純粋な`head`関数
+を実装できます。
 
 ```idris
 head1 : (as : List a) -> (0 _ : NotNil as) -> a
@@ -106,30 +99,29 @@ head1 (h :: _) _ = h
 head1 [] IsNotNil impossible
 ```
 
-Note, how value `IsNotNil` is a *witness* that its index, which corresponds
-to our list argument, is indeed non-empty, because this is what we specified
-in its type.  The impossible case in the implementation of `head1` is not
-strictly necessary here. It was given above for completeness.
+値`IsNotNil`がどのように指標の*目撃者*となっているかという点に注目して
+ください。この指標はリスト引数に対応しており当然非空です。なぜなら型で
+指定していることだからです。`head1`の実装の中の不可能の場合はここでは
+厳密には必要ではありません。上では完全のために与えられています。
 
-We call `NotNil` a *predicate* on lists, as it restricts the values allowed
-in the index. We can express a function's preconditions by adding additional
-(possibly erased) predicates to the function's list of arguments.
+`NotNil`はリストにおける*述語*と呼びます。なぜなら指標で許される値を制
+限するからです。追加の（消去されうる）述語を関数の引数リストに加えるこ
+とにより関数の前提条件を表現できるのです。
 
-The first really cool thing is how we can safely use `head1`, if we can at
-compile-time show that our list argument is indeed non-empty:
+1つ目の実に粋な点は、コンパイル時にリスト引数が確かに非空であれば
+`head1`を安全に使うことができる有り様にあります。
 
 ```idris
 headEx1 : Nat
 headEx1 = head1 [1,2,3] IsNotNil
 ```
 
-It is a bit cumbersome that we have to pass the `IsNotNil` proof
-manually. Before we scratch that itch, we will first discuss what to do with
-lists, the values of which are not known until runtime. For these cases, we
-have to try and produce a value of the predicate programmatically by
-inspecting the runtime list value. In the most simple case, we can wrap the
-proof in a `Maybe`, but if we can show that our predicate is *decidable*, we
-can get even stronger guarantees by returning a `Dec`:
+`IsNotNil`の証明を手動で渡さねばならないのは少し面倒です。その痒みを掻
+く前にまず、値が実行時まで知られていないリストの扱い方について話しましょ
+う。そのような場合、実行時のリストの値を調べることによって述語の値をプ
+ログラミング的に生成しようとしなければなりません。最も単純な場合では証
+明を`Maybe`に包むことができますが、述語が*決定可能*であることを示せれ
+ば、`Dec`を返すことによりさらに強力な保証が得られます。
 
 ```idris
 Uninhabited (NotNil []) where
@@ -140,8 +132,8 @@ nonEmpty (x :: xs) = Yes IsNotNil
 nonEmpty []        = No uninhabited
 ```
 
-With this, we can implement function `headMaybe`, which is to be used with
-lists of unknown origin:
+これを携えれば関数`headMaybe`を実装できます。この関数は出所不明なリス
+トに使うことができます。
 
 ```idris
 headMaybe1 : List a -> Maybe a
@@ -150,23 +142,20 @@ headMaybe1 as = case nonEmpty as of
   No  _   => Nothing
 ```
 
-Of course, for trivial functions like `headMaybe` it makes more sense to
-implement them directly by pattern matching on the list argument, but we
-will soon see examples of predicates the values of which are more cumbersome
-to create.
+もちろん`headMaybe`のような自明な関数についてはリスト引数に直接パター
+ン照合することで実装するのが理に適っています。しかしすぐ後でよりつくる
+のが面倒な値の述語の例を見ていきます。
 
-### Auto Implicits
+### 自動暗黙子
 
-Having to manually pass a proof of being non-empty to `head1` makes this
-function unnecessarily verbose to use at compile time. Idris allows us to
-define implicit function arguments, the values of which it tries to assemble
-on its own by means of a technique called *proof search*. This is not to be
-confused with type inference, which means inferring values or types from the
-surrounding context. It's best to look at some examples to explain the
-difference.
+手動で非空であることの証明を`head1`に渡さねばならないことは、コンパイ
+ル時に用いる上でこの関数を不必要に冗長にしています。Idrisでは暗黙関数
+引数を定義することができ、この値は*証明検索*と呼ばれる技術を活用してひ
+とりでに組み合わせられます。これは型推論と混同すべきではなく、そちらは
+周囲の文脈から値や型を推論する意味でした。違いを説明するにはいくつかの
+例を見るのが一番です。
 
-Let us first have a look at the following implementation of `replicate` for
-vectors:
+最初に以下のベクタ用の`replicate`の実装を眺めてみましょう。
 
 ```idris
 replicate' : {n : _} -> a -> Vect n a
@@ -174,40 +163,40 @@ replicate' {n = 0}   _ = []
 replicate' {n = S _} v = v :: replicate' v
 ```
 
-Function `replicate'` takes an unerased implicit argument.  The *value* of
-this argument must be derivable from the surrounding context. For instance,
-in the following example it is immediately clear that `n` equals three,
-because that is the length of the vector we want:
+関数`replicate`は消去されていない暗黙引数を取ります。この引数の*値*は
+周囲の文脈から導出できなくてはなりません。例えば以下の例では直ちに
+`n`が3であることが明らかですが、それは欲しいベクタの長さがそれだからで
+す。
 
 ```idris
 replicateEx1 : Vect 3 Nat
 replicateEx1 = replicate' 12
 ```
 
-In the next example, the value of `n` is not known at compile time, but it
-is available as an unerased implicit, so this can again be passed as is to
-`replicate'`:
+次の例では`n`の値はコンパイル時に知られていませんが、消去されていない
+暗黙子として使うことができるので、これもまた`replicate`にそのまま渡す
+ことができます。
 
 ```idris
 replicateEx2 : {n : _} -> Vect n Nat
 replicateEx2 = replicate' 12
 ```
 
-However, in the following example, the value of `n` can't be inferred, as
-the intermediary vector is immediately converted to a list of unknown
-length. Although Idris could try and insert any value for `n` here, it won't
-do so, because it can't be sure that this is the length we want. We
-therefore have to pass the length explicitly:
+しかし以下の例では`n`の値は推論することはできません。中間結果のベクタ
+が直ちに不明な長さのリストに変換されているからです。Idrisは`n`にあらゆ
+る値を挿入してみることはできるものの、そうすることは決してありません。
+なぜならこれが欲しい長さであると確かめることができないからです。したがっ
+て長さを明示的に渡さねばなりません。
 
 ```idris
 replicateEx3 : List Nat
 replicateEx3 = toList $ replicate' {n = 17} 12
 ```
 
-Note, how the *value* of `n` had to be inferable in these examples, which
-means it had to make an appearance in the surrounding context. With auto
-implicit arguments, this works differently. Here is the `head` example, this
-time with an auto implicit:
+`n`の値がこれらの例で推論されねばならなかったことに注目してください。
+つまりその値が周囲の文脈に姿を現すようにしなければならなかったというこ
+とです。自動暗黙引数では違った動作をします。以下は`head`の例ですが、今
+回は自動暗黙子を使っています。
 
 ```idris
 head : (as : List a) -> {auto 0 prf : NotNil as} -> a
@@ -215,22 +204,22 @@ head (x :: _) = x
 head [] impossible
 ```
 
-Note the `auto` keyword before the quantity of implicit argument `prf`. This
-means, we want Idris to construct this value on its own, without it being
-visible in the surrounding context.  In order to do so, Idris will have to
-at compile time know the structure of the list argument `as`. It will then
-try and build such a value from the data type's constructors. If it
-succeeds, this value will then be automatically filled in as the desired
-argument, otherwise, Idris will fail with a type error.
+暗黙引数`prf`の数量子の前の`auto`キーワードに注目してください。これが
+意味するところは、周囲の文脈で目に触れることなく、この値をIdrisに自力
+で構築してもらいたいということです。そうするためにはIdrisはコンパイル
+時にリスト引数`as`の構造を知っていなければなりません。それからそのよう
+な値をデータ型の構築子から構築しようとします。もし成功したらこの値は所
+望された引数として自動的に埋められます。そうでなければIdrisは型エラー
+と共に失敗します。
 
-ちょっとREPLで動かしてみましょう。
+これを実際に見てみましょう。
 
 ```idris
 headEx3 : Nat
 headEx3 = Predicates.head [1,2,3]
 ```
 
-The following example fails with an error:
+以下の例はエラーとなり失敗します。
 
 ```idris
 failing "Can't find an implementation\nfor NotNil []."
@@ -238,17 +227,15 @@ failing "Can't find an implementation\nfor NotNil []."
   errHead = Predicates.head []
 ```
 
-Wait! "Can't find an implementation for..."? Is this not the
-error message we get for missing interface implementations?
-That's correct, and I'll show you that interface resolution
-is just proof search at the end of this chapter. What I can
-show you already, is that writing the lengthy `{auto prf : t} ->`
-all the times can be cumbersome. Idris therefore allows us
-to use the same syntax as for constrained functions instead:
-`(prf : t) =>`, or even `t =>`, if we don't need to name the
-constraint. As usual, we can then access a constraint in the
-function body by its name (if any). Here is another implementation
-of `head`:
+待った！「Can't find an implementation for...」だって？これはインター
+フェースの実装が欠けているときのエラー文言じゃないか。その通り、そして
+本章の末尾でインターフェースの解決が証明検索に過ぎないことをお見せしま
+す。既にお見せしてきたことは、毎度毎度長ったらしく`{auto prf :
+t} ->`と書くことは面倒かもしれないということです。したがってIdrisでは
+代わりに制約付き関数用の同じ構文を使うことができるのです。`(prf : t)
+=>`、さらに制約の名前を付ける必要がなければ`t =>`でさえ構いません。そ
+こからはいつも通り、（もしあれば）名前によって、関数の本体で制約を扱え
+ます。以下は`head`の別実装です。
 
 ```idris
 head' : (as : List a) -> (0 _ : NotNil as) => a
@@ -256,9 +243,9 @@ head' (x :: _) = x
 head' [] impossible
 ```
 
-During proof search, Idris will also look for values of the required type in
-the current function context. This allows us to implement `headMaybe`
-without having to pass on the `NotNil` proof manually:
+証明検索中にIdrisは現在の関数の文脈の中で必要とされている型の値を探す
+こともします。これにより`headMaybe`を実装するのに手動で`NotNil`の証明
+を渡す必要はなくなります。
 
 ```idris
 headMaybe : List a -> Maybe a
@@ -268,70 +255,66 @@ headMaybe as = case nonEmpty as of
   No  _   => Nothing
 ```
 
-To conclude: Predicates allow us to restrict the values a function accepts
-as arguments. At runtime, we need to build such *witnesses* by pattern
-matching on the function arguments. These operations can typically fail. At
-compile time, we can let Idris try and build these values for us using a
-technique called *proof search*. This allows us to make functions safe and
-convenient to use at the same time.
+まとめるとこうなります。述語があれば関数が引数として受け付ける値を制限
+することができます。実行時にそのような*証拠*を関数引数でのパターン照合
+により構築する必要があります。こうした操作は一般には失敗しうるものです。
+コンパイル時に*証明検索*と呼ばれる技術を使ってIdrisにこれらの値を構築
+してみてもらうことができます。これにより関数を安全にしつつ、それと同時
+に使うのに便利になります。
 
 ### 演習 その1
 
-In these exercises, you'll have to implement several functions making use of
-auto implicits, to constrain the values accepted as function arguments. The
-results should be *pure*, that is, not wrapped in a failure type like
-`Maybe`.
+これらの演習では関数引数として受け付ける値に制約を課すために自動暗黙子
+を活用した関数を複数実装せねばなりません。結果は*純粋*でなければなりま
+せん。つまり`Maybe`のような失敗型に包まれていてはなりません。
 
-1. Implement `tail` for lists.
+1. リストに`tail`を実装してください。
 
-2. Implement `concat1` and `foldMap1` for lists. These should work like
-   `concat` and `foldMap`, but taking only a `Semigroup` constraint on the
-   element type.
+2. `concat1`と`foldMap1`をリストに実装してください。これらは`concat`や
+   `foldMap`と同じように動作しますが、要素型への`Semigroup`制約のみを取り
+   ます。
 
-3. Implement functions for returning the largest and smallest element in a
-   list.
+3. リスト中の最大と最小の要素を返す関数を実装してください。
 
-4. Define a predicate for strictly positive natural numbers and use it to
-   implement a safe and provably total division function on natural numbers.
+4. 厳密に正の自然数のための述語を定義し、それを使って安全で証明上全域な自
+   然数における除算関数を実装してください。
 
-5. Define a predicate for a non-empty `Maybe` and use it to safely extract
-   the value stored in a `Just`. Show that this predicate is decidable by
-   implementing a corresponding conversion function.
+5. 非空の`Maybe`のための述語を定義し、安全に`Just`の中に保管されてている
+   値を取り出してください。この述語が決定可能であることを対応する変換関数
+   を実装することによって示してください。
 
-6. Define and implement functions for safely extracting values from a `Left`
-   and a `Right` by using suitable predicates.  Show again that these
-   predicates are decidable.
+6. `Left`と`Right`から安全に値を取り出す関数を相応しい述語を使って定義し
+   実装してください。再びこれらの述語が決定可能であることを示してください。
 
-The predicates you implemented in these exercises are already available in
-the *base* library: `Data.List.NonEmpty`, `Data.Maybe.IsJust`,
-`Data.Either.IsLeft`, `Data.Either.IsRight`, and `Data.Nat.IsSucc`.
+これらの演習で実装した熟語は既に*base*ライブラリから手に入ります。
+`Data.List.NonEmpty`、`Data.Maybe.IsJust`、`Data.Either.IsLeft`、
+`Data.Either.IsRight`、`Data.Nat.IsSucc`がそれです。
 
-## Contracts between Values
+## 値間契約
 
-The predicates we saw so far restricted the values of a single type, but it
-is also possible to define predicates describing contracts between several
-values of possibly distinct types.
+これまで見てきた述語は値の型は単一のものに制限されていました。しかし相
+異なる型を持ちうる複数の値の間の契約を記述する述語を定義することもでき
+ます。
 
-### The `Elem` Predicate
+### `Elem`述語
 
-Assume we'd like to extract a value of a given type from a heterogeneous
-list:
+混成リストから与えられた型の値を取り出したいとします。
 
 ```idris
 get' : (0 t : Type) -> HList ts -> t
 ```
 
-This can't work in general: If we could implement this we would immediately
-have a proof of void:
+これは一般にはうまくいきません。これを実装できたとすると直ちにvoidの証
+明が得られてしまいます。
 
 ```idris
 voidAgain : Void
 voidAgain = get' Void []
 ```
 
-The problem is obvious: The type of which we'd like to extract a value must
-be an element of the index of the heterogeneous list.  Here is a predicate,
-with which we can express this:
+問題点は明らかです。値を取り出したい型は混成リストの指標の要素でなけれ
+ばなりません。以下はとある述語で、これがあればこの要件を表現することが
+できます。
 
 ```idris
 data Elem : (elem : a) -> (as : List a) -> Type where
@@ -339,15 +322,14 @@ data Elem : (elem : a) -> (as : List a) -> Type where
   There : Elem x xs -> Elem x (y :: xs)
 ```
 
-This is a predicate describing a contract between two values: A value of
-type `a` and a list of `a`s. Values of this predicate are witnesses that the
-value is an element of the list.  Note, how this is defined recursively: The
-case where the value we look for is at the head of the list is handled by
-the `Here` constructor, where the same variable (`x`) is used for the
-element and the head of the list. The case where the value is deeper within
-the list is handled by the `There` constructor. This can be read as follows:
-If `x` is and element of `xs`, then `x` is also an element of `y :: xs` for
-any value `y`. Let's write down some examples to get a feel for these:
+これは2つの値、すなわち型`a`と`a`のリストの値、の間の契約を記述する述
+語です。この契約の値は値がリストの要素であることの証拠です。これが再帰
+的に定義されていることに注目してください。探している値がリストの先頭に
+ある場合は`Here`構築子で扱われ、要素とリストの先頭とで同じ変数 (`x`)
+が使われます。値がリスト中のより深くにある場合は`There`構築子によって
+扱われます。これは以下のように読むことができます。もし`x`が`xs`の要素
+であれば、あらゆる`y`の値について、`x`もまた`y :: xs`の要素です。この
+契約の感覚を掴むためにいくつかの例を書き下しましょう。
 
 ```idris
 MyList : List Nat
@@ -360,21 +342,20 @@ sevenElemMyList : Elem 7 MyList
 sevenElemMyList = There $ There Here
 ```
 
-Now, `Elem` is just another way of indexing into a list of values. Instead
-of using a `Fin` index, which is limited by the list's length, we use a
-proof that a value can be found at a certain position.
+ここで`Elem`は値のリストを指標で探り入れる単なる別の方法です。リストの
+長さで制限された`Fin`指標を使う代わりに、値が特定の位置で見付けられる
+ことの証明を使います。
 
-We can use the `Elem` predicate to extract a value from the desired type of
-a heterogeneous list:
+`Elem`述語を使うことで混成リストの望んだ型から値を取り出すことができます。
 
 ```idris
 get : (0 t : Type) -> HList ts -> (prf : Elem t ts) => t
 ```
 
-It is important to note that the auto implicit must not be erased in this
-case. This is no longer a single value data type, and we must be able to
-pattern match on this value in order to figure out, how far within the
-heterogeneous list our value is stored:
+大事なのは自動暗黙子がこの場合には消してはならないということに注意する
+ことです。もはやこれが単一値データ型ではなく、混成リストの中のどれほど
+深いところに値が格納されているのかを解明するために、この値でパターン照
+合できなくてはならないのです。
 
 ```idris
 get t (v :: vs) {prf = Here}    = v
@@ -382,9 +363,8 @@ get t (v :: vs) {prf = There p} = get t vs
 get _ [] impossible
 ```
 
-It can be instructive to implement `get` yourself, using holes on the right
-hand side to see the context and types of values Idris infers based on the
-value of the `Elem` predicate.
+右側で穴開きを使い、`Elem`述語の値に基づいてIdrisが推論した値の文脈と
+型を見つつ、自力で`get`を実装するとわかりやすいかもしれません。
 
 ちょっとREPLで動かしてみましょう。
 
@@ -399,12 +379,11 @@ Error: Can't find an implementation for Elem Nat [String, Maybe String].
      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
 
-With this example we start to appreciate what *proof search* actually means:
-Given a value `v` and a list of values `vs`, Idris tries to find a proof
-that `v` is an element of `vs`.  Now, before we continue, please note that
-proof search is not a silver bullet. The search algorithm has a reasonably
-limited *search depth*, and will fail with the search if this limit is
-exceeded. For instance:
+この例で*証明検索*が実際のところ意味するところが分かり始めます。値
+`v`と値のリスト`vs`が与えられると、Idrisは`v`が`vs`の要素である証明を
+見付けようとします。さて、話を進める前に証明検索が銀の弾丸ではないこと
+に注意してください。検索アルゴリズムには合理的に制限された*探索深度*が
+あり、この制限を超過すると探索が失敗します。例えば以下です。
 
 ```idris
 Tps : List Type
@@ -419,19 +398,18 @@ hlist = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         , Nothing ]
 ```
 
-そしてREPLで……。
+そしてREPLで次のようにします。
 
 ```repl
 Tutorial.Predicates> get (Maybe String) hlist
 Error: Can't find an implementation for Elem (Maybe String) [Nat,...
 ```
 
-As you can see, Idris fails to find a proof that `Maybe String` is an
-element of `Tps`. The search depth can be increased with the
-`%auto_implicit_depth` directive, which will hold for the rest of the source
-file or until set to a different value.  The default value is set at 25. In
-general, it is not advisable to set this to a too large value as this can
-drastically increase compile times.
+見ての通りIdrisは`Maybe String`が`Tps`の要素であるという証明を見付ける
+ことに失敗します。検索深度は`%auto_implicit_depth`命令で増加させること
+ができ、ソースファイルの以降ないし異なる値が設定されるまでは保たれます。
+既定値は25に設定されています。これを大きすぎる値に設定することは、劇的
+にコンパイル時間を増加させかねないので、一般にはお勧めできません。
 
 ```idris
 %auto_implicit_depth 100
@@ -441,14 +419,14 @@ aMaybe = get _ hlist
 %auto_implicit_depth 25
 ```
 
-### Use Case: A nicer Schema
+### 用例：より良いスキーマ
 
-In the chapter about [sigma types](DPair.md), we introduced a schema for CSV
-files. This was not very nice to use, because we had to use natural numbers
-to access a certain column. Even worse, users of our small library had to do
-the same. There was no way to define a name for each column and access
-columns by name. We are going to change this. Here is an encoding for this
-use case:
+[依存和型](DPair.md)についての章でCSVファイル用のスキーマを導入しまし
+た。これは使う上であまりよくありませんでした。なぜなら特定の列にアクセ
+スするために自然数を使わねばならなかったからです。さらに悪いことにこの
+小さなライブラリの利用者も同じことをしなければならないのです。それぞれ
+の列に名前を定義したり名前で列にアクセスする方法がありませんでした。こ
+れを変えていくつもりです。以下はこの用例を符号化したものです。
 
 ```idris
 data ColType = I64 | Str | Boolean | Float
@@ -485,9 +463,8 @@ showSchema : Schema -> String
 showSchema = concat . intersperse "," . map show
 ```
 
-As you can see, in a schema we now pair a column's type with its name. Here
-is an example schema for a CSV file holding information about employees in a
-company:
+見ての通り、スキーマ中で列の型と名前を対にしました。以下は会社の従業員
+の情報を保管するCSVファイル用のスキーマの例です。
 
 ```idris
 EmployeeSchema : Schema
@@ -500,11 +477,10 @@ EmployeeSchema = [ "firstName"  :> Str
                  ]
 ```
 
-Such a schema could of course again be read from user input, but we will
-wait with implementing a parser until later in this chapter.  Using this new
-schema with an `HList` directly led to issues with type inference, therefore
-I quickly wrote a custom row type: A heterogeneous list indexed over a
-schema.
+そのようなスキーマは当然ここでも利用者の入力から読み取れますが、構文解
+析器を実装するのは本章の後半まで待つことにします。この新しいスキーマを
+`HList`と直接使うと型推論の問題が生じるので、手早く自前の行の型を書き
+ました。スキーマ上に指標付けられた混成リストです。
 
 ```idris
 data Row : Schema -> Type where
@@ -517,11 +493,11 @@ data Row : Schema -> Type where
        -> Row (name :> type :: ss)
 ```
 
-In the signature of *cons*, I list the erased implicit arguments
-explicitly. This is good practice, as otherwise Idris will often issue
-shadowing warnings when using such data constructors in client code.
+*cons*の処方では消去された暗黙引数を明示的に列挙しています。これは良い
+習慣です。というのもそうしないと使い手のコードでこのようなデータ構築子
+を使うときに、Idrisがよく陰に隠されている旨の警告を出すからです。
 
-We can now define a type alias for CSV rows representing employees:
+これで従業員を表現するCSVの行の型別称を定義できます。
 
 ```idris
 0 Employee : Type
@@ -531,26 +507,25 @@ hock : Employee
 hock = [ "Stefan", "Höck", "hock@foo.com", 46, 5443.2, False ]
 ```
 
-Note, how I gave `Employee` a zero quantity. This means, we are only ever
-allowed to use this function at compile time but never at runtime. This is a
-safe way to make sure our type-level functions and aliases do not leak into
-the executable when we build our application. We are allowed to use
-zero-quantity functions and values in type signatures and when computing
-other erased values, but not for runtime-relevant computations.
+なお、`Employee`にゼロ数量子を与えました。つまり、この関数を使うのは必
+ずコンパイル時にのみ許されており、実行時には決して使えません。これはア
+プリケーションを構築する際に型水準関数とその別称を実行可能物に確実に漏
+れ出させないようにするための安全な方法です。ゼロ数量子の関数と値は型処
+方や他の消去される値の計算時に使うことができますが、実行時関連の計算で
+はできません。
 
-We would now like to access a value in a row based on the name given. For
-this, we write a custom predicate, which serves as a witness that a column
-with the given name is part of the schema. Now, here is an important thing
-to note: In this predicate we include an index for the *type* of the column
-with the given name. We need this, because when we access a column by name,
-we need a way to figure out the return type. But during proof search, this
-type will have to be derived by Idris based on the column name and schema in
-question (otherwise, the proof search will fail unless the return type is
-known in advance).  We therefore *must* tell Idris, that it can't include
-this type in the list of search criteria, otherwise it will try and infer
-the column type from the context (using type inference) before running the
-proof search. This can be done by listing the indices to be used in the
-search like so: `[search name schema]`.
+さて、行の中の値に与えられた名前に基づいてアクセスしたいと思っています。
+このためには自前の述語を書きます。この述語は与えられた名前を持つ列がス
+キーマの一部であることの証拠として供されます。ここで、以下は注意すべき
+重要な点です。この述語では与えられた名前を持つ列の*型*用の指標を含めま
+す。こうする必要があるのですが、その理由は名前で列にアクセスする際に返
+却型を調べる方法が必要だからです。しかし証明検索中はこの型はIdrisによっ
+て列の名前と問題のスキーマに基づいて導出されなければなりません（さもな
+いと返却型が前もって知られていない限り証明検索が失敗します）。したがっ
+て、この型を検索判定基準の一覧に含められないことをIdrisに教える*必要*
+があります。でないと証明検索を走らせる前に（型推論を使って）文脈から列
+の型を推論しようとします。これは`[search name schema]`のように、検索で
+使う指標を列挙することによって行うことができます。
 
 ```idris
 data InSchema :  (name    : String)
@@ -566,8 +541,7 @@ Uninhabited (InSchema n [] c) where
   uninhabited (IsThere _) impossible
 ```
 
-With this, we are now ready to access the value at a given column based on
-the column's name:
+これを使うことで、列の名前に基づいて与えられた列にある値にアクセスする準備が整いました。
 
 ```idris
 getAt :  {0 ss : Schema}
@@ -579,12 +553,12 @@ getAt name (v :: vs) {prf = IsHere}    = v
 getAt name (_ :: vs) {prf = IsThere p} = getAt name vs
 ```
 
-Below is an example how to use this at compile time. Note the amount of work
-Idris performs for us: It first comes up with proofs that `firstName`,
-`lastName`, and `age` are indeed valid names in the `Employee` schema. From
-these proofs it automatically figures out the return types of the calls to
-`getAt` and extracts the corresponding values from the row. All of this
-happens in a provably total and type safe way.
+以下はこれをコンパイル時に使う方法の一例です。どれほどのことをIdrisが
+してくれているかに注目してください。まず、`firstName`、`lastName`、
+`age`が確かに`Employee`スキーマ中の妥当な名前であるという証明を考え付
+いています。これらの証明から自動的に`getAt`の呼び出しによる返却型を解
+明し、列から対応する値を抽出します。この全てが証明上全域で型安全なやり
+方で行われるのです。
 
 ```idris
 shoeck : String
@@ -596,13 +570,12 @@ shoeck =  getAt "firstName" hock
        ++ " years old."
 ```
 
-In order to at runtime specify a column name, we need a way for computing
-values of type `InSchema` by comparing the column names with the schema in
-question. Since we have to compare two string values for being
-propositionally equal, we use the `DecEq` implementation for `String` here
-(Idris provides `DecEq` implementations for all primitives). We extract the
-column type at the same time and pair this (as a dependent pair) with the
-`InSchema` proof:
+実行時に列の名前を指定するためには、列の名前と問題のスキーマを比較する
+ことによって型`InSchema`の値を計算する方法が必要です。命題上等しくある
+ために2つの文字列値を比較せねばならないため、ここでは`String`用の
+`DecEq`実装を使います（Idrisは全ての原始型用に`DecEq`実装を提供してい
+ます）。同時に列の型を取り出し、（依存対として）これと`InSchema`証明と
+を対にしています。
 
 ```idris
 inSchema : (ss : Schema) -> (n : String) -> Maybe (c ** InSchema n ss c)
@@ -614,49 +587,46 @@ inSchema (MkColumn cn t :: xs) n = case decEq cn n of
     Nothing         => Nothing
 ```
 
-At the end of this chapter we will use `InSchema` in our CSV command-line
-application to list all values in a column.
+本章の終わりには、CSVコマンドラインアプリケーションで列の中の全ての値
+を列挙するために`InSchema`を使っていきます。
 
 ### 演習 その2
 
-1. Show that `InSchema` is decidable by changing the output type of
-   `inSchema` to `Dec (c ** InSchema n ss c)`.
+1. `InSchema`が決定可能であることを、`inSchema`の出力型を`Dec (c **
+   InSchema n ss c)`に変えることで示してください。
 
-2. Declare and implement a function for modifying a field in a row based on
-   the column name given.
+2. 与えられた列名に基づいてフィールドを変更する関数を宣言し実装してください。
 
-3. Define a predicate to be used as a witness that one list contains only
-   elements in the second list in the same order and use this predicate to
-   extract several columns from a row at once.
+3. 1つ目のリストが2つ目のリスト中の要素をこの順で含んでいるという証拠とし
+   て使われる述語を定義し、この述語を使って複数列を行から一度に抽出するの
+   に使ってください。
 
-   For instance, `[2,4,5]` contains elements from
-   `[1,2,3,4,5,6]` in the correct order, but `[4,2,5]`
-   does not.
+   例えば`[2,4,5]`には`[1,2,3,4,5,6]`から正しい順序で要素を含んでいますが、
+   `[4,2,5]`はそうではありません。
 
-4. Improve the functionality from exercise 3 by defining a new predicate,
-   witnessing that all strings in a list correspond to column names in a
-   schema (in arbitrary order).  Use this to extract several columns from a
-   row at once in arbitrary order.
+4. 演習3を元に新しい述語を定義することによって機能を向上させてください。
+   この述語はリスト中の全ての文字列がスキーマ中の列名に（任意の順序で）対
+   応するという証拠です。これを使って行から複数列を任意の順序で一度に取り
+   出してください。
 
-   Hint: Make sure to include the resulting schema as an index,
-   but search only based on the list of names and the input
-   schema.
+   手掛かり：必ず結果のスキーマを指標として含めてください。ただし名前
+   のリストと入力スキーマのみに基づいて検索してください。
 
-## Use Case: Flexible Error Handling
+## 用例：柔軟なエラー制御
 
-A recurring pattern when writing larger applications is the combination of
-different parts of a program each with their own failure types in a larger
-effectful computation.  We saw this, for instance, when implementing a
-command-line tool for handling CSV files. There, we read and wrote data from
-and to files, we parsed column types and schemata, we parsed row and column
-indices and command-line commands.  All these operations came with the
-potential of failure and might be implemented in different parts of our
-application.  In order to unify these different failure types, we wrote a
-custom sum type encapsulating each of them, and wrote a single handler for
-this sum type. This approach was alright then, but it does not scale well
-and is lacking in terms of flexibility. We are therefore trying a different
-approach here. Before we continue, we quickly implement a couple of
-functions with the potential of failure plus some custom error types:
+大き目のアプリケーションを書いているときに繰り返されるパターンとして、
+独自の失敗型を持つプログラムのそれぞれの部品を、より大きな作用付き計算
+に組み合わせることがあります。これについては例えばCSVファイルを取り扱
+うコマンドラインツールを実装したときに見ました。そこではデータをファイ
+ルについて読み書きし、列の型とスキーマを構文解析し、行と列の指標とコマ
+ンドラインの命令を構文解析しました。これら全ての操作は潜在的な失敗が付
+き物であり、アプリケーションをなす異なる部品において実装されることがあ
+ります。これらの異なる失敗型を統一するためにそれぞれを内蔵化する自前の
+直和型を書き、この直和型用の単一の制御子を書きました。この手法はそのと
+きは良かったのですが、充分な規模拡大にはなりませんし、柔軟性の観点から
+は欠けているところがありました。したがってここでは違う手法を試していき
+ます。先に進む前に手短かに潜在的な失敗を伴ういくつかの関数といくつかの
+自前のエラー型を実装します。
 
 ```idris
 record NoNat where
@@ -678,11 +648,12 @@ readColType' "Float"   = Right Float
 readColType' s         = Left $ MkNoColType s
 ```
 
-However, if we wanted to parse a `Fin n`, there'd be already two ways how
-this could fail: The string in question could not represent a natural number
-(leading to a `NoNat` error), or it could be out of bounds (leading to an
-`OutOfBounds` error).  We have to somehow encode these two possibilities in
-the return type, for instance, by using an `Either` as the error type:
+ところが`Fin n`を構文解析したいとなるとこの時点でどう失敗しうるかにつ
+いて2通りあることになります。1つは問題の文字列が自然数を表現していない
+とき（`NoNat`エラーに繋がります）、もう1つは範囲外であるとき
+（`OutOfBounds`エラーに繋がります）です。どうにかしてこれら2つの可能性
+を返却型に符号化せねばなりません。例えば`Either`をエラー型として使うこ
+とはできます。
 
 ```idris
 record OutOfBounds where
@@ -696,27 +667,26 @@ readFin' s = do
   maybeToEither (Right $ MkOutOfBounds n ix) $ natToFin ix n
 ```
 
-This is incredibly ugly. A custom sum type might have been slightly better,
-but we still would have to use `mapFst` when invoking `readNat'`, and
-writing custom sum types for every possible combination of errors will get
-cumbersome very quickly as well.  What we are looking for, is a generalized
-sum type: A type indexed by a list of types (the possible choices) holding a
-single value of exactly one of the types in question.  Here is a first naive
-try:
+これは非常に見辛いです。自前の直和型は僅かにマシかもしれませんが、それ
+でも`readNat'`を呼び出すときに`mapFst`を使う必要があるでしょうし、全て
+の取り得るエラーの組み合わせについて直和型を書くこともまたとても速やか
+に面倒なことになるでしょう。ここで追い求めていたものは一般化された直和
+型です。型のリスト（取り得る選択肢）によって指標付けられちょうど1つの
+問題の型の単一値を保有する型なのです。以下は最初の素朴な試みです。
 
 ```idris
 data Sum : List Type -> Type where
   MkSum : (val : t) -> Sum ts
 ```
 
-However, there is a crucial piece of information missing: We have not
-verified that `t` is an element of `ts`, nor *which* type it actually is. In
-fact, this is another case of an erased existential, and we will have no way
-to at runtime learn something about `t`. What we need to do is to pair the
-value with a proof, that its type `t` is an element of `ts`.  We could use
-`Elem` again for this, but for some use cases we will require access to the
-number of types in the list.  We will therefore use a vector instead of a
-list as our index.  Here is a predicate similar to `Elem` but for vectors:
+しかし決定的な情報が欠けています。それは、`t`が`ts`の要素なのか、そし
+て実際に*どの*型なのかをまだ確証していないことです。実際これは消去され
+た存在量化子の別の場合であり、実行時に`t`について何かを知る術は1つもあ
+りません。しなければならないことは値を証明と対にすることで、その証明は
+型`t`が`ts`の要素であることについてのものです。このために再び`Elem`を
+使うこともできるでしょうが、リスト中にある型の数にアクセスする必要があ
+る用例もあります。したがってリストの代わりにベクタを指標として使います。
+以下は`Elem`に似ていつつもベクタ用の述語です。
 
 ```idris
 data Has :  (v : a) -> (vs  : Vect n a) -> Type where
@@ -728,9 +698,8 @@ Uninhabited (Has v []) where
   uninhabited (S _) impossible
 ```
 
-A value of type `Has v vs` is a witness that `v` is an element of `vs`. With
-this, we can now implement an indexed sum type (also called an *open
-union*):
+型`Has v vs`の値は`v`が`vs`の要素であることの証拠です。これを使えば今
+や指標付けられた直和型（*開合併型*とも呼ばれます）を実装できます。
 
 ```idris
 data Union : Vect n Type -> Type where
@@ -740,20 +709,19 @@ Uninhabited (Union []) where
   uninhabited (U ix _) = absurd ix
 ```
 
-Note the difference between `HList` and `Union`. `HList` is a *generalized
-product type*: It holds a value for each type in its index. `Union` is a
-*generalized sum type*: It holds only a single value, which must be of a
-type listed in the index.  With this we can now define a much more flexible
-error type:
+`HList`と`Union`の間の違いに注目してください。`HList`は*生成された直積
+型*です。指標にそれぞれの型の値を保有しています。`Union`は*生成された
+直和型*です。単一値のみを持ち、指標に挙げられている型でなればなりませ
+ん。これがあれば今や遥かに柔軟なエラー型を定義できます。
 
 ```idris
 0 Err : Vect n Type -> Type -> Type
 Err ts t = Either (Union ts) t
 ```
 
-A function returning an `Err ts a` describes a computation, which can fail
-with one of the errors listed in `ts`.  We first need some utility
-functions.
+`Err ts a`を返す関数はある計算を記述しています。その計算とは`ts`で挙げ
+られたエラーのうちの1つで失敗しうるというものです。最初にいくつかの便
+利関数が必要です。
 
 ```idris
 inject : (prf : Has t ts) => (v : t) -> Union ts
@@ -766,7 +734,7 @@ failMaybe : Has t ts => (err : Lazy t) -> Maybe a -> Err ts a
 failMaybe err = maybeToEither (inject err)
 ```
 
-Next, we can write more flexible versions of the parsers we wrote above:
+次に以前書いた構文解析器のより柔軟なバージョンを書くことができます。
 
 ```idris
 readNat : Has NoNat ts => String -> Err ts Nat
@@ -780,8 +748,8 @@ readColType "Float"   = Right Float
 readColType s         = fail $ MkNoColType s
 ```
 
-Before we implement `readFin`, we introduce a short cut for specifying that
-several error types must be present:
+`readFin`を実装する前に、複数のエラー型が存在していなければならないこ
+とを指定する早道を導入します。
 
 ```idris
 0 Errs : List Type -> Vect n Type -> Type
@@ -789,9 +757,9 @@ Errs []        _  = ()
 Errs (x :: xs) ts = (Has x ts, Errs xs ts)
 ```
 
-Function `Errs` returns a tuple of constraints. This can be used as a
-witness that all listed types are present in the vector of types: Idris will
-automatically extract the proofs from the tuple as needed.
+関数`Errs`は制約のタプルを返します。これは全ての列挙された型が型のベク
+タにあることの証拠として使えます。Idrisは自動的にタプルから証明を必要
+に応じて取り出します。
 
 
 ```idris
@@ -801,7 +769,7 @@ readFin s = do
   failMaybe (MkOutOfBounds n (S ix)) $ natToFin ix n
 ```
 
-As a last example, here are parsers for schemata and CSV rows:
+最後の例として以下はスキーマとCSVの行のための構文解析器です。
 
 ```idris
 fromCSV : String -> List String
@@ -851,10 +819,10 @@ decodeRow row = go 1 s . fromCSV
           [| decodeField row k c s :: go (S k) cs ss |]
 ```
 
-Here is an example REPL session, where I test `readSchema`. I defined
-variable `ts` using the `:let` command to make this more convenient.  Note,
-how the order of error types is of no importance, as long as types
-`InvalidColumn` and `NoColType` are present in the list of errors:
+以下はREPLセッションの一例です。ここでは`readSchema`を試しました。
+`:let`命令を使って変数`ts`を定義し、より便利にしています。型
+`InvalidColumn`と`NoColType`がエラーのリスト中にある限り、エラー型の順
+番には何ら重要性はないことに注意してください。
 
 ```repl
 Tutorial.Predicates> :let ts = the (Vect 3 _) [NoColType,NoNat,InvalidColumn]
@@ -866,19 +834,18 @@ Tutorial.Predicates> readSchema {ts} "foo Float"
 Left (U (S (S Z)) (MkInvalidColumn "foo Float"))
 ```
 
-### Error Handling
+### エラー制御
 
-There are several techniques for handling errors, all of which are useful at
-times. For instance, we might want to handle some errors early on and
-individually, while dealing with others much later in our application. Or we
-might want to handle them all in one fell swoop. We look at both approaches
-here.
+エラー制御にはいくつかの技法があり、それら全てがその時々で役に立ちます。
+例えば何らかのエラーを個別かつ早めに扱いつつ、他のものはアプリケーショ
+ンのもっと後で対処したいことがあるかもしれません。あるいはそれらを一挙
+に扱いたいかもしれません。ここでは両方の手法を見ていきます。
 
-First, in order to handle a single error individually, we need to *split* a
-union into one of two possibilities: A value of the error type in question
-or a new union, holding one of the other error types. We need a new
-predicate for this, which not only encodes the presence of a value in a
-vector but also the result of removing that value:
+まず単一のエラーを個別に扱うためには、合併を二者択一の可能性に*分割*す
+る必要があります。ここでの二者とは、問題のエラー型または新しい合併の値
+のことで、後者は他のエラー型を持ちます。このためには新しい述語が必要で
+あり、この述語はベクタ中に値があることだけではなく、その値を削除する結
+果についても符号化するものです。
 
 ```idris
 data Rem : (v : a) -> (vs : Vect (S n) a) -> (rem : Vect n a) -> Type where
@@ -887,9 +854,9 @@ data Rem : (v : a) -> (vs : Vect (S n) a) -> (rem : Vect n a) -> Type where
   RS : Rem v vs rem -> Rem v (w :: vs) (w :: rem)
 ```
 
-Once again, we want to use one of the indices (`rem`) in our functions'
-return types, so we only use the other indices during proof search. Here is
-a function for splitting off a value from an open union:
+繰り返しますが関数の返却型では指標 (`rem`) のうち1つを使いたいので、証
+明検索中では他の指標のみを使います。以下は開合併から値を分離する関数で
+す。
 
 ```idris
 split : (prf : Rem t ts rem) => Union ts -> Either t (Union rem)
@@ -901,14 +868,15 @@ split {prf = RS p} (U (S x) val) = case split {prf = p} (U x val) of
   Right (U ix y) => Right $ U (S ix) y
 ```
 
-This tries to extract a value of type `t` from a union. If it works, the
-result is wrapped in a `Left`, otherwise a new union is returned in a
-`Right`, but this one has `t` removed from its list of possible types.
+これは型`t`の値を合併から取り出そうとするものです。もしうまくいけば結
+果は`Left`に包まれ、そうでなければ`Right`の中に入れた新しい合併が返さ
+れます。ただしこの合併については取り得る型のリストから`t`は削除されて
+います。
 
-With this, we can implement a handler for single errors.  Error handling
-often happens in an effectful context (we might want to print a message to
-the console or write the error to a log file), so we use an applicative
-effect type to handle errors in.
+これがあれば単一エラー用の制御子を実装できます。エラー制御はしばしば作
+用付きの文脈で置こるため（文言をコンソールに印字したりエラーをログファ
+イルに書き込んだりしたいかもしれません）、アプリカティブ作用型を使って
+中のエラーを扱います。
 
 ```idris
 handle :  Applicative f
@@ -922,8 +890,8 @@ handle h (Left x)  = case split x of
 handle _ (Right x) = pure $ Right x
 ```
 
-For handling all errors at once, we can use a handler type indexed by the
-vector of errors, and parameterized by the output type:
+全てのエラーを一度に扱うためにはエラーのベクタによって指標付けられた制
+御子型を使うことができ、出力型を変数に取ります。
 
 ```idris
 namespace Handler
@@ -942,12 +910,12 @@ handleAll _ (Right v)       = pure v
 handleAll h (Left $ U ix v) = extract h ix v
 ```
 
-Below, we will see an additional way of handling all errors at once by
-defining a custom interface for error handling.
+以下では、自前のエラー制御用のインターフェースを定義することによって一
+度に全てのエラーを扱う追加の方法を見ていきます。
 
 ### 演習 その3
 
-1. `List`についての以下の汎化関数を実装してください。
+1. `Union`用の以下の便利関数を実装してください。
 
    ```idris
    project : (0 t : Type) -> (prf : Has t ts) => Union ts -> Maybe t
@@ -956,8 +924,8 @@ defining a custom interface for error handling.
 
    safe : Err [] a -> a
    ```
-2. Implement the following two functions for embedding an open union in a
-   larger set of possibilities.  Note the unerased implicit in `extend`!
+2. 開合併をより大きな可能性の集合に組込む以下の2関数を実装してください。
+   `extend`中の消去されない暗黙子に注意してください！
 
    ```idris
    weaken : Union ts -> Union (ts ++ ss)
@@ -965,8 +933,8 @@ defining a custom interface for error handling.
    extend : {m : _} -> {0 pre : Vect m _} -> Union ts -> Union (pre ++ ts)
    ```
 
-3. Find a general way to embed a `Union ts` in a `Union ss`, so that the
-   following is possible:
+3. `Union ts`を`Union ss`中に組込む汎用的な方法を見付けて、以下ができるよ
+   うにしてください。
 
    ```idris
    embedTest :  Err [NoNat,NoColType] a
@@ -974,20 +942,20 @@ defining a custom interface for error handling.
    embedTest = mapFst embed
    ```
 
-4. Make `handle` more powerful, by letting the handler convert the error in
-   question to an `f (Err rem a)`.
+4. 制御子に問題のエラーを`f (Err rem a)`へ変換させるようにすることで、
+   `handle`をより強力にしてください。
 
-## The Truth about Interfaces
+## インターフェースの真実
 
-Well, here it finally is: The truth about interfaces. Internally, an
-interface is just a record data type, with its fields corresponding to the
-members of the interface. An interface implementation is a *value* of such a
-record, annotated with a `%hint` pragma (see below) to make the value
-available during proof search. Finally, a constrained function is just a
-function with one or more auto implicit arguments. For instance, here is the
-same function for looking up an element in a list, once with the known
-syntax for constrained functions, and once with an auto implicit
-argument. The code produced by Idris is the same in both cases:
+さて、遂にここまで来ました。インターフェースについての真実です。内部的
+にはインターフェースは単なるレコードデータ型で、インターフェースのメン
+バーに対応するフィールドを持ちます。インターフェースの実装はそのような
+レコードの*値*であり、証明検索の最中に値が入手できるよう`%hint`プラグ
+マ（後述）で註釈付けられています。とどのつまり制約付き関数は単なる1つ
+以上の自動暗黙引数を持つ関数なのです。例えば以下はリスト中の要素を見つ
+け出す同じ関数で、一方は既に見た構文の制約付き関数であり、もう一方は自
+動暗黙引数を持つものです。Idrisによって生成されるコードは両方とも同じ
+です。
 
 ```idris
 isElem1 : Eq a => a -> List a -> Bool
@@ -999,20 +967,20 @@ isElem2 v []        = False
 isElem2 v (x :: xs) = x == v || isElem2 v xs
 ```
 
-Being mere records, we can also take interfaces as regular function
-arguments and dissect them with a pattern match:
+ただのレコードであるために、インターフェースを通常の関数引数として見做
+しパターン照合で解剖することもできます。
 
 ```idris
 eq : Eq a -> a -> a -> Bool
 eq (MkEq feq fneq) = feq
 ```
 
-### A manual Interface Definition
+### 手動インターフェース定義
 
-I'll now demonstrate how we can achieve the same behavior with proof search
-as with a regular interface definition plus implementations. Since I want to
-finish the CSV example with our new error handling tools, we are going to
-implement some error handlers.  First, an interface is just a record:
+ここでは証明検索が通常のインターフェース定義および実装を使うのと同じ振
+舞いを実現する方法を実演していきます。新しいエラー制御ツールを使った
+CSVの例を終わらせたいので、いくつかのエラー制御子を実装していきます。
+最初にインターフェースは単なるレコードです。
 
 ```idris
 record Print a where
@@ -1020,38 +988,36 @@ record Print a where
   print' : a -> String
 ```
 
-In order to access the record in a constrained function, we use the
-`%search` keyword, which will try to conjure a value of the desired type
-(`Print a` in this case) by means of a proof search:
+制約付き関数中のレコードにアクセスするためには`%search`キーワードを使
+います。このキーワードは証明検索によって所望の型（この場合`Print a`）
+の値を出そうとします。
 
 ```idris
 print : Print a => a -> String
 print = print' %search
 ```
 
-As an alternative, we could use a named constraint, and access it directly
-via its name:
+代替案として名前付き制約を使うこともでき、直接その名前を介してアクセスできます。
 
 ```idris
 print2 : (impl : Print a) => a -> String
 print2 = print' impl
 ```
 
-As yet another alternative, we could use the syntax for auto implicit
-arguments:
+更に別の代替案として、自動暗黙子用の構文を使うこともできます。
 
 ```idris
 print3 : {auto impl : Print a} -> a -> String
 print3 = print' impl
 ```
 
-All three versions of `print` behave exactly the same at runtime.
-So, whenever we write `{auto x : Foo} ->` we can just as well
-write `(x : Foo) =>` and vice versa.
+3バージョン全ての`print`は実行時にはちょうど同じ振舞いをします。ですか
+ら`{auto x : Foo}`と書くときは単に`(x : Foo) =>`とも書くことができます
+し、逆もまた然りです。
 
-Interface implementations are just values of the given record type, but in
-order to be available during proof search, these need to be annotated with a
-`%hint` pragma:
+インターフェース実装は単に与えられたレコード型の値ですが、証明検索中で
+使えるようにするには、`%hint`プラグマで註釈付けられている必要がありま
+す。
 
 ```idris
 %hint
@@ -1077,9 +1043,9 @@ rowErrorPrint = MkPrint $
           "Expected end of input in row \{show r}, column \{show c}."
 ```
 
-We can also write an implementation of `Print` for a union or errors. For
-this, we first come up with a proof that all types in the union's index come
-with an implementation of `Print`:
+合併やエラー用の`Print`の実装を書くこともできます。このためには最初に
+合併の指標中の全ての型に`Print`の実装が付いて来ていることの証明を思い
+付くことになります。
 
 ```idris
 0 All : (f : a -> Type) -> Vect n a -> Type
@@ -1095,24 +1061,24 @@ unionPrint : All Print ts => Print (Union ts)
 unionPrint = MkPrint unionPrintImpl
 ```
 
-Defining interfaces this way can be an advantage, as there is much less
-magic going on, and we have more fine grained control over the types and
-values of our fields. Note also, that all of the magic comes from the search
-hints, with which our "interface implementations" were annotated.  These
-made the corresponding values and functions available during proof search.
+このようにインターフェースを定義することは利点になりえます。というのも
+魔法のような要素は遥かに少なく、フィールドの型と値に関してより微に入る
+制御できるからです。また、こうした魔法全てが証明手掛かりから来ているこ
+とにも注目です。この手掛かりは「インターフェース実装」に註釈付けられる
+ものです。これらは対応する値と関数を証明検索中に使えるようにするもので
+す。
 
-#### Parsing CSV Commands
+#### CSVの命令を構文解析する
 
-To conclude this chapter, we reimplement our CSV command parser, using the
-flexible error handling approach from the last section. While not
-necessarily less verbose than the original parser, this approach decouples
-the handling of errors and printing of error messages from the rest of the
-application: Functions with a possibility of failure are reusable in
-different contexts, as are the pretty printers we use for the error
-messages.
+本章の締め括りとして、前節の柔軟なエラー制御手法を使い、CSVの命令の構
+文解析器を再実装します。元の構文解析器より冗長でなくなるとは限らないも
+のの、この手法はエラーの制御とエラー文言の印字をアプリケーションの残り
+の部分から分離します。失敗の可能性を持つ関数は異なる文脈で再利用ができ
+ますが、それはエラー文言用に使うプリティープリンターもまた再利用できる
+ためです。
 
-First, we repeat some stuff from earlier chapters. I sneaked in a new
-command for printing all values in a column:
+最初に以前の章にあったいくつかのものを繰り返し書きます。列中の全ての値
+を印字する新しい命令を忍ばせました。
 
 ```idris
 record Table where
@@ -1147,9 +1113,9 @@ applyCommand (MkTable ts n rs) (Delete x)  = case n of
   Z   => absurd x
 ```
 
-Next, below is the command parser reimplemented. In total, it can fail in
-seven different was, at least some of which might also be possible in other
-parts of a larger application.
+次に、以下は再実装された命令の構文解析器です。全体としては7つの異なる
+原因で失敗しうるものですが、少なくともそのうちのいくつかはより大きなア
+プリケーションの他の部分でも使うことができる可能性があります。
 
 ```idris
 record UnknownCommand where
@@ -1192,13 +1158,14 @@ readCommand (MkTable ts n _) s         = case words s of
   _               => fail $ MkUnknownCommand s
 ```
 
-Note, how we could invoke functions like `readFin` or `readSchema` directly,
-because the necessary error types are part of our list of possible errors.
+`readFin`や`readSchema`といった関数を直接呼び出せているところに注目し
+てください。これは必要なエラー型が起こりうるエラーのリストの一部にある
+からです。
 
-To conclude this sections, here is the functionality for printing the result
-of a command plus the application's main loop. Most of this is repeated from
-earlier chapters, but note how we can handle all errors at once with a
-single call to `print`:
+本節のまとめとして、以下は命令の結果を印字する機能とアプリケーションの
+メインループです。このほとんどは以前の章からの繰り返しですが、単一の
+`print`の呼び出しで全てのエラーを一度に扱えていることに着目してくださ
+い。
 
 ```idris
 encodeField : (t : ColType) -> IdrisType t -> String
@@ -1248,7 +1215,7 @@ main : IO ()
 main = runProg $ MkTable [] _ []
 ```
 
-Here is an example REPL session:
+以下はREPLセッションの例です。
 
 ```repl
 Tutorial.Predicates> :exec main
@@ -1273,12 +1240,11 @@ Goodbye.
 
 ## まとめ
 
-Predicates allow us to describe contracts between types and to refine the
-values we accept as valid function arguments.  They allow us to make a
-function safe and convenient to use at runtime *and* compile time by using
-them as auto implicit arguments, which Idris should try to construct on its
-own if it has enough information about the structure of a function's
-arguments.
+述語のお陰で型の間の契約を記述し、妥当な関数引数として受け付ける値を精
+錬することができます。述語を自動暗黙引数として使うことにより、関数を安
+全で、且つ実行時*と*コンパイル時に使うのに便利なものにしてくれます。自
+動暗黙引数とは、関数引数の構造について充分な情報があればIdrisが自力で
+構築しようとするものでした。
 
 <!-- vi: filetype=idris2
 -->
