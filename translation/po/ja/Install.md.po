@@ -1,0 +1,288 @@
+# Japanese translations for github.com/stefan-hoeck/idris2-tutorial package
+# Copyright (C) 2023 Stefan Höck
+# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
+# Automatically generated, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
+"POT-Creation-Date: 2023-03-06 21:56+0900\n"
+"PO-Revision-Date: 2023-03-07 08:51+0900\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. type: Title ##
+#: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
+#: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
+#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
+#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
+#: ../src/Tutorial/Traverse.md:1109
+#, no-wrap
+msgid "Conclusion"
+msgstr "まとめ"
+
+#. type: Title #
+#: ../src/Appendices/Install.md:1
+#, no-wrap
+msgid "Getting Started with pack and Idris2"
+msgstr "packとIdris2で始めよう"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:16
+msgid ""
+"Here I describe what I find to be the most convenient way to get up and "
+"running with Idris2. We are going to install the [pack](https://github.com/"
+"stefan-hoeck/idris2-pack) package manager, which will install a recent "
+"version of the Idris compiler along the way.  However, this means that you "
+"need access to a Unix-like operating system such as Linux or macOS. Windows "
+"users can make use of [WSL](https://learn.microsoft.com/en-us/windows/wsl/"
+"about) to get access to a Linux environment on their system. As a "
+"prerequisite, it is assumed that readers know how to start a terminal "
+"session on their system, and how to run commands from the terminal's command-"
+"line. In addition, readers need to know how to add directories to the [`"
+"$PATH` variable](https://en.wikipedia.org/wiki/PATH_(variable))  on their "
+"system."
+msgstr ""
+"ここでは筆者が思うIdrisの使い始めるための最も便利な方法について書きます。"
+"[pack](https://github.com/stefan-hoeck/idris2-pack)パッケージ管理をインストー"
+"ルしていきますが、これは道中で最近のバージョンのIdrisコンパイラをインストール"
+"します。しかしこの管理方法を使うには、LinuxやmacOSのようなUnixに類するオペ"
+"レーティングシステムにアクセスする必要があります。Windows利用者は[WSL]"
+"(https://learn.microsoft.com/en-us/windows/wsl/about)を活用してWindowsシステ"
+"ム上でLinux環境にアクセスすることができます。事前要件として読者は端末セッショ"
+"ンをシステム上で開始する方法と端末のコマンドラインからコマンドを走らせる方法"
+"がわかっていることを前提とします。加えて読者はシステム上で[`$PATH`変数]"
+"(https://en.wikipedia.org/wiki/PATH_(variable))へディレクトリを加える方法も"
+"知っておく必要があります。"
+
+#. type: Title ##
+#: ../src/Appendices/Install.md:17
+#, no-wrap
+msgid "Installing pack"
+msgstr "packをインストールする"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:22
+msgid ""
+"In order to install the *pack* package manager together with a recent "
+"version of the Idris2 compiler, follow the instructions on [pack's GitHub "
+"page](https://github.com/stefan-hoeck/idris2-pack/blob/main/INSTALL.md)."
+msgstr ""
+"最新版のIdrisコンパイラと共に*pack*パッケージ管理をインストールするためには、"
+"[packのGitHubページ](https://github.com/stefan-hoeck/idris2-pack/blob/main/"
+"INSTALL.md)にある説明に従ってください。"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:28
+msgid ""
+"If all goes well, I suggest you take a moment to inspect the default "
+"settings available in your global `pack.toml` file, which can be found at `"
+"$HOME/.pack/user/pack.toml` (unless you explicitly set the `$PACK_DIR` "
+"environment variable to a different directory). If possible, I suggest you "
+"install the *rlwrap* tool and change the following setting in your global "
+"`pack.toml` file to `true`:"
+msgstr ""
+"全部うまくいったら、少し時間を取って大域的な`pack.toml`ファイルで使える既定の"
+"設定を調べることをお勧めします。この設定ファイルは`$HOME/.pack/usr/pack.toml`"
+"にあります（ただし`$PACK_DIR`環境変数を別のディレクトリに明示的に設定している"
+"場合はこの限りではありません）。可能であれば*rlwrap*ツールをインストールし、"
+"大域的な`pack.toml`ファイルで以下の設定を`true`にすることをお勧めします。"
+
+#. type: Fenced code block (toml)
+#: ../src/Appendices/Install.md:29
+#, no-wrap
+msgid "repl.rlwrap = true\n"
+msgstr "repl.rlwrap = true\n"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:37
+msgid ""
+"This will lead to a nicer experience when running REPL sessions.  You might "
+"also want to set up your editor to make use of the interactive editing "
+"features provided by Idris. Instruction to do this for Neovim can be found "
+"[here](Neovim.md)."
+msgstr ""
+"こうするとREPLセッションを走らせるときにより良い体験が得られるようになりま"
+"す。また、エディタを設定してIdrisが提供する対話的な編集機能を活用したいかもし"
+"れません。Neovimについてこれをするための説明は[こちら](Neovim.md)にあります。"
+
+#. type: Title ###
+#: ../src/Appendices/Install.md:38
+#, no-wrap
+msgid "Updating pack and Idris"
+msgstr "packとIdrisを更新する"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:43
+msgid ""
+"Both projects, pack and the Idris compiler, are still being actively "
+"developed.  It is therefore a good idea to update them at regular occasions. "
+"To update pack itself, just run the following command:"
+msgstr ""
+"packとIdrisコンパイラの両プロジェクトは今も尚活発に開発されています。したがっ"
+"て定期的に更新するのが良い考えです。pack自体を更新するには以下のコマンドを走"
+"らせるだけです。"
+
+#. type: Fenced code block (sh)
+#: ../src/Appendices/Install.md:44
+#, no-wrap
+msgid "pack update\n"
+msgstr "pack update\n"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:50
+msgid ""
+"To build and install the latest commit of the Idris compiler and use the "
+"latest package collection, run"
+msgstr ""
+"Idrisコンパイラの最新コミットをビルドしてインストールし、最新のパッケージコレ"
+"クションを使うには以下を走らせます。"
+
+#. type: Fenced code block (sh)
+#: ../src/Appendices/Install.md:51
+#, no-wrap
+msgid "pack switch latest\n"
+msgstr "pack switch latest\n"
+
+#. type: Title ##
+#: ../src/Appendices/Install.md:55
+#, no-wrap
+msgid "Setting up your Playground"
+msgstr "練習場を準備する"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:60
+msgid ""
+"If you are going to solve the exercises in this tutorial (you should!), "
+"you'll have to write a lot of code. It is best to setup a small playground "
+"project for tinkering with Idris. In a directory of your choice, run the "
+"following command:"
+msgstr ""
+"この入門にある演習を解いていく場合は（というか解くべきです！）、沢山のコード"
+"を書いていくことになります。Idrisをいじくり回す上では小さな練習場プロジェクト"
+"を立ち上げておくのが一番です。ディレクトリを決めて以下のコマンドを走らせてく"
+"ださい。"
+
+#. type: Fenced code block (sh)
+#: ../src/Appendices/Install.md:61
+#, no-wrap
+msgid "pack new lib tut\n"
+msgstr "pack new lib tut\n"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:68
+msgid ""
+"This will setup a minimal Idris package in directory `tut` together with an "
+"`.ipkg` file called `tut.ipkg`, a directory to put your Idris sources called "
+"`src`, and a minimal Idris module at `src/Tut.idr`."
+msgstr ""
+"こうするとディレクトリ`tut`に最小のIdrisパッケージが立ち上がります。このディ"
+"レクトリには、`tut.ipkg`という名前の`.ipkg`ファイル、`src`という名前のIdrisの"
+"ソースを置くディレクトリ、`src/Tut.idr`にある最小限のIdrisのモジュールが含ま"
+"れます。"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:78
+msgid ""
+"In addition, it sets up a minimal test suite in directory `test`. All of "
+"this is put together and made accessible to pack in a `pack.toml` file in "
+"the project's root directory. Take your time and quickly inspect the content "
+"of every file created by pack: The `.idr` files contain Idris source code. "
+"The `.ipkg` files contain detailed descriptions of packages for the Idris "
+"compiler including where the sources are located, the modules a package "
+"makes available to other projects, and a list of packages the project itself "
+"depends on. Finally, the `pack.toml` file informs pack about the local "
+"packages in the current project."
+msgstr ""
+"加えてディレクトリ`test`に最小限のテストスートが準備されています。プロジェク"
+"トのルートディレクトリにある`pack.toml`ファイルによって、packがこのテスト全て"
+"に関する情報をまとめてアクセスできるようになるのです。少し時間を取ってpackに"
+"よって作られたファイルを1つ1つ目を通してみてください。`.idr`ファイルにはIdris"
+"で書かれたソースコードが含まれます。`.ipkg`ファイルにはIdrisコンパイラ用の"
+"パッケージの詳細が含まれており、ソースが置かれている場所、そのパッケージが他"
+"のプロジェクトでも利用できるようにしているモジュール、プロジェクト自体が依存"
+"しているパッケージの一覧といったものがあります。最後に`pack.toml`ファイルは現"
+"在のプロジェクト中のローカルなパッケージについてpackに伝えるはたらきがありま"
+"す。"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:83
+msgid ""
+"With this, here is a bunch of things you can do, but first, make sure you "
+"are in the project's root directory (called `tut` if you followed my "
+"suggestion)  or one of its child folders when running these commands."
+msgstr ""
+"ここを踏まえると、以下のような沢山のことができます。でもまずはこれらのコマン"
+"ドを走らせる際に、プロジェクトのルートディレクトリ（ここまでのお勧めの方法に"
+"したがっていた場合は`tut`という名前です）かその子フォルダのうちどれかにいるこ"
+"とを確かめてください。"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:85
+msgid "To typecheck the library sources, run"
+msgstr "ライブラリのソースの型検査をしたければ以下を走らせます。"
+
+#. type: Fenced code block (sh)
+#: ../src/Appendices/Install.md:86
+#, no-wrap
+msgid "pack typecheck tut\n"
+msgstr "pack typecheck tut\n"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:91
+msgid "To build and execute the test suite, run"
+msgstr "テストスートをビルドして実行するには以下を走らせます。"
+
+#. type: Fenced code block (sh)
+#: ../src/Appendices/Install.md:92
+#, no-wrap
+msgid "pack test tut\n"
+msgstr "pack test tut\n"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:97
+msgid "To start a REPL session with `src/Tut.idr` loaded, run"
+msgstr ""
+"`src/Tut.idr`が読み込まれた状態でREPLセッションを始めるには以下を走らせます。"
+
+#. type: Fenced code block (sh)
+#: ../src/Appendices/Install.md:98
+#, no-wrap
+msgid "pack repl src/Tut.idr\n"
+msgstr "pack repl src/Tut.idr\n"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:110
+msgid ""
+"In this very short tutorial you set up an environment for working on Idris "
+"projects and following along with the main part of the tutorial.  You are "
+"now ready to start with the [first chapter](../Tutorial/Intro.md), or - if "
+"you already wrote some Idris code - to learn about the details of the [Idris "
+"module system](Modules.md)."
+msgstr ""
+"このごく短い導入ではIdrisのプロジェクトで作業し入門の主部を読み進めるための環"
+"境を立ち上げました。これで[最初の章](../Tutorial/Intro.md)から始める準備がで"
+"きました。もしくは、既にいくらかIdrisのコードを書いたことがあるなら、[Idrisの"
+"モジュールシステム](Modules.md)の詳細を学んでもよいでしょう。"
+
+#. type: Plain text
+#: ../src/Appendices/Install.md:114
+msgid ""
+"Please note that this tutorial itself is setup as a pack project: It "
+"contains a `pack.toml` and `tutorial.ipkg` file in its root directory (have "
+"a look at them to get a feel for how such projects are setup) and a lot of "
+"Idris sources in the subfolders of directory `src`."
+msgstr ""
+"なお、この入門自体もまたpackのプロジェクトとして立ち上げたものだったりしま"
+"す。ルートディレクトリ（これらのファイルを眺めて、どのようにプロジェクトが立"
+"ち上げられているのか雰囲気を掴んでください）には`pack.toml`と`tutorial.ipkg`"
+"ファイルが含まれており、ディレクトリ`src`のサブフォルダには沢山のIdrisのソー"
+"スがあります。"

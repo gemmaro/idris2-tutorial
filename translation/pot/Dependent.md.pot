@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-06 20:49+0900\n"
+"POT-Creation-Date: 2023-03-06 20:57+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,7 +84,7 @@ msgid "What's next"
 msgstr ""
 
 #. type: Title ###
-#: ../src/Tutorial/Dependent.md:1 ../src/Tutorial/Intro.md:76
+#: ../src/Tutorial/Dependent.md:1 ../src/Tutorial/Intro.md:90
 #, no-wrap
 msgid "Dependent Types"
 msgstr ""
@@ -1393,7 +1393,7 @@ msgid ""
 "Deciding whether to pass potentially inferable arguments to a function "
 "implicitly or explicitly is a question of how often the arguments actually "
 "*are* inferable by Idris. Sometimes it might even be useful to have both "
-"verions of a function. Remember, however, that even in case of an implicit "
+"versions of a function. Remember, however, that even in case of an implicit "
 "argument we can still pass the value explicitly:"
 msgstr ""
 

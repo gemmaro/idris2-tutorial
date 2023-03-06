@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-11-20 12:40+0900\n"
-"PO-Revision-Date: 2022-08-17 09:51+0900\n"
+"POT-Creation-Date: 2023-03-06 20:57+0900\n"
+"PO-Revision-Date: 2023-03-06 21:45+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -86,7 +86,7 @@ msgid "What's next"
 msgstr "お次は？"
 
 #. type: Title ###
-#: ../src/Tutorial/Dependent.md:1 ../src/Tutorial/Intro.md:76
+#: ../src/Tutorial/Dependent.md:1 ../src/Tutorial/Intro.md:90
 #, no-wrap
 msgid "Dependent Types"
 msgstr "依存型"
@@ -1213,6 +1213,8 @@ msgid ""
 "   generate 10 (\\(x,y) => let z = x + y in ((y,z),z)) (0,1)\n"
 "   [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]\n"
 msgstr ""
+"   generate 10 (\\(x,y) => let z = x + y in ((y,z),z)) (0,1)\n"
+"   [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]\n"
 
 #. type: Bullet: '8. '
 #: ../src/Tutorial/Dependent.md:507
@@ -1911,15 +1913,14 @@ msgid ""
 "Deciding whether to pass potentially inferable arguments to a function "
 "implicitly or explicitly is a question of how often the arguments actually "
 "*are* inferable by Idris. Sometimes it might even be useful to have both "
-"verions of a function. Remember, however, that even in case of an implicit "
+"versions of a function. Remember, however, that even in case of an implicit "
 "argument we can still pass the value explicitly:"
 msgstr ""
-"関数へ潜在的に推論可能な引数を渡しているとき、それを暗黙的にすべきか明示的に"
-"すべきか決定することとは、\n"
-"その引数が実際どれほどIdrisによって推論されて*いる*のかということです。\n"
-"その関数の両方の版があると便利なことさえあるでしょう。\n"
-"ただし覚えておいてほしいのですが、暗黙引数の場合でも明示的に値を渡せることに"
-"は変わりないのです。"
+"潜在的に推論可能な引数を関数に渡す際、暗黙的にすべきか明示的にすべきか決定す"
+"ることは、その引数が実際どれほどIdrisによって推論可能*である*のかということな"
+"のです。その関数の両方の版があると便利なことさえあるでしょう。ただし覚えてお"
+"いてほしいのですが、暗黙引数の場合でも明示的に値を渡せることには変わりないの"
+"です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:821

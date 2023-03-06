@@ -453,7 +453,7 @@ showReadColType Float   = Refl
 例えば以下では`Maybe`に同値関手則を証明しようとしています。
 
 ```idris
-mapMaybeId1 : (ma : Maybe a) -> map id ma = ma
+mapMaybeId1 : (ma : Maybe a) -> map Prelude.id ma = ma
 mapMaybeId1 Nothing  = Refl
 mapMaybeId1 (Just x) = ?mapMaybeId1_rhs
 ```
@@ -892,24 +892,23 @@ rewriteVect as = rewrite sym (addZeroRight n) in as
 
 
 ```repl
-reverseOnto' : Vect m a -> Vect n a -> Vect (m + n) a
-reverseOnto' xs []        = xs
-reverseOnto' xs (x :: ys) = reverseOnto' (x :: xs) ys
+revOnto' : Vect m a -> Vect n a -> Vect (m + n) a
+revOnto' xs []        = xs
+revOnto' xs (x :: ys) = revOnto' (x :: xs) ys
 
 
 reverseVect' : Vect n a -> Vect n a
-reverseVect' = reverseOnto' []
+reverseVect' = revOnto' []
 ```
 
-推測されたかもしれませんがこれは`reverseOnto'`の2つの節の長さ指標が統
-合しないためコンパイルされません。
+お分かりかもしれませんが、これは`revOnto'`の2つの節の長さの指標が統合しないためコンパイルされません。
 
 *nil*の場合は上で既に見た場合です。ここでは`n`がゼロですが、それは2つ
  目のベクタが空であり、Idrisを再び`m + 0 = m`だと説得せねばなりません。
 
 ```idris
-reverseOnto : Vect m a -> Vect n a -> Vect (m + n) a
-reverseOnto xs [] = rewrite addZeroRight m in xs
+revOnto : Vect m a -> Vect n a -> Vect (m + n) a
+revOnto xs [] = rewrite addZeroRight m in xs
 ```
 
 2つ目の場合はより複雑です。ここでIdrisは`S (m + len)`と`m + S len`を統
@@ -924,19 +923,12 @@ Data.Nat.plusSuccRightSucc :  (left : Nat)
                            -> S (left + right) = left + S right
 ```
 
-ここでは`S (m + len)`を`m + S len`で置き換えたいので、引数が入れ替わっ
-たバージョンが必要です。しかしもう1つ障害物があります。
-`plusSuccRightSucc`を`reverseOnto`の暗黙の関数引数として与えられていな
-い`ys`の長さで呼び出す必要があるのです。したがって`n`（2つ目のベクタの
-長さ）でパターン照合する必要がありますが、これは尾鰭の長さを変数に束縛
-するためです。覚えておいてほしいのは、使われている構築子が別の消去され
-ていない引数での照合に従っているときにのみ、消去された引数でパターン照
-合することができるということです（この場合`ys`があたります）。以下は2
-つ目の場合の実装です。
+ここでは`S (m + len)`を`m + S
+len`で置き換えたいので、引数が入れ替わったバージョンが必要です。しかしもう1つ障害物があります。`plusSuccRightSucc`を`ys`の長さ付きで呼び出す必要があるのですが、この`ys`は`revOnto`の暗黙の関数引数として与えられていないのです。したがって`n`（2つ目のベクタの長さ）でパターン照合する必要がありますが、これは尾鰭の長さを変数に束縛するためです。覚えておいてほしいのは、使われている構築子が別の消去されていない引数での照合に従うときにのみ、消去された引数でパターン照合することができるということです（この場合`ys`がそれにあたります）。以下は2つ目の場合の実装です。
 
 ```idris
-reverseOnto {n = S len} xs (x :: ys) =
-  rewrite sym (plusSuccRightSucc m len) in reverseOnto (x :: xs) ys
+revOnto {n = S len} xs (x :: ys) =
+  rewrite sym (plusSuccRightSucc m len) in revOnto (x :: xs) ys
 ```
 
 私自身の経験からこれは最初のうち相当に混乱するものだと知っています。も
