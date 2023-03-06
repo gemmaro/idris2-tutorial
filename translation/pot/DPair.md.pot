@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) YEAR Stefan Höck
 # This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2022-10-20 20:24+0900\n"
+"POT-Creation-Date: 2023-03-06 20:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1379,10 +1379,10 @@ msgid ""
 "order to figure out what can possibly go wrong, we first need to decide on "
 "how the commands should be entered.  Here, we use a single keyword for each "
 "command, together with an optional number of arguments separated from the "
-"keyword by a single space character. For instance: `\"new i64,boolean,str,"
-"str\"`, for initializing an empty table with a new schema. With this "
-"settled, here is a list of things that can go wrong, and the messages we'd "
-"like to print:"
+"keyword by a single space character. For instance: `\"new i64,boolean,str,str"
+"\"`, for initializing an empty table with a new schema. With this settled, "
+"here is a list of things that can go wrong, and the messages we'd like to "
+"print:"
 msgstr ""
 
 #. type: Bullet: '* '

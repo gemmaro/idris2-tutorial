@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) YEAR Stefan Höck
 # This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2022-10-20 20:24+0900\n"
+"POT-Creation-Date: 2023-03-06 20:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -724,8 +724,8 @@ msgid ""
 "number `n` (about which I know *nothing* at runtime, since it has quantity "
 "zero), given a value of type `a`, I'll give you a vector holding exactly `n` "
 "elements of type `a`. This is like saying: \"Think about a natural number "
-"`n`, and I'll give you `n` apples without you telling me the value of "
-"`n`\".  Idris is powerful, but it is not a clairvoyant."
+"`n`, and I'll give you `n` apples without you telling me the value of `n`"
+"\".  Idris is powerful, but it is not a clairvoyant."
 msgstr ""
 
 #. type: Plain text

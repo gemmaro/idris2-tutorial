@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-10-20 20:24+0900\n"
-"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial\n"
+"POT-Creation-Date: 2022-11-20 12:40+0900\n"
+"PO-Revision-Date: 2023-03-06 20:43+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -76,7 +76,7 @@ msgstr "そしてREPLで次のようにします。"
 #: ../src/Tutorial/Prim.md:1
 #, no-wrap
 msgid "Primitives"
-msgstr ""
+msgstr "原始型"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:7
@@ -86,6 +86,10 @@ msgid ""
 "never really explained how they work and where they come from, nor did I "
 "show in detail what we can and can't do with them."
 msgstr ""
+"これまで押さえてきた話題ではほとんど一度もIdrisの原始型についてお話し\n"
+"してきませんでした。空気のようにそこにあって、いくつかの計算で使いまし\n"
+"たが、その仕組みや出自について本当に説明しませんでしたし、それらについ\n"
+"て何ができ何ができないかを詳しく示しませんでした。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:8
@@ -107,25 +111,15 @@ msgstr ""
 
 #. type: Title ##
 #: ../src/Tutorial/Prim.md:17
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "How Primitives are Implemented"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`IO`はどのように実装されているのか\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "原始型はどのように実装されているのか"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:19
 #, no-wrap
 msgid "A Short Note on Backends"
-msgstr ""
+msgstr "バックエンドについての短い補足"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:30
@@ -138,6 +132,14 @@ msgid ""
 "code is then parsed and interpreted by a Chez Scheme interpreter, which must "
 "be installed on the computers we use to run compiled Idris programs."
 msgstr ""
+"[Wikipedia](https://en.wikipedia.org/wiki/Compiler)によると、コンパイ\n"
+"ラは「あるプログラミング言語（ソース言語）で書かれたコンピュータのコー\n"
+"ドを別の言語（対象言語）に翻訳するコンピュータプログラム」です。Idris\n"
+"コンパイラはまさしくその通りです。Idrisで書かれたプログラムをChez\n"
+"Schemeで書かれたプログラムに翻訳するプログラムですから。このSchemeコー\n"
+"ドはそれからChez Schemeインタプリタによって構文解析され解釈されます。\n"
+"このインタプリタはコンパイルされたIdrisプログラムを走らせるのに使うコ\n"
+"ンピュータ上にインストールしなければなりません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:37
@@ -149,12 +151,19 @@ msgid ""
 "specify the backend to use with the `--cg` command line argument (`cg` "
 "stands for *code generator*). For instance:"
 msgstr ""
+"しかしそれは氷山の一角です。Idris 2は当初より様々なコード生成器（いわ\n"
+"ゆる*バックエンド*）に対応するよう設計されており、このバックエンドのお\n"
+"陰で様々なプラットフォームを対象とするIdrisコードを書くことができ、\n"
+"Idrisをインストールするといくつかの追加のバックエンド付属して使えるよ\n"
+"うになっています。使うバックエンドを`--cg`コマンドライン引数（`cg`は\n"
+"*コード生成器*を表しています）を使って指定することができます。例えば以\n"
+"下の通り。"
 
 #. type: Fenced code block (sh)
 #: ../src/Tutorial/Prim.md:38
 #, no-wrap
 msgid "idris2 --cg racket\n"
-msgstr ""
+msgstr "idris2 --cg racket\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:45
@@ -163,6 +172,8 @@ msgid ""
 "Idris installation (the name to be used in the command line argument is "
 "given in parentheses):"
 msgstr ""
+"以下は標準的なIdrisのインストールで手に入るバックエンドの非網羅的な一\n"
+"覧です（コマンドライン引数で使われる名前は括弧内に与えられています）："
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:54
@@ -171,11 +182,14 @@ msgid ""
 "programming language, which can be useful to use when Chez Scheme is not "
 "available on your operating system."
 msgstr ""
+"Racket Scheme (`racket`): これはSchemeプログラミング言語の別のフレーバー\n"
+"であり、オペレーティングシステムでChez Schemeが使えないときに便利かも\n"
+"しれません。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:54
 msgid "Node.js (`node`): This converts an Idris program to JavaScript."
-msgstr ""
+msgstr "Node.js (`node`): これはIdrisプログラムをJavaScriptに変換します。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:54
@@ -183,6 +197,8 @@ msgid ""
 "Browser (`javascript`): Another JavaScript backend which allows you to write "
 "web applications which run in the browser in Idris."
 msgstr ""
+"ブラウザ (`javascript`): ブラウザの上で走るWebアプリケーションをIdris\n"
+"で書くことができるようにする別のJavaScriptバックエンドです。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:54
@@ -190,6 +206,8 @@ msgid ""
 "RefC (`refc`): A backend compiling Idris to C code, which is then further "
 "compiled by a C compiler."
 msgstr ""
+"RefC (`refc`): IdrisをCのコードにコンパイルするバックエンドで、そこか\n"
+"ら更にCコンパイラによってコンパイルされます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:57
@@ -197,6 +215,9 @@ msgid ""
 "I plan to at least cover the JavaScript backends in some more detail in "
 "another part of this Idris guide, as I use them pretty often myself."
 msgstr ""
+"少なくともJavaScriptバックエンドについてはこのIdrisの手引きの別の部で\n"
+"もう少し詳細に押さえる予定です。というのも私自身かなり頻繁に使うからで\n"
+"す。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:62
@@ -207,6 +228,12 @@ msgid ""
 "(https://github.com/idris-lang/Idris2/wiki/1-%5BLanguage%5D-External-"
 "backends)."
 msgstr ""
+"Idrisプロジェクトによって公式に対応していない外部のバックエンドもいく\n"
+"つかあります。その中にはIdrisコードをJavaやPythonにコンパイルするバッ\n"
+"クエンドもあります。外部バックエンドの一覧は[Idris\n"
+"Wiki](https://github.com/idris-lang/Idris2/wiki/1-%5BLanguage%5D-External-"
+"backends)\n"
+"で見ることができます。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:63
@@ -222,82 +249,85 @@ msgid ""
 "calculations on the primitives. You will therefore not find a definition of "
 "a primitive type or function in the source code of the *Prelude*."
 msgstr ""
+"*原始データ型*はIdrisコンパイラに*原始関数*と共に組込まれている型です。\n"
+"原始関数は原始型に関する計算を行うために使われます。したがって原始型や\n"
+"原始関数の定義は*Prelude*のソースコードには見付かりません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:71
 msgid "Here is again the list of primitive types in Idris:"
-msgstr ""
+msgstr "以下に再びIdrisの原始型の一覧を示します："
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
 msgid "Signed, fixed precision integers:"
-msgstr ""
+msgstr "符号付き、固定精度整数："
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Int8`: Integer in the range [-128,127]"
-msgstr ""
+msgstr "`Int8`: 範囲 [-128,127] 中の整数"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Int16`: Integer in the range [-32768,32767]"
-msgstr ""
+msgstr "`Int16`: 範囲 [-32768,32767] 中の整数"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Int32`: Integer in the range [-2147483648,2147483647]"
-msgstr ""
+msgstr "`Int32`: 範囲 [-2147483648,2147483647] 中の整数"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid ""
 "`Int64`: Integer in the range [-9223372036854775808,9223372036854775807]"
-msgstr ""
+msgstr "`Int64`: 範囲 [-9223372036854775808,9223372036854775807] 中の整数"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
 msgid "Unsigned, fixed precision integers:"
-msgstr ""
+msgstr "符号なし、固定精度整数："
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Bits8`: Integer in the range [0,255]"
-msgstr ""
+msgstr "`Bits8`: 範囲 [0,255] 中の整数"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Bits16`: Integer in the range [0,65535]"
-msgstr ""
+msgstr "`Bits16`: 範囲 [0,65535] 中の整数"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Bits32`: Integer in the range [0,4294967295]"
-msgstr ""
+msgstr "`Bits32`: 範囲 [0,4294967295] 中の整数"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Bits64`: Integer in the range [0,18446744073709551615]"
-msgstr ""
+msgstr "`Bits64`: 範囲 [0,18446744073709551615] 中の整数"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Integer`: A signed, arbitrary precision integer."
-msgstr ""
+msgstr "`Integer`: 符号あり、任意精度整数。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Double`: A double precision (64 bit) floating point number."
-msgstr ""
+msgstr "`Double`: 倍精度（64bit）浮動小数点数。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
 msgid "`Char`: A unicode character."
-msgstr ""
+msgstr "`Char`: Unicode文字。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
 msgid "`String`: A sequence of unicode characters."
-msgstr ""
+msgstr "`String`: Unicode文字の並び。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:98
@@ -306,6 +336,9 @@ msgid ""
 "about this when I showed you how `IO` is implemented.  Most of the time, you "
 "will not handle values of this type in your own code."
 msgstr ""
+"`%World`: 現在の世界の状態の象徴的な表現。これについてはどのように\n"
+"`IO`が実装されているかを示した際に学びました。ほとんどの場合、手元のコー\n"
+"ドでこの型の値を扱うことはないでしょう。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:98
@@ -320,6 +353,13 @@ msgid ""
 "   with very few guarantees, and you should use one of the well\n"
 "   specified integer types listed above whenever possible.\n"
 msgstr ""
+"* `Int`: これは特別です。固定精度で、符号付きの整数ですが、ビットの大\n"
+"   きさは使っているバックエンドと（恐らく）プラットフォームに依存しま\n"
+"   す。例えば既定のChez Schemeバックエンドを使っているなら、`Int`は64\n"
+"   ビット符号付き整数ですが、JavaScriptバックエンドでは効率上の理由か\n"
+"   ら32ビット符号付き整数です。したがって`Int`についてくるのはかなり少\n"
+"   ない保証であり、可能な限り上に挙げた充分に指定された整数型のうち1つ\n"
+"   を使うべきです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:104
@@ -330,6 +370,10 @@ msgid ""
 "and the primitive types are the constant constructors of data type `Core.TT."
 "Constant`."
 msgstr ""
+"コンパイラのソースコードのどこに原始型と原始関数が定義されているかを知\n"
+"るとわかりやすいかもしれません。このソースコードは[Idrisプロジェク\n"
+"ト](https://github.com/idris-lang/Idris2)の`src`フォルダに見付かり、原\n"
+"始型はデータ型`Core.TT.Constant`の定数構築子です。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:105
@@ -345,6 +389,10 @@ msgid ""
 "by programmers via the foreign function interface (FFI), about which I'll "
 "talk in another chapter."
 msgstr ""
+"原始型を操作する全ての計算は2種類の原始関数に基づいています。一方はコ\n"
+"ンパイラに組込まれているもの（後述）で、もう一方はプログラマが異邦関数\n"
+"インターフェース（FFI）を介して定義したものです。これについては別の章\n"
+"でお話しするつもりです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:119
@@ -356,6 +404,11 @@ msgid ""
 "but via functions and interfaces exported by the *Prelude* or the *base* "
 "library."
 msgstr ""
+"組み込みの原始関数はコンパイラに知られている関数で、その定義は\n"
+"*Prelude*には見付けられません。これらの関数は原始型用に使える中核の機\n"
+"能を定義します。大抵の場合直接呼び出すことはないですが（とはいえほとん\n"
+"どの場合そうしても完全に問題ありません）、普通は*Prelude*や*base*ライ\n"
+"ブラリが輸出する関数とインターフェースを介して呼び出されます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:123
@@ -364,6 +417,8 @@ msgid ""
 "integers is `prim__add_Bits8`. You can inspect its type and behavior at the "
 "REPL:"
 msgstr ""
+"例えば2つの8ビット符号無し整数を加える原始関数は`prim__add_Bits8`です。\n"
+"REPLで型と振舞いを調べられます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:124
@@ -374,6 +429,10 @@ msgid ""
 "Tutorial.Prim> prim__add_Bits8 12 100\n"
 "112\n"
 msgstr ""
+"Tutorial.Prim> :t prim__add_Bits8\n"
+"prim__add_Bits8 : Bits8 -> Bits8 -> Bits8\n"
+"Tutorial.Prim> prim__add_Bits8 12 100\n"
+"112\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:148
@@ -381,8 +440,8 @@ msgid ""
 "If you look at the source code implementing interface `Num` for `Bits8`, you "
 "will see that the plus operator just invokes `prim__add_Bits8` internally. "
 "The same goes for most of the other functions in primitive interface "
-"implementations.  For instance, every primitive type with the exception of "
-"`%World` comes with primitive comparison functions.  For `Bits8`, these are: "
+"implementations.  For instance, every primitive type with the exception of `"
+"%World` comes with primitive comparison functions.  For `Bits8`, these are: "
 "`prim__eq_Bits8`, `prim__gt_Bits8`, `prim__lt_Bits8`, `prim__gte_Bits8`, and "
 "`prim__lte_Bits8`.  Note, that these functions do not return a `Bool` (which "
 "is *not* a primitive type in Idris), but an `Int`. They are therefore not as "
@@ -392,6 +451,17 @@ msgid ""
 "performance critical code (which you can only identify after some serious "
 "profiling)."
 msgstr ""
+"`Bits8`にインターフェース`Num`を実装するソースコードを見ると、和演算子\n"
+"は内部的には単に`prim__add_Bits8`を呼び出しているだけだとわかるでしょ\n"
+"う。同じことがほとんどの原始インターフェース実装中の他の関数にも言えま\n"
+"す。例えば`%World`を除く全ての原始型には原始比較関数が付属しています。\n"
+"`Bits8`には`prim__eq_Bits8`、`prim__gt_Bits8`、`prim__lt_Bits8`、\n"
+"`prim__gte_Bits8`、`prim__lte_Bits8`といった具合です。なお、これらの関\n"
+"数は`Bool`（Idrisでの原始型では*ありません*）ではなく`Int`を返します。\n"
+"したがってこれらの関数は`Eq`や`Comp`といったインターフェースの対応する\n"
+"演算子の実装ほどには使うのに安全でも便利でもありません。他方で`Bool`へ\n"
+"の変換を介さないために効率が重大なコード（真面目なプロファイリングの後\n"
+"にのみ問題を特定できる）では僅かに良いかもしれません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:152
@@ -400,12 +470,15 @@ msgid ""
 "in a data type (`Core.TT.PrimFn`) in the compiler sources. We will look at "
 "most of these in the following sections."
 msgstr ""
+"原始型に関しては、原始型はコンパイラのソースのデータ型\n"
+"(`Core.TT.PrimFn`) 中の構築子として挙げられています。そのほとんどを以\n"
+"下の節で見ていきます。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:153
 #, no-wrap
 msgid "Consequences of being Primitive"
-msgstr ""
+msgstr "原始型であることの帰結"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:163
@@ -418,66 +491,26 @@ msgid ""
 "in the recursive call must be converging towards the base case (unless there "
 "is a bug in the backend we use), but the compiler does not:"
 msgstr ""
+"原始関数と原始型はコンパイラにとってほとんどの点で不透明です。これらは\n"
+"それぞれのバックエンドで個別に定義し実装されなくてはならず、したがって\n"
+"コンパイラは原始型の値の内部構造についても原始関数の内部の仕組みについ\n"
+"ても何も知らないのです。例えば以下の再帰関数について、*私達*は再帰呼び\n"
+"出し中の引数が基底の場合に（使っているバックエンドにバグがない限り）収\n"
+"束することを知っていますが、コンパイラはそうではありません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:164
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "covering\n"
 "replicateBits8' : Bits8 -> a -> List a\n"
 "replicateBits8' 0 _ = []\n"
 "replicateBits8' n v = v :: replicateBits8' (n - 1) v\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicateVect : (n : Nat) -> a -> Vect n a\n"
-"replicateVect 0     _ = []\n"
-"replicateVect (S k) x = x :: replicateVect k x\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate'' : {n : _} -> a -> Vect n a\n"
-"replicate'' {n = Z}   _ = Nil\n"
-"replicate'' {n = S _} v = v :: replicate'' v\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "covering\n"
-"replicatePrim : Bits32 -> a -> List a\n"
-"replicatePrim 0 v = []\n"
-"replicatePrim x v = v :: replicatePrim (x - 1) v\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate'' : {n : _} -> a -> Vect n a\n"
-"replicate'' {n = Z}   _ = Nil\n"
-"replicate'' {n = S _} v = v :: replicate'' v\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"replicateBits8' : Bits8 -> a -> List a\n"
+"replicateBits8' 0 _ = []\n"
+"replicateBits8' n v = v :: replicateBits8' (n - 1) v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:174
@@ -486,64 +519,20 @@ msgid ""
 "or we use `assert_smaller` to convince the totality checker (the preferred "
 "way):"
 msgstr ""
+"こうした場合単に*covering*関数として済ますか、`assert_smaller`を使って\n"
+"全域性検査器を説得するか（こちらが好ましい方法です）の2択です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:175
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "replicateBits8 : Bits8 -> a -> List a\n"
 "replicateBits8 0 _ = []\n"
 "replicateBits8 n v = v :: replicateBits8 (assert_smaller n $ n - 1) v\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicateVect : (n : Nat) -> a -> Vect n a\n"
-"replicateVect 0     _ = []\n"
-"replicateVect (S k) x = x :: replicateVect k x\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate'' : {n : _} -> a -> Vect n a\n"
-"replicate'' {n = Z}   _ = Nil\n"
-"replicate'' {n = S _} v = v :: replicate'' v\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicatePrim' : Bits32 -> a -> List a\n"
-"replicatePrim' 0 v = []\n"
-"replicatePrim' x v = v :: replicatePrim' (assert_smaller x $ x - 1) v\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"replicate'' : {n : _} -> a -> Vect n a\n"
-"replicate'' {n = Z}   _ = Nil\n"
-"replicate'' {n = S _} v = v :: replicate'' v\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"replicateBits8 : Bits8 -> a -> List a\n"
+"replicateBits8 0 _ = []\n"
+"replicateBits8 n v = v :: replicateBits8 (assert_smaller n $ n - 1) v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:184
@@ -552,6 +541,9 @@ msgid ""
 "extra careful in making sure that the new function argument is indeed "
 "smaller with relation to the base case."
 msgstr ""
+"以前`assert_smaller`を使う危険性を示したので、新しい関数引数が確かに基\n"
+"底の場合との関係としてより小さいものであることを確かめるのに特に注意が\n"
+"必要です。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:189
@@ -561,6 +553,10 @@ msgid ""
 "when fed with values known at compile time. For instance, we can trivially "
 "proof that for `Bits8` the following equation holds:"
 msgstr ""
+"Idrisは原始型と関連する関数の内部の仕組みを何もしりませんが、そうはいっ\n"
+"てもコンパイル時に知っている値が与えられているときはこれらの関数のほと\n"
+"んどは評価の最中に簡約します。例えば`Bits8`についての以下の等式が満た\n"
+"されることの自明な証明を行えます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:190
@@ -569,6 +565,8 @@ msgid ""
 "zeroBits8 : the Bits8 0 = 255 + 1\n"
 "zeroBits8 = Refl\n"
 msgstr ""
+"zeroBits8 : the Bits8 0 = 255 + 1\n"
+"zeroBits8 = Refl\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:200
@@ -579,43 +577,20 @@ msgid ""
 "demonstrate this. Assume we'd like to wrap a list in a data type indexed by "
 "the list's length:"
 msgstr ""
+"原始型の内部構造についても原始関数の実装についても何の手掛かりもないた\n"
+"めに、Idrisはそのような関数や値の*一般的な*性質については何も証明の助\n"
+"けになりません。以下はこれを実演する例です。リストの長さによって指標付\n"
+"けられたデータ型の中にリストを包みたいとします。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:201
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "data LenList : (n : Nat) -> Type -> Type where\n"
 "  MkLenList : (as : List a) -> LenList (length as) a\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
-"     Nil  : List01 False a\n"
-"     (::) : a -> List01 False a -> List01 ne a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   data List01 : (nonEmpty : Bool) -> Type -> Type where\n"
-"     Nil  : List01 False a\n"
-"     (::) : a -> List01 False a -> List01 ne a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Dependent.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"data Vect : (len : Nat) -> (a : Type) -> Type where\n"
-"  Nil  : Vect 0 a\n"
-"  (::) : (x : a) -> (xs : Vect n a) -> Vect (S n) a\n"
-"#-#-#-#-#  Eq.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"data LenList : (n : Nat) -> Type -> Type where\n"
+"  MkLenList : (as : List a) -> LenList (length as) a\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:209
@@ -624,6 +599,9 @@ msgid ""
 "That's how list concatenation affects the length of lists. We can safely "
 "teach Idris that this is true:"
 msgstr ""
+"2つの`LenList`を結合するとき、長さの指標は加算されます。それがリストの\n"
+"結合がリストの長さに影響するところです。このことが正しいことを安全に\n"
+"Idrisに教えられます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:210
@@ -640,7 +618,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:217
 msgid "With the above lemma, we can implement concatenation of `LenList`:"
-msgstr ""
+msgstr "上の補題があれば`LenList`の結合を実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:218
@@ -650,6 +628,9 @@ msgid ""
 "MkLenList xs ++ MkLenList ys =\n"
 "  rewrite concatLen xs ys in MkLenList (xs ++ ys)\n"
 msgstr ""
+"(++) : LenList m a -> LenList n a -> LenList (m + n) a\n"
+"MkLenList xs ++ MkLenList ys =\n"
+"  rewrite concatLen xs ys in MkLenList (xs ++ ys)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:231
@@ -661,30 +642,35 @@ msgid ""
 "these things right.  There is no way to implement and thus proof the "
 "following lemma in a safe way:"
 msgstr ""
+"同じことは文字列についてはできません。文字列を長さと対にすることが便利\n"
+"であるような利用法（例えば構文解析中に文字列が厳密に短かくなっていき、\n"
+"したがって結局は全体が消費されることを確かめたいなど）がありますが、\n"
+"Idrisはこうしたことを正しくするための助けには入れません。以下の補題を\n"
+"安全な方法で実装する方法はなく、故に証明することもできません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:232
 #, no-wrap
 msgid "0 concatLenStr : (a,b : String) -> length a + length b = length (a ++ b)\n"
-msgstr ""
+msgstr "0 concatLenStr : (a,b : String) -> length a + length b = length (a ++ b)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:237
 #, no-wrap
 msgid "<!-- markdownlint-disable MD026 -->\n"
-msgstr ""
+msgstr "<!-- markdownlint-disable MD026 -->\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:237
 #, no-wrap
 msgid "Believe Me!"
-msgstr ""
+msgstr "信じてくれ！"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:239
 #, no-wrap
 msgid "<!-- markdownlint-enable MD026 -->\n"
-msgstr ""
+msgstr "<!-- markdownlint-enable MD026 -->\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:245
@@ -695,12 +681,16 @@ msgid ""
 "other type.  Needless to say, this is only safe if we *really* know what we "
 "are doing:"
 msgstr ""
+"`concatLenStr`を実装するには全ての安全性を抛ち、型強制という10トン破砕\n"
+"球を使わねばなりません。それが`believe_me`です。この原始関数があれば自\n"
+"由にあらゆる型の値を別のあらゆる型の値に強制することができます。言わず\n"
+"もがな、何をしているのかを*本当に*分かっているときにのみ安全です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:246
 #, no-wrap
 msgid "concatLenStr a b = believe_me $ Refl {x = length a + length b}\n"
-msgstr ""
+msgstr "concatLenStr a b = believe_me $ Refl {x = length a + length b}\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:257
@@ -712,6 +702,12 @@ msgid ""
 "`believe_me` anyway, but I consider it to be good practice to assign one of "
 "the two sides of the equality to make our intention clear."
 msgstr ""
+"`{x = length a + length b}`にある変数`x`への明示的な代入は必要です。な\n"
+"ぜならそうでないとIdrisは*未解決の穴開き*について不平を言うからです。\n"
+"`Refl`構築子中の変数`x`の型を推論できないのです。何にせよ結果を\n"
+"`believe_me`に渡しているので、ここではどんな型を`x`に代入することもで\n"
+"きますが、等式の両端のうち1つを代入するのが意図を明確にする上で良い習\n"
+"慣であると考えます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:262
@@ -720,6 +716,9 @@ msgid ""
 "even the most basic properties for it to hold.  For instance, we might act "
 "under the delusion that floating point addition is associative:"
 msgstr ""
+"原始型の複雑度が高くなればなるほど、それが満たすほとんどの基礎的な性質\n"
+"さえ推定するのが危険になります。例えば浮動小数点数の加算が結合的である\n"
+"という思い違いを起こすかもしれません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:263
@@ -728,12 +727,14 @@ msgid ""
 "0 doubleAddAssoc : (x,y,z : Double) -> x + (y + z) = (x + y) + z\n"
 "doubleAddAssoc x y z = believe_me $ Refl {x = x + (y + z)}\n"
 msgstr ""
+"0 doubleAddAssoc : (x,y,z : Double) -> x + (y + z) = (x + y) + z\n"
+"doubleAddAssoc x y z = believe_me $ Refl {x = x + (y + z)}\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:270
 msgid ""
 "Well, guess what: That's a lie. And lies lead us straight into the `Void`:"
-msgstr ""
+msgstr "ああ、そのことだが。あれは嘘だ。で、嘘をつくと`Void`へまっしぐら。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:271
@@ -751,6 +752,17 @@ msgid ""
 "boom : Void\n"
 "boom = wrong (doubleAddAssoc One Tiny Tiny)\n"
 msgstr ""
+"Tiny : Double\n"
+"Tiny = 0.0000000000000001\n"
+"\n"
+"One : Double\n"
+"One = 1.0\n"
+"\n"
+"wrong : (0 _ : 1.0000000000000002 = 1.0) -> Void\n"
+"wrong Refl impossible\n"
+"\n"
+"boom : Void\n"
+"boom = wrong (doubleAddAssoc One Tiny Tiny)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:291
@@ -761,22 +773,18 @@ msgid ""
 "Tiny` equals `1.0`.  We can therefore pass our (wrong) proof to `wrong`, "
 "because it is of the correct type, and from this follows a proof of `Void`."
 msgstr ""
+"上のコードで起こっていることは次の通りです。`doubleAddAssoc`を呼び出す\n"
+"と`One + (Tiny + Tiny)`が`(One + Tiny) + Tiny`に等しいという証明を返し\n"
+"ます。しかし`One + (Tiny + Tiny)`は`1.0000000000000002`に等しいのです\n"
+"が、`(One + Tiny) + Tiny`は`1.0`に等しいのです。したがって（誤った）証\n"
+"明を`wrong`に渡せてしまい、正しい型ではあるので、そこから`Void`の証明\n"
+"に至ったというわけです。"
 
 #. type: Title ##
 #: ../src/Tutorial/Prim.md:292
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Working with Strings"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"ファイルを取り回す\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "文字列を取り回す"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:297
@@ -785,42 +793,45 @@ msgid ""
 "with strings. All these are based on the following primitive operations "
 "built into the compiler:"
 msgstr ""
+"*base*のモジュール`Data.String`は文字列を取り回す関数を豊富に取り揃え\n"
+"ています。これら全てはコンパイラに組込まれている以下の原始的な操作を土\n"
+"台としています。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid "`prim__strLength`: Returns the length of a string."
-msgstr ""
+msgstr "`prim__strLength`: 文字列長を返す。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid "`prim__strHead`: Extracts the first character from a string."
-msgstr ""
+msgstr "`prim__strHead`: 文字列から最初の文字を取り出す。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid "`prim__strTail`: Removes the first character from a string."
-msgstr ""
+msgstr "`prim__strTail`: 文字列から最初の文字を除く。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid "`prim__strCons`: Prepends a character to a string."
-msgstr ""
+msgstr "`prim__strCons`: 文字を文字列に前置する。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid "`prim__strAppend`: Appends two strings."
-msgstr ""
+msgstr "`prim__strAppend`: 2つの文字列を結合する。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid ""
 "`prim__strIndex`: Extracts a character at the given position from a string."
-msgstr ""
+msgstr "`prim__strIndex`: 文字列から与えられた位置での文字を取り出す。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:305
 msgid "`prim__strSubstr`: Extracts the substring between the given positions."
-msgstr ""
+msgstr "`prim__strSubstr`: 与えられた位置間の部分文字列を取り出す。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:311
@@ -831,6 +842,11 @@ msgid ""
 "primitive function by compiling and running the corresponding program, this "
 "program will crash with an error:"
 msgstr ""
+"言わずもがなですが、これらの関数全てが全域というわけではありません。し\n"
+"たがってIdrisは不当な呼び出しがコンパイル時に簡約されないことを確かめ\n"
+"ます。そうしなければコンパイラがクラッシュするからです。しかしもし対応\n"
+"するプログラムをコンパイルし走らせることで部分的な原始関数の評価を強制\n"
+"すれば、このプログラムはエラーと共にクラッシュします。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:312
@@ -841,6 +857,10 @@ msgid ""
 "Tutorial.Prim> :exec putStrLn (prim__strTail \"\")\n"
 "Exception in substring: 1 and 0 are not valid start/end indices for \"\"\n"
 msgstr ""
+"Tutorial.Prim> prim__strTail \"\"\n"
+"prim__strTail \"\"\n"
+"Tutorial.Prim> :exec putStrLn (prim__strTail \"\")\n"
+"Exception in substring: 1 and 0 are not valid start/end indices for \"\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:323
@@ -849,6 +869,9 @@ msgid ""
 "expression leads to a runtime exception if we compile and execute the "
 "program. Valid calls to `prim__strTail` are reduced just fine, however:"
 msgstr ""
+"`prim__strTail \"\"`はREPLでは簡約されず、一方で同じ式をコンパイルしてプ\n"
+"ログラムを実行すると実行時例外になることに注目してください。しかし\n"
+"`prim__strTail`の妥当な呼び出しは正常に簡約されます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:324
@@ -857,12 +880,14 @@ msgid ""
 "tailExample : prim__strTail \"foo\" = \"oo\"\n"
 "tailExample = Refl\n"
 msgstr ""
+"tailExample : prim__strTail \"foo\" = \"oo\"\n"
+"tailExample = Refl\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:329
 #, no-wrap
 msgid "Pack and Unpack"
-msgstr ""
+msgstr "詰め込んだり荷解きしたり"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:339
@@ -874,16 +899,17 @@ msgid ""
 "most efficient thing to do, but unless you plan to handle very large amounts "
 "of text, they work and perform reasonably well."
 msgstr ""
+"文字列を取り回す上で最重要の関数のうち2つは`unpack`と`pack`です。これ\n"
+"らは文字列を文字のリストに変換したりその逆をしたりします。これにより文\n"
+"字のリスト上を巡回したり畳み込んだりすることにより多くの文字列操作を便\n"
+"利に実装できます。これは最も効率のよいことであるとは限りませんが、とて\n"
+"も大量のテキストを扱う予定があるのでなければそれなりに効率良く動きます。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:340
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "String Interpolation"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"情報を得る\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "文字列内挿"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:345
@@ -892,6 +918,9 @@ msgid ""
 "by wrapping them in curly braces, the first of which has to be escaped with "
 "a backslash. For instance:"
 msgstr ""
+"Idrisでは丸括弧で包むことで任意の文字列式を文字列表記内に含められます。\n"
+"開括弧はバックスラッシュでエスケープされていなくてはなりません。\n"
+"例えば以下です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:346
@@ -900,6 +929,8 @@ msgid ""
 "interpEx1 : Bits64 -> Bits64 -> String\n"
 "interpEx1 x y = \"\\{show x} + \\{show y} = \\{show $ x + y}\"\n"
 msgstr ""
+"interpEx1 : Bits64 -> Bits64 -> String\n"
+"interpEx1 x y = \"\\{show x} + \\{show y} = \\{show $ x + y}\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:356
@@ -909,6 +940,9 @@ msgid ""
 "allows us to use values in interpolated strings without having to convert "
 "them to strings first:"
 msgstr ""
+"これは異なる型の値から複雑な文字列を組み合わせるおに大変便利な方法です。\n"
+"加えてインターフェース`Interpolation`もあります。\n"
+"これにより最初に文字列に変換することなく内挿される文字列で値を使えます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:357
@@ -939,12 +973,36 @@ msgid ""
 "ethanol : String\n"
 "ethanol = \"The formulat of ethanol is: \\{[(C,2),(H,6),(O, the Nat 1)]}\"\n"
 msgstr ""
+"data Element = H | He | C | N | O | F | Ne\n"
+"\n"
+"Formula : Type\n"
+"Formula = List (Element,Nat)\n"
+"\n"
+"Interpolation Element where\n"
+"  interpolate H  = \"H\"\n"
+"  interpolate He = \"He\"\n"
+"  interpolate C  = \"C\"\n"
+"  interpolate N  = \"N\"\n"
+"  interpolate O  = \"O\"\n"
+"  interpolate F  = \"F\"\n"
+"  interpolate Ne = \"Ne\"\n"
+"\n"
+"Interpolation (Element,Nat) where\n"
+"  interpolate (_, 0) = \"\"\n"
+"  interpolate (x, 1) = \"\\{x}\"\n"
+"  interpolate (x, k) = \"\\{x}\\{show k}\"\n"
+"\n"
+"Interpolation Formula where\n"
+"  interpolate = foldMap interpolate\n"
+"\n"
+"ethanol : String\n"
+"ethanol = \"The formulat of ethanol is: \\{[(C,2),(H,6),(O, the Nat 1)]}\"\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:384
 #, no-wrap
 msgid "Raw and Multiline String Literals"
-msgstr ""
+msgstr "素地や複数行の文字列表記"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:388
@@ -952,6 +1010,8 @@ msgid ""
 "In string literals, we have to escape certain characters like quotes, "
 "backslashes or new line characters. For instance:"
 msgstr ""
+"文字列表記では引用符やバックスラッシュや改行文字のような特定の文字をエ\n"
+"スケープせねばなりません。例えば次の通りです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:389
@@ -960,6 +1020,8 @@ msgid ""
 "escapeExample : String\n"
 "escapeExample = \"A quote: \\\". \\nThis is on a new line.\\nA backslash: \\\\\"\n"
 msgstr ""
+"escapeExample : String\n"
+"escapeExample = \"A quote: \\\". \\nThis is on a new line.\\nA backslash: \\\\\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:398
@@ -968,6 +1030,9 @@ msgid ""
 "escape quotes and backslashes, by pre- and postfixing the wrapping quote "
 "characters with the same number of hash characters. For instance:"
 msgstr ""
+"Idrisでは素地文字列表記を入力することができます。この表記では引用符文\n"
+"字を同数のハッシュ文字で前後を包むことにより引用符やバックスラッシュを\n"
+"エスケープする必要はありません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:399
@@ -979,6 +1044,11 @@ msgid ""
 "rawExample2 : String\n"
 "rawExample2 = ##\"A quote: \". A blackslash: \\\"##\n"
 msgstr ""
+"rawExample : String\n"
+"rawExample = #\"A quote: \". A blackslash: \\\"#\n"
+"\n"
+"rawExample2 : String\n"
+"rawExample2 = ##\"A quote: \". A blackslash: \\\"##\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:411
@@ -988,6 +1058,10 @@ msgid ""
 "number of hashes as are being used for opening and closing the string "
 "literal:"
 msgstr ""
+"素地文字列表記でも文字列内挿を使うことはできますが、\n"
+"開中括弧には、バックスラッシュと、\n"
+"文字列表記の開始終了に使われるのと同数のハッシュが前置されていなくてはなりま"
+"せん。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:412
@@ -996,6 +1070,8 @@ msgid ""
 "rawInterpolExample : String\n"
 "rawInterpolExample = ##\"An interpolated \"string\": \\##{rawExample}\"##\n"
 msgstr ""
+"rawInterpolExample : String\n"
+"rawInterpolExample = ##\"An interpolated \"string\": \\##{rawExample}\"##\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:424
@@ -1008,6 +1084,13 @@ msgid ""
 "Whitespace used for indentation will not appear in the resulting string. For "
 "instance:"
 msgstr ""
+"最後にIdrisでは複数行文字列を簡便に書くことができます。\n"
+"素地複数行文字列表記が欲しい場合は前後にハッシュを付けることができ、\n"
+"文字列内挿と組み合わせることもできます。\n"
+"複数行表記は3つの引用符文字で開閉されます。\n"
+"閉3引用符を字下げすることで全体の複数行表記を字下げすることができます。\n"
+"字下げに使われた空白は結果の文字列には表れません。\n"
+"例えば以下です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:425
@@ -1030,6 +1113,22 @@ msgid ""
 "  This is reduced to \"\\#{\"foo\" ++ \"bar\"}\".\n"
 "  \"\"\"#\n"
 msgstr ""
+"multiline1 : String\n"
+"multiline1 = \"\"\"\n"
+"  And I raise my head and stare\n"
+"  Into the eyes of a stranger\n"
+"  I've always known that the mirror never lies\n"
+"  People always turn away\n"
+"  From the eyes of a stranger\n"
+"  Afraid to see what hides behind the stare\n"
+"  \"\"\"\n"
+"\n"
+"multiline2 : String\n"
+"multiline2 = #\"\"\"\n"
+"  An example for a simple expression:\n"
+"  \"foo\" ++ \"bar\".\n"
+"  This is reduced to \"\\#{\"foo\" ++ \"bar\"}\".\n"
+"  \"\"\"#\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:447
@@ -1037,6 +1136,8 @@ msgid ""
 "Make sure to look at the example strings at the REPL to see the effect of "
 "interpolation and raw string literals and compare it with the syntax we used."
 msgstr ""
+"ぜひREPLで例にある文字列を見て、\n"
+"使用した構文と内挿や素地文字列表記の効果を比べてみてください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:454
@@ -1045,6 +1146,10 @@ msgid ""
 "functions for consuming and converting strings.  I don't give the expected "
 "types here, because you are supposed to come up with those yourself."
 msgstr ""
+"これらの演習では文字列を取り込んで変換する沢山の便利関数を実装することになり"
+"ます。\n"
+"ここでは期待される型を与えていません。\n"
+"なぜなら自力で思い付くこととしているからです。"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Prim.md:458
@@ -1052,11 +1157,13 @@ msgid ""
 "Implement functions similar to `map`, `filter`, and `mapMaybe` for strings. "
 "The output type of these should always be a string."
 msgstr ""
+"文字列用の`map`、`filter`、`mapMaybe`に似た関数を実装してください。\n"
+"これらの出力型は常に文字列です。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Prim.md:461
 msgid "Implement functions similar to `foldl` and `foldMap` for strings."
-msgstr ""
+msgstr "文字列用の`foldl`、`foldMap`に似た関数を実装してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Prim.md:464
@@ -1064,6 +1171,8 @@ msgid ""
 "Implement a function similar to `traverse` for strings. The output type "
 "should be a wrapped string."
 msgstr ""
+"文字列用の`traverse`に似た関数を実装してください。\n"
+"出力型は包まれた文字列になります。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Prim.md:467
@@ -1071,6 +1180,8 @@ msgid ""
 "Implement the bind operator for strings. The output type should again be a "
 "string."
 msgstr ""
+"文字列に束縛演算子を実装してください。\n"
+"出力型もまた文字列になります。"
 
 #. type: Title ##
 #: ../src/Tutorial/Prim.md:468
@@ -1086,6 +1197,11 @@ msgid ""
 "arbitrary precision signed integer type.  All of them come with the "
 "following primitive functions (given here for `Bits8` as an example):"
 msgstr ""
+"本章の始めに一覧になっていたように、\n"
+"Idrisは任意精度符号付き整数型である`Integer`と共に、\n"
+"さまざまな固定精度の符号付きないし符号無し整数型を提供しています。\n"
+"これら全ては以下の原始関数から来ています。\n"
+"（っこでは`Bits8`を例に取ります。）"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
@@ -1095,12 +1211,12 @@ msgstr "`prim__add_Bits8`: 整数の加算。"
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__sub_Bits8`: Integer subtraction."
-msgstr "`prim__add_Bits8`: 整数の加算。"
+msgstr "`prim__sub_Bits8`: 整数の減算。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__mul_Bits8`: Integer multiplication."
-msgstr "`prim__add_Bits8`: 整数の加算。"
+msgstr "`prim__mul_Bits8`: 整数の乗算。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
@@ -1115,27 +1231,27 @@ msgstr "`prim__mod_Bits8`: 剰余関数。"
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__shl_Bits8`: Bitwise left shift."
-msgstr "`prim__add_Bits8`: 整数の加算。"
+msgstr "`prim__shl_Bits8`: ビットの左シフト。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__shr_Bits8`: Bitwise right shift."
-msgstr "`prim__add_Bits8`: 整数の加算。"
+msgstr "`prim__shr_Bits8`: ビットの右シフト。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__and_Bits8`: Bitwise *and*."
-msgstr "`prim__add_Bits8`: 整数の加算。"
+msgstr "`prim__and_Bits8`: ビットの*and*。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__or_Bits8`: Bitwise *or*."
-msgstr "`prim__mod_Bits8`: 剰余関数。"
+msgstr "`prim__or_Bits8`: ビットの*or*。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:486
 msgid "`prim__xor_Bits8`: Bitwise *xor*."
-msgstr "`prim__mod_Bits8`: 剰余関数。"
+msgstr "`prim__xor_Bits8`: ビットの*xor*。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:493
@@ -1146,6 +1262,14 @@ msgid ""
 "interface `Integral`.  The bitwise operations are available through "
 "interfaces `Data.Bits.Bits` and `Data.Bits.FiniteBits`."
 msgstr ""
+"よくあるのは、インターフェース`Num`由来の演算子を通じて加算や乗算のための関数"
+"を、\n"
+"インターフェース`Neg`を通じて減算のための関数を、\n"
+"そしてインターフェース`Integral`を通じて除算（`div`と`mod`）のための関数"
+"を、\n"
+"それぞれ使うというものです。\n"
+"ビット演算はインターフェース`Data.Bits.Bits`と`Data.Bits.FiniteBits`インター"
+"フェースを通じて使うことができます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:497
@@ -1154,51 +1278,53 @@ msgid ""
 "operations (`x`, `y`, and `z` are arbitrary value of the same primitive "
 "integral type):"
 msgstr ""
+"全ての整数型について、数値演算用の以下の法則が満たされているとされます。\n"
+"（`x`、`y`、`z`は同じ原始整数型の任意の値です。）"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x + y = y + x`: Addition is commutative."
-msgstr ""
+msgstr "`x + y = y + x`: 加算は可換です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x + (y + z) = (x + y) + z`: Addition is associative."
-msgstr ""
+msgstr "`x + (y + z) = (x + y) + z`: 加算は結合的です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x + 0 = x`: Zero is the neutral element of addition."
-msgstr ""
+msgstr "`x + 0 = x`: ゼロは加算の中立要素です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x - x = x + (-x) = 0`: `-x` is the additive inverse of `x`."
-msgstr ""
+msgstr "`x - x = x + (-x) = 0`: `-x`は`x`の加法的逆数です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x * y = y * x`: Multiplication is commutative."
-msgstr ""
+msgstr "`x * y = y * x`: 乗算は可換です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x * (y * z) = (x * y) * z`: Multiplication is associative."
-msgstr ""
+msgstr "`x * (y * z) = (x * y) * z`: 乗算は結合的です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x * 1 = x`: One is the neutral element of multiplication."
-msgstr ""
+msgstr "`x * 1 = x`: 1は乗算の中立要素です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "`x * (y + z) = x * y + x * z`: The distributive law holds."
-msgstr ""
+msgstr "`x * (y + z) = x * y + x * z`: 分配法則を満たします。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:507
 msgid "``y * (x `div` y) + (x `mod` y) = x`` (for `y /= 0`)."
-msgstr ""
+msgstr "``y * (x `div` y) + (x `mod` y) = x``（ただし`y /= 0`）"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:515
@@ -1211,12 +1337,19 @@ msgid ""
 "(https://www.microsoft.com/en-us/research/publication/division-and-modulus-"
 "for-computer-scientists/)."
 msgstr ""
+"注意していただきたいのは、公式に対応されているバックエンドでは`mod`の計算に*"
+"ユークリッドモジュロ*が使われているという点です。\n"
+"`y /= 0`のとき、``x `mod` y``は常に`abs y`より厳密に小さい非負値であり、\n"
+"上に与えられた法則が満たされるのです。\n"
+"`x`や`y`が負数であれば他の多くの言語でどうなっているかはさまざまですが、\n"
+"もっともな説明がこちらの[記事](https://www.microsoft.com/en-us/research/"
+"publication/division-and-modulus-for-computer-scientists/)にあります。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:516
 #, no-wrap
 msgid "Unsigned Integers"
-msgstr ""
+msgstr "符号無し整数"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:526
@@ -1229,6 +1362,12 @@ msgid ""
 "`2^bitsize`. For instance, for `Bits8`, all operations calculate their "
 "results modulo 256:"
 msgstr ""
+"符号無し固定精度整数型（`Bits8`、`Bits16`、`Bits32`、`Bits64`）には全ての整数"
+"インターフェース（`Num`、`Neg`、`Integral`）と2つのビット演算用のインター"
+"フェース（`Bits`と`FiniteBits`）が付属しています。\n"
+"`div`と`mod`以外の全ての関数は全域です。\n"
+"オーバーフローは剰余`2^bitwise`を計算することによって取り扱われます。\n"
+"例えば`Bits8`については全ての操作で結果を256を法とするよう計算されます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:527
@@ -1243,12 +1382,20 @@ msgid ""
 "Main> the Bits8 12 - 13\n"
 "255\n"
 msgstr ""
+"Main> the Bits8 255 + 1\n"
+"0\n"
+"Main> the Bits8 255 + 255\n"
+"254\n"
+"Main> the Bits8 128 * 2 + 7\n"
+"7\n"
+"Main> the Bits8 12 - 13\n"
+"255\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:538
 #, no-wrap
 msgid "Signed Integers"
-msgstr ""
+msgstr "符号付き整数"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:549
@@ -1262,6 +1409,13 @@ msgid ""
 "calculate their results modulo 256, subtracting 128 if the result is still "
 "out of bounds:"
 msgstr ""
+"符号無し整数型と同様、符号付き固定精度整数型（`Int8`、`Int16`、`Int32`、"
+"`Int64`）には全ての整数インターフェースと2つのビット演算用インターフェース"
+"（`Bits`と`FiniteBits`）が付属しています。\n"
+"オーバーフローは剰余`2^bitwise`を計算しそれでも結果が範囲外であれば小さいほう"
+"の境界（負数）を加えることで取り扱われます。\n"
+"例えば`Int8`については、全ての操作は結果を256の剰余で取り、結果がそれでも範囲"
+"外なら128を引きます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:550
@@ -1272,12 +1426,16 @@ msgid ""
 "Main> the Int8 3 * 127\n"
 "125\n"
 msgstr ""
+"Main> the Int8 2 * 127\n"
+"-2\n"
+"Main> the Int8 3 * 127\n"
+"125\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:557
 #, no-wrap
 msgid "Bitwise Operations"
-msgstr ""
+msgstr "ビット演算"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:568
@@ -1292,6 +1450,16 @@ msgid ""
 "wikipedia.org/wiki/Two%27s_complement), about which I will not go into the "
 "details here."
 msgstr ""
+"モジュール`Data.Bits`は整数型に対してビット演算を行うインターフェースを輸出し"
+"ています。\n"
+"ビット計算が初めての読者にその概念を説明するために、符号無し8ビット数 "
+"(`Bits8`) について数例お見せしようと思います。\n"
+"なお、これについては符号付きの場合よりもはるかに符号無し整数型の場合のほうが"
+"把握が簡単です。\n"
+"符号付きのものは数の*符号*についての情報をビット様式に含めなくてはならず、\n"
+"Idrisにおける符号付き整数は[2の補数](https://en.wikipedia.org/wiki/Two"
+"%27s_complement)を使っているものとされます。\n"
+"2の補数についてはここでは詳細に踏み込みません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:573
@@ -1300,6 +1468,9 @@ msgid ""
 "eight bits (with values 0 or 1), each of which corresponds to a power of 2. "
 "For instance, the number 23 (= 16 + 4 + 2 + 1) is represented as `0001 0111`:"
 msgstr ""
+"符号なし8ビット2進数は内部的に8つのビット（値は0か1）の並びによって表され、\n"
+"それぞれが2の累乗に対応します。\n"
+"例えば数23 (= 16 + 4 + 2 + 1) は`0001 0111`として表されます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:574
@@ -1310,6 +1481,10 @@ msgid ""
 "Bit number:      7  6  5  4    3  2  1  0\n"
 "Decimal value: 128 64 32 16    8  4  2  1\n"
 msgstr ""
+"2進数での23：   0  0  0  1    0  1  1  1\n"
+"\n"
+"ビット数：      7  6  5  4    3  2  1  0\n"
+"10進値：      128 64 32 16    8  4  2  1\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:583
@@ -1317,6 +1492,8 @@ msgid ""
 "We can use function `testBit` to check if the bit at the given position is "
 "set or not:"
 msgstr ""
+"関数`testBit`を使って与えられた位置にあるビットが点いているかどうかを確かめら"
+"れます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:584
@@ -1329,6 +1506,12 @@ msgid ""
 "Tutorial.Prim> testBit (the Bits8 23) 3\n"
 "False\n"
 msgstr ""
+"Tutorial.Prim> testBit (the Bits8 23) 0\n"
+"True\n"
+"Tutorial.Prim> testBit (the Bits8 23) 1\n"
+"True\n"
+"Tutorial.Prim> testBit (the Bits8 23) 3\n"
+"False\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:595
@@ -1336,6 +1519,8 @@ msgid ""
 "Likewise, we can use functions `setBit` and `clearBit` to set or unset a bit "
 "at a certain position:"
 msgstr ""
+"同様に、関数`setBit`と`clearBit`を使って特定の位置のビットを点けたり消したり"
+"できます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:596
@@ -1346,6 +1531,10 @@ msgid ""
 "Tutorial.Prim> clearBit (the Bits8 23) 2\n"
 "19\n"
 msgstr ""
+"Tutorial.Prim> setBit (the Bits8 23) 3\n"
+"31\n"
+"Tutorial.Prim> clearBit (the Bits8 23) 2\n"
+"19\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:610
@@ -1357,6 +1546,13 @@ msgid ""
 "that are either set in `x` or `y` (or both), and ``x `xor` y`` has those "
 "bits set that are set in exactly one of the two values:"
 msgstr ""
+"整数値に真偽値演算をするためには関数`xor`（ビットの*排他的論理和*）と同様に\n"
+"演算子`(.&.)`（ビットの*論理積*）や`(.|.)`（ビットの*論理和*）もあります。\n"
+"例えば`x .&. y`の各ビット集合はちょうど`x`と`y`両方のビットが点いているところ"
+"が点きます。\n"
+"一方で`x .|. y`は`x`ないし`y`（あるいは両方）が点いている全てのビットが点きま"
+"す。\n"
+"そして``x `xor` y``は2つの値のうちちょうど1つが点いているビットが点きます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:611
@@ -1369,11 +1565,17 @@ msgid ""
 "23 .|. 11 in binary:   0  0  0  1    1  1  1  1\n"
 "23 `xor` 11 in binary: 0  0  0  1    1  1  0  0\n"
 msgstr ""
+"23を2進数で：          0  0  0  1    0  1  1  1\n"
+"11を2進数で：          0  0  0  0    1  0  1  1\n"
+"\n"
+"23 .&. 11を2進数で：   0  0  0  0    0  0  1  1\n"
+"23 .|. 11を2進数で：   0  0  0  1    1  1  1  1\n"
+"23 `xor` 11を2進数で： 0  0  0  1    1  1  0  0\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:621
 msgid "And here are the examples at the REPL:"
-msgstr "以下はREPLでの例です。"
+msgstr "そして以下はREPLでの例です。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:622
@@ -1386,6 +1588,12 @@ msgid ""
 "Tutorial.Prim> the Bits8 23 `xor` 11\n"
 "28\n"
 msgstr ""
+"Tutorial.Prim> the Bits8 23 .&. 11\n"
+"3\n"
+"Tutorial.Prim> the Bits8 23 .|. 11\n"
+"31\n"
+"Tutorial.Prim> the Bits8 23 `xor` 11\n"
+"28\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:637
@@ -1396,6 +1604,10 @@ msgid ""
 "viewed as a multiplication by a power of two, while a right shift can be "
 "seen as a division by a power of two:"
 msgstr ""
+"最後に、関数`shiftR`と`shiftL`を使うことにより、全てのビットを特定の数だけそ"
+"れぞれ左右にシフトすることができます（溢れたビットは単に捨てられます）。\n"
+"したがって左シフトは2の累乗による乗算として、\n"
+"右シフトは2の累乗による除算として、それぞれ見ることができます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:638
@@ -1406,6 +1618,10 @@ msgid ""
 "22 `shiftL` 2 in binary: 0  1  0  1    1  0  0  0\n"
 "22 `shiftR` 1 in binary: 0  0  0  0    1  0  1  1\n"
 msgstr ""
+"22 in binary:            0  0  0  1    0  1  1  0\n"
+"\n"
+"22 `shiftL` 2 in binary: 0  1  0  1    1  0  0  0\n"
+"22 `shiftR` 1 in binary: 0  0  0  0    1  0  1  1\n"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:647
@@ -1416,6 +1632,10 @@ msgid ""
 "Tutorial.Prim> the Bits8 22 `shiftR` 1\n"
 "11\n"
 msgstr ""
+"Tutorial.Prim> the Bits8 22 `shiftL` 2\n"
+"88\n"
+"Tutorial.Prim> the Bits8 22 `shiftR` 1\n"
+"11\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:657
@@ -1424,6 +1644,9 @@ msgid ""
 "performance applications. As programmers, we have to know they exist and how "
 "they work."
 msgstr ""
+"ビット演算は専門的なコードやある程度高い効率性のアプリケーションでよく使われ"
+"ます。\n"
+"プログラマとしてはそれらの存在と仕組みを知っておかねばなりません。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:658
@@ -1440,6 +1663,11 @@ msgid ""
 "the type in question. As we will see in the last section, such a function "
 "can even restrict the values allowed as valid literals."
 msgstr ""
+"ここまで所与の型用に整数表記が使えるようにするために常に`Num`の実装が必要でし"
+"た。\n"
+"しかし実は`Integer`を問題の型に変換する関数を実装しさえすればよいのです。\n"
+"最後の節で見ていくように、そのような関数は妥当な表記として許される値を制限し"
+"さえできます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:671
@@ -1448,6 +1676,8 @@ msgid ""
 "charge of a chemical molecule. Such a value can be positive or negative and "
 "(theoretically) of almost arbitrary magnitude:"
 msgstr ""
+"例えば化学分子の電荷を表現するデータ型を定義したいとします。\n"
+"そのような値は正にも負にもなりえ、（理論上）ほぼ任意の大きさを取りえます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:672
@@ -1469,6 +1699,10 @@ msgid ""
 "we'd like to have the convenience of integer literals when using constant "
 "charges at compile time. Here's how to do this:"
 msgstr ""
+"電荷を加算することは理に適っていますが、乗算はそうではありません。\n"
+"したがって`Monoid`の実装を持ちますが、`Num`は持ちません。\n"
+"それでもコンパイル時に定数の電荷を使う際に整数表記の便宜を得たいのです。\n"
+"以下はこれをする方法です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:684
@@ -1483,6 +1717,14 @@ msgid ""
 "Monoid Charge where\n"
 "  neutral = 0\n"
 msgstr ""
+"fromInteger : Integer -> Charge\n"
+"fromInteger = MkCharge\n"
+"\n"
+"Semigroup Charge where\n"
+"  x <+> y = MkCharge $ x.value + y.value\n"
+"\n"
+"Monoid Charge where\n"
+"  neutral = 0\n"
 
 #. type: Title ####
 #: ../src/Tutorial/Prim.md:695
@@ -1498,6 +1740,10 @@ msgid ""
 "to be prefixed with a zero following by a `b`, `o`, or `x` for binary, "
 "octal, and hexadecimal, respectively:"
 msgstr ""
+"よく知られた10進表記に加えて、2進、8進、16進表現の整数表記を使うこともできま"
+"す。\n"
+"これらは2進、8進、16進それぞれについて、\n"
+"ゼロと続く`b`、`o`、`x`で前置されていなくてはなりません。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:703
@@ -1510,6 +1756,12 @@ msgid ""
 "Tutorial.Prim> 0xffa2\n"
 "65442\n"
 msgstr ""
+"Tutorial.Prim> 0b1101\n"
+"13\n"
+"Tutorial.Prim> 0o773\n"
+"507\n"
+"Tutorial.Prim> 0xffa2\n"
+"65442\n"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Prim.md:716
@@ -1517,6 +1769,8 @@ msgid ""
 "Define a wrapper record for integral values and implement `Monoid` so that "
 "`(<+>)` corresponds to `(.&.)`."
 msgstr ""
+"整数値用の梱包レコードを定義し`(<+>)`が`(.&.)`に対応するように`Monoid`を実装"
+"してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:719
@@ -1525,6 +1779,8 @@ msgid ""
 "   Hint: Have a look at the functions available from interface\n"
 "   `Bits` to find a value suitable as the neutral element.\n"
 msgstr ""
+"   手掛かり：インターフェース`Bits`で手に入る関数を眺めて、\n"
+"   中立の要素として相応しい値を見付けてください。\n"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Prim.md:722
@@ -1532,6 +1788,8 @@ msgid ""
 "Define a wrapper record for integral values and implement `Monoid` so that "
 "`(<+>)` corresponds to `(.|.)`."
 msgstr ""
+"整数値用の梱包レコードを定義し`(<+>)`が`(.|.)`に対応するように`Monoid`を実装"
+"してください。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Prim.md:725
@@ -1539,17 +1797,19 @@ msgid ""
 "Use bitwise operations to implement a function, which tests if a given value "
 "of type `Bits64` is even or not."
 msgstr ""
+"ビット演算を使って次の関数を実装してください。\n"
+"この関数は型が`Bits64`の与えられた値が偶数かどうかを検査します。"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Prim.md:727
 msgid "Convert a value of type `Bits64` to a string in binary representation."
-msgstr ""
+msgstr "型`Bits64`の値を2進表現の文字列へ変換してください。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Prim.md:729
 msgid ""
 "Convert a value of type `Bits64` to a string in hexadecimal representation."
-msgstr ""
+msgstr "型`Bits64`の値を16進数表現の文字列へ変換してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:732
@@ -1558,12 +1818,14 @@ msgid ""
 "   Hint: Use `shiftR` and `(.&. 15)` to access subsequent packages of\n"
 "   four bits.\n"
 msgstr ""
+"   手掛かり：`shiftR`と`(.&. 15)`を使い、\n"
+"   後続する4ビットの集まりにアクセスしてください。\n"
 
 #. type: Title ##
 #: ../src/Tutorial/Prim.md:733
 #, no-wrap
 msgid "Refined Primitives"
-msgstr ""
+msgstr "精錬された原始型"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:741
@@ -1574,6 +1836,11 @@ msgid ""
 "it is usually advisable to rule out invalid values early on, by pairing a "
 "value with an erased proof of validity."
 msgstr ""
+"何らかの文脈ではある型の全ての値を許したくないことはよくあります。\n"
+"例えば任意のUTF-8文字（いくつかは印字可能ですらありません）の並びとしての"
+"`String`はほとんどの場合一般化されすぎています。\n"
+"したがって大抵は不正な値を早めに排除することが勧められます。\n"
+"これは値と消去される妥当性の証明と対にすることでできます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:749
@@ -1585,24 +1852,18 @@ msgid ""
 "we come up with a set of primitive axioms (implemented most likely using "
 "`believe_me`), with which we can manipulate our predicates."
 msgstr ""
+"流麗な述語の書き方を学んできましたが、\n"
+"これにより関数が全域であることを証明することができ、\n"
+"そこから……理想的な場合では……他の関連する述語を導出することもできます。\n"
+"しかしながら、述語を原始型に定義するとき、\n"
+"述語を操れるだけの原始的な公理（ほぼ`believe_me`を使って実装されます）の集合"
+"を思い付かない限り、こうしたことはそれ単体ではそこそこの悪夢です。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:750
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Use Case: ASCII Strings"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"用例：CSV読取器\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "用例：ASCII文字列"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:756
@@ -1612,6 +1873,10 @@ msgid ""
 "therefore, we'd like to make sure the strings we accept in our application "
 "only consist of ASCII characters:"
 msgstr ""
+"文字列のエンコーディングは難しい話題なので、多くの低水準な処理では最初のうち"
+"はほとんどの文字を排除するのは理に適っています。\n"
+"したがって、ここでのアプリケーションで受け付ける文字列はASCII文字からのみ構成"
+"されることにしたいと思います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:757
@@ -1623,13 +1888,18 @@ msgid ""
 "isAsciiString : String -> Bool\n"
 "isAsciiString = all isAsciiChar . unpack\n"
 msgstr ""
+"isAsciiChar : Char -> Bool\n"
+"isAsciiChar c = ord c <= 127\n"
+"\n"
+"isAsciiString : String -> Bool\n"
+"isAsciiString = all isAsciiChar . unpack\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:767
 msgid ""
 "We can now *refine* a string value by pairing it with an erased proof of "
 "validity:"
-msgstr ""
+msgstr "これで文字列値を検証の消去される証明と対にすることで*精錬*できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:768
@@ -1653,6 +1923,10 @@ msgid ""
 "already pretty easy to safely wrap strings at compile time in a value of "
 "type `Ascii`:"
 msgstr ""
+"これで、実行時ないしコンパイル時に最初に包まれる文字列を検証することなく型"
+"`Ascii`の値を作ることが*不可能*になりました。\n"
+"これによって最早コンパイル時に型`Ascii`の値に安全に文字列を包むことはかなり簡"
+"単です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:780
@@ -1681,6 +1955,21 @@ msgid ""
 "define a custom `fromString` function with an erased auto implicit argument "
 "as a proof of validity:"
 msgstr ""
+"そしてさらに、安全性の快適さを犠牲にすることなく、これに文字列表記を使うこと"
+"もまた遥かにより便利にすることでしょう。\n"
+"そうするためと言って、インターフェース`FromString`を使うことはできません。\n"
+"というのはその関数`fromString`は*いかなる*文字列をも変換できるようにしなけれ"
+"ばならず、不正なものでさえそうなのです。\n"
+"しかしながら実は文字列表記に対応するには`FromString`の実装は必要ではなく、\n"
+"これはちょうど整数表記に対応するために`Num`の実装が必要ではないようなもので"
+"す。\n"
+"本当に必要なことは`fromString`という名前の関数なのです。\n"
+"さて、文字列表記が脱糖されると`fromString`の呼出しとその引数として文字列値が"
+"与えられたものに変換されます。\n"
+"例えば表記`\"Hello\"`は`fromString \"Hello\"`に脱糖されます。\n"
+"これは型検査と（自動）暗黙値を埋める前に起こります。\n"
+"したがって妥当性の証明としての消去される自動暗黙引数を持つ自前の`fromString`"
+"関数を定義することは全くもって大丈夫なのです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:801
@@ -1689,6 +1978,8 @@ msgid ""
 "fromString : (s : String) -> {auto 0 prf : isAsciiString s === True} -> Ascii\n"
 "fromString s = MkAscii s prf\n"
 msgstr ""
+"fromString : (s : String) -> {auto 0 prf : isAsciiString s === True} -> Ascii\n"
+"fromString s = MkAscii s prf\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:808
@@ -1696,6 +1987,8 @@ msgid ""
 "With this, we can us (valid) string literals for coming up with values of "
 "type `Ascii` directly:"
 msgstr ""
+"これを使えば直接型`Ascii`の値であるようなものにについて（妥当な）文字列表記を"
+"使うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:809
@@ -1714,6 +2007,8 @@ msgid ""
 "unknown source, we can use a refinement function returning some kind of "
 "failure type:"
 msgstr ""
+"不明な源からの文字列から型`Ascii`の値を実行時に作るためには、何らかの類の失敗"
+"型を返す精錬関数を使うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:818
@@ -1728,12 +2023,20 @@ msgid ""
 "  Yes prf   => Just $ MkAscii x prf\n"
 "  No contra => Nothing\n"
 msgstr ""
+"test : (b : Bool) -> Dec (b === True)\n"
+"test True  = Yes Refl\n"
+"test False = No absurd\n"
+"\n"
+"ascii : String -> Maybe Ascii\n"
+"ascii x = case test (isAsciiString x) of\n"
+"  Yes prf   => Just $ MkAscii x prf\n"
+"  No contra => Nothing\n"
 
 #. type: Title ####
 #: ../src/Tutorial/Prim.md:829
 #, no-wrap
 msgid "Disadvantages of Boolean Proofs"
-msgstr ""
+msgstr "真偽値証明の欠点"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:834
@@ -1742,6 +2045,9 @@ msgid ""
 "very far. However, one drawback of this approach is that we can't safely "
 "perform any computations with the proofs at hand."
 msgstr ""
+"多くの用途で、上でASCII文字列について記述したことを使えば大きく前進で\n"
+"きます。しかし、この手法の欠点の1つは手に証明を手にしていてもいかなる\n"
+"計算も安全には行えないということです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:839
@@ -1751,6 +2057,10 @@ msgid ""
 "`believe_me`, because we will not be able to proof the following lemma "
 "otherwise:"
 msgstr ""
+"例えば2つのASCII文字列を結合するのは全くもって大丈夫だと知っているでしょう"
+"が、\n"
+"このことをIdrisに説得するためには`believe_me`を使わねばならないでしょう。\n"
+"なぜなら以下の補題を証明することが決してできないからです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:840
@@ -1769,6 +2079,18 @@ msgid ""
 "  MkAscii s1 p1 ++ MkAscii s2 p2 =\n"
 "    MkAscii (s1 ++ s2) (allAppend isAsciiChar s1 s2 p1 p2)\n"
 msgstr ""
+"0 allAppend :  (f : Char -> Bool)\n"
+"            -> (s1,s2 : String)\n"
+"            -> (p1 : all f (unpack s1) === True)\n"
+"            -> (p2 : all f (unpack s2) === True)\n"
+"            -> all f (unpack (s1 ++ s2)) === True\n"
+"allAppend f s1 s2 p1 p2 = believe_me $ Refl {x = True}\n"
+"\n"
+"namespace Ascii\n"
+"  export\n"
+"  (++) : Ascii -> Ascii -> Ascii\n"
+"  MkAscii s1 p1 ++ MkAscii s2 p2 =\n"
+"    MkAscii (s1 ++ s2) (allAppend isAsciiChar s1 s2 p1 p2)\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:861
@@ -1779,12 +2101,18 @@ msgid ""
 "therefore be challenging at times, and whether such axioms are even required "
 "very much depends on the use case at hand."
 msgstr ""
+"同じことが与えられた文字列から部分文字列を取り出す全ての操作について言えま"
+"す。\n"
+"それぞれの規則について`believe_me`を使って実装せねばなりません。\n"
+"したがって精錬された原始型を便利に扱うための理に適った公理の集合を見付けるこ"
+"とはしばしば挑戦的となり、\n"
+"そのような公理が必要であるかすらも直面している用例に大きく依存するのです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Prim.md:862
 #, no-wrap
 msgid "Use Case: Sanitized HTML"
-msgstr ""
+msgstr "用例：消毒済みHTML"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:869
@@ -1794,6 +2122,11 @@ msgid ""
 "input here. Users can write arbitrary text in a text field and upon hitting "
 "Enter, the message is displayed to all other registered users."
 msgstr ""
+"登録済みの利用者の間で科学的な議論をするための単純なWebアプリケーションを書い"
+"ているとします。\n"
+"話を単純にするためにここでは書式化されていない入力テキストのみを考えます。\n"
+"利用者はテキストフィールドに任意のテキストを書くことができ、エンターを打つと"
+"文言が他の全ての登録済み利用者に表示されます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:871
@@ -1804,7 +2137,7 @@ msgstr "ここで利用者が以下の文言を入力することにしたとし
 #: ../src/Tutorial/Prim.md:872
 #, no-wrap
 msgid "<script>alert(\"Hello World!\")</script>\n"
-msgstr ""
+msgstr "<script>alert(\"Hello World!\")</script>\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:884
@@ -1818,6 +2151,16 @@ msgid ""
 "in the page's HTML structure and executed when it is being displayed to "
 "other users."
 msgstr ""
+"おっと、（かなり）まずいことになるところでした。\n"
+"尚もこれが起こることを防ぐ対策を講じなければ、\n"
+"Webページ中に全く意図しないJavaScriptプログラムが埋め込まれるかもしれませ"
+"ん！\n"
+"ここで記述したことは[クロスサイトスクリプティング](https://en.wikipedia.org/"
+"wiki/Cross-site_scripting)と呼ばれるセキュリティ脆弱性でよく知られていま"
+"す。\n"
+"Webページの利用者にテキストフィールドへ悪意のあるJavaScriptコードを入力するこ"
+"とを許すことで、ページのHTML構造にそれが含まれてしまい、他の利用者に表示され"
+"たときに実行されてしまうのです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:891
@@ -1830,6 +2173,9 @@ msgid ""
 "this will be overly restrictive. An alternative\n"
 "is to escape certain characters before rendering them on the page.\n"
 msgstr ""
+"確かなことにしたいのは、これがwebページで起こりえないようにすることです。\n"
+"この攻撃から身を守るために、例えば`'<'`や`'>'`のような文字（これでは充分ではないかもしれません！）を全く許さないようにすることもできますが、もしこの会話サービスがプログラマーを対象しているならば、度を越した制限となるでしょう。\n"
+"代替案は特定の文字をページに描画する前にエスケープすることです。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:892
@@ -1845,6 +2191,15 @@ msgid ""
 "        esc '\\'' = \"&apos;\"\n"
 "        esc c    = singleton c\n"
 msgstr ""
+"escape : String -> String\n"
+"escape = concat . map esc . unpack\n"
+"  where esc : Char -> String\n"
+"        esc '<'  = \"&lt;\"\n"
+"        esc '>'  = \"&gt;\"\n"
+"        esc '\"'  = \"&quot;\"\n"
+"        esc '&'  = \"&amp;\"\n"
+"        esc '\\'' = \"&apos;\"\n"
+"        esc c    = singleton c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:910
@@ -1855,6 +2210,12 @@ msgid ""
 "to `escape` and arrived at the string we have now\". Here's how to encode "
 "this:"
 msgstr ""
+"ここでやりたいことは文字列とその文字列が適切にエスケープされているという証明"
+"と共に保管することです。\n"
+"これは存在量化の別の形式です。\n"
+"「ここに文字列があり、ある別の文字列が存在する。\n"
+"後者の文字列を`escape`に渡すと今ある前者の文字列に至る。」\n"
+"以下はこれを符号化する方法です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:911
@@ -1881,6 +2242,11 @@ msgid ""
 "also possible to safely embed string literals known at compile time without "
 "the need to escape them first:"
 msgstr ""
+"これでwebページに出所不明の文字列を埋め込むときはいつでも、型`Escaped`の値を"
+"要求し、最早クロスサイトスクリプティング攻撃に対して脆弱でないことの大変強力"
+"な保証が得られました。\n"
+"もっといいことに、コンパイル時に知られている文字列表記を、最初にエスケープす"
+"る必要なく、安全に埋め込むこともできています。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:926
@@ -1894,6 +2260,13 @@ msgid ""
 "escaped : Escaped\n"
 "escaped = \"Hello World!\"\n"
 msgstr ""
+"namespace Escaped\n"
+"  export\n"
+"  fromString : (s : String) -> {auto 0 prf : escape s === s} -> Escaped\n"
+"  fromString s = MkEscaped s s prf\n"
+"\n"
+"escaped : Escaped\n"
+"escaped = \"Hello World!\"\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:941
@@ -1902,6 +2275,9 @@ msgid ""
 "working with predicates on primitives.  We want to keep the following goals "
 "in mind:"
 msgstr ""
+"この大部の演習では原始型における述語を扱う小さなライブラリを構築していきま"
+"す。\n"
+"以下の目標を念頭に置きたいと思います。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:955
@@ -1910,6 +2286,8 @@ msgid ""
 "predicates: Negation, conjuction (logical *and*), and disjunction (logical "
 "*or*)."
 msgstr ""
+"述語を組み合わせるのに命題論理につきものの操作を使いたいです。\n"
+"つまり、否定、連言（論理の*and*）、そして宣言（論理*or*）です。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:955
@@ -1918,6 +2296,9 @@ msgid ""
 "primitive number, we want to make sure not to carry around a huge proof of "
 "validity."
 msgstr ""
+"全ての述語は実行時に消去されるべきです。\n"
+"原始的な数について何らかの証明をするとき、莫大な検証のための証明を持ち回るこ"
+"とがないようにしたいです。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:955
@@ -1925,6 +2306,8 @@ msgid ""
 "Calculations on predicates should make no appearance at runtime (with the "
 "exception of `decide`; see below)."
 msgstr ""
+"述語における計算は実行時に現れないようにするべきです。\n"
+"（ただし`decide`は例外です。後述します。）"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Prim.md:955
@@ -1934,6 +2317,11 @@ msgid ""
 "can't find a tail recursive solution for a given problem, use what feels "
 "most natural instead."
 msgstr ""
+"述語における再帰計算は、`decide`の実装で使われているときは、末尾再帰であるべ"
+"きです。\n"
+"これを達成するのは大変かもしれません。\n"
+"所与の問題について末尾再帰の解法を見付けられなければ、代わりに最も自然に感じ"
+"る方法を使ってください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:980
@@ -1959,6 +2347,27 @@ msgid ""
 "the compiler. A way out of this is discussed at the end of this section of "
 "exercises."
 msgstr ""
+"効率性についての補足。\n"
+"述語について計算を走らせられるようにするために、できるときはいつでも、そして"
+"できるだけ早く、原始値を代数型データ型に変換したいです。\n"
+"符号無し整数は`cast`を使って`Nat`に変換されるでしょうし、文字列は`unpack`を"
+"使って`List Char`に変換されるでしょう。\n"
+"これによりほとんどの時間を`Nat`と`List`における証明の作業に割くことができ、そ"
+"のような証明は`believe_me`やその他のズルに訴えることなく実装できます。\n"
+"しかしながら、原始型が代数的データ型に優越する1点は、効率性が遥かによいことが"
+"よくあるということです。\n"
+"とりわけ整数型と`Nat`を比較する際は致命的です。\n"
+"自然数における操作はしばしば`O(n)`時間計算量です。\n"
+"ただし`n`は対象の自然数の数です。\n"
+"例えば多くの操作は高速な定数時間 (`O(1)`) で走ります。\n"
+"幸運なことにIdrisコンパイラは対応する`Integer`の操作を実行時に使うことで自然"
+"数における多くの関数を最適化します。\n"
+"これには、コンパイル時には自然数について何かしらの証明を適切に導出できつつ、"
+"実行時には速い整数の操作を享受できるという利点があります。\n"
+"しかしながら、`Nat`における操作は*コンパイル時に*`O(n)`時間計算量で走るので"
+"す。\n"
+"したがって、大きな自然数を扱う証明は劇的にコンパイラを低速にさせます。\n"
+"この回避方法はこの節の演習の末尾で議論します。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:983
@@ -1966,6 +2375,8 @@ msgid ""
 "Enough talk, let's begin! To start with, you are given the following "
 "utilities:"
 msgstr ""
+"前置きはこのくらいにして始めましょう！\n"
+"始めるにあたって、以下の小間物が与えられています。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:984
@@ -2005,6 +2416,35 @@ msgid ""
 "test0 True  = Yes0 Refl\n"
 "test0 False = No0 absurd\n"
 msgstr ""
+"-- `Dec`のようですが、消去された証明を持ちます。\n"
+"-- 構築子`Yes0`と`No0`はコンパイラによって定数`0`と`1`に変換されます！\n"
+"data Dec0 : (prop : Type) -> Type where\n"
+"  Yes0 : (0 prf : prop) -> Dec0 prop\n"
+"  No0  : (0 contra : prop -> Void) -> Dec0 prop\n"
+"\n"
+"-- 1つ以上の引数を持つインターフェース（この例では`a`と`p`）について、\n"
+"-- 時に1つの引数が他方を知ることによって決定できることがあります。\n"
+"-- 例えば`p`が何であるかを知っているとき、\n"
+"-- `a`が何であるかもほぼ確実に知っています。\n"
+"-- したがって`Decidable`における証明検索が`p`に基づくことを、\n"
+"-- 垂直棒の後に`p`を挙げること、つまり`| p`によって指定しています。\n"
+"-- これは述語についての章で見たように`[search p]`で\n"
+"-- データ型の検索引数を指定するようなものです。\n"
+"-- ここで見たように単一の検索引数を指定することにより劇的に型推論の助けになります。\n"
+"interface Decidable (0 a : Type) (0 p : a -> Type) | p where\n"
+"  decide : (v : a) -> Dec0 (p v)\n"
+"\n"
+"-- しばしばIdrisの型推論を助けるために`p`を明示的に渡す必要があります。\n"
+"-- そのような場合、`decide {p = pred}`の代わりに\n"
+"-- `decideOn pred`を使うとより便利です。\n"
+"decideOn : (0 p : a -> Type) -> Decidable a p => (v : a) -> Dec0 (p v)\n"
+"decideOn _ = decide\n"
+"\n"
+"-- 真偽値関数を使ってのみ合理的に実装される原始的な述語もあります。\n"
+"-- この小間物はそのような証明の決定可能性を補助します。\n"
+"test0 : (b : Bool) -> Dec0 (b === True)\n"
+"test0 True  = Yes0 Refl\n"
+"test0 False = No0 absurd\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1025
@@ -2014,6 +2454,10 @@ msgid ""
 "We therefore come up with a predicate witnessing that a `Dec0` value is "
 "actually a `Yes0` together with two utility functions:"
 msgstr ""
+"またコンパイル時に決定可能な計算を走らせもしたいのです。\n"
+"これは帰納型に直接証明検索を走らせるより遥かに効率的なことがよくあります。\n"
+"したがって`Dec0`の値が実際には`Yes0`であることをを証言する述語と2つの補助関数"
+"を作り出します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1026
@@ -2033,6 +2477,19 @@ msgid ""
 "               => p v\n"
 "safeDecideOn p v = fromYes0 $ decideOn p v\n"
 msgstr ""
+"data IsYes0 : (d : Dec0 prop) -> Type where\n"
+"  ItIsYes0 : IsYes0 (Yes0 prf)\n"
+"\n"
+"0 fromYes0 : (d : Dec0 prop) -> (0 prf : IsYes0 d) => prop\n"
+"fromYes0 (Yes0 x) = x\n"
+"fromYes0 (No0 contra) impossible\n"
+"\n"
+"0 safeDecideOn :  (0 p : a -> Type)\n"
+"               -> Decidable a p\n"
+"               => (v : a)\n"
+"               -> (0 prf : IsYes0 (decideOn p v))\n"
+"               => p v\n"
+"safeDecideOn p v = fromYes0 $ decideOn p v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1045
@@ -2040,6 +2497,8 @@ msgid ""
 "Finally, as we are planning to refine mostly primitives, we will at times "
 "require some sledge hammer to convince Idris that we know what we are doing:"
 msgstr ""
+"最後に、ほとんどの原始型を精錬しようとしているため、時には自分達が何をしてい"
+"るのかがわかっているのだとIdrisを説得する大型ハンマーが必要になります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1046
@@ -2053,11 +2512,19 @@ msgid ""
 "  No0  _   =>\n"
 "    assert_total $ idris_crash \"Unexpected refinement failure in `unsafeRefineOn`\"\n"
 msgstr ""
+"-- `decideOn p v`が`Yes0`を返すことを確信しているときにだけ使ってくださいね。\n"
+"0 unsafeDecideOn : (0 p : a -> Type) -> Decidable a p => (v : a) -> p v\n"
+"unsafeDecideOn p v = case decideOn p v of\n"
+"  Yes0 prf => prf\n"
+"  No0  _   =>\n"
+"    assert_total $ idris_crash \"Unexpected refinement failure in `unsafeRefineOn`\"\n"
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Prim.md:1058
 msgid "We start with equality proofs. Implement `Decidable` for `Equal v`."
 msgstr ""
+"透過性の証明から始めます。\n"
+"`Decidable`を`Equal v`に実装してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1061
@@ -2065,12 +2532,12 @@ msgstr ""
 msgid ""
 "   Hint: Use `DecEq` from module `Decidable.Equality` as a constraint\n"
 "         and make sure that `v` is available at runtime.\n"
-msgstr ""
+msgstr "   手掛かり：制約としてはモジュール`Decidable.Equality`の`DecEq`を使い、必ず`v`が実行時に使えるようにしてください。\n"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Prim.md:1063
 msgid "We want to be able to negate a predicate:"
-msgstr ""
+msgstr "次のように述語を否定できるようにしたいです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1064
@@ -2079,30 +2546,19 @@ msgid ""
 "   data Neg : (p : a -> Type) -> a -> Type where\n"
 "     IsNot : {0 p : a -> Type} -> (contra : p v -> Void) -> Neg p v\n"
 msgstr ""
+"   data Neg : (p : a -> Type) -> a -> Type where\n"
+"     IsNot : {0 p : a -> Type} -> (contra : p v -> Void) -> Neg p v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1070
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "   Implement `Decidable` for `Neg p` using a suitable constraint.\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Const e`に`Applicative`を実装してください。\n"
-"ただし`e`は`Monoid`制約を満たします。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "   相応しい制約を使って`Neg p`に`Decidable`を実装してください。\n"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Prim.md:1072
 msgid "We want to describe the conjunction of two predicates:"
-msgstr ""
+msgstr "述語の連言を記述したいです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1073
@@ -2111,12 +2567,14 @@ msgid ""
 "   data (&&) : (p,q : a -> Type) -> a -> Type where\n"
 "     Both : {0 p,q : a -> Type} -> (prf1 : p v) -> (prf2 : q v) -> (&&) p q v\n"
 msgstr ""
+"   data (&&) : (p,q : a -> Type) -> a -> Type where\n"
+"     Both : {0 p,q : a -> Type} -> (prf1 : p v) -> (prf2 : q v) -> (&&) p q v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1079
 #, no-wrap
 msgid "   Implement `Decidable` for `(p && q)` using suitable constraints.\n"
-msgstr ""
+msgstr "   相応しい制約を使って`(p && q)`に`Decidable`を実装してください。\n"
 
 #. type: Bullet: '4. '
 #: ../src/Tutorial/Prim.md:1083
@@ -2124,6 +2582,8 @@ msgid ""
 "Come up with a data type called `(||)` for the disjunction (logical *or*) of "
 "two predicates and implement `Decidable` using suitable constraints."
 msgstr ""
+"2つの述語の選言（論理的な*or*）用の`(||)`という名前のデータ型を作り出し、相応"
+"しい制約を使って`Decidable`を実装してください。"
 
 #. type: Bullet: '5. '
 #: ../src/Tutorial/Prim.md:1086
@@ -2131,6 +2591,8 @@ msgid ""
 "Proof [De Morgan's laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws)  "
 "by implementing the following propositions:"
 msgstr ""
+"以下の命題を実装することによって[ド・モルガンの法則](https://en.wikipedia."
+"org/wiki/De_Morgan%27s_laws)を証明してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1087
@@ -2142,6 +2604,11 @@ msgid ""
 "\n"
 "   orNeg : (Neg p || Neg q) v -> Neg (p && q) v\n"
 msgstr ""
+"   negOr : Neg (p || q) v -> (Neg p && Neg q) v\n"
+"\n"
+"   andNeg : (Neg p && Neg q) v -> Neg (p || q) v\n"
+"\n"
+"   orNeg : (Neg p || Neg q) v -> Neg (p && q) v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1100
@@ -2153,6 +2620,8 @@ msgid ""
 "   (annotated with quantity 0 as we will need to access an erased\n"
 "   contraposition):\n"
 msgstr ""
+"   ド・モルガンの最後の含意は型付けて証明するのが難しいのですが、それは型`p v`と`q v`の値を作り出す方法が必要なところ、両方ともは存在しないと判明するからです。\n"
+"   以下はこれを符号化する方法です（数量子0で註釈していますが、これは消去された対偶にアクセスするのに必要です）。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1101
@@ -2163,6 +2632,10 @@ msgid ""
 "            => Neg (p && q) v\n"
 "            -> (Neg p || Neg q) v\n"
 msgstr ""
+"   0 negAnd :  Decidable a p\n"
+"            => Decidable a q\n"
+"            => Neg (p && q) v\n"
+"            -> (Neg p || Neg q) v\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1111
@@ -2172,6 +2645,8 @@ msgid ""
 "   erased (implicit) arguments, because `negAnd` itself can only be\n"
 "   used in an erased context.\n"
 msgstr ""
+"   `negAnd`を実装する際は消去された（暗黙の）引数に自由にアクセスできることを思い出してください。\n"
+"   なぜできるかというと`negAnd`自体は消去された文脈でのみ使われているからです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1117
@@ -2181,6 +2656,11 @@ msgid ""
 "use case, we will focus on limiting the valid range of natural numbers. For "
 "this, we use the following data type:"
 msgstr ""
+"ここまででいくつかの述語を抽象的に記述したり結合したりする道具を実装しまし"
+"た。\n"
+"これでいくつかの例を作り出すときが来ました。\n"
+"最初の用例として自然数の妥当な範囲を制限することに焦点を当てます。\n"
+"このためには以下のデータ型を使います。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1118
@@ -2191,6 +2671,10 @@ msgid ""
 "  ZLTE : 0 <= n\n"
 "  SLTE : m <= n -> S m <= S n\n"
 msgstr ""
+"-- Proof that m <= n\n"
+"data (<=) : (m,n : Nat) -> Type where\n"
+"  ZLTE : 0 <= n\n"
+"  SLTE : m <= n -> S m <= S n\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1128
@@ -2198,6 +2682,9 @@ msgid ""
 "This is similar to `Data.Nat.LTE` but I find operator notation often to be "
 "clearer.  We also can define and use the following aliases:"
 msgstr ""
+"これは`Data.Nat.LTE`と似ていますが、筆者はしばしば演算子の記法がよりすっきり"
+"しているように思われます。\n"
+"また以下の別称を定義して使うこともできます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Prim.md:1129
@@ -2230,6 +2717,32 @@ msgid ""
 "Between : (lower,upper : Nat) -> Nat -> Type\n"
 "Between l u = GreaterThan l && LessThan u\n"
 msgstr ""
+"(>=) : (m,n : Nat) -> Type\n"
+"m >= n = n <= m\n"
+"\n"
+"(<) : (m,n : Nat) -> Type\n"
+"m < n = S m <= n\n"
+"\n"
+"(>) : (m,n : Nat) -> Type\n"
+"m > n = n < m\n"
+"\n"
+"LessThan : (m,n : Nat) -> Type\n"
+"LessThan m = (< m)\n"
+"\n"
+"To : (m,n : Nat) -> Type\n"
+"To m = (<= m)\n"
+"\n"
+"GreaterThan : (m,n : Nat) -> Type\n"
+"GreaterThan m = (> m)\n"
+"\n"
+"From : (m,n : Nat) -> Type\n"
+"From m = (>= m)\n"
+"\n"
+"FromTo : (lower,upper : Nat) -> Nat -> Type\n"
+"FromTo l u = From l && To u\n"
+"\n"
+"Between : (lower,upper : Nat) -> Nat -> Type\n"
+"Between l u = GreaterThan l && LessThan u\n"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/Prim.md:1171
@@ -2245,6 +2758,16 @@ msgid ""
 "numbers.  Since `Prelude.(<=)` for natural numbers is implemented in terms "
 "of `compare`, it runs just as efficiently."
 msgstr ""
+"`m`と`n`にパターン照合して型`m <= n`の値を作り出すのは`m`が大きな数のときにか"
+"なり非効率になります。\n"
+"これは`m`回分の計算が必要になるからです。\n"
+"しかし消去される文脈である限りは型`m <= n`の値を保つ必要はありません。\n"
+"そのような値がより効率的な計算から従うことだけを示せばよいのです。\n"
+"そうした計算は自然数の`compare`です。\n"
+"これは*Prelude*で引数へのパターン照合で実装されているものの、たとえとても大き"
+"な数であっても定数時間で走る整数の比較にコンパイラが最適化します。\n"
+"自然数用の`Prelude.(<=)`は`compare`を活用して実装されているので、こちらも効率"
+"的に走ります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1175
@@ -2253,7 +2776,7 @@ msgid ""
 "   We therefore need to proof the following two lemmas (make\n"
 "   sure to not confuse `Prelude.(<=)` with `Prim.(<=)` in\n"
 "   these declarations):\n"
-msgstr ""
+msgstr "   したがって以下の2つの補題を証明する必要があります（これらの宣言で`Prelude.(<=)`と`Prim.(<=)`を混同しないようにしてください。）。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1176
@@ -2263,6 +2786,9 @@ msgid ""
 "\n"
 "   0 toLTE : (n1,n2 : Nat) -> n1 <= n2 -> (n1 <= n2) === True\n"
 msgstr ""
+"   0 fromLTE : (n1,n2 : Nat) -> (n1 <= n2) === True -> n1 <= n2\n"
+"\n"
+"   0 toLTE : (n1,n2 : Nat) -> n1 <= n2 -> (n1 <= n2) === True\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1185
@@ -2271,7 +2797,7 @@ msgid ""
 "   They come with a quantity of 0, because they are just as inefficient\n"
 "   as the other computations we discussed above. We therefore want\n"
 "   to make absolutely sure that they will never be used at runtime!\n"
-msgstr ""
+msgstr "   どれも数量子0が付いていますが、それは単に上でお話しした別の案の計算と同じくらい非効率だからです。したがって実行時に全く使われないことに関して絶対の確信を得たいのです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1190
@@ -2281,7 +2807,7 @@ msgid ""
 "   `fromLTE`, and `toLTE`.\n"
 "   Likewise, implement `Decidable Nat (m <=)`, because we require\n"
 "   both kinds of predicates.\n"
-msgstr ""
+msgstr "   それでは`test0`、`fromLTE`、`toLTE`を活用して`Decidable Nat (<= n)`を実装してください。同様にして`Decidable Nat (m <=)`を実装してください。これは両方の種類の述語に必要だからです。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1193
@@ -2289,7 +2815,7 @@ msgstr ""
 msgid ""
 "   Note: You should by know figure out yourself that `n` must be\n"
 "   available at runtime and how to make sure that this is the case.\n"
-msgstr ""
+msgstr "   補足：これで`n`が実行時に使えるようになっていることとこれが正にそうなっていることを確実にする方法を明らかにしたことでしょう。\n"
 
 #. type: Bullet: '7. '
 #: ../src/Tutorial/Prim.md:1198
@@ -2299,11 +2825,15 @@ msgid ""
 "chain several values of type `(<=)`, it makes sense to also define a short "
 "operator alias for this."
 msgstr ""
+"`(<=)`が反射率と推移律を満たすことを対応する命題を宣言して実装することによっ"
+"て証明してください。推移律の証明は型`(<=)`のいくつかの値を連鎖させるのに必要"
+"になるかもしれないので、これの別称となる短い演算子も定義するのは理に適ってい"
+"ます。"
 
 #. type: Bullet: '8. '
 #: ../src/Tutorial/Prim.md:1200
 msgid "Proof that from `n > 0` follows `IsSucc n` and vise versa."
-msgstr ""
+msgstr "`n > 0`から`IsSucc n`が従うことを、またの逆を証明してください。"
 
 #. type: Bullet: '9. '
 #: ../src/Tutorial/Prim.md:1207
@@ -2314,6 +2844,10 @@ msgid ""
 "value carrying an erased proof that the result is strictly smaller than the "
 "modulus:"
 msgstr ""
+"`Base64`用の安全な除算と剰余関数を宣言して実装してください。これには割る数が"
+"自然数に変換したとき厳密に正であることの消去される証明を要求します。剰余関数"
+"の場合、結果が法とする数より厳密に小さいことの消去される証明を持ち回る精錬さ"
+"れた値を返してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1208
@@ -2323,6 +2857,9 @@ msgid ""
 "           -> (0 prf : cast y > 0)\n"
 "           => Subset Bits64 (\\v => cast v < cast y)\n"
 msgstr ""
+"   safeMod :  (x,y : Bits64)\n"
+"           -> (0 prf : cast y > 0)\n"
+"           => Subset Bits64 (\\v => cast v < cast y)\n"
 
 #. type: Bullet: '10. '
 #: ../src/Tutorial/Prim.md:1218
@@ -2331,6 +2868,9 @@ msgid ""
 "value of type `Bits64` to a string of digits in base `b` with `2 <= b && b "
 "<= 16`.  To do so, implement the following skeleton definitions:"
 msgstr ""
+"これまでに定義した述語と補助関数を使って型`Bits64`の値を底が`b`の数字の文字列"
+"に変換していきます。ここで`2 <= b && b <= 16`です。そうするために以下の定義の"
+"骨組を実装してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1223
@@ -2341,6 +2881,9 @@ msgid ""
 "    -- and `idris_crash`.\n"
 "    digit : (v : Bits64) -> (0 prf : cast v < 16) => Char\n"
 msgstr ""
+"    ```idris\n"
+"    -- この関数には`assert_total`と`idris_crash`の助けがいくらか要ります。\n"
+"    digit : (v : Bits64) -> (0 prf : cast v < 16) => Char\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1228
@@ -2360,7 +2903,7 @@ msgstr ""
 #: ../src/Tutorial/Prim.md:1230
 #, no-wrap
 msgid "    base : Bits64 -> Maybe Base\n"
-msgstr ""
+msgstr "    base : Bits64 -> Maybe Base\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1235
@@ -2371,6 +2914,10 @@ msgid ""
 "      fromInteger : (v : Integer) -> {auto 0 _ : IsJust (base $ cast v)} -> Base\n"
 "    ```\n"
 msgstr ""
+"    namespace Base\n"
+"      public export\n"
+"      fromInteger : (v : Integer) -> {auto 0 _ : IsJust (base $ cast v)} -> Base\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1241
@@ -2382,32 +2929,22 @@ msgid ""
 "    checker. You might also require `assert_smaller` in the\n"
 "    recursive step.\n"
 msgstr ""
+"    最後に実装で`safeDiv`と`safeMod`を使って`digits`を実装してください。\n"
+"    これは挑戦的な難易度かもしれません。\n"
+"    というのも型検査器を満たすために証明を手作業で変形する必要があるためです。\n"
+"    再帰の過程では`assert_smaller`も必要になることでしょう。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1245
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "    ```idris\n"
 "    digits : Bits64 -> Base -> String\n"
 "    ```\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"      ```idris\n"
-"      head : List01 True a -> a\n"
-"      ```\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"      ```idris\n"
-"      deleteUser : (id : Nat) -> Prog ()\n"
-"      ```\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"    ```idris\n"
+"    digits : Bits64 -> Base -> String\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1255
@@ -2419,6 +2956,11 @@ msgid ""
 "either go for a boolean check or use a custom data type representing the "
 "different parts of the pattern, but we will not cover these topics here."
 msgstr ""
+"ここからは文字列に焦点を移します。受け付ける文字列を制限する最も分かりやすい2"
+"つの方法は文字集合を制限することと長さを限定することです。より応用的な精錬で"
+"は文字列が特定のパターンや正規表現に照合することを要求するかもしれません。そ"
+"うした場合は真偽値検査を付けたりパターンのそれぞれの部分を表現する独自データ"
+"型を使ったりすることになりそうですが、こうした話題はここでは触れません。"
 
 #. type: Bullet: '11. '
 #: ../src/Tutorial/Prim.md:1258
@@ -2432,7 +2974,7 @@ msgid ""
 "    Hint: Use `cast` to convert characters to natural numbers,\n"
 "    use `(<=)` and `InRange` to specify regions of characters,\n"
 "    and use `(||)` to combine regions of characters.\n"
-msgstr ""
+msgstr "    手掛かり：`cast`を使って文字を自然数に変換し、`(=)`と`InRange`を使って文字の範囲を指定し、そして`(||)`を使って文字の範囲を結合してください。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1266
@@ -2442,6 +2984,9 @@ msgid ""
 "    -- Characters <= 127\n"
 "    IsAscii : Char -> Type\n"
 msgstr ""
+"    ```idris\n"
+"    -- 文字 <= 127\n"
+"    IsAscii : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1269
@@ -2450,6 +2995,8 @@ msgid ""
 "    -- Characters <= 255\n"
 "    IsLatin : Char -> Type\n"
 msgstr ""
+"    -- 文字 <= 255\n"
+"    IsLatin : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1272
@@ -2458,6 +3005,8 @@ msgid ""
 "    -- Characters in the interval ['A','Z']\n"
 "    IsUpper : Char -> Type\n"
 msgstr ""
+"    -- 文字は ['A','Z'] の範囲内\n"
+"    IsUpper : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1275
@@ -2466,6 +3015,8 @@ msgid ""
 "    -- Characters in the interval ['a','z']\n"
 "    IsLower : Char -> Type\n"
 msgstr ""
+"    -- 文字は ['a','z'] の範囲内\n"
+"    IsLower : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1278
@@ -2474,6 +3025,8 @@ msgid ""
 "    -- Lower or upper case characters\n"
 "    IsAlpha : Char -> Type\n"
 msgstr ""
+"    -- 大小文字\n"
+"    IsAlpha : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1281
@@ -2482,6 +3035,8 @@ msgid ""
 "    -- Characters in the range ['0','9']\n"
 "    IsDigit : Char -> Type\n"
 msgstr ""
+"    -- ['0','9'] の範囲にある文字\n"
+"    IsDigit : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1284
@@ -2490,6 +3045,8 @@ msgid ""
 "    -- Digits or characters from the alphabet\n"
 "    IsAlphaNum : Char -> Type\n"
 msgstr ""
+"    -- 数字かアルファベットにある文字\n"
+"    IsAlphaNum : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1287
@@ -2498,6 +3055,8 @@ msgid ""
 "    -- Characters in the ranges [0,31] or [127,159]\n"
 "    IsControl : Char -> Type\n"
 msgstr ""
+"    -- 範囲 [0,31] または [127,159] の文字\n"
+"    IsControl : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1290
@@ -2506,6 +3065,8 @@ msgid ""
 "    -- An ASCII character that is not a control character\n"
 "    IsPlainAscii : Char -> Type\n"
 msgstr ""
+"    -- 制御文字ではないASCII文字\n"
+"    IsPlainAscii : Char -> Type\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1294
@@ -2515,6 +3076,9 @@ msgid ""
 "    IsPlainLatin : Char -> Type\n"
 "    ```\n"
 msgstr ""
+"    -- 制御文字ではないラテン文字\n"
+"    IsPlainLatin : Char -> Type\n"
+"    ```\n"
 
 #. type: Bullet: '12. '
 #: ../src/Tutorial/Prim.md:1301
@@ -2525,6 +3089,10 @@ msgid ""
 "`List`. Here are some examples of such calculations and conversions, all of "
 "which can be implemented without cheating:"
 msgstr ""
+"原始型における述語へ向けてのこのより組立方式の手法の利点は、述語における計算"
+"を安全に走らせて`Nat`や`List`のような帰納型についての既存の証明からの強力な保"
+"証を得られることです。以下はそのような計算と変換の例であり、全て誤魔化すこと"
+"なく実装できています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1304
@@ -2533,36 +3101,38 @@ msgid ""
 "    ```idris\n"
 "    0 plainToAscii : IsPlainAscii c -> IsAscii c\n"
 msgstr ""
+"    ```idris\n"
+"    0 plainToAscii : IsPlainAscii c -> IsAscii c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1306
 #, no-wrap
 msgid "    0 digitToAlphaNum : IsDigit c -> IsAlphaNum c\n"
-msgstr ""
+msgstr "    0 digitToAlphaNum : IsDigit c -> IsAlphaNum c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1308
 #, no-wrap
 msgid "    0 alphaToAlphaNum : IsAlpha c -> IsAlphaNum c\n"
-msgstr ""
+msgstr "    0 alphaToAlphaNum : IsAlpha c -> IsAlphaNum c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1310
 #, no-wrap
 msgid "    0 lowerToAlpha : IsLower c -> IsAlpha c\n"
-msgstr ""
+msgstr "    0 lowerToAlpha : IsLower c -> IsAlpha c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1312
 #, no-wrap
 msgid "    0 upperToAlpha : IsUpper c -> IsAlpha c\n"
-msgstr ""
+msgstr "    0 upperToAlpha : IsUpper c -> IsAlpha c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1314
 #, no-wrap
 msgid "    0 lowerToAlphaNum : IsLower c -> IsAlphaNum c\n"
-msgstr ""
+msgstr "    0 lowerToAlphaNum : IsLower c -> IsAlphaNum c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1317
@@ -2571,6 +3141,8 @@ msgid ""
 "    0 upperToAlphaNum : IsUpper c -> IsAlphaNum c\n"
 "    ```\n"
 msgstr ""
+"    0 upperToAlphaNum : IsUpper c -> IsAlphaNum c\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1324
@@ -2582,7 +3154,7 @@ msgid ""
 "    `%search` because the search depth is too small. You could\n"
 "    increase the search depth, but it is much more efficient\n"
 "    to use `safeDecideOn` instead.\n"
-msgstr ""
+msgstr "    以下 (`asciiToLatin`) はもっと注意が要ります。`(<=)`が推移的であることを思い出しましょう。ところが推移律の証明の呼び出しでは`%search`を使った直接的な証明検索を適用することは決してできません。なぜなら検索深度が小さすぎるからです。検索深度を増すことはできますが、代わりに`safeDecideOn`を使うのが遥かに効率的です。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1327
@@ -2591,6 +3163,8 @@ msgid ""
 "    ```idris\n"
 "    0 asciiToLatin : IsAscii c -> IsLatin c\n"
 msgstr ""
+"    ```idris\n"
+"    0 asciiToLatin : IsAscii c -> IsLatin c\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1330
@@ -2599,6 +3173,8 @@ msgid ""
 "    0 plainAsciiToPlainLatin : IsPlainAscii c -> IsPlainLatin c\n"
 "    ```\n"
 msgstr ""
+"    0 plainAsciiToPlainLatin : IsPlainAscii c -> IsPlainLatin c\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1334
@@ -2606,47 +3182,13 @@ msgid ""
 "Before we turn our full attention to predicates on strings, we have to cover "
 "lists first, because we will often treat strings as lists of characters."
 msgstr ""
+"文字列における述語に完全に集中する前に、まずはリストを押さえなければなりませ"
+"ん。というのもよく文字列を文字のリストとして扱うことになるからです。"
 
 #. type: Bullet: '13. '
 #: ../src/Tutorial/Prim.md:1336
-#, fuzzy
 msgid "Implement `Decidable` for `Head`:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`tail`を`HList`に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インスタンス`Eq`を木薔薇に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`head`を`HList`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Foldable`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "`Head`に`Decidable`を実装してください："
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1341
@@ -2657,47 +3199,15 @@ msgid ""
 "      AtHead : {0 p : a -> Type} -> (0 prf : p v) -> Head p (v :: vs)\n"
 "    ```\n"
 msgstr ""
+"    ```idris\n"
+"    data Head : (p : a -> Type) -> List a -> Type where\n"
+"      AtHead : {0 p : a -> Type} -> (0 prf : p v) -> Head p (v :: vs)\n"
+"    ```\n"
 
 #. type: Bullet: '14. '
 #: ../src/Tutorial/Prim.md:1343
-#, fuzzy
 msgid "Implement `Decidable` for `Length`:"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`tail`を`HList`に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インスタンス`Eq`を木薔薇に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`head`を`HList`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Foldable`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "`Length`に`Decidable`を実装してください："
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1350
@@ -2710,6 +3220,12 @@ msgid ""
 "                -> Length p vs\n"
 "    ```\n"
 msgstr ""
+"    ```idris\n"
+"    data Length : (p : Nat -> Type) -> List a -> Type where\n"
+"      HasLength :  {0 p : Nat -> Type}\n"
+"                -> (0 prf : p (List.length vs))\n"
+"                -> Length p vs\n"
+"    ```\n"
 
 #. type: Bullet: '15. '
 #: ../src/Tutorial/Prim.md:1354
@@ -2718,6 +3234,8 @@ msgid ""
 "fulfill the given predicate. We will use this to limit the valid set of "
 "characters in a string."
 msgstr ""
+"以下の述語は値のリストの中にある全ての値が与えられた述語を満足するという証明"
+"です。これを使って文字列中の妥当な文字集合を制限していきます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1363
@@ -2732,47 +3250,20 @@ msgid ""
 "           -> All p (v :: vs)\n"
 "    ```\n"
 msgstr ""
+"    ```idris\n"
+"    data All : (p : a -> Type) -> (as : List a) -> Type where\n"
+"      Nil  : All p []\n"
+"      (::) :  {0 p : a -> Type}\n"
+"           -> (0 h : p v)\n"
+"           -> (0 t : All p vs)\n"
+"           -> All p (v :: vs)\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1365
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "    Implement `Decidable` for `All`.\n"
-msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`tail`を`HList`に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"インスタンス`Eq`を木薔薇に実装してください。\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   `Functor`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions2.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functions1.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Folds.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"`Foldable`を`Crud i`に実装してください。\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "    `All`に`Decidable`を実装してください。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1373
@@ -2785,7 +3276,7 @@ msgid ""
 "    stack at runtime. In order to come up with a tail recursive implementation,\n"
 "    you will need an additional data type `AllSnoc` witnessing that a predicate\n"
 "    holds for all elements in a `SnocList`.\n"
-msgstr ""
+msgstr "    真の挑戦として、`decide`の実装を末尾再帰にしてみてください。これはJavaScriptバックエンドにおける現実世界のアプリケーションでは重要になってきます。そのようなアプリケーションでは実行時にスタックオーバーフローすることなく何千もの文字からなる文字列を精錬したいことがあるかもしれません。末尾再帰の実装を引き出すためには、`SnocList`中の全ての要素について述語が満たされていることを証言する`AllSnoc`データ型が追加で必要になるでしょう。\n"
 
 #. type: Bullet: '16. '
 #: ../src/Tutorial/Prim.md:1379
@@ -2796,6 +3287,10 @@ msgid ""
 "specification, implement predicate `IdentChar`, from which we can define a "
 "new wrapper type for identifiers:"
 msgstr ""
+"ついにここまで辿り着きました。Idrisの識別子はアルファベット文字の並びで、下線"
+"文字 (`_`) で区切られていてもよいものです。加えて全ての識別子は文字始まりでな"
+"ければなりません。この仕様があるとき、述語`IdentChar`を実装してください。この"
+"述語から識別子用の新しい梱包型を定義することができます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1382
@@ -2809,7 +3304,7 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1388
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "    record Identifier where\n"
 "      constructor MkIdentifier\n"
@@ -2817,20 +3312,11 @@ msgid ""
 "      0 prf : IdentChars (unpack value)\n"
 "    ```\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"   record Identity a where\n"
-"     constructor Id\n"
-"     value : a\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"    record Identifier where\n"
+"      constructor MkIdentifier\n"
+"      value : String\n"
+"      0 prf : IdentChars (unpack value)\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1391
@@ -2838,33 +3324,19 @@ msgstr ""
 msgid ""
 "    Implement a factory method `identifier` for converting strings\n"
 "    of unknown source at runtime:\n"
-msgstr ""
+msgstr "    実行時に出所不明な文字列を変換するためのファクトリーメソッド`identifier`を実装してください。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1395
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "    ```idris\n"
 "    identifier : String -> Maybe Identifier\n"
 "    ```\n"
 msgstr ""
-"#-#-#-#-#  Neovim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Predicates.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Intro.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Interfaces.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  IO.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"      ```idris\n"
-"      head : List01 True a -> a\n"
-"      ```\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  Functor.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"      ```idris\n"
-"      deleteUser : (id : Nat) -> Prog ()\n"
-"      ```\n"
-"#-#-#-#-#  Prim.md.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"    ```idris\n"
+"    identifier : String -> Maybe Identifier\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1398
@@ -2872,7 +3344,7 @@ msgstr ""
 msgid ""
 "    In addition, implement `fromString` for `Identifier` and verify,\n"
 "    that the following is a valid identifier:\n"
-msgstr ""
+msgstr "    加えて、`Identifier`用に`fromString`を実装し、以下が妥当な識別子であることを検証してください。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1403
@@ -2883,6 +3355,10 @@ msgid ""
 "    testIdent = \"fooBar_123\"\n"
 "    ```\n"
 msgstr ""
+"    ```idris\n"
+"    testIdent : Identifier\n"
+"    testIdent = \"fooBar_123\"\n"
+"    ```\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:1409
@@ -2893,3 +3369,8 @@ msgid ""
 "deals with these issues. It is not yet finished, but you can have a look at "
 "it [here](https://github.com/stefan-hoeck/idris2-prim)."
 msgstr ""
+"結びの言葉：原始型について物事を証明することは挑戦的になりえます。どんな公理"
+"を使うか決めるときもそうですし、実行時とコンパイル時とで効率良く動作するよう"
+"にしようとするときもそうです。筆者はこうした問題に対処するためのライブラリの"
+"作成を試みています。まだ未完ですが[こちら](https://github.com/stefan-hoeck/"
+"idris2-prim)から垣間見ることができます。"
