@@ -1,4 +1,6 @@
-# 関数型プログラミングをIdris 2で
+# Idrisでの関数型プログラミング
+
+[中文翻译](https://github.com/running-grass/idris2-tutorial-zh/blob/main/translation/README.md)
 
 この企画の目標を手短かに説明すると、
 関数型プログラミングの入門者を対称とした導入例をちりばめつつ、
@@ -101,11 +103,13 @@ Haskellのような他の純粋関数型プログラミング言語を使った�
 補遺は卑近な話題の参考書として使えます。
 最終的には、Idrisの文法、典型的なエラー文言、モジュールシステム、対話的編集などについての簡潔な参考情報にしようと模索しています。
 
-1. [Neovimでの対話的編集](src/Appendices/Neovim.md)
+1. [packとIdris2で始めよう](src/Appendices/Install.md)
+2. [Neovimでの対話的編集](src/Appendices/Neovim.md)
+3. [Idrisのプロジェクトを構築する](src/Appendices/Neovim.md)
 
 ## 予め必要なもの
 
-現時点でこの企画は活発に開発中で、
-Idris 2リポジトリのmainブランチとともに進展し続けています。
-GitHubでnightlyにテストされており、
-Idris 2のmainブランチの最新コミットとファイル`.idris-version`にあるIdris 2のコミット時点でビルドしています。
+現時点でこの企画は活発に開発中で、Idris
+2リポジトリのmainブランチとともに進展し続けています。GitHubでnightlyにテストされており、[packのパッケージコレクション](https://github.com/stefan-hoeck/idris2-pack-db)の最新版に対してビルドされています。
+
+この入門を読み進めるにあたっては[こちら](src/Appendices/Install.md)に記載されているようにpackパッケージ管理を介してIdrisをインストールすることを強くお勧めします。
