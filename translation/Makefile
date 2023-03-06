@@ -1,14 +1,6 @@
-proc_runner ?= foreman
+PO4A		?= po4a
+po4a-cfg	:= po4a.cfg
 
-.PHONY: start
-start:
-	${proc_runner} start
-
-po4a = po4a.cfg
-
+translate: ${po4a-cfg}
+	${PO4A} $<
 .PHONY: translate
-translate: ${po4a}
-	po4a $< # --debug
-
-${po4a}: gen-po4a-cfg
-	./$< > $@

@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) YEAR Stefan Höck
 # This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2022-10-20 20:24+0900\n"
+"POT-Creation-Date: 2023-03-06 20:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,8 +363,8 @@ msgid ""
 "If you look at the source code implementing interface `Num` for `Bits8`, you "
 "will see that the plus operator just invokes `prim__add_Bits8` internally. "
 "The same goes for most of the other functions in primitive interface "
-"implementations.  For instance, every primitive type with the exception of "
-"`%World` comes with primitive comparison functions.  For `Bits8`, these are: "
+"implementations.  For instance, every primitive type with the exception of `"
+"%World` comes with primitive comparison functions.  For `Bits8`, these are: "
 "`prim__eq_Bits8`, `prim__gt_Bits8`, `prim__lt_Bits8`, `prim__gte_Bits8`, and "
 "`prim__lte_Bits8`.  Note, that these functions do not return a `Bool` (which "
 "is *not* a primitive type in Idris), but an `Int`. They are therefore not as "
