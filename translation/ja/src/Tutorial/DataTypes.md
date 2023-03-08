@@ -1254,5 +1254,5 @@ namespace GADT
 [次の節](Interfaces.md)では*インターフェース*を導入します。
 インターフェースは*関数のオーバーロード*の他の手法です。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

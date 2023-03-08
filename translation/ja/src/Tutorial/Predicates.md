@@ -1246,5 +1246,7 @@ Goodbye.
 動暗黙引数とは、関数引数の構造について充分な情報があればIdrisが自力で
 構築しようとするものでした。
 
-<!-- vi: filetype=idris2
+[次の章](./Prim.md)
+
+<!-- vi: filetype=idris2:syntax=markdown
 -->

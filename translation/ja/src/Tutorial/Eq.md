@@ -983,5 +983,7 @@ revOnto {n = S len} xs (x :: ys) =
  て`Maybe`や他の失敗型を返す必要が減ります。なぜなら制限された入力とな
  るため関数が最早失敗することがなくなるからです。
 
-<!-- vi: filetype=idris2
+[次の章](./Predicates.md)
+
+<!-- vi: filetype=idris2:syntax=markdown
 -->

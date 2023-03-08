@@ -552,5 +552,5 @@ Tutorial.Functions1.not : (Integer -> Bool) -> (Integer -> Bool) -> Integer -> B
 この新しい型の値を構築したり分解したりする方法を学びます。
 汎化型と汎化関数についても学びます。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

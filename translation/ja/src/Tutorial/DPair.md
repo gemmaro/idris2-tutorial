@@ -1121,5 +1121,5 @@ main = runProg $ MkTable [] _ []
 ただしこのデータ型は、値の間で満たされている何らかの契約についての証明としてのものです。
 これらにより、最終的に関数の引数と出力型に事前ないし事後の条件を定義することができます。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

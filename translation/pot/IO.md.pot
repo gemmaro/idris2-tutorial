@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-06 20:49+0900\n"
+"POT-Creation-Date: 2023-03-21 09:33+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. type: Title ##
-#: ../src/Appendices/Neovim.md:364 ../src/Tutorial/DPair.md:1191
+#: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
+#: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
@@ -29,16 +30,17 @@ msgid "Conclusion"
 msgstr ""
 
 #. type: Plain text
-#: ../src/Appendices/Neovim.md:374 ../src/Tutorial/DPair.md:1206
-#: ../src/Tutorial/DataTypes.md:1368 ../src/Tutorial/Dependent.md:910
-#: ../src/Tutorial/Eq.md:1098 ../src/Tutorial/Folds.md:1064
-#: ../src/Tutorial/Functions1.md:583 ../src/Tutorial/Functions2.md:964
-#: ../src/Tutorial/Functor.md:1427 ../src/Tutorial/IO.md:1125
-#: ../src/Tutorial/Interfaces.md:821 ../src/Tutorial/Predicates.md:1369
+#: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
+#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
+#: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 msgstr ""
 
@@ -1078,7 +1080,7 @@ msgid ""
 "makes it possible to add additional namespaces to modules. For instance, in "
 "order to define another function called `eval`, we need to add it to its own "
 "namespace (note, that all definitions in a namespace must be indented by the "
-"same amount of white space):"
+"same amount of whitespace):"
 msgstr ""
 
 #. type: Fenced code block (idris)
@@ -1136,7 +1138,7 @@ msgid ""
 "Sometimes, even *do blocks* are too noisy to express a combination of "
 "effectful computations. In this case, we can prefix the effectful parts with "
 "an exclamation mark (wrapping them in parentheses if they contain additional "
-"white space), while leaving pure expressions unmodified:"
+"whitespace), while leaving pure expressions unmodified:"
 msgstr ""
 
 #. type: Fenced code block (idris)

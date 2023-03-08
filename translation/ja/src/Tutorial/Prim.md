@@ -1204,5 +1204,5 @@ Between l u = GreaterThan l && LessThan u
 
 結びの言葉：原始型について物事を証明することは挑戦的になりえます。どんな公理を使うか決めるときもそうですし、実行時とコンパイル時とで効率良く動作するようにしようとするときもそうです。筆者はこうした問題に対処するためのライブラリの作成を試みています。まだ未完ですが[こちら](https://github.com/stefan-hoeck/idris2-prim)から垣間見ることができます。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

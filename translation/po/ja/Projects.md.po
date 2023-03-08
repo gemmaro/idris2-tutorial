@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-06 21:56+0900\n"
-"PO-Revision-Date: 2023-03-06 22:08+0900\n"
+"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"PO-Revision-Date: 2023-03-21 09:26+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -32,18 +32,18 @@ msgstr "まとめ"
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1098
+#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
 #: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
-#: ../src/Tutorial/Predicates.md:1369 ../src/Tutorial/Prim.md:1411
-#: ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
+#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 msgstr ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 
 #. type: Title #
@@ -60,6 +60,10 @@ msgid ""
 "system, visibility of types and functions, writing comments and doc strings, "
 "and using pack for managing our libraries."
 msgstr ""
+"この節ではより大きなIdrisのプロジェクトを、組織立て、インストールし、依存先に"
+"する方法をお見せしていきます。Idrisのパッケージ、モジュールシステム、型と関数"
+"の可視性、コメントとドキュメント文字列を書くこと、ライブラリの管理にpackを使"
+"うことについて一望します。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:15
@@ -71,6 +75,11 @@ msgid ""
 "us to write code that is expected to fail during elaboration (type "
 "checking). For instance:"
 msgstr ""
+"この節は既に少しでもIdrisのコードを書いたことがある全読者にとって役に立つこと"
+"でしょう。ここではあまり型水準の魔法を扱いませんが、`failing`コードブロックを"
+"使っていくつかの概念を実演します。このブロックはこれまでに見たことがないかも"
+"しれません。この比較的新しい言語への追加要素は推敲（型検査）の最中に失敗する"
+"ことが期待されるものです。例えば次の通りです。"
 
 #. type: Fenced code block (repl)
 #: ../src/Appendices/Projects.md:16
@@ -91,12 +100,15 @@ msgid ""
 "message for documentation purposes and to make sure the block fails with the "
 "expected error."
 msgstr ""
+"ドキュメンテーションの目的で失敗ブロックの一部としてコンパイラのエラー文言の"
+"部分文字列を与えることができ、ブロックが期待されたエラーで失敗することを確か"
+"められます。"
 
 #. type: Title ##
 #: ../src/Appendices/Projects.md:26
 #, no-wrap
 msgid "Modules"
-msgstr ""
+msgstr "Modules"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:30
@@ -104,14 +116,14 @@ msgid ""
 "Every Idris source file defines a *module*, typically starting with a module "
 "header like the one below:"
 msgstr ""
-"全てのIdrisのソースファイルで*module*を定義します。よく以下のようなモジュール"
-"ヘッダから始まります。"
+"全てのIdrisのソースファイルには*module*が定義されています。ファイルは大抵、以"
+"下のようなモジュールヘッダから始まります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:31
 #, no-wrap
 msgid "module Appendices.Projects\n"
-msgstr ""
+msgstr "module Appendices.Projects\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:39
@@ -121,6 +133,10 @@ msgid ""
 "stored. For instance, this module is stored in file `Appendices/Projects."
 "md`, so the module's name is `Appendices.Projects`."
 msgstr ""
+"モジュール名はドットで区切られたいくつかの大文字始まりの識別子からなります。"
+"この識別子の並びはモジュールが保管されている`.idr`ファイルのパスを反映したも"
+"のでなければなりません。例えばこのモジュールは`Appendices.Projects.md`に保管"
+"されているので、モジュール名は`Appendices.Projects`です。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:46
@@ -132,6 +148,13 @@ msgid ""
 "to the directory, from which the Idris executable is run. For instance, when "
 "in folder `src` of this project, you can open this source file like so:"
 msgstr ""
+"「でもちょっと待ってください」と言う声が聞こえます。「`Appendices`の親フォル"
+"ダについてはどうなんですか。どうして親フォルダはモジュール名の一部にならない"
+"のでしょう。」これを理解するには*ソースディレクトリ*の概念についてお話ししな"
+"ければなりません。ソースディレクトリはIdrisがソースファイルを探す場所のことで"
+"す。既定ではIdrisの実行ファイルが走っているところのディレクトリです。例えばこ"
+"のプロジェクトの`src`フォルダにいるとき、このソースファイルを次のように開くこ"
+"とができます。"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:47
@@ -145,6 +168,7 @@ msgid ""
 "This will not work, however, if you try the same thing from this project's "
 "root folder:"
 msgstr ""
+"しかし同じことをプロジェクトのルートフォルダからしようとすると動きません。"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:54
@@ -155,6 +179,10 @@ msgid ""
 "Error: Module name Appendices.Projects does not match file name \"src/Appendices/Projects.md\"\n"
 "...\n"
 msgstr ""
+"$ idris2 src/Appendices/Projects.md\n"
+"...\n"
+"Error: Module name Appendices.Projects does not match file name \"src/Appendices/Projects.md\"\n"
+"...\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:68
@@ -166,6 +194,12 @@ msgid ""
 "possible to change the source directory with the `--source-dir` command-line "
 "option. The following works from within this project's root directory:"
 msgstr ""
+"ですから、モジュール名にどのフォルダ名が含まれるのかは、ソースディレクトリと"
+"見做す親ディレクトリに依るのです。慣習としてはソースディレクトリを`src`と名付"
+"けますが、これは必須ではありません（上で述べたように既定では実際はIdrisを走ら"
+"せるディレクトリになります）。`--source-dir`コマンドラインオプションを使って"
+"ソースディレクトリを変えることができます。以下はこのプロジェクトのルートディ"
+"レクトリ中で動きます。"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:69
@@ -179,12 +213,14 @@ msgid ""
 "And the following would work from a parent directory (assuming this tutorial "
 "is stored in folder `tutorial`):"
 msgstr ""
+"そして以下は親ディレクトリから動きます（この入門書が`tutorial`フォルダに保管"
+"されていることを前提としています）。"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:76
 #, no-wrap
 msgid "idris2 --source-dir tutorial/src tutorial/src/Appendices/Projects.md\n"
-msgstr ""
+msgstr "idris2 --source-dir tutorial/src tutorial/src/Appendices/Projects.md\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:84
@@ -194,12 +230,16 @@ msgid ""
 "Afterwards, you can use pack (instead of the `idris2` executable) to start "
 "REPL sessions and load your source files."
 msgstr ""
+"しかしほとんどの場合、プロジェクトに`.ipkg`ファイルを指定し（この節の後のほう"
+"を参照）そのファイルでソースディレクトリを定義することでしょう。その後で"
+"（`idris2`実行ファイルの代わりに）packを使ってREPLセッションを開始しソース"
+"ファイルを読み込むことができます。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:85
 #, no-wrap
 msgid "Module Imports"
-msgstr ""
+msgstr "Module Imports"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:91
@@ -208,6 +248,9 @@ msgid ""
 "writing Idris code. This can be done with an `import` statement. Here are "
 "several examples showing how these might look like:"
 msgstr ""
+"Idrisのコードを書く際は、関数とデータ型をインポートする必要が出てくることがよ"
+"くあります。これは`import`文でできます。以下の数例でどんな見た目をしているの"
+"かお見せします。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:92
@@ -220,6 +263,12 @@ msgid ""
 "import Data.Vect as V\n"
 "import public Data.List1 as L\n"
 msgstr ""
+"import Data.String\n"
+"import Data.List\n"
+"import Text.CSV\n"
+"import public Appendices.Neovim\n"
+"import Data.Vect as V\n"
+"import public Data.List1 as L\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:104
@@ -228,6 +277,9 @@ msgid ""
 "about packages below): `Data.List` from the *base* package, which will be "
 "installed as part of your Idris installation."
 msgstr ""
+"最初の2行は別の*パッケージ*（パッケージについては後で学びます）からモジュール"
+"をインポートしています。`Data.List`は*base*パッケージ由来で、このパッケージは"
+"Idrisのインストール時にその一部としてインストールされたものです。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:108
@@ -236,7 +288,11 @@ msgid ""
 "directory `src`. It is always possible to import modules that are part of "
 "the same source directory as the file we are working on."
 msgstr ""
+"2行目は自分のソースディレクトリ`src`中からモジュール`Text.CSV`をインポートし"
+"ています。作業しているファイルと同じソースディレクトリの一部にあるモジュール"
+"をインポートするのはいつでもできます。"
 
+# TODO: the lot via a single catch-all module で最後のピリオドが抜けているようです。
 #. type: Plain text
 #: ../src/Appendices/Projects.md:122
 msgid ""
@@ -253,6 +309,17 @@ msgid ""
 "(https://github.com/idris-lang/Idris2).  The base library can be found in "
 "the `libs/base` subfolder."
 msgstr ""
+"3行目ではモジュール`Appendices.Neovim`をインポートしています。これも自分の"
+"ソースディレクトリからです。ただしこの`import`文は`public`キーワードが追加さ"
+"れていますね。こうするとモジュールを*再輸出*することができ、現在のモジュール"
+"に加えて他のモジュールの中でも使えるようになります。別のモジュールが"
+"`Appendices.Projects`をインポートした場合、これ以上`import`文を書かなくてもモ"
+"ジュール`Appendices.Neovim`がインポートされるのです。この機能は複雑な機能を違"
+"うモジュールに分割しておいて、1つに全部まとめるモジュールにインポートするとき"
+"に便利です。例として*base*の`Control.Monad.State`を参照してください。Idrisの"
+"ソースは[Idris2プロジェクト](https://github.com/idris-lang/Idris2)をGitHub上"
+"かクローンしてきてから見ることができます。baseライブラリは`libs/base`サブフォ"
+"ルダにあります。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:127
@@ -262,6 +329,10 @@ msgid ""
 "`B`. For instance, `Data.Vect` in *base* re-exports `Data.Fin`, because the "
 "latter is often required when working with vectors."
 msgstr ""
+"モジュール`A`の関数を使うために別のモジュール`B`のユーティリティが必要なこと"
+"はよく起こるので、そうした場合は`A`は`B`を再輸出すべきです。例えば*base*の"
+"`Data.Vect`は`Data.Fin`を再輸出しますが、これは`Data.Fin`がベクタを扱うときに"
+"よく必要になるからです。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:132
@@ -271,6 +342,10 @@ msgid ""
 "prefixing them with a module's name, this can help making your code more "
 "concise:"
 msgstr ""
+"4行目はモジュール`Data.Vect`をインポートし、新しい名前`V`を与えています。この"
+"名前はより短い接頭辞として使えます。よくモジュール名を前置して識別子の曖昧解"
+"決をする必要がある場合は、こうすることでコードをより簡潔にする助けになりま"
+"す。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:133
@@ -279,6 +354,8 @@ msgid ""
 "vectSum : Nat\n"
 "vectSum = sum $ V.fromList [1..10]\n"
 msgstr ""
+"vectSum : Nat\n"
+"vectSum = sum $ V.fromList [1..10]\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:143
@@ -289,6 +366,11 @@ msgid ""
 "type checking the tutorial)  without loading a source file from this "
 "project's root folder:"
 msgstr ""
+"最後に5行目はモジュールを公に輸入して新しい名前を与えています。そうするとこの"
+"名前は`Appendices.Projects`を介して`Data.List1`を推移的にインポートしたときの"
+"ものになります。これを見てみるために（入門書を型検査したあとで）REPLセッショ"
+"ンを始めましょう。ただしこのプロジェクトのルートディレクトリからソースファイ"
+"ルを読み込みません。"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:144
@@ -297,12 +379,16 @@ msgid ""
 "pack typecheck tutorial\n"
 "pack repl\n"
 msgstr ""
+"pack typecheck tutorial\n"
+"pack repl\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:151
 msgid ""
 "Now load module `Appendices.Projects` and checkout the type of `singleton`:"
 msgstr ""
+"そしてモジュール`Appendices.Projects`を読み込んで`singleton`の型を確認しま"
+"す。"
 
 #. type: Fenced code block (repl)
 #: ../src/Appendices/Projects.md:152
@@ -315,6 +401,12 @@ msgid ""
 "Data.List.singleton : a -> List a\n"
 "L.singleton : a -> List1 a\n"
 msgstr ""
+"Main> :module Appendices.Projects\n"
+"Imported module Appendices.Projects\n"
+"Main> :t singleton\n"
+"Data.String.singleton : Char -> String\n"
+"Data.List.singleton : a -> List a\n"
+"L.singleton : a -> List1 a\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:164
@@ -323,6 +415,8 @@ msgid ""
 "instead of `Data.List1`. It is still possible to use the \"official\" "
 "prefix, though:"
 msgstr ""
+"見ての通り`singleton`の`List1`版が`Data.List1`ではなく`L`で前置されています。"
+"ただ「公式の」接頭辞を使うことも可能のままです。"
 
 #. type: Fenced code block (repl)
 #: ../src/Appendices/Projects.md:165
@@ -333,6 +427,10 @@ msgid ""
 "Main> L.singleton 12\n"
 "12 ::: []\n"
 msgstr ""
+"Main> List1.singleton 12\n"
+"12 ::: []\n"
+"Main> L.singleton 12\n"
+"12 ::: []\n"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:172
@@ -351,6 +449,12 @@ msgid ""
 "name of the namespace. All functions which should belong to this namespace "
 "must then be indented by the same amount of whitespace."
 msgstr ""
+"時折、1つのモジュール中に同じ名前を持つ関数やデータ型を複数定義したいときがあ"
+"ります。Idrisはこれを許しませんが、それは全ての名前が*名前空間*で一意でなけれ"
+"ばならないからです。そしてモジュールの名前空間は単なる完全に修飾されたモ"
+"ジュール名です。しかし`namespace`キーワードとそれに続く名前空間名を使うことで"
+"モジュール中に追加で名前空間を定義することは可能です。この名前空間に属する全"
+"ての関数は同量の空白で字下げされなければなりません。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:184
@@ -385,6 +489,29 @@ msgid ""
 "  tail : HVect (t :: ts) -> HVect ts\n"
 "  tail (_ :: vs) = vs\n"
 msgstr ""
+"data HList : List Type -> Type where\n"
+"  Nil  : HList []\n"
+"  (::) : (v : t) -> (vs : HList ts) -> HList (t :: ts)\n"
+"\n"
+"head : HList (t :: ts) -> t\n"
+"head (v :: _) = v\n"
+"\n"
+"tail : HList (t :: ts) -> HList ts\n"
+"tail (_ :: vs) = vs\n"
+"\n"
+"namespace HVect\n"
+"  public export\n"
+"  data HVect : Vect n Type -> Type where\n"
+"    Nil  : HVect []\n"
+"    (::) : (v : t) -> (vs : HVect ts) -> HVect (t :: ts)\n"
+"\n"
+"  public export\n"
+"  head : HVect (t :: ts) -> t\n"
+"  head (v :: _) = v\n"
+"\n"
+"  public export\n"
+"  tail : HVect (t :: ts) -> HVect ts\n"
+"  tail (_ :: vs) = vs\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:222
@@ -401,6 +528,14 @@ msgid ""
 "type supporting list syntax, of which again several are in scope), which "
 "version we want:"
 msgstr ""
+"関数名`HVect.head`と`HVect.tail`及び構築子`HVect.Nil`と`HVect.(::)`は外側の名"
+"前空間 (`Appendices.Projects`) にある同名の関数と構築子と衝突するので、専用の"
+"名前空間に置かなくてはなりません。名前空間の外側から使えるようにするには輸出"
+"する必要があります（以下の可視性の節を参照）。これらの名前の曖昧解決をする必"
+"要があるときは、名前に名前空間の一部を前置すればよいです。例えば以下は曖昧解"
+"決エラーで失敗しますが、それはスコープで`head`という名前の関数が複数あって、"
+"`head`の引数（リストの構文に対応している型があり、それもスコープに複数あるの"
+"です）からはどのバージョンを使いたいのかが明らかにならないからです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:223
@@ -410,6 +545,9 @@ msgid ""
 "  whatHead : Nat\n"
 "  whatHead = head [12,\"foo\"]\n"
 msgstr ""
+"failing \"Ambiguous elaboration.\"\n"
+"  whatHead : Nat\n"
+"  whatHead = head [12,\"foo\"]\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:232
@@ -418,6 +556,9 @@ msgid ""
 "ambiguities. It is now immediately clear, that `[12,\"foo\"]` must be an "
 "`HVect`, because that's the type of `HVect.head`'s argument:"
 msgstr ""
+"`head`に名前空間の一部を前置することで両方の曖昧性を解決をすることができま"
+"す。これで`[12,\"foo\"]`が`HVect`でなければいけないことが直ちに明らかになりま"
+"した。それが`HVect.head`の引数の型だからです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:233
@@ -434,13 +575,13 @@ msgstr ""
 msgid ""
 "In the following subsection I'll make use of namespaces to demonstrate the "
 "principles of visibility."
-msgstr ""
+msgstr "以下の副節では可視性の原理を実演するために名前空間を活用していきます。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:241
 #, no-wrap
 msgid "Visibility"
-msgstr ""
+msgstr "可視性"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:248
@@ -450,6 +591,9 @@ msgid ""
 "visibility is `private`: Such a function or data type is not visible from "
 "outside its module or namespace:"
 msgstr ""
+"関数やデータ型を定義されているモジュールや名前空間の外で使うためには、*可視性"
+"*を変える必要があります。既定の可視性は`private`です。この可視性の関数やデー"
+"タ型はモジュールや名前空間の外側からは見えません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:249
@@ -463,11 +607,18 @@ msgid ""
 "  bar : Nat\n"
 "  bar = 2 * foo\n"
 msgstr ""
+"namespace Foo\n"
+"  foo : Nat\n"
+"  foo = 12\n"
+"\n"
+"failing \"Name Appendices.Projects.Foo.foo is private.\"\n"
+"  bar : Nat\n"
+"  bar = 2 * foo\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:261
 msgid "To make a function visible, annotate it with the `export` keyword:"
-msgstr ""
+msgstr "関数が見えるようにするには`export`キーワードを註釈します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:262
@@ -478,6 +629,10 @@ msgid ""
 "  square : Num a => a -> a\n"
 "  square v = v * v\n"
 msgstr ""
+"namespace Square\n"
+"  export\n"
+"  square : Num a => a -> a\n"
+"  square v = v * v\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:271
@@ -485,6 +640,8 @@ msgid ""
 "This will allow us to invoke function `square` from within other modules or "
 "namespaces (after importing `Appendices.Projects`):"
 msgstr ""
+"こうすると（`Appendices.Projects`を輸入した後に）他のモジュールや名前空間内で"
+"関数`square`を呼び出すことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:272
@@ -493,6 +650,8 @@ msgid ""
 "OneHundred : Bits8\n"
 "OneHundred = square 10\n"
 msgstr ""
+"OneHundred : Bits8\n"
+"OneHundred = square 10\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:279
@@ -500,6 +659,8 @@ msgid ""
 "However, the *implementation* of `square` will not be exported, so `square` "
 "will not reduce during elaboration:"
 msgstr ""
+"しかし`square`の*実装*は輸出されないため、`square`は推敲の際に簡約されませ"
+"ん。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:280
@@ -509,11 +670,14 @@ msgid ""
 "  checkOneHundred : OneHundred === 100\n"
 "  checkOneHundred = Refl\n"
 msgstr ""
+"failing \"Can't solve constraint between: 100 and square 10.\"\n"
+"  checkOneHundred : OneHundred === 100\n"
+"  checkOneHundred = Refl\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:287
 msgid "For this to work, we need to *publicly export* `square`:"
-msgstr ""
+msgstr "これが動くようにするには`square`を*公に輸出*する必要があります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:288
@@ -530,7 +694,18 @@ msgid ""
 "checkOneHundredAgain : OneHundredAgain === 100\n"
 "checkOneHundredAgain = Refl\n"
 msgstr ""
+"namespace SquarePub\n"
+"  public export\n"
+"  squarePub : Num a => a -> a\n"
+"  squarePub v = v * v\n"
+"\n"
+"OneHundredAgain : Bits8\n"
+"OneHundredAgain = squarePub 10\n"
+"\n"
+"checkOneHundredAgain : OneHundredAgain === 100\n"
+"checkOneHundredAgain = Refl\n"
 
+# Such function'sは誤植？
 #. type: Plain text
 #: ../src/Appendices/Projects.md:306
 msgid ""
@@ -539,6 +714,9 @@ msgid ""
 "you use a function to compute a type. Such function's *must* reduce during "
 "elaboration, otherwise they are completely useless:"
 msgstr ""
+"したがって遂行中に簡約する関数が必要なときは`export`ではなく`public export`を"
+"註釈してください。型を計算する関数を使っている場合はとくに大切です。そうした"
+"関数は推敲中の簡約が*必須*であり、公に輸出しないと完全に役に立ちません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:307
@@ -553,11 +731,19 @@ msgid ""
 "  natOrString : NatOrString\n"
 "  natOrString = Left \"foo\"\n"
 msgstr ""
+"namespace Stupid\n"
+"  export\n"
+"  0 NatOrString : Type\n"
+"  NatOrString = Either String Nat\n"
+"\n"
+"failing \"Can't solve constraint between: Either String ?b and NatOrString.\"\n"
+"  natOrString : NatOrString\n"
+"  natOrString = Left \"foo\"\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:319
 msgid "If we publicly export our type alias, everything type checks fine:"
-msgstr ""
+msgstr "型別称を公に輸出すると全型検査が正常になります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:320
@@ -571,12 +757,19 @@ msgid ""
 "natOrString : Better.NatOrString\n"
 "natOrString = Left \"bar\"\n"
 msgstr ""
+"namespace Better\n"
+"  public export\n"
+"  0 NatOrString : Type\n"
+"  NatOrString = Either String Nat\n"
+"\n"
+"natOrString : Better.NatOrString\n"
+"natOrString = Left \"bar\"\n"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:330
 #, no-wrap
 msgid "Visibility of Data Types"
-msgstr ""
+msgstr "データ型の可視性"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:337
@@ -587,6 +780,10 @@ msgid ""
 "with `export`, the type constructor is exported but not the data "
 "constructors:"
 msgstr ""
+"データ型の可視性は僅かに異なった挙動をします。`private`（既定）に設定されてい"
+"る場合、定義されている名前空間の外側では*型構築子*も*データ構築子*も見えませ"
+"ん。`export`と註釈が付いていれば型構築子は輸出されますがデータ構築子は輸出さ"
+"れません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:338
@@ -605,6 +802,18 @@ msgid ""
 "foo1 : Export.Foo\n"
 "foo1 = mkFoo1 \"foo\"\n"
 msgstr ""
+"namespace Export\n"
+"  export\n"
+"  data Foo : Type where\n"
+"    Foo1 : String -> Foo\n"
+"    Foo2 : Nat -> Foo\n"
+"\n"
+"  export\n"
+"  mkFoo1 : String -> Export.Foo\n"
+"  mkFoo1 = Foo1\n"
+"\n"
+"foo1 : Export.Foo\n"
+"foo1 = mkFoo1 \"foo\"\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:357
@@ -613,6 +822,8 @@ msgid ""
 "outside of namespace `Export`. However, we cannot use the `Foo1` constructor "
 "to create a value of type `Foo` directly:"
 msgstr ""
+"見ての通り型`Foo`と関数`mkFoo1`を名前空間`Export`の外側で使えています。しかし"
+"`Foo1`構築子を使って直接型`Foo`の値を作ることはできません。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:358
@@ -622,11 +833,14 @@ msgid ""
 "  foo : Export.Foo\n"
 "  foo = Foo1 \"foo\"\n"
 msgstr ""
+"failing \"Export.Foo1 is private.\"\n"
+"  foo : Export.Foo\n"
+"  foo = Foo1 \"foo\"\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:365
 msgid "This changes when we publicly export the data type:"
-msgstr ""
+msgstr "公にデータ型を輸出すると状況は変わります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:366
@@ -641,6 +855,14 @@ msgid ""
 "foo2 : PublicExport.Foo\n"
 "foo2 = Foo2 12\n"
 msgstr ""
+"namespace PublicExport\n"
+"  public export\n"
+"  data Foo : Type where\n"
+"    Foo1 : String -> PublicExport.Foo\n"
+"    Foo2 : Nat -> PublicExport.Foo\n"
+"\n"
+"foo2 : PublicExport.Foo\n"
+"foo2 = Foo2 12\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:381
@@ -649,6 +871,9 @@ msgid ""
 "(a type constructor) plus all its functions are exported and you can write "
 "implementations outside the namespace where they where defined:"
 msgstr ""
+"インターフェースについても同じことが言えます。公に公開されている場合、イン"
+"ターフェース（型構築子）に加えて全ての関数が輸出され、それらの関数が定義され"
+"ている名前空間の外側で実装を書くことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:382
@@ -664,6 +889,15 @@ msgid ""
 "sumSizes : Foldable t => Sized a => t a -> Nat\n"
 "sumSizes = foldl (\\n,e => n + size e) 0\n"
 msgstr ""
+"namespace PEI\n"
+"  public export\n"
+"  interface Sized a where\n"
+"    size : a -> Nat\n"
+"\n"
+"Sized Nat where size = id\n"
+"\n"
+"sumSizes : Foldable t => Sized a => t a -> Nat\n"
+"sumSizes = foldl (\\n,e => n + size e) 0\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:397
@@ -672,6 +906,9 @@ msgid ""
 "implementations outside the namespace they were defined in (but you can "
 "still use the type and its functions in your code):"
 msgstr ""
+"公に公開されていなければ、メンバー関数が定義されている名前空間の外側では実装"
+"を書くことができません（しかし型と関数についてはコードで使うことができま"
+"す）。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:398
@@ -695,12 +932,29 @@ msgid ""
 "nonEmpty : Empty a => a -> Bool\n"
 "nonEmpty = not . empty\n"
 msgstr ""
+"namespace EI\n"
+"  export\n"
+"  interface Empty a where\n"
+"    empty : a -> Bool\n"
+"\n"
+"  export\n"
+"  Empty (List a) where\n"
+"    empty [] = True\n"
+"    empty _  = False\n"
+"\n"
+"failing\n"
+"  Empty Nat where\n"
+"    empty Z = True\n"
+"    empty (S _) = False\n"
+"\n"
+"nonEmpty : Empty a => a -> Bool\n"
+"nonEmpty = not . empty\n"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:418
 #, no-wrap
 msgid "Child Namespaces"
-msgstr "子の名前空間"
+msgstr "子名前空間"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:424
@@ -710,6 +964,10 @@ msgid ""
 "better name): Modules and namespaces sharing the parent module's or "
 "namespace's prefix. For instance:"
 msgstr ""
+"時には別のモジュールや名前空間にあるプライベート関数にアクセスする必要があり"
+"ます。これは子名前空間（もっと良い名前があるといいのですが）の内側から可能で"
+"す。モジュールと名前空間は親モジュールまたは親名前空間の接頭辞を共有します。"
+"例えば次の通りです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:425
@@ -719,6 +977,9 @@ msgid ""
 "  testEmpty : Bool\n"
 "  testEmpty = nonEmpty (the (List Nat) [12])\n"
 msgstr ""
+"namespace Inner\n"
+"  testEmpty : Bool\n"
+"  testEmpty = nonEmpty (the (List Nat) [12])\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:441
@@ -732,12 +993,20 @@ msgid ""
 "module system (go have a look!).  In general, this is a rather hacky way to "
 "work around visibility constraints, but it can be useful at times."
 msgstr ""
+"見ての通り、`nonEmpty`はモジュール`Appendices.Projects`のプライベート関数です"
+"が、名前空間`Appendices.Projects.Inner`からは関数にアクセスできています。これ"
+"はモジュールについても可能です。仮にモジュール`Data.List.Magic`を書いたら、"
+"*base*のモジュール`Data.List`に定義されたプライベートの補助関数にアクセスする"
+"ことができるでしょう。事実、このIdrisのモジュールシステムの妙な癖を実演するモ"
+"ジュール`Data.List.Magic`を加えたところです（見に行ってください）。一般にこれ"
+"はどちらかと言えばハック的な可視性の制約を迂回する方法ですが、場合によっては"
+"役に立つこともあります。"
 
 #. type: Title ##
 #: ../src/Appendices/Projects.md:442
 #, no-wrap
 msgid "Parameter Blocks"
-msgstr ""
+msgstr "引数ブロック"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:450
@@ -748,6 +1017,10 @@ msgid ""
 "write more concise function signatures. I'm going to demonstrate their "
 "usability with a small example program."
 msgstr ""
+"この副節では`parameters`ブロックという言語の構成要素を眺めていきたいと思いま"
+"す。これにより複数の関数に共通する読取専用の引数（パラメータ）の集合を分配す"
+"ることができ、したがってより簡潔な関数の処方を書くことができます。小さなプロ"
+"グラムの例でどのように使うことができるか実演していきます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:457
@@ -759,6 +1032,10 @@ msgid ""
 "being made about it, and whole libraries and frameworks have been built "
 "around it."
 msgstr ""
+"外部の情報を関数で使えるようにする一番基本的な方法は追加の引数として渡すこと"
+"です。オブジェクト指向プログラミングではこの原理は時に[依存性の注入](https://"
+"en.wikipedia.org/wiki/Dependency_injection)と呼ばれて人口に膾炙しており、オブ"
+"ジェクト指向のライブラリやフレームワークはこれに基づいて構築されています。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:467
@@ -772,6 +1049,13 @@ msgid ""
 "abstracting over this concept, called the `Reader` monad. It can be found in "
 "module `Control.Monad.Reader`, in the base library."
 msgstr ""
+"関数型プログラミングではこうしたことからは完全に一歩身を引いていられます。ア"
+"プリケーションから何らかの設定データにアクセスする必要がありますか。関数に追"
+"加の引数を渡してください。ローカルな可変状態を使いたいですか。関数に追加の引"
+"数として対応する`IORef`を渡してください。引数に渡すことはかなり効率的で非常に"
+"単純です。唯一の欠点は、関数の処方を振り出しに戻してしまうことです。この考え"
+"方を抽象化するためのモナドさえあり、`Reader`モナドと呼ばれます。baseライブラ"
+"リの`Control.Monad.Reader`モジュールにあります。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:471
@@ -780,6 +1064,8 @@ msgid ""
 "search with auto implicit arguments for dependency injection. Here's some "
 "example code:"
 msgstr ""
+"しかしIdrisではもっと簡単な方法があります。依存性の注入のために証明検索と自動"
+"暗黙引数が使えるのです。以下はそうしたコード例です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:472
@@ -816,6 +1102,36 @@ msgid ""
 "  ls <- getText' n\n"
 "  c.put \"Read \\{show n} lines and \\{show . sum $ map length ls} characters.\"\n"
 msgstr ""
+"data Error : Type where\n"
+"  NoNat  : String -> Error\n"
+"  NoBool : String -> Error\n"
+"\n"
+"record Console where\n"
+"  constructor MkConsole\n"
+"  read : IO String\n"
+"  put  : String -> IO ()\n"
+"\n"
+"record ErrorHandler where\n"
+"  constructor MkHandler\n"
+"  handle : Error -> IO ()\n"
+"\n"
+"getCount' : (h : ErrorHandler) => (c : Console) => IO Nat\n"
+"getCount' = do\n"
+"  str <- c.read\n"
+"  case parsePositive str of\n"
+"    Nothing => h.handle (NoNat str) $> 0\n"
+"    Just n  => pure n\n"
+"\n"
+"getText' : (h : ErrorHandler) => (c : Console) => (n : Nat) -> IO (Vect n String)\n"
+"getText' n = sequence $ replicate n c.read\n"
+"\n"
+"prog' : ErrorHandler => (c : Console) => IO ()\n"
+"prog' = do\n"
+"  c.put \"Please enter the number of lines to read.\"\n"
+"  n  <- getCount'\n"
+"  c.put \"Please enter \\{show n} lines of text.\"\n"
+"  ls <- getText' n\n"
+"  c.put \"Read \\{show n} lines and \\{show . sum $ map length ls} characters.\"\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:520
@@ -835,6 +1151,18 @@ msgid ""
 "a value of type `Console` can be viewed as an *object* of this class, on "
 "which we can invoke those methods."
 msgstr ""
+"プログラムの例は何らかの`Console`型から入力を読み、また出力を印字します。この"
+"型の実装は関数の呼び出し側に委ねられています。これは典型的な依存性の注入の例"
+"になっています。`IO`アクションはテキストの数行をどう読み書きしたらいいのかを"
+"知りませんが（例えば直接`putStrLn`や`getLine`を呼び出したりはしません）、外部"
+"の*オブジェクト*によってこうしたタスクを扱ってくれます。これにより例えばテス"
+"ト時に単純な*モックオブジェクト*を使い、実際のアプリケーションを走らせるとき"
+"は、2つのファイル制御子やデータベース接続を使うことができます。オブジェクト指"
+"向プログラミングでよく見られる典型的な技法が存在し、事実、この例は典型的なオ"
+"ブジェクト指向のパターンを純粋に関数型プログラミング言語でエミュレートしたも"
+"のになります。`Console`のような型は機能（*メソッド*`read`および`put`）を提供"
+"する*クラス*として見ることができ、型`Console`の値はこのクラスの*オブジェクト*"
+"として見ることができます。その値はこれらのメソッドを呼び出すことができます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:525
@@ -844,7 +1172,12 @@ msgid ""
 "to a log file at the same time. Whatever it does, our functions need not "
 "care."
 msgstr ""
+"エラー制御についても同じことが言えます。エラー制御子を、どんなエラーが起こっ"
+"ても静かに無視するようにさせることができますし、`stderr`に印字しつつ同時にロ"
+"グファイルに書き込むようにすることもできます。どんなことが起ころうと関数は意"
+"に介しません。"
 
+# TODO: parameterはparametersの間違いかもしれません
 #. type: Plain text
 #: ../src/Appendices/Projects.md:536
 msgid ""
@@ -858,6 +1191,14 @@ msgid ""
 "listed with each function, thus decluttering our function signatures.  "
 "Here's the example from above in a parameter block:"
 msgstr ""
+"しかしこのとても単純な例であっても既に追加の関数引数を導入していますよね。そ"
+"して実世界のアプリケーションともなるとより多くの引数が必要になるでしょうし、"
+"関数の処方が膨れ上がってしまうことは容易に想像が付きます。朗報ですが、Idrisに"
+"はこのためのとても明快で単純な解決法があります。`parameters`ブロックです。こ"
+"のブロックではブロック内に挙げられた全ての関数で共通する（関数の引数を変えな"
+"い）*引数*のリストを指定することができます。そうすればこうした引数はそれぞれ"
+"の関数でリストにする必要はなく、もう関数の処方を散らかしてしまうこともありま"
+"せん。以下は上の例で引数ブロックを使ったものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:537
@@ -882,6 +1223,24 @@ msgid ""
 "    ls <- getText n\n"
 "    c.put \"Read \\{show n} lines and \\{show . sum $ map length ls} characters.\"\n"
 msgstr ""
+"parameters {auto c : Console} {auto h : ErrorHandler}\n"
+"  getCount : IO Nat\n"
+"  getCount = do\n"
+"    str <- c.read\n"
+"    case parsePositive str of\n"
+"      Nothing => h.handle (NoNat str) $> 0\n"
+"      Just n  => pure n\n"
+"\n"
+"  getText : (n : Nat) -> IO (Vect n String)\n"
+"  getText n = sequence $ replicate n c.read\n"
+"\n"
+"  prog : IO ()\n"
+"  prog = do\n"
+"    c.put \"Please enter the number of lines to read.\"\n"
+"    n  <- getCount\n"
+"    c.put \"Please enter \\{show n} lines of text.\"\n"
+"    ls <- getText n\n"
+"    c.put \"Read \\{show n} lines and \\{show . sum $ map length ls} characters.\"\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:564
@@ -893,6 +1252,11 @@ msgid ""
 "block, even when invoking them from other parameter blocks with the same "
 "explicit argument. This can be rather confusing."
 msgstr ""
+"`parameters`ブロック中の引数としていくらでも（暗黙子、明示子、自動暗黙子、名"
+"前付き、名前なしのような）任意の引数を自由に挙げることができますが、一番のは"
+"たらきを見せるのは暗黙子と自動暗黙子の引数のときです。明示引数は引数ブロック"
+"で関数に明示的に渡さねばならず、同じ明示引数を持つ他の引数ブロックから呼び出"
+"すときもそうなります。これはむしろ紛らわしくなりえます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:568
@@ -901,6 +1265,9 @@ msgid ""
 "Note, how we explicitly assemble the `Console` and `ErrorHandler` to be used "
 "when invoking `prog`."
 msgstr ""
+"この例を締め括るにあたって、以下はプログラムを走らせるメイン関数です。`prog`"
+"を呼び出すときに`Console`と`ErrorHandler`を明示的に組み合わせて使われていると"
+"ころに注目してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:569
@@ -912,6 +1279,11 @@ msgid ""
 "      err  := MkHandler (const $ putStrLn \"It didn't work\")\n"
 "   in prog\n"
 msgstr ""
+"main : IO ()\n"
+"main =\n"
+"  let cons := MkConsole (trim <$> getLine) putStrLn\n"
+"      err  := MkHandler (const $ putStrLn \"It didn't work\")\n"
+"   in prog\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:580
@@ -920,6 +1292,9 @@ msgid ""
 "application of parameter blocks. They are useful in general whenever we have "
 "repeating argument lists for several functions."
 msgstr ""
+"自動暗黙引数を介した依存性の注入は引数ブロックがなしえる実例の1つに過ぎませ"
+"ん。このブロックは複数の関数で繰り返し登場する引数のリストがあるときは常に一"
+"般に有用です。"
 
 #. type: Title ##
 #: ../src/Appendices/Projects.md:581
@@ -936,12 +1311,16 @@ msgid ""
 "implementation details and docstrings describing the intent and "
 "functionality of exported data types and functions."
 msgstr ""
+"ドキュメンテーションは鍵です。自分が書いたライブラリを使う他のプログラマや"
+"コードを理解しようとする人々（将来の自分自身を含む）のためのものであって、非"
+"自明な実装の詳細を説明するコメントや輸出されたデータ型と関数の意図と機能を記"
+"述するドキュメント文字列でコードに註釈を付けることは大事です。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:589
 #, no-wrap
 msgid "Comments"
-msgstr ""
+msgstr "コメント"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:593
@@ -949,6 +1328,8 @@ msgid ""
 "Writing a comment in an Idris source file is as simple as adding some text "
 "after two hyphens:"
 msgstr ""
+"Idrisのソースファイルにコメントを書くには、単に2つのハイフンに続けてテキスト"
+"を書き加えるだけです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:594
@@ -958,6 +1339,9 @@ msgid ""
 "boring : Bits8 -> Bits8\n"
 "boring a = a -- probably I should just use `id` from the Prelude\n"
 msgstr ""
+"-- これは全き退屈なコメント\n"
+"boring : Bits8 -> Bits8\n"
+"boring a = a -- 恐らく単にPreludeの`id`を使うべき\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:603
@@ -965,13 +1349,15 @@ msgid ""
 "Whenever a line contains two hyphens that are not part of a string literal, "
 "the remainder of the line will be interpreted as a comment by Idris."
 msgstr ""
+"文字列表記の一部でない2つのハイフンを含む行は皆、ハイフン以降の部分がIdrisに"
+"よってコメントとして解釈されます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:606
 msgid ""
 "It is also possible to write multiline comments using delimiters `{-` and `-}"
 "`:"
-msgstr ""
+msgstr "仕切り`{-`及び`-}`を使って複数行コメントを書くこともできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:607
@@ -983,12 +1369,17 @@ msgid ""
 "  type errors in a larger source file.\n"
 "-}\n"
 msgstr ""
+"{-\n"
+"  これは複数行コメントです。\n"
+"  コードのブロック全体をコメントアウトするのに使えます。\n"
+"  例えば比較的大きなファイルで複数の型エラーがあったときとかです。\n"
+"-}\n"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:615
 #, no-wrap
 msgid "Doc Strings"
-msgstr ""
+msgstr "ドキュメント文字列"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:621
@@ -997,6 +1388,9 @@ msgid ""
 "our source code, doc strings provide documentation for exported functions "
 "and data types, explaining their intent and behavior to others."
 msgstr ""
+"コメントはソースコードを読んで理解しようとするプログラマを対象にするものです"
+"が、ドキュメント文字列は輸出される関数とデータ型にドキュメンテーションを提供"
+"するもので、他者にその意図や挙動を説明するためのものです。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:623
@@ -1018,6 +1412,14 @@ msgid ""
 "firstTwo (x :: y :: _) = Just (x,y)\n"
 "firstTwo _             = Nothing\n"
 msgstr ""
+"||| リストの先頭から最初の2要素を取り出そうとします。\n"
+"|||\n"
+"||| リストに2つ以上の要素があれば値の対を`Just`に包んで返します。\n"
+"||| リストが2要素より少なければ`Nothing`を返します。\n"
+"export\n"
+"firstTwo : List a -> Maybe (a,a)\n"
+"firstTwo (x :: y :: _) = Just (x,y)\n"
+"firstTwo _             = Nothing\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:638
@@ -1038,12 +1440,22 @@ msgid ""
 "  than two elements.\n"
 "  Visibility: export\n"
 msgstr ""
+"Appendices.Projects> :doc firstTwo\n"
+"Appendices.Projects.firstTwo : List a -> Maybe (a,a)\n"
+"  Tries to extract the first two elements from the beginning\n"
+"  of a list.\n"
+"\n"
+"  Returns a pair of values wrapped in a `Just` if the list has\n"
+"  two elements or more. Returns `Nothing` if the list has fewer\n"
+"  than two elements.\n"
+"  Visibility: export\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:653
 msgid "We can document data types and their constructors in a similar manner:"
-msgstr ""
+msgstr "データ型やその構築子も似たような風にドキュメントを書けます。"
 
+# TODO: index -> indexed
 #. type: Fenced code block (idris)
 #: ../src/Appendices/Projects.md:654
 #, no-wrap
@@ -1060,6 +1472,17 @@ msgid ""
 "  ||| A branch unifying two subtrees.\n"
 "  Branch : Tree m a -> Tree n a -> Tree (m + n) a\n"
 msgstr ""
+"||| 保管されている値の数で指標付けられた二分木\n"
+"|||\n"
+"||| @param `n` : `Tree`に保管されている値の数\n"
+"||| @param `a` : `Tree`で保管されている値の型\n"
+"public export\n"
+"data Tree : (n : Nat) -> (a : Type) -> Type where\n"
+"  ||| 二分木の葉に保管されている単一の値\n"
+"  Leaf   : (v : a) -> Tree 1 a\n"
+"\n"
+"  ||| 2つの部分木を結わえる分枝\n"
+"  Branch : Tree m a -> Tree n a -> Tree (m + n) a\n"
 
 # TODO: this generatesはthat generatesの誤植？
 #. type: Plain text
@@ -1078,12 +1501,18 @@ msgid ""
 "document and annotate our code, so should take our time and do so. It is "
 "time well spent."
 msgstr ""
+"コードにドキュメントを書くことは大変重要です。これに気付くのは、ひとたび他の"
+"人のコードを理解しようとしたり、自分でそれなりの規模のコードを書いたのち数カ"
+"月間触れない状態が続いたあとに読み返したりするときです。充分にドキュメント化"
+"されていないと、気の晴れないことになるかもしれません。Idrisではコードにドキュ"
+"メントを書いたり註釈を付けたりするのに必要なツールが提供されているので、そう"
+"いったことをする時間は取るべきです。ドキュメントを書くことは愉快なことです。"
 
 #. type: Title ##
 #: ../src/Appendices/Projects.md:679
 #, no-wrap
 msgid "Packages"
-msgstr ""
+msgstr "パッケージ"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:686
@@ -1093,12 +1522,16 @@ msgid ""
 "this section, we are going to learn about the structure of an Idris package "
 "and how to depend on other packages in our projects."
 msgstr ""
+"Idrisのパッケージがあると複数のモジュールを1つの論理的な単位にまとめて、パッ"
+"ケージを*インストール*することによって他のIdrisのプロジェクトから使えるように"
+"することができます。この節ではIdrisのパッケージの構造とプロジェクトで他のパッ"
+"ケージに依存する方法について学んでいきます。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:687
 #, no-wrap
 msgid "The `.ipkg` File"
-msgstr ""
+msgstr "The `.ipkg` File"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:693
@@ -1108,6 +1541,10 @@ msgid ""
 "this Idris tutorial, there is file `tutorial.ipkg` at the tutorial's root "
 "directory."
 msgstr ""
+"Idrisのパッケージの核心は`.ipkg`ファイルにあります。このファイルは大抵プロ"
+"ジェクトのルートディレクトリに保管されますが、必須ではありません。例えばこの"
+"Idrisの入門書では、入門書のルートディレクトリに`tutorial.ipkg`ファイルがあり"
+"ます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:699
@@ -1117,23 +1554,27 @@ msgid ""
 "setup a new Idris project is by letting pack or Idris itself do it for you. "
 "Just run"
 msgstr ""
+"`.ipkg`ファイルは複数のキーバリュー対（ほとんどがオプション）から構成され、そ"
+"のうち重要なものをここに記述していきます。今のところ新しいIdrisのプロジェクト"
+"を立ち上げる最も簡単な方法はpackまたはIdris自体を使うことです。以下を走らせる"
+"だけです。"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:700
 #, no-wrap
 msgid "pack new lib pkgname\n"
-msgstr ""
+msgstr "pack new lib pkgname\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:705
 msgid "to create the skeleton of a new library or"
-msgstr ""
+msgstr "上記は新しいライブラリの骨子をつくります。あるいは"
 
 #. type: Fenced code block (sh)
 #: ../src/Appendices/Projects.md:706
 #, no-wrap
 msgid "pack new bin appname\n"
-msgstr ""
+msgstr "pack new bin appname\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:713
@@ -1142,6 +1583,9 @@ msgid ""
 "suitable `.ipkg` file, these commands will also add a `pack.toml` file, "
 "which we will discuss further below."
 msgstr ""
+"とすると新しいアプリケーションを立ち上げます。新しいディレクトリと相応しい`."
+"ipkg`ファイルを作るのに加えて、これらのコマンドは`pack.toml`ファイルも追加し"
+"ます。このファイルについて詳しくは後述します。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:714
@@ -1157,6 +1601,10 @@ msgid ""
 "[*hedgehog* package](https://github.com/stefan-hoeck/idris2-hedgehog), a "
 "framework for writing property tests in Idris:"
 msgstr ""
+"`.ipkg`ファイルの最重要の側面の1つは、`depends`フィールドにライブラリが依存す"
+"るパッケージを一覧にすることです。以下は[*hedgehog*パッケージ](https://"
+"github.com/stefan-hoeck/idris2-hedgehog)からの例です。このパッケージはIdrisで"
+"性質テストを書くための枠組みです。"
 
 #. type: Fenced code block (ipkg)
 #: ../src/Appendices/Projects.md:722
@@ -1168,6 +1616,11 @@ msgid ""
 "           , pretty-show  >= 0.5.0\n"
 "           , sop          >= 0.5.0\n"
 msgstr ""
+"depends    = base         >= 0.5.1\n"
+"           , contrib      >= 0.5.1\n"
+"           , elab-util    >= 0.5.0\n"
+"           , pretty-show  >= 0.5.0\n"
+"           , sop          >= 0.5.0\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:745
@@ -1184,6 +1637,16 @@ msgid ""
 "show), a library for pretty printing Idris values (*hedgehog* makes use of "
 "this in case a test fails)."
 msgstr ""
+"見ての通り*hedgehog*は*base*と*contrib*に依存しており、両方ともIdrisのインス"
+"トールに含まれる一部です。しかし[*elab-util*](https://github.com/stefan-"
+"hoeck/idris2-elab-util)という推敲スクリプトを書くためのユーティリティライブラ"
+"リ（Idrisのコードを書くことによってIdrisの宣言を作る強力な技法です。ご興味が"
+"あれば分量のある入門書があるのでどうぞ）、[*sop*](https://github.com/stefan-"
+"hoeck/idris2-sop)という*積和*表現を介してインターフェースの実装を一般的に導出"
+"するライブラリ（便利なものでいつの日にか確認したくなるでしょう）、[*pretty-"
+"show*](https://github.com/stefan-hoeck/idris2-pretty-show)というIdrisの値を綺"
+"麗に印字するためのライブラリ（*hedgehog*はこれをテストが失敗した場合に活用し"
+"ています）にも依存しています。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:752
@@ -1193,6 +1656,10 @@ msgid ""
 "installing *hedgehog* itself. Since this can be tedious to do manually, it "
 "is best let a package manager like pack handle this task for you."
 msgstr ""
+"なので自分のプロジェクトで性質テストを書くのに実際に*hedgehog*を使えるように"
+"なるまでには、*hedgehog*自体をインストールする前にそれに依存するパッケージを"
+"インストールする必要があるでしょう。こうしたことを手作業でするのは億劫なので"
+"packのようなパッケージ管理に対応してもらうのが一番です。"
 
 #. type: Title ####
 #: ../src/Appendices/Projects.md:753
@@ -1208,6 +1675,10 @@ msgid ""
 "the same package installed and not all of them are compatible with your "
 "project.  Here are several examples:"
 msgstr ""
+"Idrisが依存関係に使うべきバージョンを特定のもの（あるいは範囲）に指定したいこ"
+"とがあるでしょう。この指定ができると、同じパッケージの複数のバージョンがイン"
+"ストールされていて、全部が全部プロジェクトと互換性があるわけではないようなと"
+"きに、役に立つことでしょう。以下にいくつかの例を示します。"
 
 #. type: Fenced code block (ipkg)
 #: ../src/Appendices/Projects.md:761
@@ -1219,6 +1690,11 @@ msgid ""
 "           , pretty-show\n"
 "           , sop          >= 0.5.0 && < 0.6.0\n"
 msgstr ""
+"depends    = base         == 0.5.1\n"
+"           , contrib      == 0.5.1\n"
+"           , elab-util    >= 0.5.0\n"
+"           , pretty-show\n"
+"           , sop          >= 0.5.0 && < 0.6.0\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:776
@@ -1229,6 +1705,11 @@ msgid ""
 "given range. In all cases, if several installed versions of a package match "
 "the specified range, the latest version will be used."
 msgstr ""
+"このようにすると、パッケージ*base*と*contrib*は厳密に与えられたバージョンを、"
+"パッケージ*elab-util*は`0.5.0`以上のバージョンを、パッケージ*pretty-show*はど"
+"んなバージョンも、パッケージ*sop*は与えられた範囲内のバージョンを、それぞれ探"
+"し出すことになります。全ての場合において、指定された範囲に合致するパッケージ"
+"のインストールされたバージョンが複数ある場合、最新版が使用されます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:780
@@ -1236,6 +1717,8 @@ msgid ""
 "In order to make use of this for your own packages, every `.ipkg` file "
 "should give the package's name and current version:"
 msgstr ""
+"自分のパッケージでこの依存関係の指定が使えるようにするためには、`.ipkg`ファイ"
+"ルには必ずパッケージ名と現在のバージョンを与えるべきです。"
 
 #. type: Fenced code block (ipkg)
 #: ../src/Appendices/Projects.md:781
@@ -1245,6 +1728,9 @@ msgid ""
 "\n"
 "version    = 0.1.0\n"
 msgstr ""
+"package tutorial\n"
+"\n"
+"version    = 0.1.0\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:792
@@ -1254,12 +1740,16 @@ msgid ""
 "to consider restricting the versions of packages you accept in order to make "
 "sure you catch any braking changes introduced upstream."
 msgstr ""
+"後述するようにpackと厳選されたパッケージコレクションを使う際はあまりパッケー"
+"ジのバージョンは大事な役割を持ちません。しかしそれでも最前線で導入された破壊"
+"的な変更を確実に察知できるようにするために、パッケージのバージョンを制限する"
+"ことを検討したいこともあるでしょう。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:793
 #, no-wrap
 msgid "Library Modules"
-msgstr ""
+msgstr "ライブラリのモジュール"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:806
@@ -1274,6 +1764,15 @@ msgid ""
 "*prelude*, *base*, and *contrib*, which provide basic data types and "
 "functions useful in most Idris projects."
 msgstr ""
+"GitHubで入手できるIdrisのパッケージはほとんどでないとしてもその多くがプログラ"
+"ミング用の*ライブラリ*です。これらのライブラリは何らかの機能を実装していて、"
+"与えられたパッケージに依存する全てのプロジェクトで使うことができるものです。"
+"これはIdrisの*アプリケーション*とは違います。アプリケーションは実行ファイルに"
+"コンパイルしてコンピュータで走らせられるもののはずです。Idrisのプロジェクト自"
+"体は両方を提供しています。1つはIdrisのコンパイラのアプリケーションで、Idrisの"
+"ライブラリとアプリケーションを型検査してビルドするのに使います。もう1つは"
+"*prelude*、*base*、*contrib*のようないくつかのライブラリで、ほとんどのIdrisの"
+"プロジェクトで便利な基本的なデータ型と関数を提供します。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:810
@@ -1282,6 +1781,9 @@ msgid ""
 "must list them in the `.ipkg` file's `modules` field.  Here is an excerpt "
 "from the *sop* package:"
 msgstr ""
+"ライブラリで書いたモジュールを型検査してインストールするためには、`.ipkg`ファ"
+"イルの`modules`フィールドにそれらを列挙しなければなりません。以下は*sop*パッ"
+"ケージからの抜粋です。"
 
 #. type: Fenced code block (ipkg)
 #: ../src/Appendices/Projects.md:811
@@ -1296,6 +1798,14 @@ msgid ""
 "        , Data.SOP.SOP\n"
 "        , Data.SOP.Utils\n"
 msgstr ""
+"modules = Data.Lazy\n"
+"        , Data.SOP\n"
+"        , Data.SOP.Interfaces\n"
+"        , Data.SOP.NP\n"
+"        , Data.SOP.NS\n"
+"        , Data.SOP.POP\n"
+"        , Data.SOP.SOP\n"
+"        , Data.SOP.Utils\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:824
@@ -1303,12 +1813,14 @@ msgid ""
 "Modules missing from this list will *not* be installed and hence will not be "
 "available for other packages depending on the sop library."
 msgstr ""
+"この一覧に欠けているモジュールはインストール*されず*、そのためsopライブラリに"
+"依存する別のパッケージからは決して利用できません。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:825
 #, no-wrap
 msgid "Pack and its curated Collection of Packages"
-msgstr ""
+msgstr "packと厳選されたパッケージのコレクション"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:833
@@ -1320,6 +1832,12 @@ msgid ""
 "situation can be nigh to impossible to resolve, and can lead to a lot of "
 "frustration when working with conflicting libraries."
 msgstr ""
+"プロジェウトの依存関係グラフがより大きく複雑なものになってきたとき、つまりプ"
+"ロジェクトが多くのライブラリに依存していて、そのライブラリもまた他のライブラ"
+"リに依存しているとき、2つのパッケージが両方とも、第三のパッケージの異なる……そ"
+"して非互換の可能性がある……バージョンに依存しているということは起こりえます。"
+"この状況は解決することが不可能に近いことがあり、競合するライブラリに対処する"
+"際はかなりいらいらすることになりかねません。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:841
@@ -1332,6 +1850,13 @@ msgid ""
 "packages available to pack [here](https://github.com/stefan-hoeck/idris2-"
 "pack-db/blob/main/STATUS.md)."
 msgstr ""
+"したがってpackプロジェクトの考え方として、そのような状況を避けるために、初め"
+"から*厳選されたパッケージコレクション*を活用することとしています。packのコレ"
+"クションはIdrisのコンパイラとパッケージの集まりからなるGitのコミットから構成"
+"されており、それぞれのGitのコミットについて、コレクション中の全てのものが一緒"
+"に使っても正常に動作し問題がないことを検査されているのです。packで使えるパッ"
+"ケージの一覧は[here](https://github.com/stefan-hoeck/idris2-pack-db/blob/"
+"main/STATUS.md)で見ることができます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:852
@@ -1346,6 +1871,15 @@ msgid ""
 "either specify a dependency local to your system or a Git project (local or "
 "remote). An example for each is shown below:"
 msgstr ""
+"作業しているプロジェクトがpackのパッケージコレクションの一覧にあるライブラリ"
+"の1つに依存しているなら、packは自動的にそのライブラリとその依存関係インストー"
+"ルしてくれます。しかしpackのコレクションにまだ含まれていないライブラリへの依"
+"存関係を作りたいこともあるでしょう。その場合問題のライブラリをどこかの`pack."
+"toml`ファイルに指定しなければなりません。このファイルは、大域的なものだと`"
+"$HOME/.pack/user/pack.toml`にあり、ローカルなものは現在のプロジェクトや（もし"
+"あれば）その親ディレクトリのどこかにあるものです。そのファイルでは、システム"
+"上またはGitのプロジェクト（ローカルまたはリモート）にある依存関係を指定するこ"
+"とができます。それぞれについての例は以下の通りです。"
 
 #. type: Fenced code block (toml)
 #: ../src/Appendices/Projects.md:853
@@ -1362,6 +1896,16 @@ msgid ""
 "commit = \"latest:main\"\n"
 "ipkg   = \"bar.ipkg\"\n"
 msgstr ""
+"[custom.all.foo]\n"
+"type = \"local\"\n"
+"path = \"/path/to/foo\"\n"
+"ipkg = \"foo.ipkg\"\n"
+"\n"
+"[custom.all.bar]\n"
+"type   = \"github\"\n"
+"url    = \"https://github.com/me/bar\"\n"
+"commit = \"latest:main\"\n"
+"ipkg   = \"bar.ipkg\"\n"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:872
@@ -1372,6 +1916,11 @@ msgid ""
 "example above, we want to use the latest commit from the `main` branch. We "
 "can use `pack fetch` to fetch and store the currently latest commit hash."
 msgstr ""
+"見ての通り両方の場合について、プロジェクトがどこで見つかるかということと、`."
+"ipkg`ファイルの名前と場所を指定せねばなりません。Gitのプロジェクトの場合、使"
+"うコミットをpackに伝える必要があります。上の例では`main`ブランチの最新コミッ"
+"トを使いたいとしています。`pack fetch`を使って現在の最新コミットのハッシュを"
+"格納することができます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:877
@@ -1381,6 +1930,10 @@ msgid ""
 "in your own project's `.ipkg` file and pack will automatically install them "
 "for you."
 msgstr ""
+"上で与えられているような項目が、packに独自のライブラリの対応を追加するのに必"
+"要なことの全てです。これで自分のプロジェクトの`.ipkg`ファイルに依存関係として"
+"これらのライブラリを挙げることができ、packはそれらの依存関係を自動的にインス"
+"トールしてくれます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:888
@@ -1394,3 +1947,11 @@ msgid ""
 "libraries in an Idris project and how to use pack to help us keep track of "
 "these dependencies."
 msgstr ""
+"Idrisのプロジェクトを構築することについての節を締め括ります。いくつかの種類の"
+"コードブロックについて学んできました。`failing`ブロックは推敲でコード片が失敗"
+"することを示すものであり、`namespace`には同じソースファイル中でオーバーロード"
+"された名前があり、引数ブロックは複数の関数で引数のリストを共有するものでし"
+"た。そしていくつかのソースファイルを1つのIdrisのライブラリやアプリケーション"
+"にまとめる方法についても学びました。最後に、Idrisのプロジェクトに外部のライブ"
+"ラリを含める方法とこうした依存関係をpackに管理してもらうための方法を学びまし"
+"た。"

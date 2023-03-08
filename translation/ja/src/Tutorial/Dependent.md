@@ -818,5 +818,5 @@ replicate'' {n = S _} v = v :: replicate'' v
 
 [次節](IO.md)では、そろそろ副作用のあるプログラムを*純粋*なまま書く方法について学びましょう。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

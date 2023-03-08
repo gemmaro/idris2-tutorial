@@ -1030,11 +1030,12 @@ Pattern](https://www.cs.ox.ac.uk/jeremy.gibbons/publications/iterator.pdf)はか
   複数の作用付き計算を1回の巡回で走らせることができます。
 * 巡回可能性も合成の元で閉じているため、`traverse`を使って入れ子の容器を操作することができます。
 
-ここまででが*Prelude*の高階インターフェースの導入のまとめになります。
-これらのインターフェースは`Functor`に始まり、`Applicative`や`Monad`、
-そして`Foldable`に移り、そしてこれらに優るとも劣らぬ`Traversable`で締め括りました。
-まだ1つ欠けている`Alternative`がありますが、これはもう少し待たねばなりません。
-なぜならまず、いくつかのより型水準の魔術で脳を煙に巻かなくてはならないからです。
+For now, this concludes our introduction of the *Prelude*'s higher-kinded
+interfaces, which started with the introduction of `Functor`, `Applicative`,
+and `Monad`, before moving on to `Foldable`, and - last but definitely not
+least - `Traversable`.  There's one still missing - `Alternative` - but this
+will have to wait a bit longer, because we need to first make our brains
+smoke with some more [type-level wizardry](./DPair.md).
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

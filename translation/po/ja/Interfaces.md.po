@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-10-08 16:04+0900\n"
-"PO-Revision-Date: 2022-08-17 09:36+0900\n"
+"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"PO-Revision-Date: 2023-03-21 09:39+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. type: Title ##
-#: ../src/Appendices/Neovim.md:364 ../src/Tutorial/DPair.md:1191
+#: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
+#: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
@@ -29,19 +30,20 @@ msgid "Conclusion"
 msgstr "まとめ"
 
 #. type: Plain text
-#: ../src/Appendices/Neovim.md:374 ../src/Tutorial/DPair.md:1206
-#: ../src/Tutorial/DataTypes.md:1368 ../src/Tutorial/Dependent.md:910
-#: ../src/Tutorial/Eq.md:1098 ../src/Tutorial/Folds.md:1064
-#: ../src/Tutorial/Functions1.md:583 ../src/Tutorial/Functions2.md:964
-#: ../src/Tutorial/Functor.md:1427 ../src/Tutorial/IO.md:1125
-#: ../src/Tutorial/Interfaces.md:821 ../src/Tutorial/Predicates.md:1369
+#: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
+#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
+#: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 msgstr ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 
 #. type: Title ###
