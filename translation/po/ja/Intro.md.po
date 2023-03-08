@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-06 20:57+0900\n"
-"PO-Revision-Date: 2023-03-06 21:41+0900\n"
+"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"PO-Revision-Date: 2023-03-21 09:39+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -15,6 +15,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#. type: Plain text
+#: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
+#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
+#: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
+#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#, no-wrap
+msgid ""
+"<!-- vi: filetype=idris2:syntax=markdown\n"
+"-->\n"
+msgstr ""
+"<!-- vi: filetype=idris2:syntax=markdown\n"
+"-->\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Dependent.md:1 ../src/Tutorial/Intro.md:90
@@ -1079,7 +1096,7 @@ msgstr ""
 "定義には、識別子（名前）、型、そして実装があるのでした。"
 
 #. type: Plain text
-#: ../src/Tutorial/Intro.md:450
+#: ../src/Tutorial/Intro.md:451
 msgid ""
 "In the [next chapter](Functions1.md), we start programming in Idris for "
 "real. We learn how to write our own pure functions, how functions compose, "

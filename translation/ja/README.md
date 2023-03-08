@@ -105,7 +105,7 @@ Haskellのような他の純粋関数型プログラミング言語を使った�
 
 1. [packとIdris2で始めよう](src/Appendices/Install.md)
 2. [Neovimでの対話的編集](src/Appendices/Neovim.md)
-3. [Idrisのプロジェクトを構築する](src/Appendices/Neovim.md)
+3. [Idrisのプロジェクトを構築する](src/Appendices/Projects.md)
 
 ## 予め必要なもの
 

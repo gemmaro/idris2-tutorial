@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-08-17 08:59+0900\n"
-"PO-Revision-Date: 2022-08-17 08:59+0900\n"
+"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"PO-Revision-Date: 2023-03-21 09:43+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. type: Title ##
-#: ../src/Appendices/Neovim.md:364 ../src/Tutorial/DPair.md:1191
+#: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
+#: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
@@ -29,19 +30,20 @@ msgid "Conclusion"
 msgstr "まとめ"
 
 #. type: Plain text
-#: ../src/Appendices/Neovim.md:374 ../src/Tutorial/DPair.md:1206
-#: ../src/Tutorial/DataTypes.md:1368 ../src/Tutorial/Dependent.md:910
-#: ../src/Tutorial/Eq.md:1098 ../src/Tutorial/Folds.md:1064
-#: ../src/Tutorial/Functions1.md:583 ../src/Tutorial/Functions2.md:964
-#: ../src/Tutorial/Functor.md:1427 ../src/Tutorial/IO.md:1125
-#: ../src/Tutorial/Interfaces.md:821 ../src/Tutorial/Predicates.md:1369
+#: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
+#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
+#: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 msgstr ""
-"<!-- vi: filetype=idris2\n"
+"<!-- vi: filetype=idris2:syntax=markdown\n"
 "-->\n"
 
 #. type: Title ###
@@ -1519,16 +1521,14 @@ msgid ""
 "makes it possible to add additional namespaces to modules. For instance, in "
 "order to define another function called `eval`, we need to add it to its own "
 "namespace (note, that all definitions in a namespace must be indented by the "
-"same amount of white space):"
+"same amount of whitespace):"
 msgstr ""
-"関数名は名前空間で唯一でなければいけない一方で、\n"
-"それでも1つのIdrisのモジュールで2つのオーバーロードされた版の関数を定義したい"
-"ときがあるかもしれないので、\n"
-"Idrisではモジュールに追加の名前空間を加えられます。\n"
-"例えば`eval`という名前の別の関数を定義するためには、\n"
-"それ自身の名前空間に加える必要があります。\n"
-"（1つの名前空間中の全定義が同量の空白文字で前置されなければいけないことに注意"
-"です。）"
+"関数名は名前空間で唯一でなければいけませんが、それでも1つのIdrisのモジュール"
+"で2つのオーバーロードされた版の関数を定義したいときがあるかもしれないので、"
+"Idrisではモジュールに追加の名前空間を加えることができます。例えば`eval`という"
+"名前の別の関数を定義するためには、その関数のためのの名前空間に加える必要があ"
+"ります（1つの名前空間中の全定義が同量の空白文字で前置されなければいけないこと"
+"に注意です）。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/IO.md:650
@@ -1609,13 +1609,12 @@ msgid ""
 "Sometimes, even *do blocks* are too noisy to express a combination of "
 "effectful computations. In this case, we can prefix the effectful parts with "
 "an exclamation mark (wrapping them in parentheses if they contain additional "
-"white space), while leaving pure expressions unmodified:"
+"whitespace), while leaving pure expressions unmodified:"
 msgstr ""
-"ときどき*doブロック*さえも作用付き計算の組み合わせを表現するのに目にうるさい"
-"ことがあります。\n"
-"この場合、純粋な式を変更しないままで、作用のある部分にびっくりマークを前置す"
-"ることができます。\n"
-"（作用のある部分に空白がある場合、括弧で囲みます。）"
+"ときどき作用付き計算の組み合わせを表現する上で*doブロック*さえも目にうるさい"
+"ことがあります。この場合、純粋な式を変更しないままに、作用のある部分にびっく"
+"りマークを前置することができます（作用のある部分に空白が含まれる場合は括弧で"
+"囲みます）。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/IO.md:689

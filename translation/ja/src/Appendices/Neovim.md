@@ -314,5 +314,5 @@ Idrisでのプログラミングをする際に対話的編集のための豊富
 読者の選んだエディタでどんなことができるのか
 [Idris 2 Discordチャンネル](https://discord.gg/UX68fDs2jc)で気軽に尋ねてください。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->

@@ -1273,5 +1273,5 @@ Effects)](https://www.staff.city.ac.uk/~ross/papers/Applicative.html)で紹介�
 [次章](Folds.md)では再帰、全域性検査、
 そして容器型を折り畳むインターフェースである`Foldable`について学び始めます。
 
-<!-- vi: filetype=idris2
+<!-- vi: filetype=idris2:syntax=markdown
 -->
