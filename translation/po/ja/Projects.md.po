@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
 "POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 09:26+0900\n"
+"PO-Revision-Date: 2023-03-21 10:34+0900\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -108,7 +108,7 @@ msgstr ""
 #: ../src/Appendices/Projects.md:26
 #, no-wrap
 msgid "Modules"
-msgstr "Modules"
+msgstr "モジュール"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:30
@@ -239,7 +239,7 @@ msgstr ""
 #: ../src/Appendices/Projects.md:85
 #, no-wrap
 msgid "Module Imports"
-msgstr "Module Imports"
+msgstr "モジュールのインポート"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:91
@@ -1531,7 +1531,7 @@ msgstr ""
 #: ../src/Appendices/Projects.md:687
 #, no-wrap
 msgid "The `.ipkg` File"
-msgstr "The `.ipkg` File"
+msgstr "`.ipkg`ファイル"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:693
