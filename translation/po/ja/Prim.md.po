@@ -1,14 +1,14 @@
-# Japanese translations for PACKAGE package
-# Copyright (C) 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
+# Japanese translations for Functional Programming in Idris 2
+# Copyright (c) 2021-2023, Stefan Höck.
+# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 09:43+0900\n"
-"Last-Translator: Automatically generated\n"
+"Project-Id-Version: Functional Programming in Idris 2\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"PO-Revision-Date: 2023-04-10 07:45+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -83,14 +83,14 @@ msgstr "原始型"
 #: ../src/Tutorial/Prim.md:7
 msgid ""
 "In the topics we covered so far, we hardly ever talked about primitive types "
-"in Idris. They where around and we used them in some computations, but I "
+"in Idris. They were around and we used them in some computations, but I "
 "never really explained how they work and where they come from, nor did I "
 "show in detail what we can and can't do with them."
 msgstr ""
-"これまで押さえてきた話題ではほとんど一度もIdrisの原始型についてお話し\n"
-"してきませんでした。空気のようにそこにあって、いくつかの計算で使いまし\n"
-"たが、その仕組みや出自について本当に説明しませんでしたし、それらについ\n"
-"て何ができ何ができないかを詳しく示しませんでした。"
+"これまで押さえてきた話題ではほとんど一度もIdrisの原始型についてお話ししてきま"
+"せんでした。空気のようにそこにあって、いくつかの計算で使いましたが、その仕組"
+"みや出自について本当に説明しませんでしたし、それらについて何ができ何ができな"
+"いかを詳しく示しませんでした。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:8
@@ -446,23 +446,23 @@ msgid ""
 "`prim__eq_Bits8`, `prim__gt_Bits8`, `prim__lt_Bits8`, `prim__gte_Bits8`, and "
 "`prim__lte_Bits8`.  Note, that these functions do not return a `Bool` (which "
 "is *not* a primitive type in Idris), but an `Int`. They are therefore not as "
-"safe or convenient to use as the corresponding operator implementations form "
+"safe or convenient to use as the corresponding operator implementations from "
 "interfaces `Eq` and `Comp`.  On the other hand, they do not go via a "
 "conversion to `Bool` and might therefore perform slightly better in "
 "performance critical code (which you can only identify after some serious "
 "profiling)."
 msgstr ""
-"`Bits8`にインターフェース`Num`を実装するソースコードを見ると、和演算子\n"
-"は内部的には単に`prim__add_Bits8`を呼び出しているだけだとわかるでしょ\n"
-"う。同じことがほとんどの原始インターフェース実装中の他の関数にも言えま\n"
-"す。例えば`%World`を除く全ての原始型には原始比較関数が付属しています。\n"
-"`Bits8`には`prim__eq_Bits8`、`prim__gt_Bits8`、`prim__lt_Bits8`、\n"
-"`prim__gte_Bits8`、`prim__lte_Bits8`といった具合です。なお、これらの関\n"
-"数は`Bool`（Idrisでの原始型では*ありません*）ではなく`Int`を返します。\n"
-"したがってこれらの関数は`Eq`や`Comp`といったインターフェースの対応する\n"
-"演算子の実装ほどには使うのに安全でも便利でもありません。他方で`Bool`へ\n"
-"の変換を介さないために効率が重大なコード（真面目なプロファイリングの後\n"
-"にのみ問題を特定できる）では僅かに良いかもしれません。"
+"`Bits8`にインターフェース`Num`を実装するソースコードを見ると、和演算子は内部"
+"的には単に`prim__add_Bits8`を呼び出しているだけだとわかるでしょう。同じことが"
+"ほとんどの原始インターフェース実装中の他の関数にも言えます。例えば`%World`を"
+"除く全ての原始型には原始比較関数が付属しています。`Bits8`には"
+"`prim__eq_Bits8`、`prim__gt_Bits8`、`prim__lt_Bits8`、`prim__gte_Bits8`、"
+"`prim__lte_Bits8`といった具合です。なお、これらの関数は`Bool`（Idrisでの原始"
+"型では*ありません*）ではなく`Int`を返します。したがってこれらの関数は`Eq`や"
+"`Comp`といったインターフェースの対応する演算子の実装ほどには使うのに安全でも"
+"便利でもありません。他方で`Bool`への変換を介さないために効率が重大なコード"
+"（真面目なプロファイリングの後にのみ問題を特定できる）では僅かに良いかもしれ"
+"ません。"
 
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:152
@@ -1985,7 +1985,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:808
 msgid ""
-"With this, we can us (valid) string literals for coming up with values of "
+"With this, we can use (valid) string literals for coming up with values of "
 "type `Ascii` directly:"
 msgstr ""
 "これを使えば直接型`Ascii`の値であるようなものにについて（妥当な）文字列表記を"
@@ -2814,7 +2814,7 @@ msgstr "   それでは`test0`、`fromLTE`、`toLTE`を活用して`Decidable Na
 #: ../src/Tutorial/Prim.md:1193
 #, no-wrap
 msgid ""
-"   Note: You should by know figure out yourself that `n` must be\n"
+"   Note: You should by now figure out yourself that `n` must be\n"
 "   available at runtime and how to make sure that this is the case.\n"
 msgstr "   補足：これで`n`が実行時に使えるようになっていることとこれが正にそうなっていることを確実にする方法を明らかにしたことでしょう。\n"
 

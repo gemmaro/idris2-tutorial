@@ -1,14 +1,14 @@
-# Japanese translations for PACKAGE package
-# Copyright (C) 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
+# Japanese translations for Functional Programming in Idris 2
+# Copyright (c) 2021-2023, Stefan Höck.
+# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 09:36+0900\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-04-09 23:14+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"

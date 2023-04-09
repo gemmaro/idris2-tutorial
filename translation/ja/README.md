@@ -1,6 +1,7 @@
 # Idrisでの関数型プログラミング
 
-[中文翻译](https://github.com/running-grass/idris2-tutorial-zh/blob/main/translation/README.md)
+[中文翻译](https://github.com/running-grass/idris2-tutorial-zh/blob/main/translation/README.md),
+[日本語訳](https://github.com/gemmaro/idris2-tutorial/blob/ja/translation/ja/README.md)
 
 この企画の目標を手短かに説明すると、
 関数型プログラミングの入門者を対称とした導入例をちりばめつつ、

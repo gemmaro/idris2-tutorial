@@ -1242,11 +1242,9 @@ Left (FieldError 1 2 "jon@doe.ch")
 高度に抽象的な話題ですが、[Bartosz
 Milewski](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)によって書かれたプログラマにとってかなり手を出しやすい導入があります。
 
-関手とモナドの中間地点としてのアプリカティブ関手の実用性は、
-Haskellで既にモナドが使われるようになってから数年後に発見されました。
-こちらは記事[*作用つきアプリカティブプログラミング* (Applicative Programming with
-Effects)](https://www.staff.city.ac.uk/~ross/papers/Applicative.html)で紹介されています。
-オンラインで自由に見ることができ、読まれることを強くお勧めします。
+関手とモナドの中間地点としてのアプリカティブ関手の実用性は、Haskellで既にモナドが使われるようになってから数年後に発見されました。こちらは記事[*作用つきアプリカティブプログラミング*
+(Applicative Programming with
+Effects)](https://www.staff.city.ac.uk/~ross/papers/Applicative.html)で紹介されています。オンラインで自由に見ることができ、読まれることを強くお勧めします。
 
 ## まとめ
 

@@ -1,14 +1,14 @@
-# Japanese translations for github.com/stefan-hoeck/idris2-tutorial package
-# Copyright (C) 2023 Stefan Höck
-# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
-# Automatically generated, 2023.
+# Japanese translations for Functional Programming in Idris 2
+# Copyright (c) 2021-2023, Stefan Höck.
+# COpyright (C) 2023 gemmaro <gemmaro.dev@gmail.com>
+# This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
+"Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 10:34+0900\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-04-09 23:15+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"

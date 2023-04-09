@@ -1,14 +1,14 @@
-# Japanese translations for PACKAGE package
-# Copyright (C) 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
+# Japanese translations for Functional Programming in Idris 2
+# Copyright (c) 2021-2023, Stefan Höck.
+# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# This file is distributed under the same license as the FUnctional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 09:39+0900\n"
-"Last-Translator: Automatically generated\n"
+"Project-Id-Version: Functional Programming in Idris 2\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"PO-Revision-Date: 2023-04-10 07:44+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -3223,16 +3223,15 @@ msgstr ""
 msgid ""
 "The usefulness of applicative functors as a middle ground between functor "
 "and monad was discovered several years after monads had already been in use "
-"in Haskell. They where introduced in the article [*Applicative Programming "
+"in Haskell. They were introduced in the article [*Applicative Programming "
 "with Effects*](https://www.staff.city.ac.uk/~ross/papers/Applicative.html), "
 "which is freely available online and a highly recommended read."
 msgstr ""
-"関手とモナドの中間地点としてのアプリカティブ関手の実用性は、\n"
-"Haskellで既にモナドが使われるようになってから数年後に発見されました。\n"
-"こちらは記事[*作用つきアプリカティブプログラミング* (Applicative Programming "
-"with Effects)](https://www.staff.city.ac.uk/~ross/papers/Applicative.html)で"
-"紹介されています。\n"
-"オンラインで自由に見ることができ、読まれることを強くお勧めします。"
+"関手とモナドの中間地点としてのアプリカティブ関手の実用性は、Haskellで既にモナ"
+"ドが使われるようになってから数年後に発見されました。こちらは記事[*作用つきア"
+"プリカティブプログラミング* (Applicative Programming with Effects)](https://"
+"www.staff.city.ac.uk/~ross/papers/Applicative.html)で紹介されています。オンラ"
+"インで自由に見ることができ、読まれることを強くお勧めします。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functor.md:1401

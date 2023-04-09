@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Stefan Höck
-# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
+# This file is distributed under the same license as the Functional Programming in Idris 2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:55
 msgid ""
-"We will not be able to implement `concatTables` by appending the two row "
+"We will not be able to implement `concatTables1` by appending the two row "
 "vectors, unless we can somehow verify that the two schemata are identical. "
 "\"Well,\" I hear you say, \"that shouldn't be a big issue! Just implement "
 "`Eq` for `ColType`\". Let's give this a try:"
