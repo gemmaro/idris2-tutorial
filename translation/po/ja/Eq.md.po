@@ -1,14 +1,14 @@
-# Japanese translations for PACKAGE package
-# Copyright (C) 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
+# Japanese translations for Functional Programming in Idris 2
+# Copyright (c) 2021-2023, Stefan Höck.
+# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 09:34+0900\n"
-"Last-Translator: Automatically generated\n"
+"Project-Id-Version: Functional Programming in Idris 2\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"PO-Revision-Date: 2023-04-10 07:43+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -198,16 +198,15 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:55
 msgid ""
-"We will not be able to implement `concatTables` by appending the two row "
+"We will not be able to implement `concatTables1` by appending the two row "
 "vectors, unless we can somehow verify that the two schemata are identical. "
 "\"Well,\" I hear you say, \"that shouldn't be a big issue! Just implement "
 "`Eq` for `ColType`\". Let's give this a try:"
 msgstr ""
-"どうにかして2つのスキーマが同値であることを検証できなければ、\n"
-"2つの行のベクタを結合することで`concatTables1`を実装することはできません。\n"
-"「それなら」とあなたが言うのが聞こえます。\n"
-"「大した問題ではありません。`ColType`に`Eq`を実装するだけです。」\n"
-"やってみましょう。"
+"どうにかして2つのスキーマが同値であることを検証できなければ、2つの行のベクタ"
+"を結合することで`concatTables1`を実装することはできません。「それなら」とあな"
+"たが言うのが聞こえます。「大した問題ではありません。`ColType`に`Eq`を実装する"
+"だけです。」やってみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:56

@@ -1,14 +1,14 @@
-# Japanese translations for PACKAGE package
-# Copyright (C) 2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
+# Japanese translations for Functional Programming in Idris 2
+# Copyright (c) 2021-2023, Stefan Höck.
+# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-03-21 09:43+0900\n"
-"Last-Translator: Automatically generated\n"
+"Project-Id-Version: Functional Programming in Idris 2\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"PO-Revision-Date: 2023-04-10 07:44+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -881,17 +881,17 @@ msgid ""
 "the `Here` constructor, where the same variable (`x`) is used for the "
 "element and the head of the list. The case where the value is deeper within "
 "the list is handled by the `There` constructor. This can be read as follows: "
-"If `x` is and element of `xs`, then `x` is also an element of `y :: xs` for "
+"If `x` is an element of `xs`, then `x` is also an element of `y :: xs` for "
 "any value `y`. Let's write down some examples to get a feel for these:"
 msgstr ""
-"これは2つの値、すなわち型`a`と`a`のリストの値、の間の契約を記述する述\n"
-"語です。この契約の値は値がリストの要素であることの証拠です。これが再帰\n"
-"的に定義されていることに注目してください。探している値がリストの先頭に\n"
-"ある場合は`Here`構築子で扱われ、要素とリストの先頭とで同じ変数 (`x`)\n"
-"が使われます。値がリスト中のより深くにある場合は`There`構築子によって\n"
-"扱われます。これは以下のように読むことができます。もし`x`が`xs`の要素\n"
-"であれば、あらゆる`y`の値について、`x`もまた`y :: xs`の要素です。この\n"
-"契約の感覚を掴むためにいくつかの例を書き下しましょう。"
+"これは2つの値、すなわち型`a`と`a`のリストの値、の間の契約を記述する述語です。"
+"この契約の値は値がリストの要素であることの証拠です。これが再帰的に定義されて"
+"いることに注目してください。探している値がリストの先頭にある場合は`Here`構築"
+"子で扱われ、要素とリストの先頭とで同じ変数 (`x`)が使われます。値がリスト中の"
+"より深くにある場合は`There`構築子によって扱われます。これは以下のように読むこ"
+"とができます。もし`x`が`xs`の要素であれば、あらゆる`y`の値について、`x`もまた"
+"`y :: xs`の要素です。この契約の感覚を掴むためにいくつかの例を書き下しましょ"
+"う。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:387

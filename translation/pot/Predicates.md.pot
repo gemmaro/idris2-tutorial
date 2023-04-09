@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Stefan Höck
-# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
+# This file is distributed under the same license as the Functional Programming in Idris 2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -671,7 +671,7 @@ msgid ""
 "the `Here` constructor, where the same variable (`x`) is used for the "
 "element and the head of the list. The case where the value is deeper within "
 "the list is handled by the `There` constructor. This can be read as follows: "
-"If `x` is and element of `xs`, then `x` is also an element of `y :: xs` for "
+"If `x` is an element of `xs`, then `x` is also an element of `y :: xs` for "
 "any value `y`. Let's write down some examples to get a feel for these:"
 msgstr ""
 

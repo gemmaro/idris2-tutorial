@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Stefan Höck
-# This file is distributed under the same license as the github.com/stefan-hoeck/idris2-tutorial package.
+# This file is distributed under the same license as the Functional Programming in Idris 2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: github.com/stefan-hoeck/idris2-tutorial VERSION\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
+"Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
+"POT-Creation-Date: 2023-04-09 22:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,7 @@ msgstr ""
 #: ../src/Tutorial/Prim.md:7
 msgid ""
 "In the topics we covered so far, we hardly ever talked about primitive types "
-"in Idris. They where around and we used them in some computations, but I "
+"in Idris. They were around and we used them in some computations, but I "
 "never really explained how they work and where they come from, nor did I "
 "show in detail what we can and can't do with them."
 msgstr ""
@@ -369,7 +369,7 @@ msgid ""
 "`prim__eq_Bits8`, `prim__gt_Bits8`, `prim__lt_Bits8`, `prim__gte_Bits8`, and "
 "`prim__lte_Bits8`.  Note, that these functions do not return a `Bool` (which "
 "is *not* a primitive type in Idris), but an `Int`. They are therefore not as "
-"safe or convenient to use as the corresponding operator implementations form "
+"safe or convenient to use as the corresponding operator implementations from "
 "interfaces `Eq` and `Comp`.  On the other hand, they do not go via a "
 "conversion to `Bool` and might therefore perform slightly better in "
 "performance critical code (which you can only identify after some serious "
@@ -1510,7 +1510,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Prim.md:808
 msgid ""
-"With this, we can us (valid) string literals for coming up with values of "
+"With this, we can use (valid) string literals for coming up with values of "
 "type `Ascii` directly:"
 msgstr ""
 
@@ -2084,7 +2084,7 @@ msgstr ""
 #: ../src/Tutorial/Prim.md:1193
 #, no-wrap
 msgid ""
-"   Note: You should by know figure out yourself that `n` must be\n"
+"   Note: You should by now figure out yourself that `n` must be\n"
 "   available at runtime and how to make sure that this is the case.\n"
 msgstr ""
 
