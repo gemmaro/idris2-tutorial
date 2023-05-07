@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2023-05-07 21:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1128,8 +1128,9 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Folds.md:673
 msgid ""
-"Implement the following functions in a provably total way without \"cheating"
-"\". Note: It is not necessary to implement these in a tail recursive way."
+"Implement the following functions in a provably total way without "
+"\"cheating\". Note: It is not necessary to implement these in a tail "
+"recursive way."
 msgstr ""
 
 #. type: Plain text

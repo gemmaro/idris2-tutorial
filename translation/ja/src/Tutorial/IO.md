@@ -895,9 +895,8 @@ countEmpty' path = withFile path Read pure (go 0)
              -> IO (Either FileError s)
    ```
 
-5. 1つの文字文書中の行数、単語数、文字数を形状する関数`wordCount`を実装してください。
-   これらの値を保管し累積できるように自前のレコード型を`Monoid`の実装とともに定義し、
-   `foldLines`を`wordCount`の実装で使ってください。
+5. 1つのテキスト文書中の行数、単語数、文字数を形状する関数`wordCount`を実装してください。
+   これらの値を保管し累積できるように自前のレコード型を`Monoid`の実装とともに定義し、`foldLines`を`wordCount`の実装で使ってください。
 
 ## `IO`はどのように実装されているのか
 
