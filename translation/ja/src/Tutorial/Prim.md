@@ -110,7 +110,7 @@ Wiki](https://github.com/idris-lang/Idris2/wiki/1-%5BLanguage%5D-External-backen
 ブラリが輸出する関数とインターフェースを介して呼び出されます。
 
 例えば2つの8ビット符号無し整数を加える原始関数は`prim__add_Bits8`です。
-REPLで型と振舞いを調べられます。
+REPLで型と挙動を調べられます。
 
 ```repl
 Tutorial.Prim> :t prim__add_Bits8
@@ -848,7 +848,7 @@ escaped = "Hello World!"
 この回避方法はこの節の演習の末尾で議論します。
 
 前置きはこのくらいにして始めましょう！
-始めるにあたって、以下の小間物が与えられています。
+始めるにあたって、以下のユーティリティが与えられています。
 
 ```idris
 -- `Dec`のようですが、消去された証明を持ちます。
@@ -876,7 +876,7 @@ decideOn : (0 p : a -> Type) -> Decidable a p => (v : a) -> Dec0 (p v)
 decideOn _ = decide
 
 -- 真偽値関数を使ってのみ合理的に実装される原始的な述語もあります。
--- この小間物はそのような証明の決定可能性を補助します。
+-- このユーティリティはそのような証明の決定可能性を補助します。
 test0 : (b : Bool) -> Dec0 (b === True)
 test0 True  = Yes0 Refl
 test0 False = No0 absurd
