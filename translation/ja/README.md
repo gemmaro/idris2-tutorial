@@ -3,7 +3,8 @@
 [中文翻译](https://github.com/running-grass/idris2-tutorial-zh/blob/main/translation/README.md),
 [日本語訳](https://github.com/gemmaro/idris2-tutorial/blob/ja/translation/ja/README.md)
 
-このプロジェクトの目標を手短かに説明すると、関数型プログラミングの入門者を対象とした導入例をちりばめつつ、Idrisプログラミング言語の多少なりとも網羅的な手引きとなることです。
+このプロジェクトの目標を手短かに説明するとこうなります。
+Idrisプログラミング言語の多少なりとも網羅的な手引きとし、関数型プログラミングの入門者を対象とした入門的な題材をちりばめることです。
 
 内容はいくつかの部にまとまっています。
 中核的な言語の特徴についての部は、Idrisでの関数型プログラミングのための手引きです。
