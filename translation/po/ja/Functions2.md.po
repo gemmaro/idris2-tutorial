@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-07 22:22+0900\n"
+"PO-Revision-Date: 2023-05-09 02:06+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -480,14 +480,14 @@ msgstr ""
 "これらはほぼ見ればわかります。\n"
 "ただし、いくつかのレコード型（`Email`, `Artist`, `Password`）で単一の値を新し"
 "いレコード型で梱包しているところに注目です。\n"
-"当然、剥き出しの`String`型を代わりに使うことも*できはします*が、\n"
-"そうすると最終的に`String`のフィールドが沢山あることになるため、\n"
-"見分けがつきにくくなるかもしれません。\n"
-"Eメールの文字列とパスワードの文字列を混同するなんてことがないように、\n"
-"両方を新しいレコード型で梱包しておくと助けになります。\n"
-"いくつかのインターフェースを再実装しなければいけない負担と引き換えに、型安全"
-"性を劇的に高めますから。\n"
-"*Prelude*由来の小間物関数`on`はこうしたとき大変役に立ちます。\n"
+"当然、剥き出しの`String`型を代わりに使うことも*できはします*が、そうすると最"
+"終的に`String`のフィールドが沢山あることになるため、見分けがつきにくくなるか"
+"もしれません。\n"
+"Eメールの文字列とパスワードの文字列を混同するなんてことがないように、両方を新"
+"しいレコード型で梱包しておくと助けになります。\n"
+"いくつかのインターフェースを実装し直さなければいけない負担と引き換えに、型安"
+"全性を劇的に高めますから。\n"
+"*Prelude*由来のユーティリティ関数`on`はこうしたとき大変役に立ちます。\n"
 "型をREPLで調べて、何をするものなのか理解するのをお忘れなく。"
 
 #. type: Fenced code block (idris)
@@ -577,8 +577,8 @@ msgstr ""
 "を符号化します。\n"
 "実践の場では、`Success`のときには実際にアルバム配信を開始するための何らかの接"
 "続を返すのでしょうが、\n"
-"この振舞いを模擬するために、ここでは単に見付かったアルバムを梱包することにし"
-"ます。"
+"この挙動を模擬するために、ここでは単に見付かったアルバムを梱包することにしま"
+"す。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:248
@@ -834,9 +834,9 @@ msgstr ""
 "核酸塩基のリストについて、型別称`DNA`も定義してください。\n"
 "単一文字（型`Char`）を核酸塩基に変換する関数`readBase`を宣言・実装してくださ"
 "い。\n"
-"実装では`'A'`, `'a'`のように文字リテラルが使えます。\n"
-"この関数は失敗するかもしれないので、\n"
-"結果の型をそれにしたがって調整してください。"
+"実装では`'A'`や`'a'`のように文字直値が使えます。\n"
+"この関数は失敗するかもしれないので、結果の型をそれにしたがって調整してくださ"
+"い。"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Functions2.md:371
@@ -1266,8 +1266,8 @@ msgid ""
 "We could also specify the type of the whole expression using utility "
 "function `the` from the *Prelude*:"
 msgstr ""
-"*Prelude*由来の小間物関数`the`を使って、全体の式の型を指定することもできま"
-"す。"
+"*Prelude*由来のユーティリティ関数`the`を使って、全体の式の型を指定することも"
+"できます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functions2.md:553
@@ -1297,7 +1297,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:566
 msgid "Compare this with the identity function `id`:"
-msgstr "小間物関数`id`と比較してみましょう。"
+msgstr "ユーティリティ関数`id`と比較してみましょう。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functions2.md:567
@@ -2118,9 +2118,7 @@ msgstr ""
 msgid ""
 "* When in need of local utility functions, consider defining them\n"
 "as local definitions in a *where block*.\n"
-msgstr ""
-"* 局所小間物関数が必要なときは、\n"
-"  *whereブロック*中の局所定義に書くことを検討してください。\n"
+msgstr "* 局所ユーティリティ関数が必要なときは、*whereブロック*中の局所定義に書くことを検討してください。\n"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions2.md:934
