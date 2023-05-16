@@ -51,7 +51,7 @@ Haskellのような他の純粋関数型プログラミング言語を使った�
 5. [関数 その2](src/Tutorial/Functions2.md)
    1. [let束縛と局所定義](src/Tutorial/Functions2.md#let-bindings-and-local-definitions)
    2. [関数引数の真実](src/Tutorial/Functions2.md#the-truth-about-function-arguments)
-   3. [穴開きプログラミング](src/Tutorial/Functions2.md#programming-with-holes)
+   3. [虫食いプログラミング](src/Tutorial/Functions2.md#programming-with-holes)
 6. [依存型](src/Tutorial/Dependent.md)
    1. [長さ指標付きリスト](src/Tutorial/Dependent.md#length-indexed-lists)
    2. [Fin:

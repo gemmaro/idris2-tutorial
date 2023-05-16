@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-09 02:06+0900\n"
+"PO-Revision-Date: 2023-05-16 22:05+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1568,7 +1568,7 @@ msgstr ""
 #: ../src/Tutorial/Functions2.md:681
 #, no-wrap
 msgid "Programming with Holes"
-msgstr "穴開きプログラミング"
+msgstr "虫食いプログラミング"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:696
@@ -1594,14 +1594,14 @@ msgstr ""
 "（型が充分に特定のものであれば）時々コンパイラは完全な関数を実装できることが"
 "あります。\n"
 "それができない場合であっても、非常に有用で重要な特徴がIdrisにはあります。\n"
-"型が複雑になりすぎたときに手助けしてくれるもの、それが穴開きです。\n"
-"穴開きは変数で、変数名は疑問符が前に付きます。\n"
-"あとで機能の一部を実装するつもりの場所であればどこにでも、穴開きを仮置場とし"
+"型が複雑になりすぎたときに手助けしてくれるもの、それが虫食いです。\n"
+"虫食いは変数で、変数名は疑問符が前に付きます。\n"
+"あとで機能の一部を実装するつもりの場所であればどこにでも、虫食いを仮置場とし"
 "て使えます。\n"
-"加えて穴開きの型と穴開きのスコープにある他の全ての変数の型と数量子をREPLで"
+"加えて虫食いの型と虫食いのスコープにある他の全ての変数の型と数量子をREPLで"
 "（あるいは必要なプラグインが設定できていればエディタで）調べることができま"
 "す。\n"
-"穴開きを実際に見てみましょう。"
+"虫食いを実際に見てみましょう。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:704
@@ -1652,7 +1652,7 @@ msgstr ""
 "さて、読み進めていくにあたって、読者のみなさんは自分でIdrisのソースファイルを"
 "書き始めてREPLセッションに読み込まれるとよいでしょう。\n"
 "コードはこちらで記述されている内容にしたがって調整していきます。\n"
-"最初にすることは右側に穴開きの実装の骨組を書くことです。"
+"最初にすることは右側に虫食いの実装の骨組を書くことです。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functions2.md:719
@@ -1687,8 +1687,8 @@ msgid ""
 "Next, we'd like to display the hole's type (including all variables in the "
 "surrounding context plus their types):"
 msgstr ""
-"次は穴の型を表示したいところです。\n"
-"（加えて周囲の文脈にある全ての変数とその型も。）"
+"次は虫食いの型を表示したいところです（加えて周囲の文脈にある全ての変数とその"
+"型も）。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functions2.md:735
@@ -1751,8 +1751,7 @@ msgid ""
 "The result is two holes, which must be given distinct names. When inspecting "
 "`impl_0`, we get the following result:"
 msgstr ""
-"結果は2つの穴で、\n"
-"それぞれ別の名前でなくてはいけません。\n"
+"結果は2つの虫食いで、それぞれ別の名前でなくてはいけません。\n"
 "`impl_0`を調べると以下の結果になります。"
 
 #. type: Fenced code block (repl)
@@ -2109,7 +2108,7 @@ msgid ""
 "type checker help you figure out what to do next."
 msgstr ""
 "繰り返しになりますが本節では様々な領域の話題を述べました。\n"
-"どんなに強調しても足りませんが、ぜひ穴開きのあるプログラミングに体を慣らし"
+"どんなに強調しても足りませんが、ぜひ虫食いのあるプログラミングに体を慣らし"
 "て、型検査器に次何をすればよいのかを教えてもらうようにしましょう。"
 
 #. type: Plain text
@@ -2177,8 +2176,8 @@ msgid ""
 "the types of holes together with the names, types, and quantities of all\n"
 "variables in their context.\n"
 msgstr ""
-"* *穴*をあとで埋める予定のコード片の場所取りに使ってください。\n"
-"  REPL（もしくはエディタ）を使って、穴の型とその文脈にある全ての変数の名前、型、数量子を調べてください。\n"
+"* *虫食い*をあとで埋める予定のコード片の場所取りに使ってください。\n"
+"  REPL（もしくはエディタ）を使って、虫食いの型とその文脈にある全ての変数の名前、型、数量子を調べてください。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:962
@@ -2192,5 +2191,5 @@ msgstr ""
 "[次節](Dependent.md)では依存型を使い始め、証明的に正しいコードを書くのに使い"
 "ます。\n"
 "Idrisの型処方の読み方をよく理解しておくことは、そこでは最重要となります。\n"
-"道を見失ったように感じたら、いくつか穴を加えてみてその文脈を調べ、次何をすべ"
-"きかを決めましょう。"
+"道を見失ったように感じたら、いくつか虫食いを加えてみてその文脈を調べ、次何を"
+"すべきかを決めましょう。"

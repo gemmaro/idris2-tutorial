@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-05-09 01:03+0900\n"
+"PO-Revision-Date: 2023-05-16 22:00+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -390,7 +390,7 @@ msgid ""
 "case by inspecting the holes and their context."
 msgstr ""
 "さあ、自分でこれを実装してみましょう！\n"
-"穴開きを使って`Indexed`引数でパターン照合し、そして穴開きとその文脈を調べるこ"
+"虫食いを使って`Indexed`引数でパターン照合し、そして虫食いとその文脈を調べるこ"
 "とによって、それぞれの場合の期待される出力型を調べてください。"
 
 #. type: Plain text
@@ -525,7 +525,7 @@ msgstr ""
 "す。\n"
 "この契約を履行しないと型エラーです。\n"
 "`mapVect`を実装しているときなどでこの契約は大変説明的なもので、これに沿って実"
-"装したり穴開きを使ったりできます。\n"
+"装したり虫食いを使ったりできます。\n"
 "`Vect`の長さについての*どんな*情報を得るのにも、パターン照合が要ります。"
 
 #. type: Fenced code block (repl)
@@ -589,7 +589,7 @@ msgid ""
 "The first hole, `impl_0` is of type `Vect 0 b`. There is only one such "
 "value, as discussed above:"
 msgstr ""
-"最初の穴開き`impl_0`は型`Vect 0 b`です。\n"
+"最初の虫食い`impl_0`は型`Vect 0 b`です。\n"
 "前述したようにそのような値は1つしかありません。"
 
 #. type: Fenced code block (idris)
@@ -626,7 +626,7 @@ msgstr "mapVect f (x :: xs) = f x :: ?rest\n"
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:244
 msgid "Let's inspect the new hole at the REPL:"
-msgstr "REPLで新しい穴開きを調べてみましょう。"
+msgstr "REPLで新しい虫食いを調べてみましょう。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Dependent.md:245
@@ -1222,7 +1222,7 @@ msgid ""
 msgstr ""
 "関数`fromList`を実装してください。\n"
 "この関数は値のリストを同じ長さのベクタに変換します。\n"
-"詰まったら穴開きを使ってください。"
+"詰まったら虫食いを使ってください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:508
@@ -1448,7 +1448,7 @@ msgid ""
 "if you get stuck."
 msgstr ""
 "読み進める前に自分で`index`を実装してみてください。\n"
-"詰まったら穴開きを利用しましょう。"
+"詰まったら虫食いを利用しましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:608
@@ -2015,9 +2015,8 @@ msgid ""
 "   Note: This might be a challenging exercise, but make sure\n"
 "   to give it a try. As usual, make use of holes if you get stuck!\n"
 msgstr ""
-"   附記：これは発展的な演習かもしれませんが、\n"
-"   ぜひ挑戦してみてください。\n"
-"   いつも通り手詰まりになったら穴開きを活用しましょう！\n"
+"   附記：これは発展的な演習かもしれませんが、ぜひ挑戦してみてください。\n"
+"   いつも通り手詰まりになったら虫食いを活用しましょう！\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:866
