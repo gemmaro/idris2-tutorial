@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-09 01:33+0900\n"
+"PO-Revision-Date: 2023-05-16 21:59+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -996,7 +996,7 @@ msgid ""
 "use `:t` to inspect the type of an expression or meta variable (hole): `:t "
 "foldl`,"
 msgstr ""
-"`:t`で式やメタ変数（穴開き）の型を調べられます。\n"
+"`:t`で式やメタ変数（虫食い）の型を調べられます。\n"
 "例えば`:t foldl`とします。"
 
 #. type: Bullet: '  * '
@@ -1011,7 +1011,7 @@ msgstr ""
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Intro.md:431
 msgid "use `:m` to list all meta variables (holes) in scope,"
-msgstr "`:m`で、スコープ内の全てのメタ変数（穴開き）の一覧が出てきます。"
+msgstr "`:m`で、スコープ内の全てのメタ変数（虫食い）の一覧が出てきます。"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Intro.md:431

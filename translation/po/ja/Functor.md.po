@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-09 02:03+0900\n"
+"PO-Revision-Date: 2023-05-16 22:03+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1031,7 +1031,7 @@ msgid ""
 msgstr ""
 "   上記で混乱しないようにしてください。\n"
 "   可能な実装は1つしかありません。\n"
-"   いつも通り穴開きを使い、道を見失ったときはコンパイラに導いてもらいましょう。\n"
+"   いつも通り虫食いを使い、道を見失ったときはコンパイラに導いてもらいましょう。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:408

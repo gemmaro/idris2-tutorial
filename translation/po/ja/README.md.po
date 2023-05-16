@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-09 00:46+0900\n"
+"PO-Revision-Date: 2023-05-16 21:58+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -276,7 +276,7 @@ msgstr ""
 msgid ""
 "[Programming with Holes](src/Tutorial/Functions2.md#programming-with-holes)"
 msgstr ""
-"[穴開きプログラミング](src/Tutorial/Functions2.md#programming-with-holes)"
+"[虫食いプログラミング](src/Tutorial/Functions2.md#programming-with-holes)"
 
 #. type: Bullet: '6. '
 #: ../README.md:106
