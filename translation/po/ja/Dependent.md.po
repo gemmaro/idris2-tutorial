@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-05-16 22:00+0900\n"
+"PO-Revision-Date: 2023-06-03 19:29+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -184,7 +184,7 @@ msgid ""
 "length:"
 msgstr ""
 "上述した問題への答えはもちろん、依存型です。\n"
-"そして最もよく知られた導入例は*ベクタ*、長さ指標付きリストです。"
+"そして最もよく知られた取っ掛かりの例は*ベクタ*、長さ指標付きリストです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:42
@@ -1179,7 +1179,7 @@ msgid ""
 "   if you don't know where to start.\n"
 msgstr ""
 "   関数`iterate`を宣言し実装してください。\n"
-"   この関数はこの挙動を内蔵化します。\n"
+"   この関数はこの挙動をカプセル化します。\n"
 "   どこから始めたらよいかわからないときは`replicate`から着想が得られます。\n"
 
 #. type: Bullet: '7. '
@@ -1193,7 +1193,7 @@ msgstr ""
 "状態型`s`の初期値と関数`fun : s -> (s, a)`が与えられているとき、`a`の`Vect`を"
 "生成したいとします。\n"
 "関数`generate`を宣言し実装してください。\n"
-"この関数はこの挙動を内蔵化します。\n"
+"この関数はこの挙動をカプセル化します。\n"
 "必ず全ての新しい`fun`の呼び出しで更新された状態を使うようにしてください。"
 
 #. type: Plain text

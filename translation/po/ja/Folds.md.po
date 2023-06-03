@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-05-09 02:02+0900\n"
+"PO-Revision-Date: 2023-06-03 19:29+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1683,7 +1683,7 @@ msgstr ""
 "リストで末尾再帰的に巡回するためになくてはならないのは、累積関数と何らかの初期状態だけです。\n"
 "でも累積器の型はどうすべきなのでしょうか。\n"
 "そうですね、現在の状態とリストの次の要素をまとめて更新された状態を返すもの、つまり`state -> elem -> state`です。\n"
-"もちろんこの挙動を内蔵化する高階関数が頭に浮かびます。\n"
+"もちろんこの挙動をカプセル化する高階関数が頭に浮かびます。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Folds.md:720
