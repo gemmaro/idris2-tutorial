@@ -285,7 +285,7 @@ true' : Singleton True
 true' = Val _
 ```
 
-これを使えば（消去された！）ベクタの長さを何もないところから取り出すのに使えます。
+これを使えば（消去された！）ベクタの長さを何もないところから引っ張り出すのに使えます。
 
 ```idris
 vectLength : Vect n a -> Singleton n

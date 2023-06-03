@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-05-16 22:02+0900\n"
+"PO-Revision-Date: 2023-06-03 19:53+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -83,7 +83,7 @@ msgstr "演習 その3"
 #: ../src/Tutorial/DataTypes.md:1127 ../src/Tutorial/Eq.md:1056
 #, no-wrap
 msgid "Exercises part 4"
-msgstr "演習パート4"
+msgstr "演習 その4"
 
 #. type: Title #
 #: ../src/Tutorial/Eq.md:1
@@ -1635,18 +1635,14 @@ msgid ""
 "are the same, or return a proof that the two schemata\n"
 "are not the same. (Remember that `Not a` is an alias for `a -> Void`).\n"
 msgstr ""
-"`sameColType`を実装したとき、2つの行の型が確かに同じであるという証明を\n"
-"得て、そこから2つのスキーマが同値かどうかが調べられました。型は偽陽性\n"
-"の発生がないことを保証します。つまり型`SameSchema s1 s2`の値を生成すれ\n"
-"ば`s1`と`s2`が確かに同値であるという証明があるのです。しかし\n"
-"`sameColType`とそれを使う`sameSchema`は、2つの値が同値であっても\n"
-"`Nothing`を返すことによって、それでも理論的には偽陰性を生じる可能性が\n"
-"あるのです。例えば`sameColType`を常に`Nothing`を返すようなやり方で実装\n"
-"できてしまいます。これは型としては合致しますが間違いなく望んでいるもの\n"
-"ではないでしょう。なのでここでより強い保証を得るために行いたいことが出\n"
-"てきます。2つのスキーマが同じであるという証明を返すか、2つのスキーマ\n"
-"が同じでないという証明を返すかのどちらかをしたいのです。（`Not a`が`a\n"
-"-> Void`の別の形であることを思い出してください。）\n"
+"`sameColType`を実装したとき、2つの行の型が確かに同じであるという証明を得て、そこから2つのスキーマが同値かどうかが調べられました。\n"
+"型は偽陽性の発生がないことを保証します。\n"
+"つまり型`SameSchema s1 s2`の値を生成すれば`s1`と`s2`が確かに同値であるという証明があるのです。\n"
+"しかし`sameColType`とそれを使う`sameSchema`は、2つの値が同値であっても`Nothing`を返すことによって、それでも理論的には偽陰性を生じる可能性があるのです。\n"
+"例えば`sameColType`を常に`Nothing`を返すようなやり方で実装できてしまいます。\n"
+"これは型としては合致しますが間違いなく望んでいるものではないでしょう。\n"
+"なのでここでより強い保証を得るために行いたいことが出てきます。\n"
+"2つのスキーマが同じであるという証明を返すか、2つのスキーマが同じでないという証明を返すかのどちらかをしたいのです（`Not a`が`a -> Void`の別の形であることを思い出してください）。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:708
@@ -1655,8 +1651,9 @@ msgid ""
 "*decidable property*, and the *Prelude* exports data type `Dec prop`, which "
 "encapsulates this distinction."
 msgstr ""
-"命題を満たすか矛盾になるかする性質を*決定可能性質*と呼びます。そして\n"
-"*Prelude*はデータ型`Dec prop`を輸出しており、この区別を内蔵化します。"
+"命題を満たすか矛盾になるかする性質を*決定可能性質*と呼びます。\n"
+"そして*Prelude*はデータ型`Dec prop`を輸出しており、この区別をカプセル化しま"
+"す。"
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:710

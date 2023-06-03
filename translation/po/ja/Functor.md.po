@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-16 22:03+0900\n"
+"PO-Revision-Date: 2023-06-03 20:03+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1230,8 +1230,8 @@ msgid ""
 "to encapsulate this behavior. It's called `Applicative`.  Here is its "
 "definition and an example implementation:"
 msgstr ""
-"もちろん既にお察しの通り、これからこの挙動を内蔵化する新しいインターフェース"
-"をお見せします。\n"
+"もちろん既にお察しの通り、これからこの挙動をカプセル化する新しいインター"
+"フェースをお見せします。\n"
 "それは`Applicative`と呼ばれます。\n"
 "以下はその定義と実装例です。"
 
@@ -1436,7 +1436,7 @@ msgid ""
 msgstr ""
 "アプリカティブ関手の持つ強力さと多芸さを実感するために、ほんの少し大きめの例"
 "を見ていきます。\n"
-"CSVファイルから内容をパースしたりデコードしたりするユーティリティです。\n"
+"CSVファイルから内容を構文解析したりデコードしたりするユーティリティです。\n"
 "ここでのCSVファイルはそれぞれの行にコンマ（あるいは他の区切文字）で区切られた"
 "値のリストがあるものです。\n"
 "よくあるのがこれらを表のデータを格納するのに使うというもので、例えばスプレッ"
@@ -1587,7 +1587,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:675
 msgid "For numeric types, we can use the parsing functions from `Data.String`:"
-msgstr "数値型については`Data.String`由来のパースする関数が使えます。"
+msgstr "数値型については`Data.String`由来の解析する関数が使えます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:676
@@ -1622,9 +1622,7 @@ msgid ""
 "(Remember that `(<$>)` is an alias for `map`.)\n"
 msgstr ""
 "オプショナルな値については、格納される型自身が`CSVField`のインスタンスでなければいけません。\n"
-"そこで空文字列`\"\"`を`Nothing`として扱うことにし、\n"
-"非空文字列を内蔵化された型のフィールドの読取器に渡すことにします。\n"
-"（`(<$>)`が`map`の別称なことを思い出してください。）\n"
+"そこで空文字列`\"\"`を`Nothing`として扱うことにし、非空文字列をカプセル化された型のフィールドの読取器に渡すことにします（`(<$>)`が`map`の別称なことを思い出してください）。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:693
@@ -1741,8 +1739,8 @@ msgid ""
 "first introduce a custom error type encapsulating how things can go wrong:"
 msgstr ""
 "これでCSVファイルの行全体を復号化し始められます。\n"
-"そうするためにまず自前のエラー型を導入して、どう物事が失敗しうるかを内蔵化し"
-"ます。"
+"そうするためにまず自前のエラー型を導入して、どう物事が失敗しうるかをカプセル"
+"化します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:750
@@ -1882,11 +1880,9 @@ msgid ""
 msgstr ""
 "なお、`readUser'`の実装で慣用括弧を使い、6引数関数 (`MkUser`) を型`Either "
 "CSVError`の6つの値に写しました。\n"
-"これは全てのパースが成功したとき、またそのときに限って、自動的に成功しま"
-"す。\n"
-"もし立て続けに6重に入れ子になったパターン照合で`readUser'`を実装していた"
-"ら、\n"
-"考えるまでもなく面倒ではるかに読みづらいコードになっていたでしょう。"
+"これは全ての解析が成功したとき、またそのときに限って、自動的に成功します。\n"
+"もし立て続けに6重に入れ子になったパターン照合で`readUser'`を実装していたら、"
+"考えるまでもなく面倒で遥かに読みづらいコードになっていたでしょう。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:819
@@ -1980,7 +1976,7 @@ msgid ""
 "lines. In order to do that, we need to introduce a new interface for types "
 "corresponding to whole lines in a CSV-file:"
 msgstr ""
-"しかしまずは`HList`を簡潔にCSVの行をパースする手段として活用します。\n"
+"しかしまずは`HList`を簡潔にCSVの行を構文解析する手段として活用します。\n"
 "そうするためにはCSVファイル中の全行に対応する型のための、新しいインターフェー"
 "スを導入する必要があります。"
 
