@@ -1,0 +1,4 @@
+catch-all pattern: 全捕捉パターン
+elaboration: 細密化
+accumulate: 累算。累積とすると乗算になりそうなので避けます。
+container type: 容器型
