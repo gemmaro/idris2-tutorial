@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-09 01:59+0900\n"
+"PO-Revision-Date: 2023-06-06 23:11+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -113,8 +113,8 @@ msgstr ""
 "関数オーバーロード - つまり同名異実装な関数定義 - は多くのプログラミング言語"
 "で見られる概念です。\n"
 "Idrisには関数のオーバーロードが備わっています。\n"
-"つまり、同名の2つの関数は異なるモジュールや名前空間で定義できますし、\n"
-"型をもとに曖昧さを解消しようとします。\n"
+"つまり、同名の2つの関数は異なるモジュールや名前空間で定義でき、Idrisは型をも"
+"とに曖昧さを解消しようとします。\n"
 "例はこちら。"
 
 #. type: Fenced code block (idris)
@@ -168,8 +168,7 @@ msgid ""
 "namespace. We can disambiguate between these by prefixing them with their "
 "namespace:"
 msgstr ""
-"ここでは`size`という名前の互いに異なる関数をそれぞれの名前空間で定義しまし"
-"た。\n"
+"ここでは`size`という名前の相異なる関数を名前空間で個別に定義しました。\n"
 "これらの曖昧さを解消するにはそれぞれの名前空間を前置すればよいです。"
 
 #. type: Fenced code block (repl)
@@ -204,10 +203,10 @@ msgid ""
 "functions, since `xs` is of type `List Integer`, which unifies only with "
 "`List a`, the argument type of `List.size`."
 msgstr ""
-"見てみるとIdrisは互いに異なる`size`関数の曖昧さを解消できていることがわかりま"
+"見ての通りIdrisは相異なる`size`関数の曖昧さを解消できていることがわかりま"
 "す。\n"
-"`xs`は型`List Integer`であり、この型は`List a`にのみ統合できるので、\n"
-"`List a`が引数の型である`List.size`が選ばれます。"
+"`xs`は型`List Integer`であり、この型は`List a`にのみ統合できるので、`List a`"
+"が引数の型である`List.size`が選ばれます。"
 
 #. type: Title ##
 #: ../src/Tutorial/Interfaces.md:52
@@ -222,9 +221,8 @@ msgid ""
 "cases, where this form of overloaded functions leads to a lot of code "
 "duplication."
 msgstr ""
-"関数オーバーロードは上述したようにいい感じに動くものの、\n"
-"こうした関数オーバーロードの形式だと沢山のコードの重複に繋がるような使用例が"
-"あります。"
+"関数オーバーロードは上述したようにいい感じに動くものの、こうした関数オーバー"
+"ロードの形式だと沢山のコードの重複に繋がるような用例があります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:61
@@ -233,8 +231,8 @@ msgid ""
 "already exported by the *Prelude*), for describing an ordering for the "
 "values of type `String`:"
 msgstr ""
-"例として、関数`cmp`を考えてみましょう。\n"
-"（*compare*を縮めたもので、既に*Prelude*から公開されています。）\n"
+"例として、関数`cmp`を考えてみましょう（*compare*を縮めたもので、既に*Prelude*"
+"から公開されています）。\n"
 "この関数は型`String`の値の序列を表現するものとします。"
 
 #. type: Fenced code block (idris)
@@ -251,9 +249,9 @@ msgid ""
 "piece of functionality. From it, we can derive functions like "
 "`greaterThan'`, `lessThan'`, `minimum'`, `maximum'`, and many others:"
 msgstr ""
-"似たような関数が沢山の他のデータ型についても欲しいです。\n"
-"これだけだったら関数オーバーロードでいいですが、\n"
-"`cmp`の機能性ははそれだけに留まりません。\n"
+"似たような関数は沢山の他のデータ型についても欲しいです。\n"
+"これだけだったら関数オーバーロードでいいですが、`cmp`の機能性ははそれだけに留"
+"まりません。\n"
 "この関数があれば`greaterThan`, `lessThan`, `minimum`, `maximum`やその他諸々の"
 "関数を導出できます。"
 
@@ -307,7 +305,7 @@ msgstr ""
 "これら全てを`cmp`関数を使って他の型について実装し直さなくてはなりません。\n"
 "それにこれらの実装は、全てではないにしても、上に書いたものと同じになりま"
 "す。\n"
-"そうなると沢山のコードの重複になります。"
+"そうなるとコードの重複が沢山出てきます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:99
@@ -318,8 +316,8 @@ msgid ""
 msgstr ""
 "1つの方法として高階関数を使うという手があります。\n"
 "例えば、関数`minimumBy`を定義するとしましょう。\n"
-"この関数は最初の引数に比較関数を取り、残りの2つの引数のうちより小さいほうを返"
-"します。"
+"この関数は最初の引数に比較関数を取り、残りの2つの引数のうち、より小さいほうを"
+"返します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:100
@@ -348,8 +346,8 @@ msgstr ""
 "この解決策は高階関数があればコードの重複を減らせることの傍証になっていま"
 "す。\n"
 "しかしながら、いつも比較関数を持ち回らなければいけないのは億劫です。\n"
-"Idrisにこの例での比較関数のようなものを自分で思い出せるようにさせられたらいい"
-"ですね。"
+"この例での比較関数のようなものをIdris自ら思い出せるようになってくれるといいで"
+"すね。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:116
@@ -401,8 +399,9 @@ msgid ""
 "`compare`, which is part of a similar interface from the *Prelude* called "
 "`Ord`."
 msgstr ""
-"`Bits8`と`Bits16`のための`comp`の実装両方で使われている関数`compare`は、\n"
-"*Prelude*の似たようなインターフェースである`Ord`の一部です。"
+"`Bits8`と`Bits16`のための`comp`の実装では両方とも関数`compare`が使われていま"
+"す。\n"
+"この関数は*Prelude*の似たようなインターフェースである`Ord`の一部です。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:139
@@ -433,13 +432,10 @@ msgid ""
 "value of type `Comp a` on its own, hence the new `=>` arrow.\n"
 "If Idris fails to do so, it will answer with a type error.\n"
 msgstr ""
-"`comp`の型シグネチャの面白い部分は最初の引数`Comp a =>`です。\n"
+"`comp`の型処方の興味深い部分は最初の引数`Comp a =>`です。\n"
 "ここで`Comp`は型変数`a`の*制約*です。\n"
-"このシグネチャはこんな感じに読めます。\n"
-"「あらゆる型`a`、ただしインターフェース`Comp`の実装があるもの、\n"
-"については型`a`の2つの値を比較でき、それらの`Ordering`を返す。」\n"
-"`comp`をどんなもので呼び出そうとも、\n"
-"Idris自ら`Comp a`であるような型の値を思い付いてくれます。\n"
+"この処方は、「あらゆる型`a`、ただしインターフェース`Comp`の実装があるもの、については型`a`の2つの値を比較でき、それらの`Ordering`を返す」のようにに読めます。\n"
+"`comp`をどんなもので呼び出そうとも、Idris自ら`Comp a`であるような型の値を思い付いてくれます。\n"
 "そう、新しい矢印`=>`があればね。\n"
 "もしIdrisがこれに失敗するなら、それは型エラーです。\n"
 
@@ -451,8 +447,8 @@ msgid ""
 "constraint:"
 msgstr ""
 "これにて`comp`を関係する関数の実装に使えます。\n"
-"やらなければいけないことはこれらの導出される関数に`Comp`制約を前置することだ"
-"けです。"
+"やらなければいけないことは以下の導出される関数に`Comp`制約を前置することだけ"
+"です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:159
@@ -504,10 +500,9 @@ msgid ""
 "Idris for us."
 msgstr ""
 "`minimum`の定義は`minimumBy`と瓜二つですね。\n"
-"強いて違うところを挙げるとすれば、\n"
-"`minimumBy`の場合は比較関数を明示的な引数として渡さねばならないところ、\n"
-"`minimum`は`Comp`の実装の一部で提供されているのでIdrisが代わりに渡してくれる"
-"ことです。"
+"強いて違うところを挙げるとすれば、`minimumBy`の場合は比較関数を明示的な引数と"
+"して渡さねばならないところ、`minimum`は`Comp`の実装の一部で提供されているので"
+"Idrisが代わりに渡してくれることです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:188
@@ -515,8 +510,8 @@ msgid ""
 "Thus, we have defined all these utility functions once and for all for every "
 "type with an implementation of interface `Comp`."
 msgstr ""
-"したがってこれら全てのユーティリティ関数を一度定義してしまえば、インター"
-"フェース`Comp`の実装がある全ての型に適用できます。"
+"したがって以上のユーティリティ関数を一度定義してしまえば、インターフェース"
+"`Comp`の実装がある全ての型に適用できます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:195
@@ -599,10 +594,9 @@ msgid ""
 "interfaces with constraints, and default implementations."
 msgstr ""
 "先の節ではごく基本的なインターフェースを学びました。\n"
-"なぜ便利なのか、そしてどのように定義し実装するのかについてです。\n"
-"この節では僅かに発展的な概念を学びます。\n"
-"それはインターフェースを拡張すること、制約付きのインターフェース、そして既定"
-"実装です。"
+"便利な理由と定義して実装する方法についてです。\n"
+"この節では少しだけ発展的な概念を学びます。\n"
+"インターフェースを拡張すること、制約付きのインターフェース、既定実装です。"
 
 #. type: Title ###
 #: ../src/Tutorial/Interfaces.md:225
@@ -619,12 +613,12 @@ msgid ""
 "concatenation.  In such a case, we make an implementation of `Concat` a "
 "prerequisite for implementing `Empty`:"
 msgstr ""
-"階層を形成するインターフェースがあります。\n"
-"例えば演習4で使った`Concat`インターフェースについては、\n"
-"`Empty`という名前の子インターフェースがあってもいいでしょう。\n"
+"階層をなすインターフェースがあります。\n"
+"例えば演習4で使った`Concat`インターフェースについては、`Empty`という名前の子"
+"インターフェースがあってもいいでしょう。\n"
 "このインターフェースを満たすような型には、連結の際に何の効果も生じない値があ"
 "ります。\n"
-"そのような場合、`Concat`の実装が`Empty`の実装の必要条件にできます。"
+"そのような場合、`Concat`の実装を`Empty`の実装の必要条件にできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:234
@@ -665,8 +659,7 @@ msgid ""
 "of interface `Empty`, we *must* also have an implementation of `Concat`\n"
 "and can invoke the corresponding functions:\n"
 msgstr ""
-"`Concat a => Empty a`はこのように読めます。\n"
-"「`Concat`の型`a`のための実装は、`a`に対して`Empty`の実装をするための必要条件である。」\n"
+"`Concat a => Empty a`は「`Concat`の型`a`のための実装は、`a`に対して`Empty`の実装をするための必要条件である」のように読めます。\n"
 "しかしこれは、インターフェース`Empty`の実装があるならば、常に`Concat`の実装が*なくてはならず*、\n"
 "いつでも`Concat`にある関数を呼び出すことができる、という意味でもあるのです。\n"
 
@@ -689,8 +682,8 @@ msgid ""
 "and how in the implementation we were still able to invoke both `empty` and "
 "`concat`."
 msgstr ""
-"`concatListE`の型で`Empty`制約のみ使っているにも関わらず、\n"
-"実装で`empty`と`concat`の両方を呼び出せていますね。"
+"`concatListE`の型で`Empty`制約だけを使っているにも関わらず、実装で`empty`と"
+"`concat`の両方を呼び出せていますね。"
 
 #. type: Title ###
 #: ../src/Tutorial/Interfaces.md:265
@@ -742,13 +735,13 @@ msgid ""
 "`Comp a` constraint from the above implementation. Learning to read and "
 "understand Idris' type errors is important for fixing them."
 msgstr ""
-"これはインターフェースを拡張することとは同じではありません。\n"
-"文法がよく似てはいますが。\n"
-"制約は*型変数*に課されていて、全体の型ではないですね。\n"
+"文法がよく似てはいますが、これはインターフェースを拡張することとは同じではあ"
+"りません。\n"
+"制約は*型変数*に課されていて、型全体ではないですね。\n"
 "`Comp (Maybe a)`の実装の最後の行では2つの`Just`に格納された値を比較します。\n"
 "これが可能となるのは、これらの値にも`Comp`の実装があるときだけです。\n"
 "さあ、上記の実装から`Comp a`制約を消去してみましょう。\n"
-"Idrisの型エラーを読み解くことは、修正を行う上で大事です。"
+"Idrisの型エラーを読み解くことは、修正するときに大事になります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:295
@@ -774,9 +767,9 @@ msgid ""
 "the error message Idris produces."
 msgstr ""
 "ここでIdrisは`Comp (Maybe Bits8)`の実装を見つけ出そうとします。\n"
-"そのためには`Comp Bits8`のための実装が必要です。\n"
+"そのためには`Comp Bits8`用の実装が必要です。\n"
 "さあさあ`maxInt`の型にある`Bits8`を`Bits64`に変えてみましょう。\n"
-"どんなエラー文言をIdrisが出すでしょうか。"
+"どんなエラー文言をIdrisは出すでしょうか。"
 
 #. type: Title ###
 #: ../src/Tutorial/Interfaces.md:306
@@ -848,7 +841,7 @@ msgstr ""
 msgid ""
 "If on the other hand we'd like to provide explicit implementations for both "
 "functions, we can do so as well:"
-msgstr "他方で両方の関数に陽に実装を提供したい場合も同様に可能です。"
+msgstr "他方で両方の関数に陽に実装を提供したければそれもできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:341
@@ -882,9 +875,8 @@ msgid ""
 "  other function arguments: `Comp a => Comp b => Comp (a,b)`.)\n"
 msgstr ""
 "1. インターフェース`Equals`, `Comp`, `Concat`, `Empty`を対（2つ組タプル）に実装してください。\n"
-"  実装では必要に応じて制約を課して構いません。\n"
-"  （他の関数の引数と同様に、複数の制約を連続して課すことができます。\n"
-"  例えば`Comp a => Comp b => Comp (a,b)`です。）\n"
+"  実装では必要に応じて制約を課して構いません（関数の引数と同様に、複数の制約を連続して課すことができます。\n"
+"  例えば`Comp a => Comp b => Comp (a,b)`です）。\n"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Interfaces.md:361
@@ -920,7 +912,7 @@ msgid ""
 "are useful in almost every non-trivial program. I'll introduce the basic "
 "ones here. The more advanced ones will be discussed in later chapters."
 msgstr ""
-"Idrisの*Prelude*はいくつかのインターフェースと実装を提供します。\n"
+"Idrisの*Prelude*はインターフェースと実装をいくつか提供しています。\n"
 "これらはほぼ全てのある程度以上のプログラムで便利です。\n"
 "基本的なものをここで紹介します。\n"
 "より発展的なものは後の章でお話ししましょう。"
@@ -933,7 +925,7 @@ msgid ""
 "given here as well."
 msgstr ""
 "これらのインターフェースのほとんどは数学的な法則に関連します。\n"
-"そして、実装はこれらの実装に従うことになっています。\n"
+"そして、実装はこれらの法則に従うことになっています。\n"
 "法則についてもここで触れます。"
 
 #. type: Title ###
@@ -1021,7 +1013,7 @@ msgid ""
 msgstr ""
 "理論上、Idrisにはこれらの法則を非原始型に対してコンパイル時に検証する能力があ"
 "ります。\n"
-"しかしながら、実用上`Eq`の実装には必要ではありません。\n"
+"しかしながら、実用上は`Eq`の実装には必要ありません。\n"
 "そのような証明を書くというのはちょっとしたハマりどころだからです。"
 
 #. type: Title ###
@@ -1041,8 +1033,8 @@ msgid ""
 "so whenever there is an `Ord` constraint, we also have access to operators\n"
 "`(==)` and `(/=)` and related functions.\n"
 msgstr ""
-"*Prelude*版`Comp`として`Ord`があります。\n"
-"自前の`comp`と等価な`compare`に加えて、比較演算子`(>=)`、`(>)`、`(<=)`、`(<)`やユーティリティ関数`max`と`min`を提供します。\n"
+"*Prelude*版の`Comp`として`Ord`があります。\n"
+"自前の`comp`と等価な`compare`に加え、比較演算子`(>=)`、`(>)`、`(<=)`、`(<)`やユーティリティ関数`max`と`min`を提供します。\n"
 "`Comp`とは異なり、`Ord`は`Eq`を拡張します。\n"
 "なので`Ord`制約がある場合は、常に演算子`(==)`および`(/=)`と関連する関数が使えます。\n"
 
@@ -1154,7 +1146,7 @@ msgid ""
 "There is a natural way for combining two distances: We sum up the values "
 "they hold. This immediately leads to an implementation of `Semigroup`:"
 msgstr ""
-"2つの距離を結合するには自然な方法があります。\n"
+"2つの距離を結合するのには自然な方法があります。\n"
 "それらが持つ値を加算すればよいのです。\n"
 "そこで直ちに`Semigroup`の実装が導かれます。"
 
@@ -1175,10 +1167,9 @@ msgid ""
 "operation: Adding zero to any value does not affect the value at all.  This "
 "allows us to implement `Monoid` as well:"
 msgstr ""
-"これも直ちに明らかなことですが、\n"
-"ゼロはこの操作での中立的な要素です。\n"
+"これも直ちに明らかなことですが、ゼロはこの操作での中立な要素です。\n"
 "ゼロを加算しても値には何ら影響がありません。\n"
-"これにより`Monoid`も同様に実装できます。"
+"こうして`Monoid`も実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:475
@@ -1239,9 +1230,9 @@ msgid ""
 "of arguments in parentheses where necessary. For instance, experiment with "
 "the output of the following function at the REPL:"
 msgstr ""
-"`Show`インターフェースは主にデバッグ用途で使われ、\n"
-"与えられた型の値を文字列として表示するためのものです。\n"
-"典型的にはその値を作るIdrisのコードに近付けることが多いです。\n"
+"`Show`インターフェースは主に不具合修正の用途で使われ、与えられた型の値を文字"
+"列として表示するためのものです。\n"
+"その値を作るIdrisのコードに近付けることが多いです。\n"
 "その場合は必要に応じて括弧内に引数を適切にくるむことがあります。\n"
 "例えば以下の関数の出力がどうなるかREPLでやってみてください。"
 
@@ -1307,12 +1298,11 @@ msgid ""
 "these cases, it is advisable to come up with new types for the two, "
 "especially since getting these things wrong is a security concern."
 msgstr ""
-"`FromString`の使用例はこちらです。\n"
+"`FromString`の用途はこうです。\n"
 "アプリケーションを書いており、利用者が利用者名とパスワードで自身であることを"
 "同定できるものだとします。\n"
-"いずれも文字からなる文字列なので、\n"
-"2つを混同してしまいがちです。\n"
-"はっきりと異なる意味論を持つものではあるのですが。\n"
+"はっきりと異なる意味論を持つものではあるのですが、いずれも文字からなる文字列"
+"なので、2つを混同してしまいがちです。\n"
 "この場合、これら2つのために新しい型を用意することが望ましいです。\n"
 "特にこれらを取り違えたりなんかするとセキュリティ上の問題になりますから。"
 
@@ -1357,8 +1347,8 @@ msgid ""
 "In order to create a value of type `User`, even for testing, we'd have to "
 "wrap all strings using the given constructors:"
 msgstr ""
-"型`User`の値を作るには、試したいときであっても、\n"
-"逐一文字列を構築子でくるむ必要があります。"
+"型`User`の値を作るには、試してみたいときであっても、逐一文字列を構築子でくる"
+"む必要があります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:552
@@ -1377,9 +1367,9 @@ msgid ""
 "price to pay just for an increase in type safety (I'd tend to disagree).  "
 "Luckily, we can get the convenience of string literals back very easily:"
 msgstr ""
-"これはわりとまどろっこしく、型安全性を増すには割に合わなさすぎると考える人も"
-"いるでしょう（私はどちらかというと違いますが）。\n"
-"幸運にも文字列直値の便利さをとても簡単に取り戻せます。"
+"これは割りとまどろっこしく、型安全性を増すには割に合わなさすぎると考える人も"
+"いるでしょう（私はそうでもありませんが）。\n"
+"幸いにも文字列直値の便利さをとても簡単に取り戻せます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:561
@@ -1458,7 +1448,7 @@ msgstr "`(-)`: 減算"
 #. type: Bullet: '* '
 #: ../src/Tutorial/Interfaces.md:590
 msgid "`Integral`"
-msgstr "整数"
+msgstr "`Integral`"
 
 #. type: Bullet: '  * '
 #: ../src/Tutorial/Interfaces.md:590
@@ -1513,11 +1503,11 @@ msgid ""
 "unlike the other interfaces we looked at so far, with only one type "
 "parameter."
 msgstr ""
-"最後にこの節で手早く説明するインターフェースは`Cast`です。\n"
+"最後にこの節では`Cast`というインターフェースについて手短かに説明します。\n"
 "ある型の値を他の型の値に関数`cast`で変換するというものです。\n"
-"`Cast`は特別です。\n"
-"なぜならこのインターフェースは*2つ*の型変数を引数に取りますが、\n"
-"これまで見てきた他のインターフェースは型変数が1つしかないからです。"
+"`Cast`が特別なのは、このインターフェースが*2つ*の型変数を引数に取るからで"
+"す。\n"
+"これまで見てきた他のインターフェースは型変数が1つしかありませんでした。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:614
@@ -1558,7 +1548,7 @@ msgid ""
 "interfaces for your own data types, as you will have to do so regularly when "
 "writing Idris code."
 msgstr ""
-"ここにある演習は流暢に自前のデータ型のためのインターフェースが実装できるよう"
+"ここにある演習は自前のデータ型のためのインターフェースを流暢に実装できるよう"
 "になることを意図しています。\n"
 "Idrisのコードを書くときはしばしば必要になることですから。"
 
@@ -1570,8 +1560,7 @@ msgid ""
 "appreciate at first.  Therefore, there are several exercises where you'll "
 "implement different instances for these."
 msgstr ""
-"`Eq`, `Ord`, `Num`のようなインターフェースが便利な理由は直ちに明らかです"
-"が、\n"
+"`Eq`, `Ord`, `Num`のようなインターフェースが便利な理由はすぐに分かりますが、"
 "一方で`Semigroup`と`Monoid`の便利さは最初は実感しにくいかもしれません。\n"
 "したがって演習の中にはいくつかの異なるインスタンスについて実装するものがあり"
 "ます。"
@@ -1583,9 +1572,9 @@ msgid ""
 "type `Double`.  Implement interfaces `Eq`, `Num`, `Neg`, and `Fractional` "
 "for `Complex`."
 msgstr ""
-"レコード型`Complex`を複素数について定義してください。\n"
+"複素数のためのレコード型`Complex`を定義してください。\n"
 "型`Double`の値2つを対にします。\n"
-"`Eq`, `Num`, `Neg`、そして`Fractional`を`Complex`に実装してください。"
+"`Eq`、`Num`、`Neg`、`Fractional`を`Complex`に実装してください。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Interfaces.md:643
@@ -1608,12 +1597,12 @@ msgid ""
 "   the REPL.\n"
 msgstr ""
 "   書いた実装が正しい挙動になっていることを確かめるために、\n"
-"   REPLで型`Complex`の値を`Just`でくるんで`show`してみましょう。\n"
+"   REPLで型`Complex`の値を`Just`にくるんで`show`してみましょう。\n"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Interfaces.md:649
 msgid "Consider the following wrapper for optional values:"
-msgstr "あってもなくてもよい値の、以下の梱包について考えてみましょう。"
+msgstr "以下のオプショナルな値の梱包について考えてみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Interfaces.md:650
@@ -1675,7 +1664,7 @@ msgid ""
 "Repeat exercises 3 and 4 for record `Last`. The `Semigroup` implementation "
 "should return the last non-nothing value."
 msgstr ""
-"問題3と4をレコード`Last`に改めて行ってください。\n"
+"レコード`Last`についてもう一度問題3と4を解いてください。\n"
 "`Semigroup`の実装は最後の非空な値を返します。"
 
 #. type: Fenced code block (idris)
@@ -1712,8 +1701,8 @@ msgid ""
 "   types we haven't looked at so far. We will learn about\n"
 "   interface `Foldable` in a later section.\n"
 msgstr ""
-"   ここで`foldMap`の型はより一般的でリストのみが専門ではありません。\n"
-"   `Maybe`や`Either`やその他のまだ見ぬ荷車型に対しても動きます。\n"
+"   ここでの`foldMap`の型はより一般的で、リストのみが専門ではありません。\n"
+"   `Maybe`や`Either`やその他のまだ見ぬ容器型に対しても動きます。\n"
 "   後の節でインターフェース`Foldable`を学びましょう。\n"
 
 #. type: Bullet: '7. '
@@ -1761,7 +1750,7 @@ msgid ""
 "   `(<+>)` is `True`, if and only if both of the arguments are `True`.\n"
 "   Make sure that `neutral` is indeed the neutral element for this operation.\n"
 msgstr ""
-"   同様に`Semigroup`と`Monoid`を`All`に実装してください。\n"
+"   同様にして`Semigroup`と`Monoid`を`All`に実装してください。\n"
 "   `(<+>)`の結果は、両方の引数が`True`のときにのみ`True`であるようにしてください。\n"
 "   `neural`はもちろんこの操作において中立な要素になるようにしてくださいね。\n"
 
@@ -1823,7 +1812,7 @@ msgid ""
 "   Given an implementation of `Num a`, implement `Semigroup (Sum a)`\n"
 "   and `Monoid (Sum a)`, so that `(<+>)` corresponds to addition.\n"
 msgstr ""
-"   `Num a`の実装があったとして、`Semigroup (Sum a)`と`Monoid (Sum a)`を実装してください。\n"
+"   `Num a`の実装があるとして、`Semigroup (Sum a)`と`Monoid (Sum a)`を実装してください。\n"
 "   ただし`(<+>)`は加算に対応します。\n"
 
 #. type: Plain text
@@ -1842,7 +1831,7 @@ msgstr ""
 msgid ""
 "   When implementing `neutral`, remember that you can use integer\n"
 "   literals when working with numeric types.\n"
-msgstr "   `neutral`を実装する際は、数値型を扱うときは整数直値が使えることを思い出してください。\n"
+msgstr "   `neutral`を実装する際は、数値型を扱うときに整数直値が使えることを思い出してください。\n"
 
 #. type: Bullet: '10. '
 #: ../src/Tutorial/Interfaces.md:748
@@ -1882,11 +1871,10 @@ msgid ""
 "calculate the first and last element of the list as well as the sum and "
 "product of all values."
 msgstr ""
-"`foldMap`の強力さと多芸さを享受するために、\n"
-"演習6から10までを解いたあとに（もしくはREPLで`Solutions.Interfaces`をロードし"
-"てもよいです）、\n"
-"以下をREPLで実行してください。\n"
-"これは、たった1回の巡回で！、リストの最初と最後の要素と全ての値の和と積を計算"
+"`foldMap`の強力さと多彩さを味わうために、演習6から10までを解いたあとに（もし"
+"くはREPLで`Solutions.Interfaces`を読み込んでもよいです）、以下をREPLで実行し"
+"てください。\n"
+"これはなんとたった1回の巡回でリストの最初と最後の要素と全ての値の和と積を計算"
 "しています。"
 
 #. type: Plain text
@@ -1914,10 +1902,9 @@ msgid ""
 "    natural numbers, or 0 and 255 for `Bits8`), these can even\n"
 "    be extended to `Monoid`.\n"
 msgstr ""
-"   `Ord`の実装付きの型のための`Semigroup`の実装もあります。\n"
+"   `Ord`の実装付きの型用に`Semigroup`の実装もあります。\n"
 "   この実装は2つの値のうちより小さいかより大きいほうを返します。\n"
-"   決まった最小値や最大値がある型の場合（例えば自然数の0や、`Bits8`の0と255）、\n"
-"   これらについてもまた`Monoid`に拡張できます。\n"
+"   絶対的な最小値や最大値がある型の場合（例えば自然数の0や、`Bits8`の0と255）、これらは`Monoid`にまで拡張できます。\n"
 
 #. type: Bullet: '12. '
 #: ../src/Tutorial/Interfaces.md:778
@@ -1928,11 +1915,11 @@ msgid ""
 "interfaces `Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, and `Monoid` for "
 "this."
 msgstr ""
-"以前の演習で化学の元素を表現するデータ型を実装し、\n"
-"化学の体積を計算する関数を書きました。\n"
-"新しく原子の体積を表現する単一フィールドレコード型を定義して、\n"
-"インターフェース`Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, `Monoid`をこ"
-"の型に実装してください。"
+"以前の演習で、化学の元素を表現するデータ型を実装し、化学の体積を計算する関数"
+"を書きました。\n"
+"新しく原子の体積を表現する単一フィールドレコード型を定義して、インターフェー"
+"ス`Eq`, `Ord`, `Show`, `FromDouble`, `Semigroup`, `Monoid`をこの型に実装して"
+"ください。"
 
 #. type: Bullet: '13. '
 #: ../src/Tutorial/Interfaces.md:782
@@ -1962,9 +1949,9 @@ msgid ""
 msgstr ""
 "最後の註釈：もし関数型プログラミングが初めてであれば、演習6から10の実装をREPL"
 "で確かめてみてください。\n"
-"これら全ての関数を最小限の量のコードでどのように実装できたか、そして演習11で"
-"見たように1回のリストの巡回においてこれらの挙動をどのように組み合わせられた"
-"か、を思い返しましょう。"
+"これら全ての関数を最小限の量のコードでどう実装できたか、そして演習11で見たよ"
+"うに1回のリストの巡回においてこれらの挙動をどう組み合わせられたかを思い返しま"
+"しょう。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Interfaces.md:807
@@ -1997,8 +1984,8 @@ msgid ""
 "Interfaces implementations can themselves be *constrained* requiring other "
 "implementations to be available."
 msgstr ""
-"インターフェースの実装は、それ自体が他の実装を必要とする*制約*が課されること"
-"があります。"
+"インターフェースの実装には、それ自体が他の実装を必要とする*制約*が課されるこ"
+"とがあります。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Interfaces.md:807
@@ -2016,8 +2003,8 @@ msgid ""
 "Certain interfaces allow us to use literal values such as string or integer "
 "literals for our own data types."
 msgstr ""
-"いくつかのインターフェースがあれば、文字列や整数といった直値のようなそのまま"
-"の値を自前のデータ型に使えます。"
+"インターフェースを用意すれば、文字列や整数といった直値を自前のデータ型に使え"
+"ることがあります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Interfaces.md:812
@@ -2027,7 +2014,7 @@ msgid ""
 "restricted set of values can be found in the chapter about [primitives](Prim."
 "md)."
 msgstr ""
-"ただ、この節では直値の一部始終はまだお話ししていません。\n"
+"ただ、この節ではまだ直値の一部始終をお話ししていません。\n"
 "限られた値の集合のみを受け付ける型に直値を使うことに関するもっと詳しい話は、"
 "[原始型](Prim.md)についての章にあります。"
 
