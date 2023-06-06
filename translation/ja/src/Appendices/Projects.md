@@ -527,7 +527,9 @@ depends    = base         >= 0.5.1
            , sop          >= 0.5.0
 ```
 
-見ての通り*hedgehog*は*base*と*contrib*に依存しており、両方ともIdrisのインストールに含まれる一部です。しかし[*elab-util*](https://github.com/stefan-hoeck/idris2-elab-util)という推敲スクリプトを書くためのユーティリティライブラリ（Idrisのコードを書くことによってIdrisの宣言を作る強力な技法です。ご興味があれば分量のある入門書があるのでどうぞ）、[*sop*](https://github.com/stefan-hoeck/idris2-sop)という*積和*表現を介してインターフェースの実装を一般的に導出するライブラリ（便利なものでいつの日にか確認したくなるでしょう）、[*pretty-show*](https://github.com/stefan-hoeck/idris2-pretty-show)というIdrisの値を綺麗に印字するためのライブラリ（*hedgehog*はこれをテストが失敗した場合に活用しています）にも依存しています。
+見ての通り*hedgehog*は*base*と*contrib*に依存しており、両方ともIdrisのインストールに含まれる一部です。
+しかし[*elab-util*](https://github.com/stefan-hoeck/idris2-elab-util)という細密子スクリプトを書くためのユーティリティライブラリ（Idrisのコードを書くことによってIdrisの宣言を作る強力な技法です。
+ご興味があれば分量のある入門書があるのでどうぞ）、[*sop*](https://github.com/stefan-hoeck/idris2-sop)という*積和*表現を介してインターフェースの実装を一般的に導出するライブラリ（便利なものでいつの日にか確認したくなるでしょう）、[*pretty-show*](https://github.com/stefan-hoeck/idris2-pretty-show)というIdrisの値を綺麗に印字するためのライブラリ（*hedgehog*はこれをテストが失敗した場合に活用しています）にも依存しています。
 
 なので自分のプロジェクトで性質テストを書くのに実際に*hedgehog*を使えるようになるまでには、*hedgehog*自体をインストールする前にそれに依存するパッケージをインストールする必要があるでしょう。こうしたことを手作業でするのは億劫なのでpackのようなパッケージ管理に対応してもらうのが一番です。
 

@@ -1,4 +1,6 @@
-catch-all pattern: 全捕捉パターン
-elaboration: 細密化
+catch-all: 全捕捉。catch-all patternは全捕捉パターンです。
+elaboration: 細密化。elaboratorは細密子です。
 accumulate: 累算。累積とすると乗算になりそうなので避けます。
-container type: 容器型
+container: 容器。container typeは容器型です。荷車とすると大仰な感じ。
+signature: 処方。type signatureは型処方です。
+literal: 直値

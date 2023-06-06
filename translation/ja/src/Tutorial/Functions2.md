@@ -304,7 +304,7 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
 
 演習3はまたもや最重要です。
 `traverseList`はより汎用的な`traverse`の特殊版です。
-`traverse`は最も強力で多芸な関数の1つで、*Prelude*にあります（型を確認しましょう！）。
+`traverse`は最も強力で多彩な関数の1つで、*Prelude*にあります（型を確認しましょう！）。
 
 1. *base*のモジュール`Data.List`は関数`find`と`elemBy`を公開しています。
    型を調べた上で、`handleRequest`の実装で使ってください。

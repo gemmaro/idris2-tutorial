@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-06-03 19:29+0900\n"
+"PO-Revision-Date: 2023-06-06 22:52+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1355,7 +1355,7 @@ msgstr ""
 "しょう。\n"
 "当然これが成功するのは、`k`がベクタの長さ`n`より厳密に小さい自然数であるとき"
 "に限ります。\n"
-"幸運にもこの前提条件を指標付き型で表現できます。"
+"幸いにもこの前提条件を指標付き型で表現できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:565
