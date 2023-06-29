@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-05-09 01:58+0900\n"
+"PO-Revision-Date: 2023-06-29 23:32+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -231,8 +231,8 @@ msgid ""
 "Functions can be combined in several ways, the most direct probably being "
 "the dot operator:"
 msgstr ""
-"関数はいくつかのやり方で組み合わせられます。\n"
-"もっとも直接的なのは恐らくドット演算子でしょう。"
+"関数は幾つかのやり方で組み合わせられます。\n"
+"最も直接的なのは恐らくドット演算子でしょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functions1.md:80
@@ -301,8 +301,8 @@ msgid ""
 "We can conveniently chain several functions using the dot operator to write "
 "more complex functions:"
 msgstr ""
-"いくつかの関数をドット演算子を使って連鎖させて、\n"
-"もっと複雑な関数を簡便に書くことができます。"
+"幾つかの関数をドット演算子を使って連鎖させて、もっと複雑な関数を簡便に書くこ"
+"とができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functions1.md:109
@@ -765,12 +765,10 @@ msgid ""
 "8, while `(*)` is left associated with a priority of 9. Hence, `a * b + c` "
 "is the same as `(a * b) + c` instead of `a * (b + c)`."
 msgstr ""
-"式で複数の演算子が混在するような場合は、\n"
-"より高い優先度を持つ演算子がより強く結び付きます。\n"
-"たとえば、 `(+)` は左結合で優先度が8、\n"
-"`(*)` は左結合で優先度が9です。\n"
-"したがって `a * b + c` は `a * (b + c)` ではなく、\n"
-"`(a * b) + c` と同じです。"
+"式で複数の演算子が混在するような場合は、より高い優先度を持つ演算子がより強く"
+"結び付きます。\n"
+"例えば`(+)` は左結合で優先度が8、`(*)` は左結合で優先度が9です。\n"
+"したがって `a * b + c` は `a * (b + c)` ではなく、`(a * b) + c` と同じです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Functions1.md:326
@@ -813,10 +811,8 @@ msgid ""
 "less than 10, the second, whether 10 is less than its\n"
 "argument.\n"
 msgstr ""
-"例から見てとれるように、\n"
-"`(< 10)` と `(10 <)` には違いがあります。\n"
-"前者は引数が10より小さいかの検査で、\n"
-"後者は10が引数より小さいかの検査です。\n"
+"例を見ての通り`(< 10)` と `(10 <)` には違いがあります。\n"
+"前者は引数が10より小さいかの検査で、後者は10が引数より小さいかの検査です。\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions1.md:348
@@ -977,8 +973,8 @@ msgstr ""
 "今は心配しなくて大丈夫です。\n"
 "その時が来たらインターフェースについて学びましょう。\n"
 "インターフェースを知らずとも、演算子は直感的に振舞うことでしょう。\n"
-"たとえば加算と乗算は全ての数値型に対してはたらきますし、\n"
-"比較演算子は*Prelude*の関数以外のほぼ全ての型に対してはたらきます。"
+"例えば加算と乗算は全ての数値型に対してはたらきますし、比較演算子は*Prelude*の"
+"関数以外のほぼ全ての型に対してはたらきます。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions1.md:429
@@ -1243,7 +1239,7 @@ msgid ""
 "* A function in Idris can take an arbitrary number of arguments,\n"
 "separated by `->` in the function's type.\n"
 msgstr ""
-"Idrisの関数はいくつでも引数を取ることができます。\n"
+"Idrisの関数は幾つでも引数を取ることができます。\n"
 "引数は関数の型で、`->`で区切られています。\n"
 
 #. type: Plain text

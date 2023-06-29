@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-06-06 22:52+0900\n"
+"PO-Revision-Date: 2023-06-29 23:45+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -301,10 +301,10 @@ msgstr ""
 "というわけでリストのようなデータ構造の*長さ*を*型*に書き換える方法がわかりま"
 "した。\n"
 "ベクタの要素数が型にある長さと合致しなければ*型エラー*になるのです。\n"
-"すぐあとでいくつかの使用例を見ていきますが、\n"
+"すぐあとで幾つかの使用例を見ていきますが、\n"
 "この追加情報により型をより精密なものにしてこれ以上のプログラミングの誤りを排"
 "除できます。\n"
-"でもまずはさくっといくつかの用語を明らかにしておかねばなりません。"
+"でもまずはさくっと幾つかの用語を明らかにしておかねばなりません。"
 
 #. type: Title ###
 #: ../src/Tutorial/Dependent.md:94
@@ -699,8 +699,8 @@ msgstr ""
 "さて、`bogusZipList`を見てみましょう。\n"
 "異な（りう）る型の要素を持つ2つのリストについて、所与の2引数関数を通して向か"
 "い合うものを1つに閉じるというものです。\n"
-"前述したように、2つのリストと結果はいずれも同じ長さになるのが一番理に適ってい"
-"ます。\n"
+"前述したように、2つのリストと結果は何れも同じ長さになるのが一番理に適っていま"
+"す。\n"
 "`Vect`があればこれは以下のように表現でき、実装されます。"
 
 #. type: Fenced code block (idris)
@@ -1378,18 +1378,17 @@ msgid ""
 "number `n`. `FS` is the inductive case: If `k` is strictly smaller than `n` "
 "(`k` being of type `Fin n`), then `FS k` is strictly smaller than `S n`."
 msgstr ""
-"`Fin n`は`n`より厳密に小さい自然数の型で、\n"
-"帰納的に定義されています。\n"
-"`FZ`は自然数*ゼロ*に対応し、\n"
-"型で見てとれるようにあらゆる自然数`n`に対して`S n`より厳密に小さいです。\n"
+"`Fin n`は`n`より厳密に小さい自然数の型で、帰納的に定義されています。\n"
+"`FZ`は自然数*ゼロ*に対応し、型を見ての通りあらゆる自然数`n`に対して`S n`より"
+"厳密に小さいです。\n"
 "`FS`は帰納的な場合です。\n"
-"もし`k`が`n`より厳密に小さいなら（`k`は型が`Fin n`です）、\n"
-"`FS k`は`S n`より厳密に小さいです。"
+"もし`k`が`n`より厳密に小さいなら（`k`は型が`Fin n`です）、`FS k`は`S n`より厳"
+"密に小さいです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:579
 msgid "Let's come up with some values of type `Fin`:"
-msgstr "型`Fin`の値をいくつか挙げてみましょう。"
+msgstr "型`Fin`の値を幾つか挙げてみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:580
@@ -1426,7 +1425,7 @@ msgid ""
 "session, how to express \"there is no value of type `x`\" in a type."
 msgstr ""
 "型`Fin 0`の値がないことにご注意を。\n"
-"のちの節で、「型`x`に値が1つもない」ことを型中で表現する方法を学びます。"
+"後の節で、「型`x`に値が1つもない」ことを型中で表現する方法を学びます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:600
@@ -1629,8 +1628,8 @@ msgid ""
 "functions and values.  This is a very powerful concept, as it allows us to "
 "compute output types from input types. Here's an example:"
 msgstr ""
-"先程の節、特にいくつかの演習では、関数や値の型を表現するために、ますますコン"
-"パイル時計算を使い始めました。\n"
+"先程の節、特に幾つかの演習では、関数や値の型を表現するために、ますますコンパ"
+"イル時計算を使い始めました。\n"
 "これは大変強力な概念で、というのも入力型から出力型を計算できるからです。\n"
 "以下は例です。"
 
