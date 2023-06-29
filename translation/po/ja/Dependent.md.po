@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-03-21 09:33+0900\n"
-"PO-Revision-Date: 2023-04-09 23:13+0900\n"
+"POT-Creation-Date: 2023-05-07 21:24+0900\n"
+"PO-Revision-Date: 2023-06-29 23:45+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -184,7 +184,7 @@ msgid ""
 "length:"
 msgstr ""
 "上述した問題への答えはもちろん、依存型です。\n"
-"そして最もよく知られた導入例は*ベクタ*、長さ指標付きリストです。"
+"そして最もよく知られた取っ掛かりの例は*ベクタ*、長さ指標付きリストです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:42
@@ -301,10 +301,10 @@ msgstr ""
 "というわけでリストのようなデータ構造の*長さ*を*型*に書き換える方法がわかりま"
 "した。\n"
 "ベクタの要素数が型にある長さと合致しなければ*型エラー*になるのです。\n"
-"すぐあとでいくつかの使用例を見ていきますが、\n"
+"すぐあとで幾つかの使用例を見ていきますが、\n"
 "この追加情報により型をより精密なものにしてこれ以上のプログラミングの誤りを排"
 "除できます。\n"
-"でもまずはさくっといくつかの用語を明らかにしておかねばなりません。"
+"でもまずはさくっと幾つかの用語を明らかにしておかねばなりません。"
 
 #. type: Title ###
 #: ../src/Tutorial/Dependent.md:94
@@ -390,10 +390,8 @@ msgid ""
 "case by inspecting the holes and their context."
 msgstr ""
 "さあ、自分でこれを実装してみましょう！\n"
-"穴あきを使い、\n"
-"`Indexed`引数でパターン照合し、\n"
-"そして穴あきとその文脈を調べることによって、\n"
-"それぞれの場合の期待される出力型を調べてください。"
+"虫食いを使って`Indexed`引数でパターン照合し、そして虫食いとその文脈を調べるこ"
+"とによって、それぞれの場合の期待される出力型を調べてください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:135
@@ -438,11 +436,11 @@ msgid ""
 "these length indices will tell us *exactly*, if and how the lengths of our "
 "vectors are modified:"
 msgstr ""
-"関数`bogusMapList`は期待した通りには振舞いませんでしたが、\n"
-"これはいつも空リストを返却していたからです。\n"
+"関数`bogusMapList`は期待した通りには振舞いませんでしたが、これはいつも空リス"
+"トを返却していたからです。\n"
 "これが`Vect`だったら型に正直でなければなりません。\n"
-"`Vect`をmapする場合、引数*および*出力型は長さ指標を含んでおり、\n"
-"この長さ指標は*厳密に*ベクタの長さがどれほど変わったのかがわかります。"
+"`Vect`をmapする場合、引数*および*出力型は長さ指標を含んでおり、この長さ指標は"
+"*厳密に*ベクタの長さがどれほど変わったのかがわかります。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:155
@@ -519,18 +517,16 @@ msgid ""
 "argument, we need to pattern match on it:"
 msgstr ""
 "2つの型変数`a`と`b`は無視できます。\n"
-"ただの汎化関数なので。\n"
-"（ただ、同じ型と数量子の引数を単一対の波括弧内にまとめられることは覚えておい"
-"てください。\n"
+"というのもこれらは単なる汎化関数を表しているからです（ただ、同じ型と数量子の"
+"引数を単一対の波括弧内にまとめられることは覚えておいてください。\n"
 "これはやってもやらなくてもいいですが、型処方を少しだけ短くできることもありま"
-"す。）\n"
+"す）。\n"
 "型`Nat`の暗黙引数はしかし、入出力の`Vect`が同じ長さであることを示していま"
 "す。\n"
 "この契約を履行しないと型エラーです。\n"
-"`mapVect`を実装しているときなどでこの契約は大変説明的なもので、\n"
-"これに沿って実装したり穴あきを使ったりできます。\n"
-"`Vect`の長さについての*どんな*情報を得るのにも、\n"
-"パターン照合が要ります。"
+"`mapVect`を実装しているときなどでこの契約は大変説明的なもので、これに沿って実"
+"装したり虫食いを使ったりできます。\n"
+"`Vect`の長さについての*どんな*情報を得るのにも、パターン照合が要ります。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Dependent.md:197
@@ -593,7 +589,7 @@ msgid ""
 "The first hole, `impl_0` is of type `Vect 0 b`. There is only one such "
 "value, as discussed above:"
 msgstr ""
-"最初の穴あき`impl_0`は型`Vect 0 b`です。\n"
+"最初の虫食い`impl_0`は型`Vect 0 b`です。\n"
 "前述したようにそのような値は1つしかありません。"
 
 #. type: Fenced code block (idris)
@@ -630,7 +626,7 @@ msgstr "mapVect f (x :: xs) = f x :: ?rest\n"
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:244
 msgid "Let's inspect the new hole at the REPL:"
-msgstr "REPLで新しい穴あきを調べてみましょう。"
+msgstr "REPLで新しい虫食いを調べてみましょう。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Dependent.md:245
@@ -703,8 +699,8 @@ msgstr ""
 "さて、`bogusZipList`を見てみましょう。\n"
 "異な（りう）る型の要素を持つ2つのリストについて、所与の2引数関数を通して向か"
 "い合うものを1つに閉じるというものです。\n"
-"前述したように、2つのリストと結果はいずれも同じ長さになるのが一番理に適ってい"
-"ます。\n"
+"前述したように、2つのリストと結果は何れも同じ長さになるのが一番理に適っていま"
+"す。\n"
 "`Vect`があればこれは以下のように表現でき、実装されます。"
 
 #. type: Fenced code block (idris)
@@ -1005,8 +1001,8 @@ msgid ""
 "number `n` (about which I know *nothing* at runtime, since it has quantity "
 "zero), given a value of type `a`, I'll give you a vector holding exactly `n` "
 "elements of type `a`. This is like saying: \"Think about a natural number "
-"`n`, and I'll give you `n` apples without you telling me the value of `n`"
-"\".  Idris is powerful, but it is not a clairvoyant."
+"`n`, and I'll give you `n` apples without you telling me the value of "
+"`n`\".  Idris is powerful, but it is not a clairvoyant."
 msgstr ""
 "この型は以下のように読めます。\n"
 "あらゆる型`a`とあらゆる自然数`n`（数量子ゼロなので実行時には*何にも*わかりま"
@@ -1183,7 +1179,7 @@ msgid ""
 "   if you don't know where to start.\n"
 msgstr ""
 "   関数`iterate`を宣言し実装してください。\n"
-"   この関数はこの振舞いを内蔵化します。\n"
+"   この関数はこの挙動をカプセル化します。\n"
 "   どこから始めたらよいかわからないときは`replicate`から着想が得られます。\n"
 
 #. type: Bullet: '7. '
@@ -1194,10 +1190,10 @@ msgid ""
 "`generate`, which should encapsulate this behavior. Make sure to use the "
 "updated state in every new invocation of `fun`."
 msgstr ""
-"状態型`s`の初期値と関数`fun : s -> (s, a)`が与えられているとき、\n"
-"`a`の`Vect`を生成したいとします。\n"
+"状態型`s`の初期値と関数`fun : s -> (s, a)`が与えられているとき、`a`の`Vect`を"
+"生成したいとします。\n"
 "関数`generate`を宣言し実装してください。\n"
-"この関数はこの振舞いを内蔵化します。\n"
+"この関数はこの挙動をカプセル化します。\n"
 "必ず全ての新しい`fun`の呼び出しで更新された状態を使うようにしてください。"
 
 #. type: Plain text
@@ -1226,7 +1222,7 @@ msgid ""
 msgstr ""
 "関数`fromList`を実装してください。\n"
 "この関数は値のリストを同じ長さのベクタに変換します。\n"
-"詰まったら穴開きを使ってください。"
+"詰まったら虫食いを使ってください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:508
@@ -1359,7 +1355,7 @@ msgstr ""
 "しょう。\n"
 "当然これが成功するのは、`k`がベクタの長さ`n`より厳密に小さい自然数であるとき"
 "に限ります。\n"
-"幸運にもこの前提条件を指標付き型で表現できます。"
+"幸いにもこの前提条件を指標付き型で表現できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:565
@@ -1382,18 +1378,17 @@ msgid ""
 "number `n`. `FS` is the inductive case: If `k` is strictly smaller than `n` "
 "(`k` being of type `Fin n`), then `FS k` is strictly smaller than `S n`."
 msgstr ""
-"`Fin n`は`n`より厳密に小さい自然数の型で、\n"
-"帰納的に定義されています。\n"
-"`FZ`は自然数*ゼロ*に対応し、\n"
-"型で見てとれるようにあらゆる自然数`n`に対して`S n`より厳密に小さいです。\n"
+"`Fin n`は`n`より厳密に小さい自然数の型で、帰納的に定義されています。\n"
+"`FZ`は自然数*ゼロ*に対応し、型を見ての通りあらゆる自然数`n`に対して`S n`より"
+"厳密に小さいです。\n"
 "`FS`は帰納的な場合です。\n"
-"もし`k`が`n`より厳密に小さいなら（`k`は型が`Fin n`です）、\n"
-"`FS k`は`S n`より厳密に小さいです。"
+"もし`k`が`n`より厳密に小さいなら（`k`は型が`Fin n`です）、`FS k`は`S n`より厳"
+"密に小さいです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:579
 msgid "Let's come up with some values of type `Fin`:"
-msgstr "型`Fin`の値をいくつか挙げてみましょう。"
+msgstr "型`Fin`の値を幾つか挙げてみましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:580
@@ -1430,7 +1425,7 @@ msgid ""
 "session, how to express \"there is no value of type `x`\" in a type."
 msgstr ""
 "型`Fin 0`の値がないことにご注意を。\n"
-"のちの節で、「型`x`に値が1つもない」ことを型中で表現する方法を学びます。"
+"後の節で、「型`x`に値が1つもない」ことを型中で表現する方法を学びます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:600
@@ -1452,7 +1447,7 @@ msgid ""
 "if you get stuck."
 msgstr ""
 "読み進める前に自分で`index`を実装してみてください。\n"
-"詰まったら穴開きを利用しましょう。"
+"詰まったら虫食いを利用しましょう。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:608
@@ -1633,8 +1628,8 @@ msgid ""
 "functions and values.  This is a very powerful concept, as it allows us to "
 "compute output types from input types. Here's an example:"
 msgstr ""
-"先程の節、特にいくつかの演習では、関数や値の型を表現するために、ますますコン"
-"パイル時計算を使い始めました。\n"
+"先程の節、特に幾つかの演習では、関数や値の型を表現するために、ますますコンパ"
+"イル時計算を使い始めました。\n"
 "これは大変強力な概念で、というのも入力型から出力型を計算できるからです。\n"
 "以下は例です。"
 
@@ -2019,9 +2014,8 @@ msgid ""
 "   Note: This might be a challenging exercise, but make sure\n"
 "   to give it a try. As usual, make use of holes if you get stuck!\n"
 msgstr ""
-"   附記：これは発展的な演習かもしれませんが、\n"
-"   ぜひ挑戦してみてください。\n"
-"   いつも通り手詰まりになったら穴開きを活用しましょう！\n"
+"   附記：これは発展的な演習かもしれませんが、ぜひ挑戦してみてください。\n"
+"   いつも通り手詰まりになったら虫食いを活用しましょう！\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:866

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-04-10 07:44+0900\n"
+"PO-Revision-Date: 2023-06-29 23:47+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -143,12 +143,12 @@ msgid ""
 "start feeling natural to you. You will then realize that their initial "
 "complexity has vanished."
 msgstr ""
-"この章ではいくつかの関連し合うインターフェースについて学びます。\n"
+"この章では幾つかの関連し合うインターフェースについて学びます。\n"
 "これらは全て抽象化についてのものなので、最初のうちは理解するのが難しいかもし"
 "れません。\n"
 "特に*なぜ*役に立つのか、*いつ*使うのかがわかるには時間と経験が必要です。\n"
-"したがってこの章は山ほど演習が付属しており、\n"
-"ほとんどはごく少ない行のコードで解くことができます。\n"
+"したがってこの章は山ほど演習が付属しており、ほとんどはごく少ない行のコードで"
+"解くことができます。\n"
 "演習を飛ばさないでください。\n"
 "内容が自然に感じられるまで何度も立ち返ってください。\n"
 "そうすれば当初感じていた複雑さが消えていることに気付くでしょう。"
@@ -215,8 +215,8 @@ msgid ""
 "pure function over the data type, without affecting its underlying "
 "structure*."
 msgstr ""
-"上で議論した型構築子は振舞いや便利になるときがかなり異なりますが、\n"
-"これらに取り組んでいると何らかの操作は頭に上ってきます。\n"
+"上で議論した型構築子は挙動の様子や便利になる場合がかなり異なりますが、これら"
+"に取り組んでいると何らかの操作は頭に上ってきます。\n"
 "そのような操作の1つ目は*土台の構造に影響することなく、純粋な関数をデータ型に"
 "写す*ことです。"
 
@@ -408,9 +408,9 @@ msgid ""
 "follow some derived functions, which are often useful. Here are some of them "
 "for `IO`:"
 msgstr ""
-"*純粋な関数を文脈に写す*という概念からいくつか派生する関数が出てきますが、便"
-"利なことがよくあります。\n"
-"以下は`IO`からいくつか取ってきたものです。"
+"*純粋な関数を文脈に写す*という概念から幾つか派生する関数が出てきますが、便利"
+"なことがよくあります。\n"
+"以下は`IO`から幾つか取ってきたものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:139
@@ -455,8 +455,7 @@ msgid ""
 "from parametrizing an interface over something else than\n"
 "a `Type`.\n"
 msgstr ""
-"関数といくつかの派生した有用な関数の集まりが繰り返される場面に出喰わしたときは、\n"
-"インターフェースを定義することを検討すべきです。\n"
+"関数と幾つかの派生した有用な関数の集まりが繰り返される場面に出喰わしたときは、インターフェースを定義することを検討すべきです。\n"
 "しかしここではどのようにすればよいのでしょうか。\n"
 "`mapList`、`mapMaybe`、`mapIO`の型を見ると、除去する必要があるのは`List`、`List1`、`IO`型であるとわかります。\n"
 "これらは型`Type`ではなく型`Type -> Type`です。\n"
@@ -568,7 +567,7 @@ msgid ""
 msgstr ""
 "覚えておいてほしいのですが、型処方を解釈できることはIdrisの宣言で起こっている"
 "ことを理解する上での最重要事項です。\n"
-"これを練習し与えられたツールや小間物を活用する*必要*があります。"
+"これを練習し与えられたツールやユーティリティを活用する*必要*があります。"
 
 #. type: Title ###
 #: ../src/Tutorial/Functor.md:210
@@ -583,7 +582,7 @@ msgid ""
 "`Functor`. Eventually, you should know and remember all of them as they are "
 "highly useful. Here they are together with their types:"
 msgstr ""
-"インターフェース`Functor`から直接導出できる関数や演算子はいくつかあります。\n"
+"インターフェース`Functor`から直接導出できる関数や演算子は幾つかあります。\n"
 "これらは大変有用なので、最終的には全てを知り記憶するべきです。\n"
 "以下は型と共に見たものです。"
 
@@ -850,8 +849,7 @@ msgstr ""
 "例えば数値型については、加算を表現する`Monoid`と乗算を表現するものを用意でき"
 "ます。\n"
 "同様に入れ子の関手については`map`の解釈として値の最初の層の上のみで写すこと"
-"も、\n"
-"値のいくつかの層の上で写すこともできます。"
+"も、値の幾つかの層の上で写すこともできます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:339
@@ -1031,7 +1029,7 @@ msgid ""
 msgstr ""
 "   上記で混乱しないようにしてください。\n"
 "   可能な実装は1つしかありません。\n"
-"   いつも通り穴開きを使い、道を見失ったときはコンパイラに導いてもらいましょう。\n"
+"   いつも通り虫食いを使い、道を見失ったときはコンパイラに導いてもらいましょう。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:408
@@ -1153,7 +1151,7 @@ msgid ""
 "(both operations might fail), calculating the product of the two. Here's the "
 "code:"
 msgstr ""
-"この振舞いは`Functor`が押さえていないものの、とてもよく見かけるものです。\n"
+"この挙動は`Functor`で押さえられていないものの、とてもよく見かけるものです。\n"
 "例えば2つの数字を標準入力から読んで（両方とも操作は失敗しえます）、2つの積を"
 "計算したいかもしれません。\n"
 "以下がそのコードです。"
@@ -1230,8 +1228,8 @@ msgid ""
 "to encapsulate this behavior. It's called `Applicative`.  Here is its "
 "definition and an example implementation:"
 msgstr ""
-"もちろん既にお察しの通り、これからこの振舞いを内蔵化する新しいインターフェー"
-"スをお見せします。\n"
+"もちろん既にお察しの通り、これからこの挙動をカプセル化する新しいインター"
+"フェースをお見せします。\n"
 "それは`Applicative`と呼ばれます。\n"
 "以下はその定義と実装例です。"
 
@@ -1351,10 +1349,9 @@ msgid ""
 "some syntactic sugar for working with applicative functors."
 msgstr ""
 "というわけで、インターフェース`Applicative`があると値（と関数も！）計算上の文"
-"脈に持ち上げることができ、\n"
-"同じ文脈で値に適用させることができるのです。\n"
-"より大きな例でなぜこれが便利なのかを見る前に、\n"
-"アプリカティブ関手に取り組む際のいくつかの糖衣構文を手短かにご紹介します。"
+"脈に持ち上げることができ、同じ文脈で値に適用させることができるのです。\n"
+"より大きな例でなぜこれが便利なのかを見る前に、アプリカティブ関手に取り組む際"
+"の幾つかの糖衣構文を手短かにご紹介します。"
 
 #. type: Title ###
 #: ../src/Tutorial/Functor.md:565
@@ -1369,9 +1366,9 @@ msgid ""
 "referred to as *applicative style* and is used a lot in Haskell for "
 "combining several effectful computations with a single pure function."
 msgstr ""
-"`liftA2`や`liftA3`を実装するのに使ったプログラミングの流儀は*アプリカティブス"
-"タイル*としても知られ、\n"
-"Haskellで複数の作用のある計算を単一の純粋な関数で結合するために多用されます。"
+"`liftA2`や`liftA3`を実装するのに使ったプログラミングの流儀は*アプリカティブ形"
+"式*としても知られ、Haskellで複数の作用のある計算を単一の純粋な関数で結合する"
+"ために多用されます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:575
@@ -1382,7 +1379,7 @@ msgid ""
 msgstr ""
 "Idrisではそのような演算子適用の連鎖を使う代わりの方法があります。\n"
 "慣用括弧です。\n"
-"以下は`liftA2`と`liftA3`の別の再実装です。"
+"以下は`liftA2`と`liftA3`をさらに実装し直したものです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:576
@@ -1434,16 +1431,15 @@ msgid ""
 "lines in a CSV file and store the result in custom records, where each "
 "record field corresponds to a column in the table."
 msgstr ""
-"アプリカティブ関手の持つ強力さと多芸さを実感するために、ほんの少し大きめの例"
+"アプリカティブ関手の持つ強力さと多彩さを実感するために、ほんの少し大きめの例"
 "を見ていきます。\n"
-"CSVファイルから内容をパースしたりデコードしたりする小間物です。\n"
+"CSVファイルから内容を構文解析したりデコードしたりするユーティリティです。\n"
 "ここでのCSVファイルはそれぞれの行にコンマ（あるいは他の区切文字）で区切られた"
 "値のリストがあるものです。\n"
-"よくあるのがこれらを表のデータを格納するのに使うというもので、\n"
-"例えばスプレッドシートアプリケーションから用います。\n"
+"よくあるのがこれらを表のデータを格納するのに使うというもので、例えばスプレッ"
+"ドシートアプリケーションから用います。\n"
 "やりたいことはCSVファイル中の行を変換して自前のレコードに保管するというもの"
-"で、\n"
-"それぞれのレコードのフィールドは表中の列に対応します。"
+"で、それぞれのレコードのフィールドは表中の列に対応します。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:609
@@ -1588,7 +1584,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:675
 msgid "For numeric types, we can use the parsing functions from `Data.String`:"
-msgstr "数値型については`Data.String`由来のパースする関数が使えます。"
+msgstr "数値型については`Data.String`由来の解析する関数が使えます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:676
@@ -1623,9 +1619,7 @@ msgid ""
 "(Remember that `(<$>)` is an alias for `map`.)\n"
 msgstr ""
 "オプショナルな値については、格納される型自身が`CSVField`のインスタンスでなければいけません。\n"
-"そこで空文字列`\"\"`を`Nothing`として扱うことにし、\n"
-"非空文字列を内蔵化された型のフィールドの読取器に渡すことにします。\n"
-"（`(<$>)`が`map`の別称なことを思い出してください。）\n"
+"そこで空文字列`\"\"`を`Nothing`として扱うことにし、非空文字列をカプセル化された型のフィールドの読取器に渡すことにします（`(<$>)`が`map`の別称なことを思い出してください）。\n"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:693
@@ -1742,8 +1736,8 @@ msgid ""
 "first introduce a custom error type encapsulating how things can go wrong:"
 msgstr ""
 "これでCSVファイルの行全体を復号化し始められます。\n"
-"そうするためにまず自前のエラー型を導入して、どう物事が失敗しうるかを内蔵化し"
-"ます。"
+"そうするためにまず自前のエラー型を導入して、どう物事が失敗しうるかをカプセル"
+"化します。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functor.md:750
@@ -1883,11 +1877,9 @@ msgid ""
 msgstr ""
 "なお、`readUser'`の実装で慣用括弧を使い、6引数関数 (`MkUser`) を型`Either "
 "CSVError`の6つの値に写しました。\n"
-"これは全てのパースが成功したとき、またそのときに限って、自動的に成功しま"
-"す。\n"
-"もし立て続けに6重に入れ子になったパターン照合で`readUser'`を実装していた"
-"ら、\n"
-"考えるまでもなく面倒ではるかに読みづらいコードになっていたでしょう。"
+"これは全ての解析が成功したとき、またそのときに限って、自動的に成功します。\n"
+"もし立て続けに6重に入れ子になったパターン照合で`readUser'`を実装していたら、"
+"考えるまでもなく面倒で遥かに読みづらいコードになっていたでしょう。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:819
@@ -1981,7 +1973,7 @@ msgid ""
 "lines. In order to do that, we need to introduce a new interface for types "
 "corresponding to whole lines in a CSV-file:"
 msgstr ""
-"しかしまずは`HList`を簡潔にCSVの行をパースする手段として活用します。\n"
+"しかしまずは`HList`を簡潔にCSVの行を構文解析する手段として活用します。\n"
 "そうするためにはCSVファイル中の全行に対応する型のための、新しいインターフェー"
 "スを導入する必要があります。"
 
@@ -2040,9 +2032,9 @@ msgid ""
 "convenient to use at the REPL:"
 msgstr ""
 "これでおしまいです！\n"
-"加える必要があるのは2つの小間物関数だけです。\n"
-"いずれも字句に分割されたあとに行全体を復号化するもので、\n"
-"一方は`HList`に特化されており、引数に消去されたリスト型を取ります。\n"
+"加える必要があるのは2つのユーティリティ関数だけです。\n"
+"何れも字句に分割されたあとに行全体を復号化するもので、一方は`HList`に特化され"
+"ており、引数に消去されたリスト型を取ります。\n"
 "これはREPLで使うのにより便利にするものです。"
 
 #. type: Fenced code block (idris)
@@ -2100,7 +2092,7 @@ msgstr "アプリカティブ則"
 msgid ""
 "Again, `Applicative` implementations must follow certain laws. Here they are:"
 msgstr ""
-"繰り返しになりますが、`Applicative`の実装もいくつかの法則に従います。\n"
+"繰り返しになりますが、`Applicative`の実装も幾つかの法則に従います。\n"
 "以下の通りです。"
 
 #. type: Bullet: '* '
@@ -2263,7 +2255,7 @@ msgstr ""
 "`Applicative`を`Validated e`に実装してください。\n"
 "ただし`e`は`Semigroup`制約を満たします。\n"
 "これがあると*apply*の実装で2つの`Invalid`な値になったときに、`(<+>)`を使って"
-"エラーを積み重ねることができます。"
+"エラーを累算できます。"
 
 #. type: Bullet: '6. '
 #: ../src/Tutorial/Functor.md:990
@@ -2295,10 +2287,9 @@ msgid ""
 "   with the ability of error accumulation. Here are some examples\n"
 "   from a REPL session:\n"
 msgstr ""
-"   2点補足：既存のコードを調整する必要があるのはごく一部ですが、\n"
-"   これは`Validated`のアプリカティブ構文をそのまま使うことができるからです。\n"
+"   2点補足：既存のコードを調整する必要があるのはごく一部ですが、これは`Validated`のアプリカティブ構文をそのまま使うことができるからです。\n"
 "   また、この変更によりCSVパーサのエラー累積能力を向上させることができます。\n"
-"   以下はREPLセッションでのいくつかの例です。\n"
+"   以下はREPLセッションでの幾つかの例です。\n"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Functor.md:1001
@@ -2356,12 +2347,10 @@ msgid ""
 msgstr ""
 "   この演習の目的は型の妙義における読者の技能を研ぎ澄ますことです。\n"
 "   したがって解決の糸口はほとんど付属しません。\n"
-"   自力で与えられた関数からどんな振舞いが期待されるか、\n"
-"   その振舞いをどう型で表現するか、そしてその後でどう実装するか、決めてみてください。\n"
+"   自力で与えられた関数からどんな挙動が期待されるか、その挙動をどう型で表現するか、そしてその後でどう実装するか、決めてみてください。\n"
 "   型が正しく充分に精緻であれば、実装は実質無料で手に入ります。\n"
 "   行き詰まっても早々に諦めないでください。\n"
-"   本当に万策尽きたときだけ解法を一瞥すること。\n"
-"   （そのときは、まずは型だけ見るようにしてください！）\n"
+"   本当に万策尽きたときだけ解法を一瞥すること（そのときは、まずは型だけ見るようにしてくださいね）。\n"
 
 #. type: Bullet: '   1. '
 #: ../src/Tutorial/Functor.md:1029
@@ -2399,11 +2388,11 @@ msgid ""
 "list of types. This makes it easier to express certain operations at the "
 "type level."
 msgstr ""
-"パッケージ*contrib*……これはIdrisプロジェクトの一部ですが……\n"
-"は混成ベクタのデータ型である`Data.HVect.HVect`を提供します。\n"
+"パッケージ*contrib*……これはIdrisプロジェクトの一部ですが……は混成ベクタのデー"
+"タ型である`Data.HVect.HVect`を提供します。\n"
 "私達の`HList`との唯一の相違点は`HVect`が型リストの代わりに型ベクタに指標付け"
 "られていることです。\n"
-"これによりいくつかの操作を型段階で表現することがより簡単になっています。"
+"これにより幾つかの操作を型段階で表現することがより簡単になっています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:1046
@@ -2672,10 +2661,10 @@ msgid ""
 "on the result of the first parsing function to decide on the data "
 "constructor and thus the next parsing function to use."
 msgstr ""
-"2つの小間物関数を加えて型推論を手助けしたり若干いい感じの構文になるようにしま"
-"した。\n"
-"大事なのは、いかにして最初の構文解析関数の結果でパターン照合し、\n"
-"データ構築子と次に使う構文解析関数を決定しているか、というところです。"
+"2つのユーティリティ関数を加えて型推論を手助けしたり若干いい感じの構文になるよ"
+"うにしました。\n"
+"大事なのは、いかにして最初の構文解析関数の結果でパターン照合し、データ構築子"
+"と次に使う構文解析関数を決定しているか、というところです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:1166
@@ -2965,8 +2954,8 @@ msgid ""
 "   to follow the following business rules when implementing the\n"
 "   functions below:\n"
 msgstr ""
-"  これでいくつかの小間物関数を書く準備ができました。\n"
-"  以下の関数を実装するときには次の取り決めにしたがうようにしてください。\n"
+"  これで幾つかのユーティリティ関数を書く準備ができました。\n"
+"  以下の関数を実装するときには次の取り決めに従うようにしてください。\n"
 
 #. type: Bullet: '   * '
 #: ../src/Tutorial/Functor.md:1297
@@ -2988,7 +2977,7 @@ msgid ""
 "Operations trying to lookup a user by their ID must fail with `UserNotFound` "
 "in case no entry was found in the DB."
 msgstr ""
-"利用者をIDで見付けだそうとする操作は、DBに項目が見付からなかった場合は"
+"利用者をIDで見付け出そうとする操作は、DBに項目が見付からなかった場合は"
 "`UserNotFound`で失敗しなければいけない。"
 
 #. type: Plain text
@@ -3018,7 +3007,7 @@ msgstr "インターフェース`HasIO`を`Prog`に実装してください。"
 #. type: Bullet: '   3. '
 #: ../src/Tutorial/Functor.md:1314
 msgid "Implement the following utility functions:"
-msgstr "以下の小間物関数を実装してください。"
+msgstr "以下のユーティリティ関数を実装してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functor.md:1317
@@ -3292,8 +3281,8 @@ msgid ""
 "presented here: Idiom brackets for `Applicative`, *do blocks* and the bang "
 "operator for `Monad`."
 msgstr ""
-"Idrisはここで提示したインターフェースのいくつかについて扱うための糖衣構文を提"
-"供します。\n"
+"Idrisはここで提示したインターフェースの幾つかについて扱うための糖衣構文を提供"
+"します。\n"
 "`Applicative`の慣用括弧や*do記法*、そして`Monad`のびっくり演算子です。"
 
 #. type: Title ###
