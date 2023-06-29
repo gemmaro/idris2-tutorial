@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-06-06 22:53+0900\n"
+"PO-Revision-Date: 2023-06-29 23:32+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -645,8 +645,7 @@ msgstr ""
 msgid ""
 "As you can see, this time the computation finished without overflowing the "
 "call stack."
-msgstr ""
-"見てとれるように今回は計算が呼び出しスタックが溢れることなしに終了しました。"
+msgstr "見ての通り今回は計算が呼び出しスタックが溢れることなしに終了しました。"
 
 #. type: Plain text
 #: ../src/Tutorial/Folds.md:253
@@ -839,7 +838,7 @@ msgid ""
 "In this section, we learned about several important aspects of recursion and "
 "totality checking, which are summarized here:"
 msgstr ""
-"この節ではいくつかの重要な再帰と全域性検査の側面について学びました。\n"
+"この節では幾つかの重要な再帰と全域性検査の側面について学びました。\n"
 "以下に要約します。"
 
 #. type: Bullet: '* '
@@ -931,7 +930,7 @@ msgid ""
 "Make sure to use tail recursion whenever possible and quickly verify the "
 "correct behavior of all functions at the REPL."
 msgstr ""
-"この演習ではいくつかの再帰関数を実装していきます。\n"
+"この演習では幾つかの再帰関数を実装していきます。\n"
 "できる限り末尾再帰を使うようにし、REPLで全ての関数について正しい挙動になるこ"
 "とを簡単に確かめてください。"
 
@@ -1152,8 +1151,8 @@ msgid ""
 "*we* know, that the functions in question are definitely total."
 msgstr ""
 "これは多くの場合で機能しますが、常に期待通りにいくわけではありません。\n"
-"以下では、*私達は*問題の関数が間違いなく全域だとわかるものの、\n"
-"全域性検査が失敗する例をいくつかお見せします。"
+"以下では、*私達は*問題の関数が間違いなく全域だとわかるものの、全域性検査が失"
+"敗する例を幾つかお見せします。"
 
 #. type: Title ###
 #: ../src/Tutorial/Folds.md:488
@@ -1361,8 +1360,8 @@ msgstr ""
 "最終的には自業自得となります。\n"
 "要はプログラムがエラーでクラッシュするのです。\n"
 "事態がこれよりさらに悪くなることもありえたでしょう。\n"
-"実行にかなりの時間が費された挙句そのようなエラーの発生箇所を見つけ出すのが厄"
-"介になる可能性がありますから。"
+"実行にかなりの時間が費された挙句、そのようなエラーの発生箇所を見付け出すのが"
+"厄介になる可能性がありますから。"
 
 #. type: Fenced code block (sh)
 #: ../src/Tutorial/Folds.md:582
@@ -1718,7 +1717,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Folds.md:736
 msgid "Here are a few examples:"
-msgstr "以下はいくつかの例です。"
+msgstr "以下は幾つかの例です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Folds.md:737
@@ -1881,16 +1880,16 @@ msgid ""
 "so the second will only be evaluated if the first argument is `True` and the "
 "second is returned as the function's (strict) result."
 msgstr ""
-"見てとれるように、2つ目の引数は`Lazy`型構築子に包まれています。\n"
+"見ての通り2つ目の引数は`Lazy`型構築子に包まれています。\n"
 "これは組み込み型で、ほとんどの場合はIdrisが自動的に細々としたことを制御しま"
 "す。\n"
 "例えば引数を`(&&)`に渡したとき、値を何らかのデータ構築子に手作業で包む必要は"
 "ありません。\n"
 "遅延関数引数は関数の実装で*必要とされる*瞬間にのみ評価されます。\n"
 "例えばパターン照合されたり他の関数の厳密な引数に渡されたりするときです。\n"
-"`(&&)`の実装では最初の引数でパターン照合が起こっているので、\n"
-"2つ目の引数が評価されるのは最初の引数が`True`のときだけで、\n"
-"関数の（正格な）結果として返されます。"
+"`(&&)`の実装では最初の引数でパターン照合が起こっているので、2つ目の引数が評価"
+"されるのは最初の引数が`True`のときだけで、関数の（正格な）結果として返されま"
+"す。"
 
 #. type: Plain text
 #: ../src/Tutorial/Folds.md:821
