@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-06-29 23:49+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"PO-Revision-Date: 2025-03-30 13:18+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -356,9 +356,9 @@ msgid ""
 "`<LocalLeader>c` in normal mode. The result will look as\n"
 "follows:\n"
 msgstr ""
-"Idrisのほとんどの関数は1つ以上の引数についてのパターン照合によって実装されています。\n"
+"Idrisのほとんどの関数は1つ以上の引数についてのパターン合致によって実装されています。\n"
 "Idrisは全ての原始的でないデータ型のデータ構築子を知っており、\n"
-"その通りにパターン照合を書いてくれます。\n"
+"その通りにパターン合致を書いてくれます。\n"
 "（この工程は*場合分割*とも呼ばれます。）\n"
 "カーソルを`negate2`の実装の骨子中にある`x`の上に移動させて、\n"
 "通常モードで`<LocalLeader>c`を入力してください。\n"
@@ -398,7 +398,7 @@ msgstr ""
 "これが対話的編集の（筆者にとっての）中核の機能への入口だという結論になりま"
 "す。\n"
 "メタ変数にかざし、関数の実装の骨子を加え、場合分割する（これはcaseブロックと"
-"入れ子のパターン照合でも動きます）。\n"
+"入れ子のパターン合致でも動きます）。\n"
 "これらを*今*この瞬間から使い始めるべきです！"
 
 #. type: Title ##
@@ -580,7 +580,7 @@ msgid ""
 "This will lead us to an implementation similar to the following\n"
 "(I had to fix the indentation, though):\n"
 msgstr ""
-"次に`x`を`f`に適用した結果をパターン照合しなければいけません。\n"
+"次に`x`を`f`に適用した結果をパターン合致しなければいけません。\n"
 "カーソルをメタ変数`?filterList_rhs_1`の上に持っていき、\n"
 "通常モードで`<LocalLeader>mc`と入力すれば、\n"
 "Idrisは新しいcaseブロックを導入してくれます。\n"
@@ -870,7 +870,7 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -898,10 +898,10 @@ msgstr ""
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"

@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-06-29 23:08+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"PO-Revision-Date: 2025-03-30 13:29+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -34,10 +34,10 @@ msgstr "まとめ"
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -60,9 +60,9 @@ msgstr "演習 その1"
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
 #: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
-#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
-#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
 #: ../src/Tutorial/Traverse.md:574
 #, no-wrap
 msgid "Exercises part 2"
@@ -71,9 +71,9 @@ msgstr "演習 その2"
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
 #: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
-#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
-#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
 #: ../src/Tutorial/Traverse.md:1016
 #, no-wrap
 msgid "Exercises part 3"
@@ -82,7 +82,7 @@ msgstr "演習 その3"
 #. type: Plain text
 #: ../src/Tutorial/Functions1.md:164 ../src/Tutorial/Functions1.md:227
 #: ../src/Tutorial/Interfaces.md:504 ../src/Tutorial/Predicates.md:461
-#: ../src/Tutorial/Prim.md:646
+#: ../src/Tutorial/Prim.md:645
 msgid "And at the REPL:"
 msgstr "そしてREPLで次のようにします。"
 
@@ -195,14 +195,16 @@ msgid ""
 "value in such a way that we can be sure it is not empty (due to an earlier "
 "pattern match, for instance)."
 msgstr ""
-"結果を失敗型に包む、`Maybe`や何らかの自前のエラー型`e`を伴う`Either e`\n"
-"といったもの。こうすると直ちに関数が結果を返せないことがあるかもしれ\n"
-"ないということが明確になります。不明な源からの未検証の入力を扱う自然な\n"
-"方法です。この手法の短所は*nil*の場合が不可能だと*知っている*状況でさ\n"
-"え、`Maybe`の染みが付いた結果を運ぶことになる点です。例えばリスト引数\n"
-"の値をコンパイル時に知っていたり、既に空でないことを確かめられるような\n"
-"やり方（例えばその前のパターン照合からなど）で入力値を*精錬*した後であっ\n"
-"たりなどの経緯でこの状況になります。"
+"結果を失敗型に包む、`Maybe`や何らかの自前のエラー型`e`を伴う`Either e`といっ"
+"たもの。\n"
+"こうすると直ちに関数が結果を返せないことがあるかもしれないということが明確に"
+"なります。\n"
+"不明な源からの未検証の入力を扱う自然な方法です。\n"
+"この手法の短所は*nil*の場合が不可能だと*知っている*状況でさえ、`Maybe`の染み"
+"が付いた結果を運ぶことになる点です。\n"
+"例えばリスト引数の値をコンパイル時に知っていたり、既に空でないことを確かめら"
+"れるようなやり方（例えばその前のパターン合致からなど）で入力値を*精錬*した後"
+"であったりなどの経緯でこの状況になります。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Predicates.md:67
@@ -327,8 +329,8 @@ msgid ""
 "implement a safe and pure `head` function:"
 msgstr ""
 "これは単一値データ型なので、常に消去された関数引数として使うことができ、\n"
-"それでいてパターン照合することができます。これで安全で純粋な`head`関数\n"
-"を実装できます。"
+"それでいてパターン合致することができます。\n"
+"これで安全で純粋な`head`関数を実装できます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:118
@@ -452,9 +454,9 @@ msgid ""
 "will soon see examples of predicates the values of which are more cumbersome "
 "to create."
 msgstr ""
-"もちろん`headMaybe`のような自明な関数についてはリスト引数に直接パター\n"
-"ン照合することで実装するのが理に適っています。しかしすぐ後でよりつくる\n"
-"のが面倒な値の述語の例を見ていきます。"
+"もちろん`headMaybe`のような自明な関数についてはリスト引数に直接パターン合致す"
+"ることで実装するのが理に適っています。\n"
+"しかしすぐ後でよりつくるのが面倒な値の述語の例を見ていきます。"
 
 #. type: Title ###
 #: ../src/Tutorial/Predicates.md:177
@@ -720,12 +722,14 @@ msgid ""
 "technique called *proof search*. This allows us to make functions safe and "
 "convenient to use at the same time."
 msgstr ""
-"まとめるとこうなります。述語があれば関数が引数として受け付ける値を制限\n"
-"することができます。実行時にそのような*証拠*を関数引数でのパターン照合\n"
-"により構築する必要があります。こうした操作は一般には失敗しうるものです。\n"
-"コンパイル時に*証明検索*と呼ばれる技術を使ってIdrisにこれらの値を構築\n"
-"してみてもらうことができます。これにより関数を安全にしつつ、それと同時\n"
-"に使うのに便利になります。"
+"まとめるとこうなります。\n"
+"述語があれば関数が引数として受け付ける値を制限することができます。\n"
+"実行時にそのような*証拠*を関数引数でのパターン合致により構築する必要がありま"
+"す。\n"
+"こうした操作は一般には失敗しうるものです。\n"
+"コンパイル時に*証明検索*と呼ばれる技術を使ってIdrisにこれらの値を構築してみて"
+"もらうことができます。\n"
+"これにより関数を安全にしつつ、それと同時に使うのに便利になります。"
 
 #. type: Plain text
 #: ../src/Tutorial/Predicates.md:312
@@ -960,10 +964,11 @@ msgid ""
 "pattern match on this value in order to figure out, how far within the "
 "heterogeneous list our value is stored:"
 msgstr ""
-"大事なのは自動暗黙子がこの場合には消してはならないということに注意する\n"
-"ことです。もはやこれが単一値データ型ではなく、混成リストの中のどれほど\n"
-"深いところに値が格納されているのかを解明するために、この値でパターン照\n"
-"合できなくてはならないのです。"
+"大事なのは自動暗黙子がこの場合には消してはならないということに注意することで"
+"す。\n"
+"もはやこれが単一値データ型ではなく、混成リストの中のどれほど深いところに値が"
+"格納されているのかを解明するために、この値でパターン合致できなくてはならない"
+"のです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:416
@@ -2334,8 +2339,8 @@ msgid ""
 "Being mere records, we can also take interfaces as regular function "
 "arguments and dissect them with a pattern match:"
 msgstr ""
-"ただのレコードであるために、インターフェースを通常の関数引数として見做\n"
-"しパターン照合で解剖することもできます。"
+"ただのレコードであるために、インターフェースを通常の関数引数として見做しパ"
+"ターン合致で解剖することもできます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Predicates.md:1080

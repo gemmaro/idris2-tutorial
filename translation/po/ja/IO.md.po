@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
-"PO-Revision-Date: 2023-06-29 23:45+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"PO-Revision-Date: 2025-03-30 13:16+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -34,10 +34,10 @@ msgstr "まとめ"
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -60,9 +60,9 @@ msgstr "演習 その1"
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
 #: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
-#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
-#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
 #: ../src/Tutorial/Traverse.md:574
 #, no-wrap
 msgid "Exercises part 2"
@@ -71,9 +71,9 @@ msgstr "演習 その2"
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
 #: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
-#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
-#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
 #: ../src/Tutorial/Traverse.md:1016
 #, no-wrap
 msgid "Exercises part 3"
@@ -679,7 +679,7 @@ msgstr ""
 "あとでモナドを学んだら、doブロックがそうした場合にちょうど同じように使えるこ"
 "とを見ていきます。\n"
 "しかしこの場合代わりの文法的な便宜を図れます。\n"
-"let束縛でパターン照合するのです。\n"
+"let束縛でパターン合致するのです。\n"
 "以下がコードです。"
 
 #. type: Fenced code block (idris)
@@ -721,15 +721,15 @@ msgstr ""
 "最初の行では入力文字列を全ての空白のある位置で分割します。\n"
 "`split`は`List1`（*base*の`Data.List1`から高階されている非空のリスト型）を返"
 "しますが、\n"
-"`List`でパターン照合するほうがもっと便利なので、\n"
+"`List`でパターン合致するほうがもっと便利なので、\n"
 "`Data.List1.forget`を使って結果を変換します。\n"
-"ここで代入演算子`:=`の左側でパターン照合を使っていますね。\n"
-"これは部分パターン照合（*部分*というのは、全ての可能な場合を網羅していないか"
+"ここで代入演算子`:=`の左側でパターン合致を使っていますね。\n"
+"これは部分パターン合致（*部分*というのは、全ての可能な場合を網羅していないか"
 "らです）なので、\n"
 "他の可能性も同様に対処しなければいけません。\n"
 "その対処は垂直線のあとで行われます。\n"
 "これは次のように読めます。\n"
-"「もし左側のパターン照合が成功し、ちょうど3つの字句のリストが得られたら、\n"
+"「もし左側のパターン合致が成功し、ちょうど3つの字句のリストが得られたら、\n"
 "`let`式を続ける。\n"
 "そうでなければ直ちに`ParseError`を`Left`に入れて返す。」"
 
@@ -742,7 +742,7 @@ msgid ""
 "also available in *do blocks*."
 msgstr ""
 "他の3行はちょうど同じように振舞います。\n"
-"つまり、それぞれに左側に部分パターン照合がありつつ、垂直棒のあとに不正な入力"
+"つまり、それぞれに左側に部分パターン合致がありつつ、垂直棒のあとに不正な入力"
 "の場合に何を返すかという説明があります。\n"
 "あとで見ていきますが、この構文は*doブロック*でも使えます。"
 
@@ -824,7 +824,7 @@ msgstr ""
 "そうしたプログラムはもはや全域であることは証明されません。\n"
 "ソースファイルの冒頭に`%default total`プラグマを加えていたら、これらの関数を"
 "`covering`で註釈する必要があります。\n"
-"これは全てのパターン照合の全ての場合を網羅できているものの、制約のない再帰に"
+"これは全てのパターン合致の全ての場合を網羅できているものの、制約のない再帰に"
 "よりプログラムが堂々巡りになるかもしれないことを意味します。"
 
 #. type: Bullet: '1. '
@@ -1585,7 +1585,7 @@ msgid ""
 "functions in compile-time computations, annotate them with `export`."
 msgstr ""
 "一般的にデータ型は`public export`の印を付けることを検討してください。\n"
-"さもないとその型の値を作れなかったりパターン照合で解体できないからです。\n"
+"さもないとその型の値を作れなかったりパターン合致で解体できないからです。\n"
 "また、関数をコンパイル時計算で使う予定がないときは`export`の印を付けましょ"
 "う。"
 
@@ -1757,7 +1757,7 @@ msgstr ""
 "   注目していただきたいのは、`Nil`の場合では`nonEmpty`札が`False`に設定されて*いなければならず*、\n"
 "   一方で*cons*の場合はどちらでもよいということです。\n"
 "   なので、`List 01 False a`は空もしくは非空のどちらもありえて、\n"
-"   どちらなのかはパターン照合することでのみ調べられます。\n"
+"   どちらなのかはパターン合致することでのみ調べられます。\n"
 "   他方で、`Nil`の場合は`nonEmpty`札が常に`False`なので、\n"
 "   `List01 True a`は*cons*でなくてはいけません。\n"
 
@@ -1830,7 +1830,7 @@ msgid ""
 msgstr ""
 "ユーティリティ関数`concat'`を実装して`concat`の実装で使ってください。\n"
 "`concat`には2枚の真偽値の札が制約なし暗黙子として渡されていますね。\n"
-"これは結果が証明的に非空かそうでないかを、この札でパターン照合することで決定"
+"これは結果が証明的に非空かそうでないかを、この札でパターン合致することで決定"
 "する必要があるからです。"
 
 #. type: Plain text
@@ -1992,7 +1992,7 @@ msgstr ""
 "ますが、\n"
 "指標付けられた型族のほうが、より複雑な型処方と引き換えに、\n"
 "書く関数のより精密な事前・事後条件のある型段階計算を行えます。\n"
-"加えて、データ値へのパターン照合だけからでは指標値を導出できないことはしばし"
+"加えて、データ値へのパターン合致だけからでは指標値を導出できないことはしばし"
 "ばあり、\n"
 "そのため消去されない（暗黙にできる）引数として渡さなければなりません。"
 
@@ -2096,7 +2096,7 @@ msgid ""
 "lines, we have to match against `\"\\n\"` instead of the empty string `\"\"`."
 msgstr ""
 "関数`go`については追加で説明せねばなりません。\n"
-"まず、`let`束縛でも見たのと同じ構文で、結果にそのままパターン照合を使っている"
+"まず、`let`束縛でも見たのと同じ構文で、結果にそのままパターン合致を使っている"
 "ところに着目しましょう。\n"
 "見ての通り幾つかの垂直棒を使って1つ以上の追加のパターンを制御できます。\n"
 "ファイルから1行読むために関数`fGetLine`を使っています。\n"
@@ -2104,7 +2104,7 @@ msgstr ""
 "すかもしれません。\n"
 "そのような場合に正しく対処する必要があります。\n"
 "さらに言えば`fGetLine`は空行のとき末尾の改行文字`'\\n'`を含む行を返すので、空"
-"行を確認するためには空文字列`\"\"`の代わりに`\"\\n\"`に照合する必要がありま"
+"行を確認するためには空文字列`\"\"`の代わりに`\"\\n\"`に合致する必要がありま"
 "す。"
 
 #. type: Plain text

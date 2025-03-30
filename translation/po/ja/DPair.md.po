@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-06-29 23:47+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"PO-Revision-Date: 2025-03-30 13:14+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -34,10 +34,10 @@ msgstr "まとめ"
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -80,7 +80,7 @@ msgstr ""
 "ん。\n"
 "結果として取り扱う値の型が実行時にのみ知られている他の値に依存することとな"
 "り、\n"
-"これらの型は依存する値へのパターン照合によってのみ行えることはよくありま"
+"これらの型は依存する値へのパターン合致によってのみ行えることはよくありま"
 "す。\n"
 "こうした依存関係を表現するためには[依存和型](https://en.wikipedia.org/wiki/"
 "Dependent_type#%CE%A3_type)と呼ばれるものが必要です。\n"
@@ -610,8 +610,8 @@ msgstr ""
 "それはちょうど`AnyVect`でしたことと同じです。\n"
 "したがって`takeWhile`を、\n"
 "自前の型`AnyVect`の代わりに`DPair`を返すように書き換えられます。\n"
-"なお、通常の対のように、依存対を作ったりパターン照合したりするのに\n"
-"同じ構文`(x ** y)`を使うことができます。"
+"なお、通常の対のように、依存対を作ったりパターン合致したりするのに同じ構文"
+"`(x ** y)`を使うことができます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/DPair.md:255
@@ -665,9 +665,9 @@ msgid ""
 "zero. Module `Data.DPair` from *base* exports data type `Exists` for this "
 "use case."
 msgstr ""
-"時々、指標値を指標付けられた型の値へのパターン照合で決定することができること"
+"時々、指標値を指標付けられた型の値へのパターン合致で決定することができること"
 "があります。\n"
-"例えばベクタへのパターン照合により長さの指標を知ることができます。\n"
+"例えばベクタへのパターン合致により長さの指標を知ることができます。\n"
 "このような場合には厳密には実行時に指標を持ち回る必要はなく、\n"
 "最初の引数が数量子ゼロの特別版の依存対を書くことができます。\n"
 "*base*のモジュール`Data.DPair`はこの用途でデータ型`Exists`を輸出しています。"
@@ -1402,7 +1402,7 @@ msgid ""
 "case, we had to transcribe the sequence first, in the second case, we could "
 "invoke `printRNA` directly."
 msgstr ""
-"依存対の最初の値にパターン照合することで、2つ目の値がRNAないしDNA配列のどちら"
+"依存対の最初の値にパターン合致することで、2つ目の値がRNAないしDNA配列のどちら"
 "になるかを判定できます。\n"
 "最初の場合だとまず配列を転写する必要がありますが、2つ目の場合では直接"
 "`printRNA`を呼び出せます。"
@@ -1491,7 +1491,7 @@ msgid ""
 "encoding as a dependent record."
 msgstr ""
 "これらの符号化の間の損失のない変換を書くことは詰まらないことで、それぞれの符"
-"号化があれば1回のパターン照合で、現時点でRNAないしDNAどちらの配列があるのかを"
+"号化があれば1回のパターン合致で、現時点でRNAないしDNAどちらの配列があるのかを"
 "決めることができます。\n"
 "しかしながら依存型は1つ以上の値に依存することができ、演習で見ていくことになり"
 "ます。\n"
@@ -1501,9 +1501,9 @@ msgstr ""
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
 #: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
-#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
-#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
 #: ../src/Tutorial/Traverse.md:574
 #, no-wrap
 msgid "Exercises part 2"
@@ -1520,7 +1520,7 @@ msgid ""
 msgstr ""
 "依存対と依存レコードの技能を研ぎ澄ましましょう！\n"
 "演習2から7では、関数が依存対ないしレコードのどちらを返すべきか、関数が追加の"
-"引数を必要とすべきかどうか、何にパターン照合できるのか、そして他のどのユー"
+"引数を必要とすべきかどうか、何にパターン合致できるのか、そして他のどのユー"
 "ティリティ関数が必要なのか、について自分で決めなくてはいけません。"
 
 #. type: Bullet: '1. '
@@ -1621,7 +1621,7 @@ msgstr ""
 "しかしながら構築子の数はそれぞれの型水準指標の値の数の*積*に対応する分だけ必"
 "要です。\n"
 "したがってこの数は急増する可能性があり、\n"
-"このような場合には直和型の符号化は長いパターン照合ブロックに繋がりかねませ"
+"このような場合には直和型の符号化は長いパターン合致ブロックに繋がりかねませ"
 "ん。"
 
 #. type: Title ##
@@ -2318,7 +2318,7 @@ msgid ""
 "type `CSVError`)."
 msgstr ""
 "現在のスキーマに基づいてCSVの内容を復号する必要もあります。\n"
-"スキーマのパターン照合により、型安全なやり方でそれができることに目を向けてく"
+"スキーマのパターン合致により、型安全なやり方でそれができることに目を向けてく"
 "ださい。\n"
 "このスキーマは実行するまで知られていないものです。\n"
 "エラー文言に期待される型を加えたいため、残念ながらCSVの解析部分を実装し直す必"
@@ -2376,7 +2376,7 @@ msgstr ""
 #: ../src/Tutorial/DPair.md:1047
 msgid ""
 "Pattern matching on explicit arguments comes with less syntactic overhead."
-msgstr "明示的引数でのパターン照合は構文的オーバーヘッドが比較的少ない。"
+msgstr "明示的引数でのパターン合致は構文的オーバーヘッドが比較的少ない。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/DPair.md:1047
@@ -2567,9 +2567,9 @@ msgstr ""
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
 #: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
-#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
-#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
 #: ../src/Tutorial/Traverse.md:1016
 #, no-wrap
 msgid "Exercises part 3"
@@ -2727,7 +2727,7 @@ msgid ""
 "reduce the number of potential bugs in our programs."
 msgstr ""
 "依存対と依存レコードは実行時に値を調べて取り扱う型を定義するのに必要です。\n"
-"これらの値へのパターン照合により型と他の値の取り得る形状についてわかります"
+"これらの値へのパターン合致により型と他の値の取り得る形状についてわかります"
 "が、\n"
 "これにより数多くのプログラム中の潜在的なバグを減らすことができます。"
 

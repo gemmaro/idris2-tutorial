@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-05-07 21:24+0900\n"
-"PO-Revision-Date: 2023-06-29 23:45+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"PO-Revision-Date: 2025-03-30 13:13+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -34,10 +34,10 @@ msgstr "まとめ"
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -60,9 +60,9 @@ msgstr "演習 その1"
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
 #: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
-#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
-#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
 #: ../src/Tutorial/Traverse.md:574
 #, no-wrap
 msgid "Exercises part 2"
@@ -71,9 +71,9 @@ msgstr "演習 その2"
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
 #: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
-#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
-#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
 #: ../src/Tutorial/Traverse.md:1016
 #, no-wrap
 msgid "Exercises part 3"
@@ -338,7 +338,7 @@ msgstr ""
 "型変数と指標の違いは、後者がデータ構築子によって異なるようにすることができる"
 "ということです。\n"
 "対して前者は全てのデータ構築子について同じです。\n"
-"あるいは視点を変えると、型族の*値*にパターン照合することで指標の*値*を知るこ"
+"あるいは視点を変えると、型族の*値*にパターン合致することで指標の*値*を知るこ"
 "とができますが、\n"
 "これは型変数では不可能なことです。"
 
@@ -373,7 +373,7 @@ msgstr ""
 "ここで`Index`は`Nat`引数が指標付けられていますが、\n"
 "それは指標値が構築子によって変わっているからです。\n"
 "（それぞれの構築子には好きに値をを選びました。）\n"
-"こうすると`Indexed`の値にパターン照合することでこれらの値がわかります。\n"
+"こうすると`Indexed`の値にパターン合致することでこれらの値がわかります。\n"
 "例えばこれを`Indexed`の指標と同じ長さの`Vect`を作るのに使えます。"
 
 #. type: Fenced code block (idris)
@@ -390,7 +390,7 @@ msgid ""
 "case by inspecting the holes and their context."
 msgstr ""
 "さあ、自分でこれを実装してみましょう！\n"
-"虫食いを使って`Indexed`引数でパターン照合し、そして虫食いとその文脈を調べるこ"
+"虫食いを使って`Indexed`引数でパターン合致し、そして虫食いとその文脈を調べるこ"
 "とによって、それぞれの場合の期待される出力型を調べてください。"
 
 #. type: Plain text
@@ -417,7 +417,7 @@ msgid ""
 "argument, we learned about the value of the `n` index itself, which was "
 "necessary to return a `Vect` of the correct length."
 msgstr ""
-"見てわかるように、`Indexed n`の引数の値にパターン照合することで`n`指標自体の"
+"見てわかるように、`Indexed n`の引数の値にパターン合致することで`n`指標自体の"
 "値がわかり、\n"
 "それを使って正しい長さの`Vect`を返す必要があるのです。"
 
@@ -526,7 +526,7 @@ msgstr ""
 "この契約を履行しないと型エラーです。\n"
 "`mapVect`を実装しているときなどでこの契約は大変説明的なもので、これに沿って実"
 "装したり虫食いを使ったりできます。\n"
-"`Vect`の長さについての*どんな*情報を得るのにも、パターン照合が要ります。"
+"`Vect`の長さについての*どんな*情報を得るのにも、パターン合致が要ります。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Dependent.md:197
@@ -666,9 +666,9 @@ msgid ""
 msgstr ""
 "さて、`Vect n a`があり、`Vect n b`がほしいところです。\n"
 "ただし`n`についてはなんにもわかりません。\n"
-"さらに`xs`をパターン照合することで`n`をより知ることは*できはします*が、\n"
+"さらに`xs`をパターン合致することで`n`をより知ることは*できはします*が、\n"
 "すぐさまいたちごっこになってしまうでしょう。\n"
-"というのはそのようなパターン照合をしたら、新しく未知の長さの尾鰭が生えるから"
+"というのはそのようなパターン合致をしたら、新しく未知の長さの尾鰭が生えるから"
 "です。\n"
 "その代わり、`mapVect`を再帰的に呼び出して残り (`xs`) を`Vect n b`に変換できま"
 "す。\n"
@@ -736,7 +736,7 @@ msgstr ""
 "上の実装を全域であるとして受理します。\n"
 "これが動くのは、他の2つの場合が*不可能*であることを、\n"
 "Idrisが自分で調べてくれるからです。\n"
-"最初の`Vect`引数にパターン照合したことから、\n"
+"最初の`Vect`引数にパターン合致したことから、\n"
 "Idrisは`n`がゼロかゼロよりあとに続く他の自然数だと読み取ります。\n"
 "しかしここから、2つ目のベクタもまた長さが`n`であり、`Nil`ないし*cons*であるこ"
 "とを導出できるのです。\n"
@@ -761,7 +761,7 @@ msgid ""
 "will learn in a later section what to do, when we think we are right about "
 "an impossible case and Idris is not."
 msgstr ""
-"もちろん、パターン照合中の場合に`impossible`を付けるのは、\n"
+"もちろん、パターン合致中の場合に`impossible`を付けるのは、\n"
 "Idrisがたしかに不可能だと確証できない限り、型エラーです。\n"
 "後の節で、自分は不可能だとわかっているのにIdrisがわかってくれないときに、\n"
 "どうすればよいのかを学びます。"
@@ -929,7 +929,7 @@ msgstr ""
 "Idrisは整数表記`2`と`3`を統合しようとします。\n"
 "これらの整数は最初に対応する`Nat`値`S (S Z)`と`S (S (S Z))`にそれぞれ変換され"
 "ます。\n"
-"2式は`Z`と`S Z`に行き着くまでパターン照合され、\n"
+"2式は`Z`と`S Z`に行き着くまでパターン合致され、\n"
 "これは値`0`と`1`に対応します。\n"
 "これがエラー文言で不一致として報告されます。"
 
@@ -947,7 +947,7 @@ msgid ""
 "0, while in the *cons* case the length was the successor of another natural "
 "number.  This is not possible when we want to create a new vector:"
 msgstr ""
-"これまでパターン照合することでベクタの長さについてのことを知ることができまし"
+"これまでパターン合致することでベクタの長さについてのことを知ることができまし"
 "た。\n"
 "`Nil`の場合は長さがゼロであることが明らかで、\n"
 "*cons*の場合は長さが後続する他の自然数の長さなのでした。\n"
@@ -1024,7 +1024,7 @@ msgid ""
 msgstr ""
 "`fill`を実装するには`n`が実際なんであるかを知る必要があります。\n"
 "`n`を明示的で消去されない引数として渡さねばなりません。\n"
-"そうすることでそれをパターン照合でき、\n"
+"そうすることでそれをパターン合致でき、\n"
 "その結果に基づいてどちらの`Vect`の構築子を使うのかを決定するのです。"
 
 #. type: Fenced code block (idris)
@@ -1042,7 +1042,7 @@ msgid ""
 msgstr ""
 "ここで`replicate`は*依存関数型*です。\n"
 "出力型は引数中の1つの値に*依存*しています。\n"
-"`replicate`を`n`についてのパターン照合により実装するのは直感的です。"
+"`replicate`を`n`についてのパターン合致により実装するのは直感的です。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:429
@@ -1066,12 +1066,12 @@ msgid ""
 "on them and learn from this, which constructor(s) of the type family to use."
 msgstr ""
 "こうしたことは指標付き型に取り組む際によく思い浮かぶパターンです。\n"
-"型族の値にパターン照合によって指標の値について知ることができます。\n"
+"型族の値にパターン合致によって指標の値について知ることができます。\n"
 "しかし関数から型族の値を返すためには、\n"
 "コンパイル時に指標の値を知っているか（例えば定数`ex1`や`ex3`を見てくださ"
 "い）、\n"
 "または実行時に指標値にアクセスする必要があります。\n"
-"後者の場合、指標値に対してパターン照合でき、型族のどの構築子を使うべきかがわ"
+"後者の場合、指標値に対してパターン合致でき、型族のどの構築子を使うべきかがわ"
 "かります。"
 
 #. type: Bullet: '1. '
@@ -1718,7 +1718,7 @@ msgid ""
 msgstr ""
 "残念ですがそれは真実からはほど遠いものです。\n"
 "本節の例は*ひとまず動く*ことが知られているような、選別されたものなのです。\n"
-"その理由というのは、パターン照合とコンパイル時に使う関数の実装との間に常に直"
+"その理由というのは、パターン合致とコンパイル時に使う関数の実装との間に常に直"
 "接の繋がりがあるためです。"
 
 #. type: Plain text
@@ -1751,13 +1751,13 @@ msgid ""
 "matches, it is possible for Idris to unify `0 + n` with `n` in the `Nil` "
 "case, and `(S k) + n` with `S (k + n)` in the *cons* case."
 msgstr ""
-"見てみると`add`は*最初の*引数でパターン照合して実装されており、\n"
+"見てみると`add`は*最初の*引数でパターン合致して実装されており、\n"
 "2つ目の引数は調べられていません。\n"
 "これは`(++)`が`Vect`に実装されているのとちょうど同じですね。\n"
-"最初の引数でパターン照合して、`Nil`の場合あ2つ目を変更せずに返し、\n"
+"最初の引数でパターン合致して、`Nil`の場合は2つ目を変更せずに返し、\n"
 "*cons*の場合は尾っぽをくっつけた結果に先頭を前置したものを返しているのでし"
 "た。\n"
-"ここで2つのパターン照合には直接合致するところがあるので、\n"
+"ここで2つのパターン合致には直接合致するところがあるので、\n"
 "Idrisは`Nil`の場合に`0 + n`と`n`を、*cons*の場合に`(S k) + n`と`S (k + n)`"
 "を、それぞれ一体化できます。"
 
@@ -1799,7 +1799,7 @@ msgstr ""
 "\"Can't solve constraint between: plus n 1 and S n.\"\n"
 "（訳註：制約を解決できません：plus n 1とS nとで差があります。）\n"
 "何が起こっているのかというと、こうです。\n"
-"左側のパターン照合から、Idrisはベクタの長さが`S n`であること、自然数`n`は`xs`"
+"左側のパターン合致から、Idrisはベクタの長さが`S n`であること、自然数`n`は`xs`"
 "の長さに対応することがわかります。\n"
 "`(++)`の型と`xs`の長さおよび`[x]`によると、右側のベクタの長さは`n + 1`で"
 "す。\n"
@@ -1944,7 +1944,7 @@ msgstr ""
 #: ../src/Tutorial/Dependent.md:830
 #, no-wrap
 msgid "Pattern Matching on Implicits"
-msgstr "暗黙子に対するパターン照合"
+msgstr "暗黙子に対するパターン合致"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:836
@@ -1953,9 +1953,9 @@ msgid ""
 "we could pattern match on the explicit argument `n`. However, it is also "
 "possible to pattern match on implicit, named arguments of non-zero quantity:"
 msgstr ""
-"`replicate'`の実装は関数`replicate`を使い、そこで明示引数`n`でのパターン照合"
+"`replicate'`の実装は関数`replicate`を使い、そこで明示引数`n`でのパターン合致"
 "をしているのでした。\n"
-"しかし、暗黙子、つまり非ゼロの数量子の名前付き引数でパターン照合することもで"
+"しかし、暗黙子、つまり非ゼロの数量子の名前付き引数でパターン合致することもで"
 "きます。"
 
 #. type: Fenced code block (idris)
@@ -2074,7 +2074,7 @@ msgid ""
 msgstr ""
 "型族の値をつくる場合、指標値はコンパイル時に既知であるか、値を作る関数に引数"
 "として渡されていなくてはいけません。\n"
-"関数は指標値でパターン照合してどの構築子を使うべきか調べられます。"
+"関数は指標値でパターン合致して、どの構築子を使うべきか調べられます。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Dependent.md:894
@@ -2095,7 +2095,8 @@ msgid ""
 msgstr ""
 "時々推論できる引数を消去されない暗黙子として渡すと便利なことがあります。\n"
 "このとき、Idrisはできる限り値を埋めてくれますが、\n"
-"パターン照合したり他の関数に渡すこともできることには変わりありません。"
+"パターン合致したり他の関数に渡したりすることもできることには変わりありませ"
+"ん。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:903
