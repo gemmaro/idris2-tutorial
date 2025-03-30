@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-03-30 11:12+0900\n"
-"PO-Revision-Date: 2023-06-29 23:32+0900\n"
+"PO-Revision-Date: 2025-03-30 11:40+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -421,15 +421,12 @@ msgstr ""
 
 #. type: Fenced code block (sh)
 #: ../src/Tutorial/Folds.md:145
-#, fuzzy, no-wrap
-#| msgid ""
-#| "idris2 --cg node -o test.js --find-ipkg -src/Tutorial/Folds.md\n"
-#| "node build/exec/test.js\n"
+#, no-wrap
 msgid ""
 "idris2 --cg node -o test.js --find-ipkg src/Tutorial/Folds.md\n"
 "node build/exec/test.js\n"
 msgstr ""
-"idris2 --cg node -o test.js --find-ipkg -src/Tutorial/Folds.md\n"
+"idris2 --cg node -o test.js --find-ipkg src/Tutorial/Folds.md\n"
 "node build/exec/test.js\n"
 
 #. type: Plain text
@@ -1274,14 +1271,14 @@ msgid ""
 "together with all the guarantees it provides.  Here's the code and its dire "
 "consequences:"
 msgstr ""
-"以下はとある実演で、素朴な`Void`の証明です。\n"
-"`Void`は*傍若無人型*、つまりは値のない型です。\n"
-"*`Void`を証明する*ことが意味するのは、全域性検査器に受け入れられる関数を実装"
-"することであり、\n"
-"そんな値はないので不可能でなくてはいけないにも関わらず、この関数は型`Void`の"
-"値を返します。\n"
-"そうすることで型システムと提供されていた全ての保証諸共、完全に無効にすること"
-"ができます。\n"
+"次の例は、`Void`の単純な証明です。\n"
+"`Void`は*無値型*、つまりは値のない型です。\n"
+"*`Void`の証明*とはつまり、全域性検査器に受け入れられる関数を実装することで"
+"す。\n"
+"関数は型`Void`の値を返しますが、そのような値はないため、不可能と考えられま"
+"す。\n"
+"そうすることで、提供されていた全ての保証諸共、型システムを完全に無効にするこ"
+"とができます。\n"
 "以下はコードとその惨憺たる結果です。"
 
 #. type: Fenced code block (idris)
@@ -1400,15 +1397,6 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Folds.md:602
-#, fuzzy
-#| msgid ""
-#| "Second note: *Ex falso quodlibet*, also called [the principle of "
-#| "explosion](https://en.wikipedia.org/wiki/Principle_of_explosion)  is a "
-#| "law in classical logic: From a contradiction, any statement can be "
-#| "proven.  In our case, the contradiction was our proof of `Void`: The "
-#| "claim that we wrote a total function producing such a value, although "
-#| "`Void` is an uninhabited type.  You can verify this by inspecting `Void` "
-#| "at the REPL with `:doc Void`: It has no data constructors."
 msgid ""
 "Second note: *Ex falso quodlibet*, also called [the principle of explosion]"
 "(https://en.wikipedia.org/wiki/Principle_of_explosion)  is a law in logic: "
@@ -1419,13 +1407,14 @@ msgid ""
 "has no data constructors."
 msgstr ""
 "2つめの補足：*Ex falso quodlibet*、またの名を[爆発の原理](https://en."
-"wikipedia.org/wiki/Principle_of_explosion)は古典論理の法則の1つです。\n"
-"矛盾からはいかなる記述も証明されたものにできるというものです。\n"
-"今回の場合、矛盾は`Void`の証明にありました。\n"
-"`Void`は傍若無人型なのに、そのような値を生み出す全域関数を書いたと主張するこ"
-"とがこれにあたるのです。\n"
-"このことは`Void`をREPLで`:doc Void`で調べれば確かめることができます。\n"
-"これにはデータ構築子がないのです。"
+"wikipedia.org/wiki/Principle_of_explosion)と言いますが、これは論理法則の1つで"
+"す。\n"
+"矛盾からはどんな文も証明できます。\n"
+"今回の場合、矛盾は`Void`の証明でした。\n"
+"この型を持つような値を生む、全域関数を書いたという主張ですが、`Void`は無値型"
+"です。\n"
+"このことは、REPLで`:doc Void`として、`Void`を調べると確かめられます。\n"
+"データ構築子がないのです。"
 
 #. type: Title ###
 #: ../src/Tutorial/Folds.md:603

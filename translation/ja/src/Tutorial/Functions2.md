@@ -245,24 +245,23 @@ handleRequest db (MkRequest (MkCredentials email pw) album) =
           if x == album then Success album else lookupAlbum xs
 ```
 
-I'd like to point out several things in this example. First, note how we can
-extract values from nested records in a single pattern match.  Second, we
-defined two *local* functions in a `where` block: `lookupUser`, and
-`lookupAlbum`. Both of these have access to all variables in the surrounding
-scope. For instance, `lookupUser` uses the `email` variable from the pattern
-match in the implementation's first line. Likewise, `lookupAlbum` makes use
-of the `album` variable.
+この例について、いくつか指摘したいと思います。
+まず、1回目のパターン合致で入れ子のレコードから値を抽出できているところに注目してください。
+次に、2つの*局所*関数を`where`ブロックで定義しました。
+`lookupUser`と`lookupAlbum`です。
+両方とも、囲まれたスコープにある全変数を使えます。
+例えば`lookupUser`では、実装の最初の行のパターン合致から、`email`変数を使っています。
+同様に、`lookupAlbum`は`album`変数を活用しています。
 
 `where`ブロックは新しい局所定義を導入します。
 この定義へは、取り囲んでいるスコープと、同じ`where`ブロックで後に定義された他の関数からのみアクセスできます。
 これらの定義は明示的に型付けされ、且つ同量の空白で字下げされていなければいけません。
 
-Local definitions can also be introduced *before* a function's
-implementation by using the `let` keyword. This usage of `let` is not to be
-confused with *let bindings* described above, which are used to bind and
-reuse the results of intermediate computations. Below is how we could have
-implemented `handleRequest` with local definitions introduced by the `let`
-keyword. Again, all definitions have to be properly typed and indented:
+局所定義は、`let`キーワードを使い、関数の実装の*前*で導入することもできます。
+この`let`の使い方は、前述した*let束縛*と混同しないでください。
+let束縛は、一時的な計算の結果を束縛して再利用するのに使われるものでした。
+以下は、`let`キーワードで導入される局所定義だと、`handleRequest`がどう実装されるかというものです。
+繰り返しますが、全ての定義は適切に型付けされ、字下げされている必要があります。
 
 ```idris
 handleRequest' : DB -> Request -> Response
@@ -523,12 +522,11 @@ Idris 2は前作のIdris 1とは異なり、*数量的型理論* (quantitative t
 
 ### 下線文字
 
-It is often desirable, to only write as little code as necessary and let
-Idris figure out the rest.  We have already learned about one such occasion:
-Catch-all patterns.  If a variable in a pattern match is not used on the
-right hand side, we can't just drop it, as this would make it impossible for
-Idris to know, which of several arguments we were planning to drop, but we
-can use an underscore as a placeholder instead:
+必要最小限のコードだけ書き、残りをIdrisに調べてもらいたいことはよくあります。
+既にそのような状況は知っており、それは全捕捉パターンです。
+パターン合致の変数が右側で使われないとき、単に消してしまうことはできません。
+複数の引数のうちどれを省くつもりなのか、知りようがないですから。
+しかし、代わりに場所取りとして下線文字が使えます。
 
 ```idris
 isRight : Either a b -> Bool

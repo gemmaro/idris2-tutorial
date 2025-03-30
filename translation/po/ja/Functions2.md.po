@@ -1,13 +1,13 @@
 # Japanese translations for FUnctional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-03-30 11:12+0900\n"
-"PO-Revision-Date: 2023-06-29 23:54+0900\n"
+"PO-Revision-Date: 2025-03-30 11:59+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -687,15 +687,6 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:305
-#, fuzzy
-#| msgid ""
-#| "I'd like to point out several things in this example. First, note how we "
-#| "can extract values from nested records in a single pattern match.  "
-#| "Second, we defined two *local* functions in a `where` block: "
-#| "`lookupUser`, and `lookupAlbum`. Both of these have access to all "
-#| "variables in the surrounding scope. For instance, `lookupUser` uses the "
-#| "`album` variable from the pattern match in the implementation's first "
-#| "line. Likewise, `lookupAlbum` makes use of the `album` variable."
 msgid ""
 "I'd like to point out several things in this example. First, note how we can "
 "extract values from nested records in a single pattern match.  Second, we "
@@ -705,15 +696,15 @@ msgid ""
 "match in the implementation's first line. Likewise, `lookupAlbum` makes use "
 "of the `album` variable."
 msgstr ""
-"この例について数点補足したいと思います。\n"
-"1点目として、1回目のパターン照合で入れ子のレコードから値を抽出することができ"
-"ます。\n"
-"2点目として、2つの*局所*関数を`where`ブロック内に定義しています。\n"
+"この例について、いくつか指摘したいと思います。\n"
+"まず、1回目のパターン合致で入れ子のレコードから値を抽出できているところに注目"
+"してください。\n"
+"次に、2つの*局所*関数を`where`ブロックで定義しました。\n"
 "`lookupUser`と`lookupAlbum`です。\n"
-"両方の関数は囲まれたスコープにある全ての変数にアクセスできます。\n"
-"例えば`lookupUser`は実装の最初の行にあるパターン照合から`album`変数を使いま"
-"す。\n"
-"同様に`lookupAlbum`も`album`変数を使用します。"
+"両方とも、囲まれたスコープにある全変数を使えます。\n"
+"例えば`lookupUser`では、実装の最初の行のパターン合致から、`email`変数を使って"
+"います。\n"
+"同様に、`lookupAlbum`は`album`変数を活用しています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:310
@@ -731,15 +722,6 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:318
-#, fuzzy
-#| msgid ""
-#| "Local definitions can also be introduce *before* a function's "
-#| "implementation by using the `let` keyword. This usage of `let` is not to "
-#| "be confused with *let bindings* described above, which are used to bind "
-#| "and reuse the results of intermediate computations. Below is how we could "
-#| "have implemented `handleRequest` with local definitions introduced by the "
-#| "`let` keyword. Again, all definitions have to be properly typed and "
-#| "indented:"
 msgid ""
 "Local definitions can also be introduced *before* a function's "
 "implementation by using the `let` keyword. This usage of `let` is not to be "
@@ -748,11 +730,12 @@ msgid ""
 "implemented `handleRequest` with local definitions introduced by the `let` "
 "keyword. Again, all definitions have to be properly typed and indented:"
 msgstr ""
-"局所定義は`let`キーワードを用いて関数の実装の*前*で導入しても構いません。\n"
-"この`let`の使用法は前述した*let束縛*と混同しないようにしてください。\n"
-"let束縛は一時的な計算の結果を束縛して再利用するものでした。\n"
-"以下では`let`キーワードにより導入された局所定義で`handleRequest`をどう実装で"
-"きるかを示しています。\n"
+"局所定義は、`let`キーワードを使い、関数の実装の*前*で導入することもできま"
+"す。\n"
+"この`let`の使い方は、前述した*let束縛*と混同しないでください。\n"
+"let束縛は、一時的な計算の結果を束縛して再利用するのに使われるものでした。\n"
+"以下は、`let`キーワードで導入される局所定義だと、`handleRequest`がどう実装さ"
+"れるかというものです。\n"
 "繰り返しますが、全ての定義は適切に型付けされ、字下げされている必要がありま"
 "す。"
 
@@ -1426,14 +1409,6 @@ msgstr "下線文字"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:623
-#, fuzzy
-#| msgid ""
-#| "It is often desirable, to only write as little code as necessary and let "
-#| "Idris figure out the rest.  We have already learned about one such "
-#| "occasion: Catch-all patterns.  If a variable in a pattern match is not "
-#| "used on the right hand side, we can't just drop it, as this would make it "
-#| "impossible for Idris, which of several arguments we were planning to "
-#| "drop, but we can use an underscore as a placeholder instead:"
 msgid ""
 "It is often desirable, to only write as little code as necessary and let "
 "Idris figure out the rest.  We have already learned about one such occasion: "
@@ -1442,14 +1417,13 @@ msgid ""
 "Idris to know, which of several arguments we were planning to drop, but we "
 "can use an underscore as a placeholder instead:"
 msgstr ""
-"必要最小限のコードだけを書いて、残りをIdrisに調べさせたいことはよくありま"
+"必要最小限のコードだけ書き、残りをIdrisに調べてもらいたいことはよくありま"
 "す。\n"
-"既にそのような状況について学びました。\n"
-"全捕捉パターンです。\n"
-"パターン照合の変数が右側で使われなければ、\n"
-"単に省略するだけということはできないものの（複数の引数のうちどれを省くつもり"
-"なのかをIdrisが推定できません）、\n"
-"代わりに下線文字で場所取りをすることができます。"
+"既にそのような状況は知っており、それは全捕捉パターンです。\n"
+"パターン合致の変数が右側で使われないとき、単に消してしまうことはできませ"
+"ん。\n"
+"複数の引数のうちどれを省くつもりなのか、知りようがないですから。\n"
+"しかし、代わりに場所取りとして下線文字が使えます。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functions2.md:624

@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-03-30 11:12+0900\n"
-"PO-Revision-Date: 2023-06-29 23:47+0900\n"
+"PO-Revision-Date: 2025-03-30 11:19+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1177,17 +1177,13 @@ msgstr ""
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:495
-#, fuzzy, no-wrap
-#| msgid ""
-#| "mapMaybeId1 : (ma : Maybe a) -> map Prelude.id ma = ma\n"
-#| "mapMaybeId1 Nothing  = Refl\n"
-#| "mapMaybeId1 (Just x) = ?mapMaybeId1_rhs\n"
+#, no-wrap
 msgid ""
 "mapMaybeId1 : (ma : Maybe a) -> map id ma = ma\n"
 "mapMaybeId1 Nothing  = Refl\n"
 "mapMaybeId1 (Just x) = ?mapMaybeId1_rhs\n"
 msgstr ""
-"mapMaybeId1 : (ma : Maybe a) -> map Prelude.id ma = ma\n"
+"mapMaybeId1 : (ma : Maybe a) -> map id ma = ma\n"
 "mapMaybeId1 Nothing  = Refl\n"
 "mapMaybeId1 (Just x) = ?mapMaybeId1_rhs\n"
 
@@ -1538,16 +1534,13 @@ msgstr ""
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:652
-#, fuzzy, no-wrap
-#| msgid ""
-#| "contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)\n"
-#| "contraCong fun = fun . cong f\n"
+#, no-wrap
 msgid ""
 "contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)\n"
 "contraCong fun x = fun $ cong f x\n"
 msgstr ""
 "contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)\n"
-"contraCong fun = fun . cong f\n"
+"contraCong fun x = fun $ cong f x\n"
 
 #. type: Title ###
 #: ../src/Tutorial/Eq.md:657
@@ -2067,16 +2060,12 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Eq.md:899
-#, fuzzy
-#| msgid ""
-#| "However, the example below can't be implemented as easily (try id!), "
-#| "because Idris can't figure out on its own that the two lengths unify."
 msgid ""
 "However, the example below can't be implemented as easily (try it!), because "
 "Idris can't figure out on its own that the two lengths unify."
 msgstr ""
-"しかし下の例は簡単には実装できません（やってみてください！）。なぜなら\n"
-"Idrisは自力で2つの長さを統合するものだと調べられないからです。"
+"しかし以下の例は簡単には実装できません（やってみてください！）。\n"
+"なぜなら、2つの長さが一致することをIdrisで調べられないからです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Eq.md:900

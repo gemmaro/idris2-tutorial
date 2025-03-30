@@ -799,8 +799,8 @@ leftZero :  List (Vect n Nat)
 leftZero = (++)
 ```
 
-However, the example below can't be implemented as easily (try it!), because
-Idris can't figure out on its own that the two lengths unify.
+しかし以下の例は簡単には実装できません（やってみてください！）。
+なぜなら、2つの長さが一致することをIdrisで調べられないからです。
 
 ```idris
 rightZero' :  List (Vect n Nat)

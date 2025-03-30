@@ -657,9 +657,9 @@ CSVField Email where
 
 isPasswordChar : Char -> Bool
 isPasswordChar ' ' = True
--- please note that isSpace holds as well for other characaters than ' '
--- e.g. for non-breaking space: isSpace '\160' = True
--- but only ' ' shall be llowed in passwords
+-- isSpaceは ' ' 以外の文字であれば満たすことに注意してください。
+-- 例えば改行を禁止する空白について、isSpace '\160' = True です。
+-- ただし、' ' だけであればパスワードとして許されます。
 isPasswordChar c   = not (isControl c) && not (isSpace c)
 
 isValidPassword : String -> Bool

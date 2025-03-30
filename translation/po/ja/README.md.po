@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-03-30 11:12+0900\n"
-"PO-Revision-Date: 2023-06-29 22:21+0900\n"
+"PO-Revision-Date: 2025-03-30 12:25+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -155,16 +155,12 @@ msgstr "[関数 その1](src/Tutorial/Functions1.md)"
 
 #. type: Bullet: '   1. '
 #: ../README.md:106
-#, fuzzy
-#| msgid ""
-#| "[Functions with more that one Argument](src/Tutorial/Functions1."
-#| "md#functions-with-more-that-one-argument)"
 msgid ""
 "[Functions with more than one Argument](src/Tutorial/Functions1.md#functions-"
 "with-more-that-one-argument)"
 msgstr ""
 "[1つ以上の引数を持つ関数](src/Tutorial/Functions1.md#functions-with-more-"
-"that-one-argument)"
+"than-one-argument)"
 
 #. type: Bullet: '   2. '
 #: ../README.md:106
@@ -557,7 +553,7 @@ msgstr "[Idrisのプロジェクトを構築する](src/Appendices/Projects.md)"
 #. type: Bullet: '4. '
 #: ../README.md:118
 msgid "[A Deep Dive into Quantitative Type Theory](src/Appendices/QTT.md)"
-msgstr ""
+msgstr "[数量的型理論を深掘りする](src/Appendices/QTT.md)"
 
 #. type: Title ##
 #: ../README.md:119

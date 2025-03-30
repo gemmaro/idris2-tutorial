@@ -460,11 +460,11 @@ replicatePrim' x v = v :: replicatePrim' (assert_smaller x $ x - 1) v
 
 #### Ex Falso Quodlibet
 
-以下はとある実演で、素朴な`Void`の証明です。
-`Void`は*傍若無人型*、つまりは値のない型です。
-*`Void`を証明する*ことが意味するのは、全域性検査器に受け入れられる関数を実装することであり、
-そんな値はないので不可能でなくてはいけないにも関わらず、この関数は型`Void`の値を返します。
-そうすることで型システムと提供されていた全ての保証諸共、完全に無効にすることができます。
+次の例は、`Void`の単純な証明です。
+`Void`は*無値型*、つまりは値のない型です。
+*`Void`の証明*とはつまり、全域性検査器に受け入れられる関数を実装することです。
+関数は型`Void`の値を返しますが、そのような値はないため、不可能と考えられます。
+そうすることで、提供されていた全ての保証諸共、型システムを完全に無効にすることができます。
 以下はコードとその惨憺たる結果です。
 
 ```idris
@@ -514,13 +514,13 @@ ERROR: No clauses
 補足：上のコード中で動いている全ての暗黒魔法を理解することは期待していません。
 別の章でその時がきたら詳細をご説明しましょう。
 
-Second note: *Ex falso quodlibet*, also called [the principle of
-explosion](https://en.wikipedia.org/wiki/Principle_of_explosion)  is a law
-in logic: From a contradiction, any statement can be proven.  In our case,
-the contradiction was our proof of `Void`: The claim that we wrote a total
-function producing such a value, although `Void` is an uninhabited type.
-You can verify this by inspecting `Void` at the REPL with `:doc Void`: It
-has no data constructors.
+2つめの補足：*Ex falso
+quodlibet*、またの名を[爆発の原理](https://en.wikipedia.org/wiki/Principle_of_explosion)と言いますが、これは論理法則の1つです。
+矛盾からはどんな文も証明できます。
+今回の場合、矛盾は`Void`の証明でした。
+この型を持つような値を生む、全域関数を書いたという主張ですが、`Void`は無値型です。
+このことは、REPLで`:doc Void`として、`Void`を調べると確かめられます。
+データ構築子がないのです。
 
 ### 事例2：関数呼び出しを介した再帰
 

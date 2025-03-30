@@ -1,13 +1,13 @@
 # Japanese translations for Functional Programming in Idris 2
 # Copyright (c) 2021-2023, Stefan Höck.
-# Copyright (C) 2022, 2023 gemmaro <gemmaro.dev@gmail.com>.
+# Copyright (C) 2022, 2023, 2025 gemmaro <gemmaro.dev@gmail.com>.
 # This file is distributed under the same license as the Functional Programming in Idris 2.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-03-30 11:12+0900\n"
-"PO-Revision-Date: 2023-06-29 22:30+0900\n"
+"PO-Revision-Date: 2025-03-30 12:19+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -53,18 +53,6 @@ msgstr "導入"
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:15
-#, fuzzy
-#| msgid ""
-#| "Welcome to my Idris 2 tutorial. I'll try and treat as many aspects of the "
-#| "Idris 2 programming language as possible here.  All `.md` files in here a "
-#| "literate Idris files: They consist of Markdown (hence the `.md` ending), "
-#| "which is being pretty printed by GitHub together with Idris code blocks, "
-#| "which can be type checked and built by the Idris compiler (more on this "
-#| "later).  Note, however, that regular Idris source files use an `.idr` "
-#| "ending, and that you go with that file type unless you end up writing "
-#| "much more prose than code as I do at the moment. Later in this tutorial, "
-#| "you'll have to solve some exercises, the solutions of which can be found "
-#| "in the `src/Solutions` subfolder. There, I use regular `.idr` files."
 msgid ""
 "Welcome to my Idris 2 tutorial. I'll try and treat as many aspects of the "
 "Idris 2 programming language as possible here.  All `.md` files in here are "
@@ -77,19 +65,20 @@ msgid ""
 "have to solve some exercises, the solutions of which can be found in the "
 "`src/Solutions` subfolder. There, I use regular `.idr` files."
 msgstr ""
-"Idris 2 入門へようこそ。\n"
-"ここではプログラミング言語 Idris 2 のできるだけ多くの側面を扱ってみることにし"
+"Idris 2入門へようこそ。\n"
+"ここではプログラミング言語Idris 2の、できるだけ多くの面から扱ってみることにし"
 "ます。\n"
-"ここにある全ての `.md` ファイルは文芸的 Idris ファイルです。\n"
-"つまり、Markdownで書かれていて（だから `.md` で終わります）、Idris のコードブ"
-"ロックを混じえつつ GitHub で綺麗に表示され、そして Idris のコンパイラで型検査"
-"とビルドができます（これについては後述）。\n"
-"ただし、通常の Idris のソースファイルは `.idr` で終わりますし、ここで私がやっ"
-"ているようにコードよりも地の文をかなり多く書かない限り、そのファイルの種類を"
-"使うものです。\n"
-"この入門のあとに、幾つかの演習問題を解くことになりますが、解答は `src/"
-"Solutions` サブフォルダにあります。\n"
-"そこでは通常の `.idr` ファイルにしています。"
+"ここにある全ての`.md`ファイルは、文芸的Idrisファイルです。\n"
+"つまり、Markdownで書かれていて（そのため`.md`終わりです）、Idrisのコードブ"
+"ロックを混じえつつGitHubで綺麗に表示されます。\n"
+"そしてこのコードブロックは、Idrisコンパイラで型検査とビルドができます（これに"
+"ついては後述）。\n"
+"ただし、普通のIdrisのソースファイルは`.idr`で終わるものを使います。\n"
+"ここで私がしているように、コードより地の文をずっと多く書くことにならなけれ"
+"ば、そのファイルの種類を使うようにしてください。\n"
+"この入門の後半で、幾つか演習問題を解くことになりますが、解答は`src/Solutions`"
+"サブフォルダにあります。\n"
+"そこでは普通の`.idr`ファイルを使っています。"
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:23
@@ -238,17 +227,13 @@ msgstr ""
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Intro.md:80
-#, fuzzy
-#| msgid ""
-#| "They are thread-safe, since the don't mutate global state, and as such "
-#| "can be freely used in several computations running in parallel."
 msgid ""
 "They are thread-safe, since they don't mutate global state, and as such can "
 "be freely used in several computations running in parallel."
 msgstr ""
-"関数はスレッド安全です。\n"
+"スレッド安全です。\n"
 "なぜなら大域状態を変更しないからです。\n"
-"そして、並列実行される計算でも自由に使えます。"
+"またそのため、並列実行される計算でも自由に使えます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:82
@@ -273,23 +258,16 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:97
-#, fuzzy
-#| msgid ""
-#| "Idris is a strongly, statically typed programming language. This means, "
-#| "that every Idris expression is given a *type* (for instance: integer, "
-#| "list of strings, boolean, function from integer to boolean, etc.)  and "
-#| "types are verified at compile time to rule out certain common programming "
-#| "errors."
 msgid ""
 "Idris is a strongly, statically typed programming language. This means that "
 "every Idris expression is given a *type* (for instance: integer, list of "
 "strings, boolean, function from integer to boolean, etc.)  and types are "
 "verified at compile time to rule out certain common programming errors."
 msgstr ""
-"Idrisは強力かつ静的に型付けされたプログラミング言語です。つまり、あらゆる"
-"Idrisの式には *型*（例えば整数、文字列のリスト、真偽値、整数から真偽値への関"
-"数など）があり、型はコンパイル時に検証されます。この時点でプログラミングにお"
-"いてよくあるエラーを排除できます。"
+"Idrisは強力かつ静的に型付けされたプログラミング言語です。\n"
+"つまり、Idrisの式には必ず*型*（例えば整数、文字列のリスト、真偽値、整数から真"
+"偽値への関数など）があり、型はコンパイル時に検証されます。\n"
+"これにより、プログラミングでよくあるエラーを排除できます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:103
@@ -683,16 +661,6 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:280
-#, fuzzy
-#| msgid ""
-#| "The first line can be read as: \"We'd like to declare (nullary)  function "
-#| "`maxBits8`. It is of type `Bits8`\". This is called the *function "
-#| "declaration*: We declare, that there shall be a function of the given "
-#| "name and type. The second line reads: \"The result of invoking `maxBits8` "
-#| "should be `255`.\" (As you can see, we can use integer literals for other "
-#| "integral types than just `Integer`.) This is called the *function "
-#| "definition*: Function `maxBits8` should behave as described here when "
-#| "being evaluated."
 msgid ""
 "The first line can be read as: \"We'd like to declare (nullary)  function "
 "`maxBits8`. It is of type `Bits8`\". This is called the *function "
@@ -702,14 +670,15 @@ msgid ""
 "types than just `Integer`.) This is called the *function definition*: "
 "Function `maxBits8` should behave as described here when being evaluated."
 msgstr ""
-"最初の行は「（引数のない）関数`maxBits8`を定義する。\n"
+"1行目は「（引数のない）関数`maxBits8`を定義する。\n"
 "型は`Bits8`である」のように読めます。\n"
 "これは*関数宣言*と呼ばれます。\n"
-"与えられた名前と型を持つ関数があることを宣言するのです。\n"
-"2行目は「`maxBits8`を呼び出した結果は`255`である」のように読めます（整数直値"
-"は`Integer`以外の他の数値の型でも使えることが見てとれます）。\n"
+"与えられた名前と型を持つ関数があることを宣言しています。\n"
+"2行目は「`maxBits8`を呼び出した結果は`255`である」と読めます（整数直値は"
+"`Integer`以外の他の数値の型でも使えることが見てとれます）。\n"
 "これは*関数定義*と呼ばれます。\n"
-"`maxBits8`関数は評価されるときにここに記述されたように振舞います。"
+"関数`maxBits8`が評価されるときは、ここに記述された通りにはたらくことになりま"
+"す。"
 
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:283

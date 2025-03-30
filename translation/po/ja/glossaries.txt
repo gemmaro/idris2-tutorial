@@ -1,10 +1,14 @@
-catch-all: 全捕捉。catch-all patternは全捕捉パターンです。
-elaboration: 細密化。elaboratorは細密子です。
+このファイルでは用語の訳を考えます。
+
 accumulate: 累算。累積とすると乗算になりそうなので避けます。
+behavior: はたらき、挙動。「振舞い」とすることも有り得ますが、こちらは動詞としての使い方に留めます。
+catch-all: 全捕捉。catch-all patternは全捕捉パターンです。
 container: 容器。container typeは容器型です。荷車とすると大仰な感じ。
-signature: 処方。type signatureは型処方です。
-literal: 直値
-utility: ユーティリティ。「便利」や「小間物」のように訳してみましたが、どうもしっくり来ませんでした。
+elaboration: 細密化。elaboratorは細密子です。
 encoding: 迷っているところ。「符号化」「エンコーディング」「コード化」など、文脈によって変えることが考えられます。
-behavior: 挙動。「振舞い」とすることも有り得ますが、こちらは動詞としての使い方に留めます。
+inhabited type: 無値型。以前、自分は傍若無人型としていましたが、とても正気ではありません。
+literal: 直値
+match: 合致。マッチとガッチで似ているため。
 scope: スコープ。「範疇」にすることを考えています。
+signature: 処方。type signatureは型処方です。
+utility: 補助、ユーティリティ。「便利」や「小間物」のように訳してみましたが、どうもしっくり来ませんでした。
