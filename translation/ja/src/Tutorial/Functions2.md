@@ -245,23 +245,24 @@ handleRequest db (MkRequest (MkCredentials email pw) album) =
           if x == album then Success album else lookupAlbum xs
 ```
 
-この例について数点補足したいと思います。
-1点目として、1回目のパターン照合で入れ子のレコードから値を抽出することができます。
-2点目として、2つの*局所*関数を`where`ブロック内に定義しています。
-`lookupUser`と`lookupAlbum`です。
-両方の関数は囲まれたスコープにある全ての変数にアクセスできます。
-例えば`lookupUser`は実装の最初の行にあるパターン照合から`album`変数を使います。
-同様に`lookupAlbum`も`album`変数を使用します。
+I'd like to point out several things in this example. First, note how we can
+extract values from nested records in a single pattern match.  Second, we
+defined two *local* functions in a `where` block: `lookupUser`, and
+`lookupAlbum`. Both of these have access to all variables in the surrounding
+scope. For instance, `lookupUser` uses the `email` variable from the pattern
+match in the implementation's first line. Likewise, `lookupAlbum` makes use
+of the `album` variable.
 
 `where`ブロックは新しい局所定義を導入します。
 この定義へは、取り囲んでいるスコープと、同じ`where`ブロックで後に定義された他の関数からのみアクセスできます。
 これらの定義は明示的に型付けされ、且つ同量の空白で字下げされていなければいけません。
 
-局所定義は`let`キーワードを用いて関数の実装の*前*で導入しても構いません。
-この`let`の使用法は前述した*let束縛*と混同しないようにしてください。
-let束縛は一時的な計算の結果を束縛して再利用するものでした。
-以下では`let`キーワードにより導入された局所定義で`handleRequest`をどう実装できるかを示しています。
-繰り返しますが、全ての定義は適切に型付けされ、字下げされている必要があります。
+Local definitions can also be introduced *before* a function's
+implementation by using the `let` keyword. This usage of `let` is not to be
+confused with *let bindings* described above, which are used to bind and
+reuse the results of intermediate computations. Below is how we could have
+implemented `handleRequest` with local definitions introduced by the `let`
+keyword. Again, all definitions have to be properly typed and indented:
 
 ```idris
 handleRequest' : DB -> Request -> Response
@@ -522,12 +523,12 @@ Idris 2は前作のIdris 1とは異なり、*数量的型理論* (quantitative t
 
 ### 下線文字
 
-必要最小限のコードだけを書いて、残りをIdrisに調べさせたいことはよくあります。
-既にそのような状況について学びました。
-全捕捉パターンです。
-パターン照合の変数が右側で使われなければ、
-単に省略するだけということはできないものの（複数の引数のうちどれを省くつもりなのかをIdrisが推定できません）、
-代わりに下線文字で場所取りをすることができます。
+It is often desirable, to only write as little code as necessary and let
+Idris figure out the rest.  We have already learned about one such occasion:
+Catch-all patterns.  If a variable in a pattern match is not used on the
+right hand side, we can't just drop it, as this would make it impossible for
+Idris to know, which of several arguments we were planning to drop, but we
+can use an underscore as a placeholder instead:
 
 ```idris
 isRight : Either a b -> Bool

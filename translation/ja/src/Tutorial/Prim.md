@@ -479,9 +479,13 @@ Main> the Bits8 12 - 13
 
 ### 符号付き整数
 
-符号無し整数型と同様、符号付き固定精度整数型（`Int8`、`Int16`、`Int32`、`Int64`）には全ての整数インターフェースと2つのビット演算用インターフェース（`Bits`と`FiniteBits`）が付属しています。
-オーバーフローは剰余`2^bitwise`を計算しそれでも結果が範囲外であれば小さいほうの境界（負数）を加えることで取り扱われます。
-例えば`Int8`については、全ての操作は結果を256の剰余で取り、結果がそれでも範囲外なら128を引きます。
+Like the unsigned integer types, the signed fixed precision integer types
+(`Int8`, `Int16`, `Int32`, and `Int64`) come with implementations of all
+integral interfaces and the two interfaces for bitwise operations (`Bits`
+and `FiniteBits`).  Overflows are handled by calculating the remainder
+modulo `2^bitsize` and subtracting `2^bitsize` if the result is still out of
+range. For instance, for `Int8`, all operations calculate their results
+modulo 256, subtracting 256 if the result is still out of bounds:
 
 ```repl
 Main> the Int8 2 * 127
@@ -884,7 +888,7 @@ test0 False = No0 absurd
 
 ```idris
 data IsYes0 : (d : Dec0 prop) -> Type where
-  ItIsYes0 : IsYes0 (Yes0 prf)
+  ItIsYes0 : {0 prf : _} -> IsYes0 (Yes0 prf)
 
 0 fromYes0 : (d : Dec0 prop) -> (0 prf : IsYes0 d) => prop
 fromYes0 (Yes0 x) = x

@@ -32,7 +32,8 @@ Haskellのような他の純粋関数型プログラミング言語を使った�
    4. [Idrisの定義の形](src/Tutorial/Intro.md#the-shape-of-an-idris-definition)
    5. [困ったときは](src/Tutorial/Intro.md#where-to-get-help)
 2. [関数 その1](src/Tutorial/Functions1.md)
-   1. [1つ以上の引数を持つ関数](src/Tutorial/Functions1.md#functions-with-more-that-one-argument)
+   1. [Functions with more than one
+      Argument](src/Tutorial/Functions1.md#functions-with-more-that-one-argument)
    2. [関数結合](src/Tutorial/Functions1.md#function-composition)
    3. [高階関数](src/Tutorial/Functions1.md#higher-order-functions)
    4. [カリー化](src/Tutorial/Functions1.md#currying)
@@ -103,6 +104,7 @@ Haskellのような他の純粋関数型プログラミング言語を使った�
 1. [packとIdris2で始めよう](src/Appendices/Install.md)
 2. [Neovimでの対話的編集](src/Appendices/Neovim.md)
 3. [Idrisのプロジェクトを構築する](src/Appendices/Projects.md)
+4. [A Deep Dive into Quantitative Type Theory](src/Appendices/QTT.md)
 
 ## 予め必要なもの
 

@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE
-# Copyright (C) YEAR Stefan Höck
+# Copyright (C) YEAR Stefan HÃ¶ck
 # This file is distributed under the same license as the Functional Programming in Idris 2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,7 +128,7 @@ msgstr ""
 #. type: Bullet: '   1. '
 #: ../README.md:106
 msgid ""
-"[Functions with more that one Argument](src/Tutorial/Functions1.md#functions-"
+"[Functions with more than one Argument](src/Tutorial/Functions1.md#functions-"
 "with-more-that-one-argument)"
 msgstr ""
 
@@ -478,28 +478,33 @@ msgid ""
 msgstr ""
 
 #. type: Bullet: '1. '
-#: ../README.md:117
+#: ../README.md:118
 msgid "[Getting Started with pack and Idris2](src/Appendices/Install.md)"
 msgstr ""
 
 #. type: Bullet: '2. '
-#: ../README.md:117
+#: ../README.md:118
 msgid "[Interactive Editing in Neovim](src/Appendices/Neovim.md)"
 msgstr ""
 
 #. type: Bullet: '3. '
-#: ../README.md:117
+#: ../README.md:118
 msgid "[Structuring Idris Projects](src/Appendices/Projects.md)"
 msgstr ""
 
-#. type: Title ##
+#. type: Bullet: '4. '
 #: ../README.md:118
+msgid "[A Deep Dive into Quantitative Type Theory](src/Appendices/QTT.md)"
+msgstr ""
+
+#. type: Title ##
+#: ../README.md:119
 #, no-wrap
 msgid "Prerequisites"
 msgstr ""
 
 #. type: Plain text
-#: ../README.md:124
+#: ../README.md:125
 msgid ""
 "At the moment, this project is being actively developed and evolved against "
 "the main branch of the Idris 2 repository.  It is being tested nightly on "
@@ -508,7 +513,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../README.md:126
+#: ../README.md:127
 msgid ""
 "In order to follow along with this tutorial, it is strongly suggested to "
 "install Idris via the pack package manager as described [here](src/"

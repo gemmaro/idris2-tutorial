@@ -1,14 +1,15 @@
 # 導入
 
-Idris 2 入門へようこそ。
-ここではプログラミング言語 Idris 2 のできるだけ多くの側面を扱ってみることにします。
-ここにある全ての `.md` ファイルは文芸的 Idris ファイルです。
-つまり、Markdownで書かれていて（だから `.md` で終わります）、Idris のコードブロックを混じえつつ GitHub
-で綺麗に表示され、そして Idris のコンパイラで型検査とビルドができます（これについては後述）。
-ただし、通常の Idris のソースファイルは `.idr`
-で終わりますし、ここで私がやっているようにコードよりも地の文をかなり多く書かない限り、そのファイルの種類を使うものです。
-この入門のあとに、幾つかの演習問題を解くことになりますが、解答は `src/Solutions` サブフォルダにあります。
-そこでは通常の `.idr` ファイルにしています。
+Welcome to my Idris 2 tutorial. I'll try and treat as many aspects of the
+Idris 2 programming language as possible here.  All `.md` files in here are
+literate Idris files: They consist of Markdown (hence the `.md` ending),
+which is being pretty printed by GitHub together with Idris code blocks,
+which can be type checked and built by the Idris compiler (more on this
+later).  Note, however, that regular Idris source files use an `.idr`
+ending, and that you go with that file type unless you end up writing much
+more prose than code as I do at the moment. Later in this tutorial, you'll
+have to solve some exercises, the solutions of which can be found in the
+`src/Solutions` subfolder. There, I use regular `.idr` files.
 
 始める前にシステムにIdrisコンパイラがインストールされていることを確かめてください。
 この入門全体を通じて、*pack*パッケージ管理をインストールし[こちら](../Appendices/Install.md)に解説されているようにパッケージの骨組を準備していることを前提とします。
@@ -60,9 +61,8 @@ Idrisは *純粋* で *依存型* で *全域* な *関数型* プログラミ�
 * 複数の入力の引数と期待値を指定することにより、簡単に関数をテストできます。
   使用する値は乱択して生成することもできます。
 
-* 関数はスレッド安全です。
-  なぜなら大域状態を変更しないからです。
-  そして、並列実行される計算でも自由に使えます。
+* They are thread-safe, since they don't mutate global state, and as such
+  can be freely used in several computations running in parallel.
 
 純粋な関数にももちろん欠点があります。
 
@@ -73,8 +73,10 @@ Idrisは *純粋* で *依存型* で *全域* な *関数型* プログラミ�
 
 ### 依存型
 
-Idrisは強力かつ静的に型付けされたプログラミング言語です。つまり、あらゆるIdrisの式には
-*型*（例えば整数、文字列のリスト、真偽値、整数から真偽値への関数など）があり、型はコンパイル時に検証されます。この時点でプログラミングにおいてよくあるエラーを排除できます。
+Idris is a strongly, statically typed programming language. This means that
+every Idris expression is given a *type* (for instance: integer, list of
+strings, boolean, function from integer to boolean, etc.)  and types are
+verified at compile time to rule out certain common programming errors.
 
 例えば、もしある関数が `String` 型（unicode文字の連なりで、 `"Hello123"` など）
 の引数を期待しているとすれば、
@@ -221,13 +223,13 @@ maxBits8 : Bits8
 maxBits8 = 255
 ```
 
-最初の行は「（引数のない）関数`maxBits8`を定義する。
-型は`Bits8`である」のように読めます。
-これは*関数宣言*と呼ばれます。
-与えられた名前と型を持つ関数があることを宣言するのです。
-2行目は「`maxBits8`を呼び出した結果は`255`である」のように読めます（整数直値は`Integer`以外の他の数値の型でも使えることが見てとれます）。
-これは*関数定義*と呼ばれます。
-`maxBits8`関数は評価されるときにここに記述されたように振舞います。
+The first line can be read as: "We'd like to declare (nullary)  function
+`maxBits8`. It is of type `Bits8`". This is called the *function
+declaration*: we declare that there shall be a function of the given name
+and type. The second line reads: "The result of invoking `maxBits8` should
+be `255`." (As you can see, we can use integer literals for other integral
+types than just `Integer`.) This is called the *function definition*:
+Function `maxBits8` should behave as described here when being evaluated.
 
 この関数をREPLで調べることができます。
 このソースファイルを（前述したように）IdrisのREPLに読み込んで、以下を試しましょう。

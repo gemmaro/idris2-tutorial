@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE
-# Copyright (C) YEAR Stefan Höck
+# Copyright (C) YEAR Stefan HÃ¶ck
 # This file is distributed under the same license as the Functional Programming in Idris 2 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,10 +21,10 @@ msgstr ""
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -38,7 +38,7 @@ msgid "Dependent Types"
 msgstr ""
 
 #. type: Title ###
-#: ../src/Tutorial/Functor.md:1420 ../src/Tutorial/Intro.md:444
+#: ../src/Tutorial/Functor.md:1423 ../src/Tutorial/Intro.md:444
 #, no-wrap
 msgid "What's next?"
 msgstr ""
@@ -53,7 +53,7 @@ msgstr ""
 #: ../src/Tutorial/Intro.md:15
 msgid ""
 "Welcome to my Idris 2 tutorial. I'll try and treat as many aspects of the "
-"Idris 2 programming language as possible here.  All `.md` files in here a "
+"Idris 2 programming language as possible here.  All `.md` files in here are "
 "literate Idris files: They consist of Markdown (hence the `.md` ending), "
 "which is being pretty printed by GitHub together with Idris code blocks, "
 "which can be type checked and built by the Idris compiler (more on this "
@@ -170,7 +170,7 @@ msgstr ""
 #. type: Bullet: '* '
 #: ../src/Tutorial/Intro.md:80
 msgid ""
-"They are thread-safe, since the don't mutate global state, and as such can "
+"They are thread-safe, since they don't mutate global state, and as such can "
 "be freely used in several computations running in parallel."
 msgstr ""
 
@@ -195,7 +195,7 @@ msgstr ""
 #. type: Plain text
 #: ../src/Tutorial/Intro.md:97
 msgid ""
-"Idris is a strongly, statically typed programming language. This means, that "
+"Idris is a strongly, statically typed programming language. This means that "
 "every Idris expression is given a *type* (for instance: integer, list of "
 "strings, boolean, function from integer to boolean, etc.)  and types are "
 "verified at compile time to rule out certain common programming errors."
@@ -494,7 +494,7 @@ msgstr ""
 msgid ""
 "The first line can be read as: \"We'd like to declare (nullary)  function "
 "`maxBits8`. It is of type `Bits8`\". This is called the *function "
-"declaration*: We declare, that there shall be a function of the given name "
+"declaration*: we declare that there shall be a function of the given name "
 "and type. The second line reads: \"The result of invoking `maxBits8` should "
 "be `255`.\" (As you can see, we can use integer literals for other integral "
 "types than just `Integer`.) This is called the *function definition*: "

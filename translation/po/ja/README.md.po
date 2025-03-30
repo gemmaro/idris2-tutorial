@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
 "PO-Revision-Date: 2023-06-29 22:21+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -155,8 +155,12 @@ msgstr "[関数 その1](src/Tutorial/Functions1.md)"
 
 #. type: Bullet: '   1. '
 #: ../README.md:106
+#, fuzzy
+#| msgid ""
+#| "[Functions with more that one Argument](src/Tutorial/Functions1."
+#| "md#functions-with-more-that-one-argument)"
 msgid ""
-"[Functions with more that one Argument](src/Tutorial/Functions1.md#functions-"
+"[Functions with more than one Argument](src/Tutorial/Functions1.md#functions-"
 "with-more-that-one-argument)"
 msgstr ""
 "[1つ以上の引数を持つ関数](src/Tutorial/Functions1.md#functions-with-more-"
@@ -536,28 +540,33 @@ msgstr ""
 "どについての簡潔な参考情報にしようと模索しています。"
 
 #. type: Bullet: '1. '
-#: ../README.md:117
+#: ../README.md:118
 msgid "[Getting Started with pack and Idris2](src/Appendices/Install.md)"
 msgstr "[packとIdris2で始めよう](src/Appendices/Install.md)"
 
 #. type: Bullet: '2. '
-#: ../README.md:117
+#: ../README.md:118
 msgid "[Interactive Editing in Neovim](src/Appendices/Neovim.md)"
 msgstr "[Neovimでの対話的編集](src/Appendices/Neovim.md)"
 
 #. type: Bullet: '3. '
-#: ../README.md:117
+#: ../README.md:118
 msgid "[Structuring Idris Projects](src/Appendices/Projects.md)"
 msgstr "[Idrisのプロジェクトを構築する](src/Appendices/Projects.md)"
 
-#. type: Title ##
+#. type: Bullet: '4. '
 #: ../README.md:118
+msgid "[A Deep Dive into Quantitative Type Theory](src/Appendices/QTT.md)"
+msgstr ""
+
+#. type: Title ##
+#: ../README.md:119
 #, no-wrap
 msgid "Prerequisites"
 msgstr "予め必要なもの"
 
 #. type: Plain text
-#: ../README.md:124
+#: ../README.md:125
 msgid ""
 "At the moment, this project is being actively developed and evolved against "
 "the main branch of the Idris 2 repository.  It is being tested nightly on "
@@ -570,7 +579,7 @@ msgstr ""
 "github.com/stefan-hoeck/idris2-pack-db)の最新版に対してビルドされています。"
 
 #. type: Plain text
-#: ../README.md:126
+#: ../README.md:127
 msgid ""
 "In order to follow along with this tutorial, it is strongly suggested to "
 "install Idris via the pack package manager as described [here](src/"

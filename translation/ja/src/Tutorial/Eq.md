@@ -445,7 +445,7 @@ showReadColType Float   = Refl
 例えば以下では`Maybe`に同値関手則を証明しようとしています。
 
 ```idris
-mapMaybeId1 : (ma : Maybe a) -> map Prelude.id ma = ma
+mapMaybeId1 : (ma : Maybe a) -> map id ma = ma
 mapMaybeId1 Nothing  = Refl
 mapMaybeId1 (Just x) = ?mapMaybeId1_rhs
 ```
@@ -589,7 +589,7 @@ notSameLength f prf = f (cong length prf)
 
 ```idris
 contraCong : {0 f : _} -> Not (f a = f b) -> Not (a = b)
-contraCong fun = fun . cong f
+contraCong fun x = fun $ cong f x
 ```
 
 ### インターフェース`Uninhabited`
@@ -799,8 +799,8 @@ leftZero :  List (Vect n Nat)
 leftZero = (++)
 ```
 
-しかし下の例は簡単には実装できません（やってみてください！）。なぜなら
-Idrisは自力で2つの長さを統合するものだと調べられないからです。
+However, the example below can't be implemented as easily (try it!), because
+Idris can't figure out on its own that the two lengths unify.
 
 ```idris
 rightZero' :  List (Vect n Nat)

@@ -128,7 +128,7 @@ Idrisの既定の*Chez Schema*バックエンドの代わりに*Node.js*バッ�
 実行するには結果的に得られるJavaScriptソースファイルをNode.jsバイナリで走らせます。
 
 ```sh
-idris2 --cg node -o test.js --find-ipkg -src/Tutorial/Folds.md
+idris2 --cg node -o test.js --find-ipkg src/Tutorial/Folds.md
 node build/exec/test.js
 ```
 
@@ -514,13 +514,13 @@ ERROR: No clauses
 補足：上のコード中で動いている全ての暗黒魔法を理解することは期待していません。
 別の章でその時がきたら詳細をご説明しましょう。
 
-2つめの補足：*Ex falso
-quodlibet*、またの名を[爆発の原理](https://en.wikipedia.org/wiki/Principle_of_explosion)は古典論理の法則の1つです。
-矛盾からはいかなる記述も証明されたものにできるというものです。
-今回の場合、矛盾は`Void`の証明にありました。
-`Void`は傍若無人型なのに、そのような値を生み出す全域関数を書いたと主張することがこれにあたるのです。
-このことは`Void`をREPLで`:doc Void`で調べれば確かめることができます。
-これにはデータ構築子がないのです。
+Second note: *Ex falso quodlibet*, also called [the principle of
+explosion](https://en.wikipedia.org/wiki/Principle_of_explosion)  is a law
+in logic: From a contradiction, any statement can be proven.  In our case,
+the contradiction was our proof of `Void`: The claim that we wrote a total
+function producing such a value, although `Void` is an uninhabited type.
+You can verify this by inspecting `Void` at the REPL with `:doc Void`: It
+has no data constructors.
 
 ### 事例2：関数呼び出しを介した再帰
 
@@ -800,11 +800,12 @@ folded
 Just 1
 ```
 
-この技法はときに大変流麗なコードに導いてくれますが、
-`rightFold`が一般的な場合ではスタック安全でないことをいつも頭の片隅に置いておいてください。
-なので、累積器がそれほど多くない反復の末に結果を返す保証がない、といったことがない限りは、
-関数を明示的なパターン照合で末尾再帰に実装するよう検討してください。
-コードは僅かにより冗長になるでしょうが、スタック安全という保証された利点が付いてきます。
+While this technique can sometimes lead to very elegant code, always
+remember that `rightFold` is not stack safe in the general case. So, unless
+your accumulator is guaranteed to return a result after not too many
+iterations, consider implementing your function tail recursively with an
+explicit pattern match. Your code will be slightly more verbose, but with
+the guaranteed benefit of stack safety.
 
 ### 畳み込みとモノイド
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2025-03-30 11:12+0900\n"
 "PO-Revision-Date: 2023-06-29 23:54+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
 #: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -34,10 +34,10 @@ msgstr "まとめ"
 #: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
 #: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -687,12 +687,21 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:305
+#, fuzzy
+#| msgid ""
+#| "I'd like to point out several things in this example. First, note how we "
+#| "can extract values from nested records in a single pattern match.  "
+#| "Second, we defined two *local* functions in a `where` block: "
+#| "`lookupUser`, and `lookupAlbum`. Both of these have access to all "
+#| "variables in the surrounding scope. For instance, `lookupUser` uses the "
+#| "`album` variable from the pattern match in the implementation's first "
+#| "line. Likewise, `lookupAlbum` makes use of the `album` variable."
 msgid ""
 "I'd like to point out several things in this example. First, note how we can "
 "extract values from nested records in a single pattern match.  Second, we "
 "defined two *local* functions in a `where` block: `lookupUser`, and "
 "`lookupAlbum`. Both of these have access to all variables in the surrounding "
-"scope. For instance, `lookupUser` uses the `album` variable from the pattern "
+"scope. For instance, `lookupUser` uses the `email` variable from the pattern "
 "match in the implementation's first line. Likewise, `lookupAlbum` makes use "
 "of the `album` variable."
 msgstr ""
@@ -722,13 +731,22 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:318
+#, fuzzy
+#| msgid ""
+#| "Local definitions can also be introduce *before* a function's "
+#| "implementation by using the `let` keyword. This usage of `let` is not to "
+#| "be confused with *let bindings* described above, which are used to bind "
+#| "and reuse the results of intermediate computations. Below is how we could "
+#| "have implemented `handleRequest` with local definitions introduced by the "
+#| "`let` keyword. Again, all definitions have to be properly typed and "
+#| "indented:"
 msgid ""
-"Local definitions can also be introduce *before* a function's implementation "
-"by using the `let` keyword. This usage of `let` is not to be confused with "
-"*let bindings* described above, which are used to bind and reuse the results "
-"of intermediate computations. Below is how we could have implemented "
-"`handleRequest` with local definitions introduced by the `let` keyword. "
-"Again, all definitions have to be properly typed and indented:"
+"Local definitions can also be introduced *before* a function's "
+"implementation by using the `let` keyword. This usage of `let` is not to be "
+"confused with *let bindings* described above, which are used to bind and "
+"reuse the results of intermediate computations. Below is how we could have "
+"implemented `handleRequest` with local definitions introduced by the `let` "
+"keyword. Again, all definitions have to be properly typed and indented:"
 msgstr ""
 "局所定義は`let`キーワードを用いて関数の実装の*前*で導入しても構いません。\n"
 "この`let`の使用法は前述した*let束縛*と混同しないようにしてください。\n"
@@ -1408,13 +1426,21 @@ msgstr "下線文字"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:623
+#, fuzzy
+#| msgid ""
+#| "It is often desirable, to only write as little code as necessary and let "
+#| "Idris figure out the rest.  We have already learned about one such "
+#| "occasion: Catch-all patterns.  If a variable in a pattern match is not "
+#| "used on the right hand side, we can't just drop it, as this would make it "
+#| "impossible for Idris, which of several arguments we were planning to "
+#| "drop, but we can use an underscore as a placeholder instead:"
 msgid ""
 "It is often desirable, to only write as little code as necessary and let "
 "Idris figure out the rest.  We have already learned about one such occasion: "
 "Catch-all patterns.  If a variable in a pattern match is not used on the "
 "right hand side, we can't just drop it, as this would make it impossible for "
-"Idris, which of several arguments we were planning to drop, but we can use "
-"an underscore as a placeholder instead:"
+"Idris to know, which of several arguments we were planning to drop, but we "
+"can use an underscore as a placeholder instead:"
 msgstr ""
 "必要最小限のコードだけを書いて、残りをIdrisに調べさせたいことはよくありま"
 "す。\n"
