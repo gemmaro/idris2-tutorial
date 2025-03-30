@@ -1,0 +1,20 @@
+- [ ] re-read manually
+  - [ ] part 1
+    - [x] function part 1
+    - [x] data types
+    - [x] interface
+    - [x] function part 2
+    - [ ] dependent type
+    - [ ] io
+    - [ ] monad and friends
+    - [ ] recursion and fold
+    - [ ] traversal with effect
+    - [ ] sigma type
+    - [ ] propositional equality
+    - [ ] prerequisite and proof search
+    - [ ] primitive type
+  - [ ] appendix
+    - [ ] pack and Idris 2
+    - [ ] Neovim
+    - [ ] Idris 2 project
+- [ ] apply Textlint rules
