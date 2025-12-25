@@ -190,6 +190,10 @@ filterList f Nil       = Nil
 filterList f (x :: xs) =
   if f x then x :: filterList f xs else filterList f xs
 
+(++) : List a -> List a -> List a
+(++) Nil ys = ys
+(++) (x :: xs) ys = x :: (Solutions.DataTypes.(++) xs ys)
+
 headMaybe : List a -> Maybe a
 headMaybe Nil      = Nothing
 headMaybe (x :: _) = Just x
@@ -204,9 +208,11 @@ lastMaybe (x :: Nil) = Just x
 lastMaybe (_ :: xs)  = lastMaybe xs
 
 initMaybe : List a -> Maybe (List a)
-initMaybe Nil        = Nothing
-initMaybe (x :: Nil) = Just Nil
-initMaybe (x :: xs)  = mapMaybe (x ::) (initMaybe xs)
+initMaybe l = case l of
+  Nil => Nothing
+  x :: xs => case initMaybe xs of
+    Nothing => Just Nil
+    Just ys => Just (x :: ys)
 
 foldList : (acc -> el -> acc) -> acc -> List el -> acc
 foldList fun vacc Nil       = vacc
