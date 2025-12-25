@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2025-12-26 08:43+0900\n"
 "PO-Revision-Date: 2023-06-29 22:57+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,10 +19,10 @@ msgstr ""
 #. type: Title ##
 #: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
 #: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
-#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/DataTypes.md:1327 ../src/Tutorial/Dependent.md:907
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
-#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:945
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -31,13 +31,13 @@ msgstr "まとめ"
 
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
-#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1376
+#: ../src/Tutorial/Dependent.md:945 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:985 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -133,8 +133,8 @@ msgstr "module Appendices.Projects\n"
 msgid ""
 "A module's name consists of several upper case identifiers separated by "
 "dots, which must reflect the path of the `.idr` file where the module is "
-"stored. For instance, this module is stored in file `Appendices/Projects."
-"md`, so the module's name is `Appendices.Projects`."
+"stored. For instance, this module is stored in file `Appendices/"
+"Projects.md`, so the module's name is `Appendices.Projects`."
 msgstr ""
 "モジュール名はドットで区切られた幾つかの大文字始まりの識別子からなります。\n"
 "この識別子の並びはモジュールが保管されている`.idr`ファイルのパスを反映したも"
@@ -365,9 +365,9 @@ msgstr ""
 #: ../src/Appendices/Projects.md:143
 msgid ""
 "Finally, on the fifth line we publicly import a module and give it a new "
-"name. This name will then be the one seen when we transitively import `Data."
-"List1` via `Appendices.Projects`. To see this, start a REPL session (after "
-"type checking the tutorial)  without loading a source file from this "
+"name. This name will then be the one seen when we transitively import "
+"`Data.List1` via `Appendices.Projects`. To see this, start a REPL session "
+"(after type checking the tutorial)  without loading a source file from this "
 "project's root folder:"
 msgstr ""
 "最後に5行目はモジュールを公に輸入して新しい名前を与えています。そうするとこの"
@@ -520,10 +520,10 @@ msgstr ""
 #. type: Plain text
 #: ../src/Appendices/Projects.md:222
 msgid ""
-"Function names `HVect.head` and `HVect.tail` as well as constructors `HVect."
-"Nil` and `HVect.(::)` would clash with functions and constructors of the "
-"same names from the outer namespace (`Appendices.Projects`), so we had to "
-"put them in their own namespace. In order to be able to use them from "
+"Function names `HVect.head` and `HVect.tail` as well as constructors "
+"`HVect.Nil` and `HVect.(::)` would clash with functions and constructors of "
+"the same names from the outer namespace (`Appendices.Projects`), so we had "
+"to put them in their own namespace. In order to be able to use them from "
 "outside their namespace, they need to be exported (see the section on "
 "visibility below). In case we need to disambiguate between these names, we "
 "can prefix them with part of their namespace. For instance, the following "
@@ -1591,9 +1591,9 @@ msgid ""
 "suitable `.ipkg` file, these commands will also add a `pack.toml` file, "
 "which we will discuss further below."
 msgstr ""
-"とすると新しいアプリケーションを立ち上げます。新しいディレクトリと相応しい`."
-"ipkg`ファイルを作るのに加えて、これらのコマンドは`pack.toml`ファイルも追加し"
-"ます。このファイルについて詳しくは後述します。"
+"とすると新しいアプリケーションを立ち上げます。新しいディレクトリと相応しい"
+"`.ipkg`ファイルを作るのに加えて、これらのコマンドは`pack.toml`ファイルも追加"
+"します。このファイルについて詳しくは後述します。"
 
 #. type: Title ###
 #: ../src/Appendices/Projects.md:714
@@ -1934,11 +1934,11 @@ msgid ""
 "example above, we want to use the latest commit from the `main` branch. We "
 "can use `pack fetch` to fetch and store the currently latest commit hash."
 msgstr ""
-"見ての通り両方の場合について、プロジェクトがどこで見つかるかということと、`."
-"ipkg`ファイルの名前と場所を指定せねばなりません。Gitのプロジェクトの場合、使"
-"うコミットをpackに伝える必要があります。上の例では`main`ブランチの最新コミッ"
-"トを使いたいとしています。`pack fetch`を使って現在の最新コミットのハッシュを"
-"格納することができます。"
+"見ての通り両方の場合について、プロジェクトがどこで見つかるかということと、"
+"`.ipkg`ファイルの名前と場所を指定せねばなりません。Gitのプロジェクトの場合、"
+"使うコミットをpackに伝える必要があります。上の例では`main`ブランチの最新コ"
+"ミットを使いたいとしています。`pack fetch`を使って現在の最新コミットのハッ"
+"シュを格納することができます。"
 
 #. type: Plain text
 #: ../src/Appendices/Projects.md:877

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"POT-Creation-Date: 2025-12-26 08:43+0900\n"
 "PO-Revision-Date: 2025-03-30 13:18+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -202,10 +202,10 @@ msgstr "よくある作業の流れ"
 msgid ""
 "In order to checkout the interactive editing features available to us, we "
 "will reimplement some small utilities from the *Prelude*. To follow along, "
-"you should have already worked through the [Introduction](../Tutorial/Intro."
-"md), [Functions Part 1](../Tutorial/Functions1.md), and at least parts of "
-"[Algebraic Data Types](../Tutorial/DataTypes.md), otherwise it will be hard "
-"to understand what's going on here."
+"you should have already worked through the [Introduction](../Tutorial/"
+"Intro.md), [Functions Part 1](../Tutorial/Functions1.md), and at least parts "
+"of [Algebraic Data Types](../Tutorial/DataTypes.md), otherwise it will be "
+"hard to understand what's going on here."
 msgstr ""
 "使える対話的編集機能を試すために、*Prelude*からいくらかのユーティリティを実装"
 "し直していきます。\n"
@@ -221,8 +221,8 @@ msgid ""
 "Before we begin, note that the commands and actions shown in this tutorial "
 "might not work correctly after you edited a source file but did not write "
 "your changes to disk. Therefore, the first thing you should try if the "
-"things described here do not work, is to quickly save the current file (`:"
-"w`)."
+"things described here do not work, is to quickly save the current file "
+"(`:w`)."
 msgstr ""
 "始める前に注意しておきますが、\n"
 "ソースファイルを編集してディスクに変更を書き込んでいなかったら、\n"
@@ -695,10 +695,10 @@ msgid ""
 "Typing `K` when on an identifier or operator in normal mode shows its type "
 "and namespace (if any). In case of a metavariable, variables in the current "
 "context are displayed as well together with their types and quantities "
-"(quantities will be explained in [Functions Part 2](../Tutorial/Functions2."
-"md)).  If you don't like popups, enter `<LocalLeader>so` to open a new "
-"window where this information is displayed and semantically highlighted "
-"instead."
+"(quantities will be explained in [Functions Part 2](../Tutorial/"
+"Functions2.md)).  If you don't like popups, enter `<LocalLeader>so` to open "
+"a new window where this information is displayed and semantically "
+"highlighted instead."
 msgstr ""
 "識別子や演算子の上にいるとき通常モードで`K`と打つと（もしあれば）型と名前空間"
 "が出ます。\n"
@@ -867,9 +867,9 @@ msgstr ""
 #. type: Title ##
 #: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
 #: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
-#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/DataTypes.md:1327 ../src/Tutorial/Dependent.md:907
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
-#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:945
 #: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
@@ -895,10 +895,10 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
-#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1376
+#: ../src/Tutorial/Dependent.md:945 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
+#: ../src/Tutorial/Functions2.md:985 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148

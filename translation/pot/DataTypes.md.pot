@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2 VERSION\n"
-"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"POT-Creation-Date: 2025-12-26 08:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,9 +19,9 @@ msgstr ""
 #. type: Title ##
 #: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
 #: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
-#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/DataTypes.md:1327 ../src/Tutorial/Dependent.md:907
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
-#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:945
 #: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
@@ -31,10 +31,10 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
-#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1376
+#: ../src/Tutorial/Dependent.md:945 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
+#: ../src/Tutorial/Functions2.md:985 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
@@ -46,7 +46,7 @@ msgstr ""
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:348 ../src/Tutorial/DataTypes.md:261
-#: ../src/Tutorial/Dependent.md:444 ../src/Tutorial/Eq.md:279
+#: ../src/Tutorial/Dependent.md:467 ../src/Tutorial/Eq.md:279
 #: ../src/Tutorial/Folds.md:373 ../src/Tutorial/Functor.md:381
 #: ../src/Tutorial/IO.md:317 ../src/Tutorial/Interfaces.md:189
 #: ../src/Tutorial/Predicates.md:305 ../src/Tutorial/Prim.md:448
@@ -57,7 +57,7 @@ msgstr ""
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
-#: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
+#: ../src/Tutorial/Dependent.md:649 ../src/Tutorial/Eq.md:555
 #: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
 #: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
@@ -68,7 +68,7 @@ msgstr ""
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
-#: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
+#: ../src/Tutorial/Dependent.md:878 ../src/Tutorial/Eq.md:826
 #: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
 #: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
@@ -1243,10 +1243,11 @@ msgstr ""
 #: ../src/Tutorial/DataTypes.md:741
 msgid ""
 "In `baz`, variable `t` is *bound* to the triple as a whole, which is then "
-"reused to construct the resulting quadruple. Remember, that `(Nat,Bool,"
-"Weekday,String)` is just sugar for `Pair Nat (Bool,Weekday,String)`, and "
-"`(length s, t)` is just sugar for `MkPair (length s) t`. Hence, the "
-"implementation above is correct as is confirmed by the type checker."
+"reused to construct the resulting quadruple. Remember, that "
+"`(Nat,Bool,Weekday,String)` is just sugar for `Pair Nat "
+"(Bool,Weekday,String)`, and `(length s, t)` is just sugar for `MkPair "
+"(length s) t`. Hence, the implementation above is correct as is confirmed by "
+"the type checker."
 msgstr ""
 
 #. type: Plain text
@@ -1950,6 +1951,14 @@ msgid ""
 "   total\n"
 "   filterList : (a -> Bool) -> List a -> List a\n"
 "\n"
+"   -- re-implement list concatenation (++) such that e.g. (++) [1, 2] [3, 4] = [1, 2, 3, 4]\n"
+"   -- note that because this function conflicts with the standard\n"
+"   -- Prelude.List.(++), if you use it then you will need to prefix it with\n"
+"   -- the name of your module, like DataTypes.(++) or Ch3.(++). alternatively\n"
+"   -- you could simply call the function something unique like myListConcat or concat'\n"
+"   total\n"
+"   (++) : List a -> List a -> List a\n"
+"\n"
 "   -- return the first value of a list, if it is non-empty\n"
 "   total\n"
 "   headMaybe : List a -> Maybe a\n"
@@ -1979,13 +1988,13 @@ msgid ""
 msgstr ""
 
 #. type: Bullet: '4. '
-#: ../src/Tutorial/DataTypes.md:1245
+#: ../src/Tutorial/DataTypes.md:1253
 msgid ""
 "Assume we store user data for our web application in the following record:"
 msgstr ""
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/DataTypes.md:1246
+#: ../src/Tutorial/DataTypes.md:1254
 #, no-wrap
 msgid ""
 "   record Client where\n"
@@ -1997,7 +2006,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1260
+#: ../src/Tutorial/DataTypes.md:1268
 #, no-wrap
 msgid ""
 "   Using `LoginError` from an earlier exercise,\n"
@@ -2008,14 +2017,14 @@ msgid ""
 msgstr ""
 
 #. type: Bullet: '5. '
-#: ../src/Tutorial/DataTypes.md:1264
+#: ../src/Tutorial/DataTypes.md:1272
 msgid ""
 "Using your data type for chemical elements from an earlier exercise, "
 "implement a function for calculating the molar mass of a molecular formula."
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1268
+#: ../src/Tutorial/DataTypes.md:1276
 #, no-wrap
 msgid ""
 "   Use a list of elements each paired with its count\n"
@@ -2024,7 +2033,7 @@ msgid ""
 msgstr ""
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/DataTypes.md:1269
+#: ../src/Tutorial/DataTypes.md:1277
 #, no-wrap
 msgid ""
 "   ethanol : List (Element,Nat)\n"
@@ -2032,7 +2041,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1276
+#: ../src/Tutorial/DataTypes.md:1284
 #, no-wrap
 msgid ""
 "   Hint: You can use function `cast` to convert a natural\n"
@@ -2040,13 +2049,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ##
-#: ../src/Tutorial/DataTypes.md:1277
+#: ../src/Tutorial/DataTypes.md:1285
 #, no-wrap
 msgid "Alternative Syntax for Data Definitions"
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1285
+#: ../src/Tutorial/DataTypes.md:1293
 msgid ""
 "While the examples in the section about parameterized data types are short "
 "and concise, there is a slightly more verbose but much more general form for "
@@ -2056,7 +2065,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1290
+#: ../src/Tutorial/DataTypes.md:1298
 msgid ""
 "Here are the definitions of `Option`, `Validated`, and `Seq` again, using "
 "this more general form (I put them in their own *namespace*, so Idris will "
@@ -2064,7 +2073,7 @@ msgid ""
 msgstr ""
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/DataTypes.md:1291
+#: ../src/Tutorial/DataTypes.md:1299
 #, no-wrap
 msgid ""
 "-- GADT is an acronym for \"generalized algebraic data type\"\n"
@@ -2083,7 +2092,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1318
+#: ../src/Tutorial/DataTypes.md:1326
 #, no-wrap
 msgid ""
 "Here, `Option` is clearly declared as a type constructor\n"
@@ -2100,14 +2109,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1323
+#: ../src/Tutorial/DataTypes.md:1331
 msgid ""
 "We covered a lot of ground in this chapter, so I'll summarize the most "
 "important points below:"
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1326
+#: ../src/Tutorial/DataTypes.md:1334
 #, no-wrap
 msgid ""
 "* Enumerations are data types consisting of a finite\n"
@@ -2115,7 +2124,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1330
+#: ../src/Tutorial/DataTypes.md:1338
 #, no-wrap
 msgid ""
 "* Sum types are data types with more than one data\n"
@@ -2124,7 +2133,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1333
+#: ../src/Tutorial/DataTypes.md:1341
 #, no-wrap
 msgid ""
 "* Product types are data types with a single constructor\n"
@@ -2132,7 +2141,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1337
+#: ../src/Tutorial/DataTypes.md:1345
 #, no-wrap
 msgid ""
 "* We use pattern matching to deconstruct immutable\n"
@@ -2141,7 +2150,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1341
+#: ../src/Tutorial/DataTypes.md:1349
 #, no-wrap
 msgid ""
 "* We can *bind* variables to values in a pattern or\n"
@@ -2150,7 +2159,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1344
+#: ../src/Tutorial/DataTypes.md:1352
 #, no-wrap
 msgid ""
 "* We can pattern match on an intermediary result by introducing\n"
@@ -2158,7 +2167,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1349
+#: ../src/Tutorial/DataTypes.md:1357
 #, no-wrap
 msgid ""
 "* The preferred way to define new product types is\n"
@@ -2168,7 +2177,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1354
+#: ../src/Tutorial/DataTypes.md:1362
 #, no-wrap
 msgid ""
 "* Generic types and functions allow us generalize\n"
@@ -2178,7 +2187,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1361
+#: ../src/Tutorial/DataTypes.md:1369
 #, no-wrap
 msgid ""
 "* Common concepts like *nullary values* (`Maybe`),\n"
@@ -2190,15 +2199,15 @@ msgid ""
 msgstr ""
 
 #. type: Title ###
-#: ../src/Tutorial/DataTypes.md:1362 ../src/Tutorial/Dependent.md:904
-#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:954
+#: ../src/Tutorial/DataTypes.md:1370 ../src/Tutorial/Dependent.md:939
+#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:975
 #: ../src/Tutorial/IO.md:1118 ../src/Tutorial/Interfaces.md:813
 #, no-wrap
 msgid "What's next"
 msgstr ""
 
 #. type: Plain text
-#: ../src/Tutorial/DataTypes.md:1366
+#: ../src/Tutorial/DataTypes.md:1374
 msgid ""
 "In the [next section](Interfaces.md), we will introduce *interfaces*, "
 "another approach to *function overloading*."

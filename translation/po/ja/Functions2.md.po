@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"POT-Creation-Date: 2025-12-26 08:43+0900\n"
 "PO-Revision-Date: 2025-03-30 13:17+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,9 +19,9 @@ msgstr ""
 #. type: Title ##
 #: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
 #: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
-#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/DataTypes.md:1327 ../src/Tutorial/Dependent.md:907
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
-#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:945
 #: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
@@ -31,10 +31,10 @@ msgstr "まとめ"
 
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
-#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1376
+#: ../src/Tutorial/Dependent.md:945 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
+#: ../src/Tutorial/Functions2.md:985 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
@@ -47,8 +47,8 @@ msgstr ""
 "-->\n"
 
 #. type: Title ###
-#: ../src/Tutorial/DataTypes.md:1362 ../src/Tutorial/Dependent.md:904
-#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:954
+#: ../src/Tutorial/DataTypes.md:1370 ../src/Tutorial/Dependent.md:939
+#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:975
 #: ../src/Tutorial/IO.md:1118 ../src/Tutorial/Interfaces.md:813
 #, no-wrap
 msgid "What's next"
@@ -814,11 +814,34 @@ msgstr ""
 "これで完全に`where`ブロックを排除できます。"
 
 #. type: Bullet: '2. '
-#: ../src/Tutorial/Functions2.md:365
+#: ../src/Tutorial/Functions2.md:358
 msgid ""
-"Define an enumeration type listing the four [nucleobases](https://en."
-"wikipedia.org/wiki/Nucleobase)  occurring in DNA strands. Define also a type "
-"alias `DNA` for lists of nucleobases.  Declare and implement function "
+"Refactor `handleRequest` to use `Either`, such that `handleRequest : DB -> "
+"Request -> Either Failure Album`, where"
+msgstr ""
+
+#. type: Fenced code block (idris)
+#: ../src/Tutorial/Functions2.md:359
+#, no-wrap
+msgid ""
+"   data Failure : Type where\n"
+"     UnknownUser : Email -> Failure\n"
+"     InvalidPassword : Failure\n"
+"     AccessDenied : Email -> Album -> Failure\n"
+msgstr ""
+
+#. type: Plain text
+#: ../src/Tutorial/Functions2.md:367
+#, no-wrap
+msgid "   Hint: You may find nested `case` statements helpful.\n"
+msgstr ""
+
+#. type: Bullet: '3. '
+#: ../src/Tutorial/Functions2.md:377
+msgid ""
+"Define an enumeration type listing the four [nucleobases](https://"
+"en.wikipedia.org/wiki/Nucleobase)  occurring in DNA strands. Define also a "
+"type alias `DNA` for lists of nucleobases.  Declare and implement function "
 "`readBase` for converting a single character (type `Char`) to a nucleobase.  "
 "You can use character literals in your implementation like so: `'A'`, `'a'`. "
 "Note, that this function might fail, so adjust the result type accordingly."
@@ -831,8 +854,8 @@ msgstr ""
 "実装では`'A'`や`'a'`のように文字直値が使えます。\n"
 "この関数は失敗するかもしれないので、結果の型を調整してください。"
 
-#. type: Bullet: '3. '
-#: ../src/Tutorial/Functions2.md:371
+#. type: Bullet: '4. '
+#: ../src/Tutorial/Functions2.md:383
 msgid ""
 "Implement the following function, which tries to convert all values in a "
 "list with a function, which might fail. The result should be a `Just` "
@@ -846,21 +869,21 @@ msgstr ""
 "`Just`になります。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:372
+#: ../src/Tutorial/Functions2.md:384
 #, no-wrap
 msgid "   traverseList : (a -> Maybe b) -> List a -> Maybe (List b)\n"
 msgstr "   traverseList : (a -> Maybe b) -> List a -> Maybe (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:378
+#: ../src/Tutorial/Functions2.md:390
 #, no-wrap
 msgid ""
 "   You can verify, that the function behaves correctly with\n"
 "   the following test: `traverseList Just [1,2,3] = Just [1,2,3]`.\n"
 msgstr "   関数が正しく振る舞うことは、`traverseList Just [1,2,3] = Just [1,2,3]`を調べてみると確かめられます。\n"
 
-#. type: Bullet: '4. '
-#: ../src/Tutorial/Functions2.md:382
+#. type: Bullet: '5. '
+#: ../src/Tutorial/Functions2.md:394
 msgid ""
 "Implement function `readDNA : String -> Maybe DNA` using the functions and "
 "types defined in exercises 2 and 3.  You will also need function `unpack` "
@@ -870,28 +893,28 @@ msgstr ""
 "してください。\n"
 "*Prelude*の関数*unpack*も要ることでしょう。"
 
-#. type: Bullet: '5. '
-#: ../src/Tutorial/Functions2.md:385
+#. type: Bullet: '6. '
+#: ../src/Tutorial/Functions2.md:397
 msgid ""
 "Implement function `complement : DNA -> DNA` to calculate the complement of "
 "a strand of DNA."
 msgstr "DNA鎖の転写を計算する関数`complement : DNA -> DNA`を実装してください。"
 
 #. type: Title ##
-#: ../src/Tutorial/Functions2.md:386
+#: ../src/Tutorial/Functions2.md:398
 #, no-wrap
 msgid "The Truth about Function Arguments"
 msgstr "関数引数の真実"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:390
+#: ../src/Tutorial/Functions2.md:402
 msgid ""
 "So far, when we defined a top level function, it looked something like the "
 "following:"
 msgstr "ここまで、最上位で定義された関数は以下のような見た目をしていました。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:391
+#: ../src/Tutorial/Functions2.md:403
 #, no-wrap
 msgid ""
 "zipEitherWith : (a -> b -> c) -> Either e a -> Either e b -> Either e c\n"
@@ -905,7 +928,7 @@ msgstr ""
 "zipEitherWith f _          (Left e)   = Left e\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:401
+#: ../src/Tutorial/Functions2.md:413
 msgid ""
 "Function `zipEitherWith` is a generic higher-order function combining the "
 "values stored in two `Either`s via a binary function. If either of the "
@@ -916,7 +939,7 @@ msgstr ""
 "どちらかの`Either`引数が`Left`なら、結果もまた`Left`です。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:407
+#: ../src/Tutorial/Functions2.md:419
 msgid ""
 "This is a *generic function* with *type parameters* `a`, `b`, `c`, and `e`.  "
 "However, there is a more verbose type for `zipEitherWith`, which is visible "
@@ -931,7 +954,7 @@ msgstr ""
 "こんな感じの型になります。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:408
+#: ../src/Tutorial/Functions2.md:420
 #, no-wrap
 msgid ""
 "zipEitherWith' :  {0 a : Type}\n"
@@ -953,7 +976,7 @@ msgstr ""
 "               -> Either e c\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:421
+#: ../src/Tutorial/Functions2.md:433
 msgid ""
 "In order to understand what's going on here, we will have to talk about "
 "named arguments, implicit arguments, and quantities."
@@ -962,20 +985,20 @@ msgstr ""
 "名前付き引数、暗黙引数、そして数量子についてお話しせねばなりません。"
 
 #. type: Title ###
-#: ../src/Tutorial/Functions2.md:422
+#: ../src/Tutorial/Functions2.md:434
 #, no-wrap
 msgid "Named Arguments"
 msgstr "名前付き引数"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:425
+#: ../src/Tutorial/Functions2.md:437
 msgid "In a function type, we can give each argument a name. Like so:"
 msgstr ""
 "関数の型ではそれぞれの引数に名前を付けられます。\n"
 "こんな感じ。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:426
+#: ../src/Tutorial/Functions2.md:438
 #, no-wrap
 msgid ""
 "fromMaybe : (deflt : a) -> (ma : Maybe a) -> a\n"
@@ -987,7 +1010,7 @@ msgstr ""
 "fromMaybe _    (Just x) = x\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:439
+#: ../src/Tutorial/Functions2.md:451
 msgid ""
 "Here, the first argument is given name `deflt`, the second `ma`. These names "
 "can be reused in a function's implementation, as was done for `deflt`, but "
@@ -1006,7 +1029,7 @@ msgstr ""
 "任意の順序で関数に引数を渡せます。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:440
+#: ../src/Tutorial/Functions2.md:452
 #, no-wrap
 msgid ""
 "extractBool : Maybe Bool -> Bool\n"
@@ -1016,12 +1039,12 @@ msgstr ""
 "extractBool v = fromMaybe { ma = v, deflt = False }\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:446
+#: ../src/Tutorial/Functions2.md:458
 msgid "Or even :"
 msgstr "さらに言えば以下です。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:447
+#: ../src/Tutorial/Functions2.md:459
 #, no-wrap
 msgid ""
 "extractBool2 : Maybe Bool -> Bool\n"
@@ -1031,7 +1054,7 @@ msgstr ""
 "extractBool2 = fromMaybe { deflt = False }\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:454
+#: ../src/Tutorial/Functions2.md:466
 msgid ""
 "The arguments in a record's constructor are automatically named in "
 "accordance with the field names:"
@@ -1039,7 +1062,7 @@ msgstr ""
 "レコード構築子内の引数はフィールド名にしたがって自動的に名付けられます。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:455
+#: ../src/Tutorial/Functions2.md:467
 #, no-wrap
 msgid ""
 "record Dragon where\n"
@@ -1061,7 +1084,7 @@ msgstr ""
 "gorgar = MkDragon { strength = 150, name = \"Gorgar\", hitPoints = 10000 }\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:471
+#: ../src/Tutorial/Functions2.md:483
 msgid ""
 "For the use cases described above, named arguments are merely a convenience "
 "and completely optional. However, Idris is a *dependently typed* programming "
@@ -1078,7 +1101,7 @@ msgstr ""
 "以下はわざとらしい例です。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:472
+#: ../src/Tutorial/Functions2.md:484
 #, no-wrap
 msgid ""
 "IntOrString : Bool -> Type\n"
@@ -1098,7 +1121,7 @@ msgstr ""
 "intOrString True  = 1000\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:489
+#: ../src/Tutorial/Functions2.md:501
 msgid ""
 "If you see such a thing for the first time, it can be hard to understand "
 "what's going on here. First, function `IntOrString` computes a `Type` from a "
@@ -1117,7 +1140,7 @@ msgstr ""
 "す）、そうでなければ`String`です。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:493
+#: ../src/Tutorial/Functions2.md:505
 msgid ""
 "Note, how in the type signature of `intOrString`, we *must* give the "
 "argument of type `Bool` a name (`v`) in order to reference it in the result "
@@ -1128,7 +1151,7 @@ msgstr ""
 "返却型`IntOrString v`で参照するためです。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:500
+#: ../src/Tutorial/Functions2.md:512
 msgid ""
 "You might wonder at this moment, why this is useful and why we would ever "
 "want to define a function with such a strange type. We will see lots of very "
@@ -1145,13 +1168,13 @@ msgstr ""
 "分です。"
 
 #. type: Title ###
-#: ../src/Tutorial/Functions2.md:501
+#: ../src/Tutorial/Functions2.md:513
 #, no-wrap
 msgid "Implicit Arguments"
 msgstr "暗黙引数"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:509
+#: ../src/Tutorial/Functions2.md:521
 msgid ""
 "Implicit arguments are arguments, the values of which the compiler should "
 "infer and fill in for us automatically. For instance, in the following "
@@ -1166,7 +1189,7 @@ msgstr ""
 "で説明します）。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:510
+#: ../src/Tutorial/Functions2.md:522
 #, no-wrap
 msgid ""
 "maybeToEither : {0 a : Type} -> Maybe a -> Either String a\n"
@@ -1189,7 +1212,7 @@ msgstr ""
 "maybeToEither' (Just x) = Right x\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:527
+#: ../src/Tutorial/Functions2.md:539
 msgid ""
 "As you can see, implicit arguments are wrapped in curly braces, unlike "
 "explicit named arguments, which are wrapped in parentheses.  Inferring the "
@@ -1203,7 +1226,7 @@ msgstr ""
 "例えば以下をREPLに入力すると、Idrisはエラーを出して実行に失敗します。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:528
+#: ../src/Tutorial/Functions2.md:540
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> show (maybeToEither Nothing)\n"
@@ -1213,7 +1236,7 @@ msgstr ""
 "Error: Can't find an implementation for Show (Either String ?a).\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:540
+#: ../src/Tutorial/Functions2.md:552
 msgid ""
 "Idris is unable to find an implementation of `Show (Either String a)` "
 "without knowing what `a` actually is.  Note the question mark in front of "
@@ -1230,7 +1253,7 @@ msgstr ""
 "以下がそうするための構文です。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:541
+#: ../src/Tutorial/Functions2.md:553
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> show (maybeToEither {a = Int8} Nothing)\n"
@@ -1240,7 +1263,7 @@ msgstr ""
 "\"Left \"Nope\"\"\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:549
+#: ../src/Tutorial/Functions2.md:561
 msgid ""
 "As you can see, we use the same syntax as shown above for explicit named "
 "arguments and the two forms of argument passing can be mixed."
@@ -1250,7 +1273,7 @@ msgstr ""
 "また、2種の引数の渡し方は混在させられます。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:552
+#: ../src/Tutorial/Functions2.md:564
 msgid ""
 "We could also specify the type of the whole expression using utility "
 "function `the` from the *Prelude*:"
@@ -1259,7 +1282,7 @@ msgstr ""
 "できます。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:553
+#: ../src/Tutorial/Functions2.md:565
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> show (the (Either String Int8) (maybeToEither Nothing))\n"
@@ -1269,12 +1292,12 @@ msgstr ""
 "\"Left \"Nope\"\"\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:559
+#: ../src/Tutorial/Functions2.md:571
 msgid "It is instructive to have a look at the type of `the`:"
 msgstr "`the`の型を見てみるとわかりやすいです。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:560
+#: ../src/Tutorial/Functions2.md:572
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :ti the\n"
@@ -1284,12 +1307,12 @@ msgstr ""
 "Prelude.the : (0 a : Type) -> a -> a\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:566
+#: ../src/Tutorial/Functions2.md:578
 msgid "Compare this with the identity function `id`:"
 msgstr "ユーティリティ関数`id`と比較してみましょう。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:567
+#: ../src/Tutorial/Functions2.md:579
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :ti id\n"
@@ -1299,7 +1322,7 @@ msgstr ""
 "Prelude.id : {0 a : Type} -> a -> a\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:581
+#: ../src/Tutorial/Functions2.md:593
 msgid ""
 "The only difference between the two: In case of `the`, the type parameter "
 "`a` is an *explicit* argument, while in case of `id`, it is an *implicit* "
@@ -1317,7 +1340,7 @@ msgstr ""
 "うなときに使います（高階関数があるときは`id`を驚くほどよく使います）。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:585
+#: ../src/Tutorial/Functions2.md:597
 msgid ""
 "Both ways to improve type inference shown above are used quite often, and "
 "must be understood by Idris programmers."
@@ -1326,13 +1349,13 @@ msgstr ""
 "Idrisのプログラマは理解しておく必要があります。"
 
 #. type: Title ###
-#: ../src/Tutorial/Functions2.md:586
+#: ../src/Tutorial/Functions2.md:598
 #, no-wrap
 msgid "Multiplicities"
 msgstr "多重度"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:593
+#: ../src/Tutorial/Functions2.md:605
 msgid ""
 "Finally, we need to talk about the zero multiplicity, which appeared in "
 "several of the type signatures in this section. Idris 2, unlike its "
@@ -1347,17 +1370,17 @@ msgstr ""
 "つまり、Idris 2での全ての変数には以下の3つの多重度のうち1つが関係するのです。"
 
 #. type: Bullet: '* '
-#: ../src/Tutorial/Functions2.md:598
+#: ../src/Tutorial/Functions2.md:610
 msgid "`0`, meaning that the variable is *erased* at runtime."
 msgstr "`0`、これは変数が実行時に*消去*されるという意味です。"
 
 #. type: Bullet: '* '
-#: ../src/Tutorial/Functions2.md:598
+#: ../src/Tutorial/Functions2.md:610
 msgid "`1`, meaning that the variable is used *exactly once* at runtime."
 msgstr "`1`、これは変数が実行時に*ちょうど1回だけ*使われるという意味です。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:598
+#: ../src/Tutorial/Functions2.md:610
 #, no-wrap
 msgid ""
 "* *Unrestricted* (the default), meaning that the variable is used\n"
@@ -1365,7 +1388,7 @@ msgid ""
 msgstr "* *制限なし*（既定値）、これは変数が実行時に際限なく使えるという意味です。\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:604
+#: ../src/Tutorial/Functions2.md:616
 msgid ""
 "We will not talk about the most complex of the three, multiplicity `1`, "
 "here.  We are, however, often interested in multiplicity `0`: A variable "
@@ -1380,7 +1403,7 @@ msgstr ""
 "ません。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:609
+#: ../src/Tutorial/Functions2.md:621
 msgid ""
 "In the type signature of `maybeToEither` we see that type parameter `a` has "
 "multiplicity `0`, and will therefore be erased and is only relevant at "
@@ -1391,7 +1414,7 @@ msgstr ""
 "一方で`Maybe a`引数は*制限なし*多重度です。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:613
+#: ../src/Tutorial/Functions2.md:625
 msgid ""
 "It is also possible to annotate explicit arguments with multiplicities, in "
 "which case the argument must again be put in parentheses. For an example, "
@@ -1402,13 +1425,13 @@ msgstr ""
 "例えば`the`の型処方をもう一度見てみてください。"
 
 #. type: Title ###
-#: ../src/Tutorial/Functions2.md:614
+#: ../src/Tutorial/Functions2.md:626
 #, no-wrap
 msgid "Underscores"
 msgstr "下線文字"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:623
+#: ../src/Tutorial/Functions2.md:635
 msgid ""
 "It is often desirable, to only write as little code as necessary and let "
 "Idris figure out the rest.  We have already learned about one such occasion: "
@@ -1426,7 +1449,7 @@ msgstr ""
 "しかし、代わりに場所取りとして下線文字が使えます。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:624
+#: ../src/Tutorial/Functions2.md:636
 #, no-wrap
 msgid ""
 "isRight : Either a b -> Bool\n"
@@ -1438,7 +1461,7 @@ msgstr ""
 "isRight _         = False\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:633
+#: ../src/Tutorial/Functions2.md:645
 msgid ""
 "But when we look at the type signature of `isRight`, we will note that type "
 "parameters `a` and `b` are also only used once, and are therefore of no "
@@ -1449,7 +1472,7 @@ msgstr ""
 "型変数を省きましょう。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:634
+#: ../src/Tutorial/Functions2.md:646
 #, no-wrap
 msgid ""
 "isRight' : Either _ _ -> Bool\n"
@@ -1461,7 +1484,7 @@ msgstr ""
 "isRight' _         = False\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:645
+#: ../src/Tutorial/Functions2.md:657
 #, no-wrap
 msgid ""
 "In the detailed type signature of `zipEitherWith`, it should\n"
@@ -1476,7 +1499,7 @@ msgstr ""
 "省いてみましょう。\n"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:646
+#: ../src/Tutorial/Functions2.md:658
 #, no-wrap
 msgid ""
 "zipEitherWith'' :  {0 a : _}\n"
@@ -1498,12 +1521,12 @@ msgstr ""
 "                -> Either e c\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:658
+#: ../src/Tutorial/Functions2.md:670
 msgid "Consider the following contrived example:"
 msgstr "以下のわざとらしい例について考えましょう。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:659
+#: ../src/Tutorial/Functions2.md:671
 #, no-wrap
 msgid ""
 "foo : Integer -> String\n"
@@ -1513,7 +1536,7 @@ msgstr ""
 "foo n = show (the (Either String Integer) (Right n))\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:669
+#: ../src/Tutorial/Functions2.md:681
 msgid ""
 "Since we wrap an `Integer` in a `Right`, it is obvious that the second "
 "argument in `Either String Integer` is `Integer`. Only the `String` argument "
@@ -1527,7 +1550,7 @@ msgstr ""
 "不必要な雑音を消しましょう。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:670
+#: ../src/Tutorial/Functions2.md:682
 #, no-wrap
 msgid ""
 "foo' : Integer -> String\n"
@@ -1537,7 +1560,7 @@ msgstr ""
 "foo' n = show (the (_ String _) (Right n))\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:680
+#: ../src/Tutorial/Functions2.md:692
 msgid ""
 "Please note, that using underscores as in `foo'` is not always desirable, as "
 "it can quite drastically obfuscate the written code. Always use a syntactic "
@@ -1551,13 +1574,13 @@ msgstr ""
 "人々にあなたの賢さを誇示しないようにしましょう。"
 
 #. type: Title ##
-#: ../src/Tutorial/Functions2.md:681
+#: ../src/Tutorial/Functions2.md:693
 #, no-wrap
 msgid "Programming with Holes"
 msgstr "虫食いプログラミング"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:696
+#: ../src/Tutorial/Functions2.md:708
 msgid ""
 "Solved all the exercises so far? Got angry at the type checker for always "
 "complaining and never being really helpful? It's time to change that. Idris "
@@ -1590,7 +1613,7 @@ msgstr ""
 "虫食いを実際に見てみましょう。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:704
+#: ../src/Tutorial/Functions2.md:716
 msgid ""
 "Remember the `traverseList` example from an Exercise earlier in this "
 "section? If this was your first encounter with applicative list traversals, "
@@ -1609,12 +1632,12 @@ msgstr ""
 "を累算します。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:706
+#: ../src/Tutorial/Functions2.md:718
 msgid "Here's the type of the function:"
 msgstr "以下が関数の型です。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:707
+#: ../src/Tutorial/Functions2.md:719
 #, no-wrap
 msgid ""
 "traverseEither :  Semigroup e\n"
@@ -1628,7 +1651,47 @@ msgstr ""
 "               -> Either e (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:718
+#: ../src/Tutorial/Functions2.md:728
+msgid ""
+"As an optional exercise, you may wish to attempt this yourself first.  "
+"You've seen everything you need. Consider:"
+msgstr ""
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Functions2.md:734
+msgid ""
+"semigroups have an append operation `<+> : e -> e -> e` that combines two "
+"values into one"
+msgstr ""
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Functions2.md:734
+msgid "the empty list will succeed vacuously"
+msgstr ""
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Functions2.md:734
+msgid ""
+"if any of the function applications fail, you'll return a consolidation of "
+"all of the errors `e`"
+msgstr ""
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Functions2.md:734
+msgid ""
+"if all of the function applications succeed, you'll return a list with all "
+"of the results `b`"
+msgstr ""
+
+#. type: Bullet: '* '
+#: ../src/Tutorial/Functions2.md:734
+msgid ""
+"if you get it to compile, there are some test functions and variables at the "
+"bottom of this section for you to confirm that it's working as intended"
+msgstr ""
+
+#. type: Plain text
+#: ../src/Tutorial/Functions2.md:739
 msgid ""
 "Now, in order to follow along, you might want to start your own Idris source "
 "file, load it into a REPL session and adjust the code as described here. The "
@@ -1641,13 +1704,13 @@ msgstr ""
 "最初にすることは右側に虫食いの実装の骨組を書くことです。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:719
+#: ../src/Tutorial/Functions2.md:740
 #, no-wrap
 msgid "traverseEither fun as = ?impl\n"
 msgstr "traverseEither fun as = ?impl\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:725
+#: ../src/Tutorial/Functions2.md:746
 msgid ""
 "When you now go to the REPL and reload the file using command `:r`, you can "
 "enter `:m` to list all the *metavariables*:"
@@ -1656,7 +1719,7 @@ msgstr ""
 "そして`:m`とすれば全ての*メタ変数*が列挙されます。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:726
+#: ../src/Tutorial/Functions2.md:747
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :m\n"
@@ -1668,7 +1731,7 @@ msgstr ""
 "  Tutorial.Functions2.impl : Either e (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:734
+#: ../src/Tutorial/Functions2.md:755
 msgid ""
 "Next, we'd like to display the hole's type (including all variables in the "
 "surrounding context plus their types):"
@@ -1677,7 +1740,7 @@ msgstr ""
 "型も）。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:735
+#: ../src/Tutorial/Functions2.md:756
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :t impl\n"
@@ -1700,7 +1763,7 @@ msgstr ""
 
 # TODO: Our goal is to come up with a value of type `Either a (List b)`.のうち`Either a (List b)`は`Either e (List b)`です。
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:750
+#: ../src/Tutorial/Functions2.md:771
 msgid ""
 "So, we have some erased type parameters (`a`, `b`, and `e`), a value of type "
 "`List a` called `as`, and a function from `a` to `Either e b` called `fun`. "
@@ -1711,7 +1774,7 @@ msgstr ""
 "目標は型`Either e (List b)`の値を思い付くことです。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:754
+#: ../src/Tutorial/Functions2.md:775
 msgid ""
 "We *could* just return a `Right []`, but that only make sense if our input "
 "list is indeed the empty list. We therefore should start with a pattern "
@@ -1722,7 +1785,7 @@ msgstr ""
 "したがってリストに関してパターン合致するところから始めるとよいでしょう。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:755
+#: ../src/Tutorial/Functions2.md:776
 #, no-wrap
 msgid ""
 "traverseEither fun []        = ?impl_0\n"
@@ -1732,7 +1795,7 @@ msgstr ""
 "traverseEither fun (x :: xs) = ?impl_1\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:762
+#: ../src/Tutorial/Functions2.md:783
 msgid ""
 "The result is two holes, which must be given distinct names. When inspecting "
 "`impl_0`, we get the following result:"
@@ -1741,7 +1804,7 @@ msgstr ""
 "`impl_0`を調べると以下の結果になります。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:763
+#: ../src/Tutorial/Functions2.md:784
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :t impl_0\n"
@@ -1761,7 +1824,7 @@ msgstr ""
 "impl_0 : Either e (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:779
+#: ../src/Tutorial/Functions2.md:800
 msgid ""
 "Now, this is an interesting situation. We are supposed to come up with a "
 "value of type `Either e (List b)` with nothing to work with. We know nothing "
@@ -1781,13 +1844,13 @@ msgstr ""
 "です。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:780
+#: ../src/Tutorial/Functions2.md:801
 #, no-wrap
 msgid "traverseEither fun []        = Right []\n"
 msgstr "traverseEither fun []        = Right []\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:786
+#: ../src/Tutorial/Functions2.md:807
 msgid ""
 "The non-empty case is of course slightly more involved. Here's the context "
 "of `?impl_1`:"
@@ -1796,7 +1859,7 @@ msgstr ""
 "以下が`?impl_1`の文脈です。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:787
+#: ../src/Tutorial/Functions2.md:808
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :t impl_1\n"
@@ -1820,7 +1883,7 @@ msgstr ""
 "impl_1 : Either e (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:810
+#: ../src/Tutorial/Functions2.md:831
 msgid ""
 "Since `x` is of type `a`, we can either use it as an argument to `fun` or "
 "drop and ignore it. `xs`, on the other hand, is the remainder of the list of "
@@ -1845,7 +1908,7 @@ msgstr ""
 "結果を分析できます。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:811
+#: ../src/Tutorial/Functions2.md:832
 #, no-wrap
 msgid ""
 "traverseEither fun (x :: xs) =\n"
@@ -1857,12 +1920,12 @@ msgstr ""
 "   p => ?impl_2\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:818
+#: ../src/Tutorial/Functions2.md:839
 msgid "Once again, we inspect the context:"
 msgstr "もう一度文脈を調べます。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:819
+#: ../src/Tutorial/Functions2.md:840
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :t impl_2\n"
@@ -1888,7 +1951,7 @@ msgstr ""
 "impl_2 : Either e (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:834
+#: ../src/Tutorial/Functions2.md:855
 msgid ""
 "We'll definitely need to pattern match on pair `p` next to figure out, which "
 "of the two computations succeeded:"
@@ -1897,7 +1960,7 @@ msgstr ""
 "この対は2つの計算が成功したかを表します。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:835
+#: ../src/Tutorial/Functions2.md:856
 #, no-wrap
 msgid ""
 "traverseEither fun (x :: xs) =\n"
@@ -1915,7 +1978,7 @@ msgstr ""
 "    (Right y, Right z) => ?impl_9\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:847
+#: ../src/Tutorial/Functions2.md:868
 msgid ""
 "At this point we might have forgotten what we actually wanted to do (at "
 "least to me, this happens annoyingly often), so we'll just quickly check "
@@ -1926,7 +1989,7 @@ msgstr ""
 "なので目標をさくっと確認しましょう。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:848
+#: ../src/Tutorial/Functions2.md:869
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> :t impl_6\n"
@@ -1954,7 +2017,7 @@ msgstr ""
 "impl_6 : Either e (List b)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:868
+#: ../src/Tutorial/Functions2.md:889
 msgid ""
 "So, we are still looking for a value of type `Either e (List b)`, and we "
 "have two values of type `e` in scope. According to the spec we want to "
@@ -1969,7 +2032,7 @@ msgstr ""
 "全ての変換が成功したときに限って`Right`を返す、ということを記憶に留めつつ。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:869
+#: ../src/Tutorial/Functions2.md:890
 #, no-wrap
 msgid ""
 "traverseEither fun (x :: xs) =\n"
@@ -1987,12 +2050,12 @@ msgstr ""
 "    (Right y, Right z) => Right (y :: z)\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:879
+#: ../src/Tutorial/Functions2.md:900
 msgid "To reap the fruits of our labour, let's show off with a small example:"
 msgstr "これまでの骨折りの成果をものにするために、小さな例をお見せします。"
 
 #. type: Fenced code block (idris)
-#: ../src/Tutorial/Functions2.md:880
+#: ../src/Tutorial/Functions2.md:901
 #, no-wrap
 msgid ""
 "data Nucleobase = Adenine | Cytosine | Guanine | Thymine\n"
@@ -2026,12 +2089,12 @@ msgstr ""
 "readDNA = traverseEither readNucleobase . unpack\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:898
+#: ../src/Tutorial/Functions2.md:919
 msgid "Let's try this at the REPL:"
 msgstr "REPLで試してみましょう。"
 
 #. type: Fenced code block (repl)
-#: ../src/Tutorial/Functions2.md:899
+#: ../src/Tutorial/Functions2.md:920
 #, no-wrap
 msgid ""
 "Tutorial.Functions2> readDNA \"CGTTA\"\n"
@@ -2045,13 +2108,13 @@ msgstr ""
 "Left [\"Unknown nucleobase: 'F'\", \"Unknown nucleobase: 'Q'\"]\n"
 
 #. type: Title ###
-#: ../src/Tutorial/Functions2.md:906
+#: ../src/Tutorial/Functions2.md:927
 #, no-wrap
 msgid "Interactive Editing"
 msgstr "対話的編集"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:916
+#: ../src/Tutorial/Functions2.md:937
 msgid ""
 "There are plugins available for several editors and programming "
 "environments, which facilitate interacting with the Idris compiler when "
@@ -2068,7 +2131,7 @@ msgstr ""
 "そろそろそちらで記載した実用品を使い始めていい頃合いです。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:923
+#: ../src/Tutorial/Functions2.md:944
 msgid ""
 "If you use a different editor, probably with less support for the Idris "
 "programming language, you should at the very least have a REPL session open "
@@ -2083,7 +2146,7 @@ msgstr ""
 "す。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:929
+#: ../src/Tutorial/Functions2.md:950
 msgid ""
 "We again covered a lot of ground in this section. I can't stress enough that "
 "you should get yourselves accustomed to programming with holes and let the "
@@ -2094,7 +2157,7 @@ msgstr ""
 "て、型検査器に次何をすればよいのかを教えてもらうようにしましょう。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:932
+#: ../src/Tutorial/Functions2.md:953
 #, no-wrap
 msgid ""
 "* When in need of local utility functions, consider defining them\n"
@@ -2102,12 +2165,12 @@ msgid ""
 msgstr "* 局所ユーティリティ関数が必要なときは、*whereブロック*中の局所定義に書くことを検討してください。\n"
 
 #. type: Bullet: '* '
-#: ../src/Tutorial/Functions2.md:934
+#: ../src/Tutorial/Functions2.md:955
 msgid "Use *let expressions* to define and reuse local variables."
 msgstr "*let式*を使って局所変数を定義・再利用してください。"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:938
+#: ../src/Tutorial/Functions2.md:959
 #, no-wrap
 msgid ""
 "* Function arguments can be given a name, which can serve as documentation,\n"
@@ -2118,7 +2181,7 @@ msgstr ""
 "  こうすればドキュメントとして残すことができ、好きな順序で引数を渡すのに使え、そして依存型で参照するのに使えます。\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:942
+#: ../src/Tutorial/Functions2.md:963
 #, no-wrap
 msgid ""
 "* Implicit arguments are wrapped in curly braces. The compiler is\n"
@@ -2130,7 +2193,7 @@ msgstr ""
 "  それができないときは、明示的に他の名前付き引数として渡せます。\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:945
+#: ../src/Tutorial/Functions2.md:966
 #, no-wrap
 msgid ""
 "* Whenever possible, Idris adds implicit erased arguments for all\n"
@@ -2138,7 +2201,7 @@ msgid ""
 msgstr "* Idrisはできるだけ全ての型変数について自動的に暗黙の消去済み引数を加えようとします。\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:948
+#: ../src/Tutorial/Functions2.md:969
 #, no-wrap
 msgid ""
 "* Quantities allow us to track how often a function argument is\n"
@@ -2148,7 +2211,7 @@ msgstr ""
 "  数量子0は引数が実行時に消去されることを意味します。\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:953
+#: ../src/Tutorial/Functions2.md:974
 #, no-wrap
 msgid ""
 "* Use *holes* as placeholders for pieces of code you plan to fill\n"
@@ -2160,7 +2223,7 @@ msgstr ""
 "  REPL（もしくはエディタ）を使って、虫食いの型とその文脈にある全ての変数の名前、型、数量子を調べてください。\n"
 
 #. type: Plain text
-#: ../src/Tutorial/Functions2.md:962
+#: ../src/Tutorial/Functions2.md:983
 msgid ""
 "In the [next chapter](Dependent.md)  we'll start using dependent types to "
 "help us write provably correct code.  Having a good understanding of how to "

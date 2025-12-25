@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2025-03-30 11:12+0900\n"
+"POT-Creation-Date: 2025-12-26 08:43+0900\n"
 "PO-Revision-Date: 2025-03-30 13:28+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -18,10 +18,10 @@ msgstr ""
 
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
-#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1376
+#: ../src/Tutorial/Dependent.md:945 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1430
+#: ../src/Tutorial/Functions2.md:985 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
 #: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
@@ -35,7 +35,7 @@ msgstr ""
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:348 ../src/Tutorial/DataTypes.md:261
-#: ../src/Tutorial/Dependent.md:444 ../src/Tutorial/Eq.md:279
+#: ../src/Tutorial/Dependent.md:467 ../src/Tutorial/Eq.md:279
 #: ../src/Tutorial/Folds.md:373 ../src/Tutorial/Functor.md:381
 #: ../src/Tutorial/IO.md:317 ../src/Tutorial/Interfaces.md:189
 #: ../src/Tutorial/Predicates.md:305 ../src/Tutorial/Prim.md:448
@@ -46,7 +46,7 @@ msgstr "演習 その1"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
-#: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
+#: ../src/Tutorial/Dependent.md:649 ../src/Tutorial/Eq.md:555
 #: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
 #: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
@@ -57,7 +57,7 @@ msgstr "演習 その2"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
-#: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
+#: ../src/Tutorial/Dependent.md:878 ../src/Tutorial/Eq.md:826
 #: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
 #: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
@@ -370,8 +370,8 @@ msgid ""
 "It can be instructive to learn, where in the compiler's source code the "
 "primitive types and functions are defined. This source code can be found in "
 "folder `src` of the [Idris project](https://github.com/idris-lang/Idris2)  "
-"and the primitive types are the constant constructors of data type `Core.TT."
-"Constant`."
+"and the primitive types are the constant constructors of data type "
+"`Core.TT.Constant`."
 msgstr ""
 "コンパイラのソースコードのどこに原始型と原始関数が定義されているかを知\n"
 "るとわかりやすいかもしれません。このソースコードは[Idrisプロジェク\n"
@@ -1448,9 +1448,9 @@ msgid ""
 "arithmetics. Note, that this is much easier to grasp for unsigned integer "
 "types than for the signed versions.  Those have to include information about "
 "the *sign* of numbers in their bit pattern, and it is assumed that signed "
-"integers in Idris use a [two's complement representation](https://en."
-"wikipedia.org/wiki/Two%27s_complement), about which I will not go into the "
-"details here."
+"integers in Idris use a [two's complement representation](https://"
+"en.wikipedia.org/wiki/Two%27s_complement), about which I will not go into "
+"the details here."
 msgstr ""
 "モジュール`Data.Bits`は整数型に対してビット演算を行うインターフェースを輸出し"
 "ています。\n"
@@ -2147,11 +2147,11 @@ msgid ""
 "Well, it could have been (much) worse. Still, unless we take measures to "
 "prevent this from happening, this might embed a JavaScript program in our "
 "web page we never intended to have there! What I described here, is a well "
-"known security vulnerability called [cross-site scripting](https://en."
-"wikipedia.org/wiki/Cross-site_scripting).  It allows users of web pages to "
-"enter malicious JavaScript code in text fields, which will then be included "
-"in the page's HTML structure and executed when it is being displayed to "
-"other users."
+"known security vulnerability called [cross-site scripting](https://"
+"en.wikipedia.org/wiki/Cross-site_scripting).  It allows users of web pages "
+"to enter malicious JavaScript code in text fields, which will then be "
+"included in the page's HTML structure and executed when it is being "
+"displayed to other users."
 msgstr ""
 "おっと、（かなり）まずいことになるところでした。\n"
 "尚もこれが起こることを防ぐ対策を講じなければ、\n"
@@ -2593,8 +2593,8 @@ msgid ""
 "Proof [De Morgan's laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws)  "
 "by implementing the following propositions:"
 msgstr ""
-"以下の命題を実装することによって[ド・モルガンの法則](https://en.wikipedia."
-"org/wiki/De_Morgan%27s_laws)を証明してください。"
+"以下の命題を実装することによって[ド・モルガンの法則](https://"
+"en.wikipedia.org/wiki/De_Morgan%27s_laws)を証明してください。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Prim.md:1086

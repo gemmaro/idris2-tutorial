@@ -34,8 +34,34 @@ bogusZipList _ _ _ = []
 
 ## 長さ指標付きリスト
 
-上述した問題への答えはもちろん、依存型です。
-そして最もよく知られた取っ掛かりの例は*ベクタ*、長さ指標付きリストです。
+The answer to the issues described above is of course: Dependent types.
+Before we proceed to our example, first consider how Idris recursively
+defines the natural numbers (here affixed with apostrophes to avoid
+introducing a conflict with the actual definition of `Nat`, which you can
+find
+[here](https://github.com/idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Nat.idr)
+for reference):
+
+```idris
+data Nat' : Type where
+  Z' : Nat'
+  S' : Nat' -> Nat'
+```
+
+In this scheme, 0 is represented by `Z`, 1 is represented by `S Z`, 2 is
+represented by `S (S Z)`, and so on. Idris does this automatically so if you
+enter `Z` or `S Z` into the REPL, it will return `0` or `1`. Note that the
+only function inherently available to act on a value of type `Nat` is our
+data constructor `S`, which represents the successor function, i.e. adding
+1.
+
+Also note that in Idris, every `Nat` can be represented as either a `Z` or
+an `S n` where `n` is another `Nat`. Much as every `List a` can be
+represented as either a `Nil` or an `x :: xs` (where `x` is an `a` and `xs`
+is a `List a`), this informs our pattern matching when solving problems.
+
+Now we can consider the textbook introductory example of dependent types,
+the *vector*, which is a list indexed by its length:
 
 ```idris
 data Vect : (len : Nat) -> (a : Type) -> Type where
@@ -412,7 +438,10 @@ replicate (S k) va = va :: replicate k va
 
 ### 演習 その1
 
-1. 関数`head`を非空のベクタに実装してください。
+1. Implement a function `len : List a -> Nat` for calculating the length of
+   a `List`. For example, `len [1, 1, 1]` produces `3`.
+
+2. 関数`head`を非空のベクタに実装してください。
 
    ```idris
    head : Vect (S n) a -> a
@@ -423,23 +452,23 @@ replicate (S k) va = va :: replicate k va
    `Nil`の場合に`impossible`節を加えて確かめてみてください。
    （ただ、ここでは厳密には必要ありません。）
 
-2. `head`を参照しつつ、非空のベクタに対して関数`tail`を宣言し実装してください。
+3. `head`を参照しつつ、非空のベクタに対して関数`tail`を宣言し実装してください。
    型では出力が入力よりちょうど1要素分短かくなることを反映してください。
 
-3. `zipWith3`を実装してください。
+4. `zipWith3`を実装してください。
    もし可能であれば`zipWith`の実装を見ずにやってみてください。
 
    ```idris
    zipWith3 : (a -> b -> c -> d) -> Vect n a -> Vect n b -> Vect n c -> Vect n d
    ```
 
-4. `Semigroup`の結合演算子 (`<+>`) を通じて`List`に保管された値を累積する関数`foldSemi`を宣言し実装してください。
+5. `Semigroup`の結合演算子 (`<+>`) を通じて`List`に保管された値を累積する関数`foldSemi`を宣言し実装してください。
    （必ず`Semigroup`制約のみを使うようにしてください。`Monoid`制約ではありません。）
 
-5. 非空のベクタについて演習4と同様のことをしてください。
+6. 非空のベクタについて演習4と同様のことをしてください。
    ベクタの非空性は出力型にどう影響するでしょうか？
 
-6. 型`a`の初期値と関数`a -> a`が与えられているとき、
+7. 型`a`の初期値と関数`a -> a`が与えられているとき、
    `a`の`Vect`を生成したいとします。
    このベクタの最初の値は`a`で、2つ目の値は`f a`で、3つ目の値は`f (f a)`で、といった風に続きます。
 
@@ -450,7 +479,7 @@ replicate (S k) va = va :: replicate k va
    この関数はこの挙動をカプセル化します。
    どこから始めたらよいかわからないときは`replicate`から着想が得られます。
 
-7. 状態型`s`の初期値と関数`fun : s -> (s, a)`が与えられているとき、`a`の`Vect`を生成したいとします。
+8. 状態型`s`の初期値と関数`fun : s -> (s, a)`が与えられているとき、`a`の`Vect`を生成したいとします。
    関数`generate`を宣言し実装してください。
    この関数はこの挙動をカプセル化します。
    必ず全ての新しい`fun`の呼び出しで更新された状態を使うようにしてください。
@@ -462,7 +491,7 @@ replicate (S k) va = va :: replicate k va
    [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
    ```
 
-8. 関数`fromList`を実装してください。
+9. 関数`fromList`を実装してください。
    この関数は値のリストを同じ長さのベクタに変換します。
    詰まったら虫食いを使ってください。
 
@@ -472,7 +501,7 @@ replicate (S k) va = va :: replicate k va
 
    `fromList`の型で、リスト引数を関数*length*に渡すことで、結果のベクタの長さを*計算*できていることにご注目。
 
-9. 以下の宣言について考えてください。
+10. 以下の宣言について考えてください。
 
    ```idris
    maybeSize : Maybe a -> Nat
@@ -650,6 +679,15 @@ drop' : (m : Nat) -> Vect (m + n) a -> Vect n a
 drop' 0     xs        = xs
 drop' (S k) (_ :: xs) = drop' k xs
 ```
+
+Note that changing the order from `(m + n)` to `(n + m)` in the second
+parameter will cause an error at the second `xs`:
+
+```repl
+While processing right hand side of drop'. Can't solve constraint between: plus n 0 and n.
+```
+
+You will learn why in the next section.
 
 ### 制約
 

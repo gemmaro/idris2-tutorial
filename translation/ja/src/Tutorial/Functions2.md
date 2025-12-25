@@ -297,13 +297,25 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
    型を調べた上で、`handleRequest`の実装で使ってください。
    これで完全に`where`ブロックを排除できます。
 
-2. DND鎖に表れる4つの[核酸塩基](https://en.wikipedia.org/wiki/Nucleobase)を並べた列挙型を定義してください。
+2. Refactor `handleRequest` to use `Either`, such that `handleRequest : DB
+   -> Request -> Either Failure Album`, where
+
+   ```idris
+   data Failure : Type where
+     UnknownUser : Email -> Failure
+     InvalidPassword : Failure
+     AccessDenied : Email -> Album -> Failure
+   ```
+
+   Hint: You may find nested `case` statements helpful.
+
+3. DND鎖に表れる4つの[核酸塩基](https://en.wikipedia.org/wiki/Nucleobase)を並べた列挙型を定義してください。
    核酸塩基のリストについて、型別称`DNA`も定義してください。
    単一文字（型`Char`）を核酸塩基に変換する関数`readBase`を宣言・実装してください。
    実装では`'A'`や`'a'`のように文字直値が使えます。
    この関数は失敗するかもしれないので、結果の型を調整してください。
 
-3. 次の関数を実装してください。
+4. 次の関数を実装してください。
    リスト中の全ての値を関数で変換しようとするものです。
    ただし、関数は失敗するかもしれません。
    全ての変換が成功したときに限り、結果は同じ順序で変換後の値のリストが入った`Just`になります。
@@ -314,10 +326,10 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
 
    関数が正しく振る舞うことは、`traverseList Just [1,2,3] = Just [1,2,3]`を調べてみると確かめられます。
 
-4. 演習2と3で定義した関数と型を使って、関数`readDNA : String -> Maybe DNA`を実装してください。
+5. 演習2と3で定義した関数と型を使って、関数`readDNA : String -> Maybe DNA`を実装してください。
    *Prelude*の関数*unpack*も要ることでしょう。
 
-5. DNA鎖の転写を計算する関数`complement : DNA -> DNA`を実装してください。
+6. DNA鎖の転写を計算する関数`complement : DNA -> DNA`を実装してください。
 
 ## 関数引数の真実
 
@@ -610,6 +622,20 @@ traverseEither :  Semigroup e
                -> List a
                -> Either e (List b)
 ```
+
+As an optional exercise, you may wish to attempt this yourself first.
+You've seen everything you need. Consider:
+
+* semigroups have an append operation `<+> : e -> e -> e` that combines two
+  values into one
+* the empty list will succeed vacuously
+* if any of the function applications fail, you'll return a consolidation of
+  all of the errors `e`
+* if all of the function applications succeed, you'll return a list with all
+  of the results `b`
+* if you get it to compile, there are some test functions and variables at
+  the bottom of this section for you to confirm that it's working as
+  intended
 
 さて、読み進めていくにあたって、読者の皆さんは自分でIdrisのソースファイルを書き始め、REPLセッションに読み込まれるとよいでしょう。
 コードはこちらで記述されている内容にしたがって調整していきます。

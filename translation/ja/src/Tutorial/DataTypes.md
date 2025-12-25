@@ -1064,26 +1064,35 @@ Idrisでは関数の型での小文字の識別子は*型変数*として扱わ�
    total
    filterList : (a -> Bool) -> List a -> List a
 
-   -- リストの最初の値を返してください。もし空でなければですが。
+   -- re-implement list concatenation (++) such that e.g. (++) [1, 2] [3, 4] = [1, 2, 3, 4]
+   -- note that because this function conflicts with the standard
+   -- Prelude.List.(++), if you use it then you will need to prefix it with
+   -- the name of your module, like DataTypes.(++) or Ch3.(++). alternatively
+   -- you could simply call the function something unique like myListConcat or concat'
+   total
+   (++) : List a -> List a -> List a
+
+   -- return the first value of a list, if it is non-empty
    total
    headMaybe : List a -> Maybe a
 
-   -- リストの最初の値以外全部を返してください。もし空でなければですが。
+   -- return everything but the first value of a list, if it is non-empty
    total
    tailMaybe : List a -> Maybe (List a)
 
-   -- リストの最後の値を返してください。もし空でなければですが。
+   -- return the last value of a list, if it is non-empty
    total
    lastMaybe : List a -> Maybe a
 
-   -- リストの最後の値以外全部を返してください。もし空でなければですが。
+   -- return everything but the last value of a list,
+   -- if it is non-empty
    total
    initMaybe : List a -> Maybe (List a)
 
-   -- リストの値を累算してください。
-   -- 与えられた累算関数と初期値を使います。
+   -- accumulate the values in a list using the given
+   -- accumulator function and initial value
    --
-   -- 例：
+   -- Examples:
    -- `foldList (+) 10 [1,2,7] = 20`
    -- `foldList String.(++) "" ["Hello","World"] = "HelloWorld"`
    -- `foldList last Nothing (mapList Just [1,2,3]) = Just 3`

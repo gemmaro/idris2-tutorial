@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
-"POT-Creation-Date: 2023-04-09 22:52+0900\n"
+"POT-Creation-Date: 2025-12-26 08:43+0900\n"
 "PO-Revision-Date: 2023-06-29 23:44+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,10 +19,10 @@ msgstr ""
 #. type: Title ##
 #: ../src/Appendices/Neovim.md:364 ../src/Appendices/Install.md:102
 #: ../src/Appendices/Projects.md:878 ../src/Tutorial/DPair.md:1191
-#: ../src/Tutorial/DataTypes.md:1319 ../src/Tutorial/Dependent.md:872
+#: ../src/Tutorial/DataTypes.md:1327 ../src/Tutorial/Dependent.md:907
 #: ../src/Tutorial/Eq.md:1085 ../src/Tutorial/Folds.md:1051
-#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:924
-#: ../src/Tutorial/Functor.md:1395 ../src/Tutorial/IO.md:1095
+#: ../src/Tutorial/Functions1.md:524 ../src/Tutorial/Functions2.md:945
+#: ../src/Tutorial/Functor.md:1398 ../src/Tutorial/IO.md:1095
 #: ../src/Tutorial/Interfaces.md:792 ../src/Tutorial/Predicates.md:1358
 #: ../src/Tutorial/Traverse.md:1109
 #, no-wrap
@@ -31,13 +31,13 @@ msgstr "まとめ"
 
 #. type: Plain text
 #: ../src/Appendices/Neovim.md:374 ../src/Appendices/Projects.md:890
-#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1368
-#: ../src/Tutorial/Dependent.md:910 ../src/Tutorial/Eq.md:1100
+#: ../src/Tutorial/DPair.md:1206 ../src/Tutorial/DataTypes.md:1376
+#: ../src/Tutorial/Dependent.md:945 ../src/Tutorial/Eq.md:1100
 #: ../src/Tutorial/Folds.md:1064 ../src/Tutorial/Functions1.md:583
-#: ../src/Tutorial/Functions2.md:964 ../src/Tutorial/Functor.md:1427
+#: ../src/Tutorial/Functions2.md:985 ../src/Tutorial/Functor.md:1430
 #: ../src/Tutorial/IO.md:1125 ../src/Tutorial/Interfaces.md:821
 #: ../src/Tutorial/Intro.md:453 ../src/Tutorial/Predicates.md:1371
-#: ../src/Tutorial/Prim.md:1411 ../src/Tutorial/Traverse.md:1148
+#: ../src/Tutorial/Prim.md:1410 ../src/Tutorial/Traverse.md:1148
 #, no-wrap
 msgid ""
 "<!-- vi: filetype=idris2:syntax=markdown\n"
@@ -48,7 +48,7 @@ msgstr ""
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:348 ../src/Tutorial/DataTypes.md:261
-#: ../src/Tutorial/Dependent.md:444 ../src/Tutorial/Eq.md:279
+#: ../src/Tutorial/Dependent.md:467 ../src/Tutorial/Eq.md:279
 #: ../src/Tutorial/Folds.md:373 ../src/Tutorial/Functor.md:381
 #: ../src/Tutorial/IO.md:317 ../src/Tutorial/Interfaces.md:189
 #: ../src/Tutorial/Predicates.md:305 ../src/Tutorial/Prim.md:448
@@ -59,10 +59,10 @@ msgstr "演習 その1"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:653 ../src/Tutorial/DataTypes.md:436
-#: ../src/Tutorial/Dependent.md:623 ../src/Tutorial/Eq.md:555
-#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:962
+#: ../src/Tutorial/Dependent.md:649 ../src/Tutorial/Eq.md:555
+#: ../src/Tutorial/Folds.md:668 ../src/Tutorial/Functor.md:965
 #: ../src/Tutorial/IO.md:728 ../src/Tutorial/Interfaces.md:352
-#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:712
+#: ../src/Tutorial/Predicates.md:672 ../src/Tutorial/Prim.md:711
 #: ../src/Tutorial/Traverse.md:574
 #, no-wrap
 msgid "Exercises part 2"
@@ -70,18 +70,18 @@ msgstr "演習 その2"
 
 #. type: Title ###
 #: ../src/Tutorial/DPair.md:1128 ../src/Tutorial/DataTypes.md:742
-#: ../src/Tutorial/Dependent.md:843 ../src/Tutorial/Eq.md:826
-#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1232
+#: ../src/Tutorial/Dependent.md:878 ../src/Tutorial/Eq.md:826
+#: ../src/Tutorial/Folds.md:988 ../src/Tutorial/Functor.md:1235
 #: ../src/Tutorial/IO.md:949 ../src/Tutorial/Interfaces.md:624
-#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:936
+#: ../src/Tutorial/Predicates.md:1020 ../src/Tutorial/Prim.md:935
 #: ../src/Tutorial/Traverse.md:1016
 #, no-wrap
 msgid "Exercises part 3"
 msgstr "演習 その3"
 
 #. type: Title ###
-#: ../src/Tutorial/DataTypes.md:1362 ../src/Tutorial/Dependent.md:904
-#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:954
+#: ../src/Tutorial/DataTypes.md:1370 ../src/Tutorial/Dependent.md:939
+#: ../src/Tutorial/Functions1.md:575 ../src/Tutorial/Functions2.md:975
 #: ../src/Tutorial/IO.md:1118 ../src/Tutorial/Interfaces.md:813
 #, no-wrap
 msgid "What's next"
@@ -90,7 +90,7 @@ msgstr "お次は？"
 #. type: Plain text
 #: ../src/Tutorial/Functions1.md:164 ../src/Tutorial/Functions1.md:227
 #: ../src/Tutorial/Interfaces.md:504 ../src/Tutorial/Predicates.md:461
-#: ../src/Tutorial/Prim.md:646
+#: ../src/Tutorial/Prim.md:645
 msgid "And at the REPL:"
 msgstr "そしてREPLで次のようにします。"
 
@@ -2009,8 +2009,8 @@ msgstr ""
 msgid ""
 "Note, that I did not yet tell the whole story about literal values in this "
 "section. More details for using literals with types that accept only a "
-"restricted set of values can be found in the chapter about [primitives](Prim."
-"md)."
+"restricted set of values can be found in the chapter about [primitives]"
+"(Prim.md)."
 msgstr ""
 "ただ、この節ではまだ直値の一部始終をお話ししていません。\n"
 "限られた値の集合のみを受け付ける型に直値を使うことに関するもっと詳しい話は、"
