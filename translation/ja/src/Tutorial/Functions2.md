@@ -297,8 +297,9 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
    型を調べた上で、`handleRequest`の実装で使ってください。
    これで完全に`where`ブロックを排除できます。
 
-2. Refactor `handleRequest` to use `Either`, such that `handleRequest : DB
-   -> Request -> Either Failure Album`, where
+2. `handleRequest`を、`Either`を使うように改修してください。
+   `handleRequest : DB -> Request -> Either Failure Album`とします。
+   ここで、`Failure`は次の通り。
 
    ```idris
    data Failure : Type where
@@ -307,7 +308,7 @@ handleRequest' db (MkRequest (MkCredentials email pw) album) =
      AccessDenied : Email -> Album -> Failure
    ```
 
-   Hint: You may find nested `case` statements helpful.
+   手掛かり：入れ子の`case`式が役に立つかもしれません。
 
 3. DND鎖に表れる4つの[核酸塩基](https://en.wikipedia.org/wiki/Nucleobase)を並べた列挙型を定義してください。
    核酸塩基のリストについて、型別称`DNA`も定義してください。
@@ -623,19 +624,16 @@ traverseEither :  Semigroup e
                -> Either e (List b)
 ```
 
-As an optional exercise, you may wish to attempt this yourself first.
-You've seen everything you need. Consider:
+おまけの演習として、まずは自分でやってみるといいかもしれません。
+必要なことは全て見てきましたから。
+次のことを考慮してください。
 
-* semigroups have an append operation `<+> : e -> e -> e` that combines two
-  values into one
-* the empty list will succeed vacuously
-* if any of the function applications fail, you'll return a consolidation of
-  all of the errors `e`
-* if all of the function applications succeed, you'll return a list with all
-  of the results `b`
-* if you get it to compile, there are some test functions and variables at
-  the bottom of this section for you to confirm that it's working as
-  intended
+* 半群 (semigroup) には、2つの値を1つに組み合わせる結合操作`<+> : e -> e -> e`があります。
+* 空リストは空のものとして成功します。
+* 関数適用がどれか失敗したら、全てのエラーを一纏めにした`e`を返します。
+* 全ての関数適用が成功したら、全ての結果があるリスト`b`を返します。
+* コンパイルできるようになったら、本節の末尾にテスト用の関数と変数を用意しています。
+  意図通りに動いているか確認してください。
 
 さて、読み進めていくにあたって、読者の皆さんは自分でIdrisのソースファイルを書き始め、REPLセッションに読み込まれるとよいでしょう。
 コードはこちらで記述されている内容にしたがって調整していきます。

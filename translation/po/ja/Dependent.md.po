@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-12-26 08:43+0900\n"
-"PO-Revision-Date: 2025-03-30 13:13+0900\n"
+"PO-Revision-Date: 2025-12-26 09:13+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -186,6 +186,12 @@ msgid ""
 "find [here](https://github.com/idris-lang/Idris-dev/blob/master/libs/prelude/"
 "Prelude/Nat.idr)  for reference):"
 msgstr ""
+"上述の問題への答えはもちろん、依存型です。\n"
+"例に進む前に、まずIdrisでどのように再帰的に自然数が定義されているか考えます"
+"（ここではアポストロフィを付けて、実際の`Nat`の定義と競合するのを回避していま"
+"す。\n"
+"参考までに、元のものは[こちら](https://github.com/idris-lang/Idris-dev/blob/"
+"master/libs/prelude/Prelude/Nat.idr)にあります）。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:45
@@ -195,6 +201,9 @@ msgid ""
 "  Z' : Nat'\n"
 "  S' : Nat' -> Nat'\n"
 msgstr ""
+"data Nat' : Type where\n"
+"  Z' : Nat'\n"
+"  S' : Nat' -> Nat'\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:56
@@ -205,6 +214,13 @@ msgid ""
 "only function inherently available to act on a value of type `Nat` is our "
 "data constructor `S`, which represents the successor function, i.e. adding 1."
 msgstr ""
+"この構成では、0が`Z`で、1が`S Z`で、2が`S (S Z)`で、といったように表されま"
+"す。\n"
+"Idrisではこの読み替えが自動で行われるため、REPLに`Z`や`S Z`と入力すると`0`や"
+"`1`が返ります。\n"
+"なお、この作りにより、`Nat`型の値を扱える関数はデータ構築子`S`だけです。\n"
+"これは後続関数を表しています。\n"
+"後続関数とは、例えば1を加えるものです。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:61
@@ -214,20 +230,19 @@ msgid ""
 "represented as either a `Nil` or an `x :: xs` (where `x` is an `a` and `xs` "
 "is a `List a`), this informs our pattern matching when solving problems."
 msgstr ""
+"また、Idrisでは`Nat`は必ず`Z`か`S n`の何れかで表されます。\n"
+"ただし`n`は別の`Nat`です。\n"
+"`List a`が必ず`Nil`か`x :: xs`（ただし`x`は`a`型、`xs`は`List a`型）の何れか"
+"で表せるのと同様に、問題を解くときのパターン合致でこの情報が使われます。"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:64
-#, fuzzy
-#| msgid ""
-#| "The answer to the issues described above is of course: Dependent types.  "
-#| "And the most common introductory example is the *vector*: A list indexed "
-#| "by its length:"
 msgid ""
 "Now we can consider the textbook introductory example of dependent types, "
 "the *vector*, which is a list indexed by its length:"
 msgstr ""
-"上述した問題への答えはもちろん、依存型です。\n"
-"そして最もよく知られた取っ掛かりの例は*ベクタ*、長さ指標付きリストです。"
+"これで、教科書の導入で出てくるような依存型の例を考えられます。\n"
+"それが*ベクタ*で、長さで指標付けられたリストです。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Dependent.md:65
@@ -1119,14 +1134,12 @@ msgstr ""
 
 #. type: Bullet: '1. '
 #: ../src/Tutorial/Dependent.md:471
-#, fuzzy
-#| msgid ""
-#| "Implement function `complement : DNA -> DNA` to calculate the complement "
-#| "of a strand of DNA."
 msgid ""
 "Implement a function `len : List a -> Nat` for calculating the length of a "
 "`List`. For example, `len [1, 1, 1]` produces `3`."
-msgstr "DNA鎖の転写を計算する関数`complement : DNA -> DNA`を実装してください。"
+msgstr ""
+"`List`の長さを計算する関数`len : List a -> Nat`を実装してください。\n"
+"例えば`len [1, 1, 1]`は`3`になります。"
 
 #. type: Bullet: '2. '
 #: ../src/Tutorial/Dependent.md:473
@@ -1752,17 +1765,19 @@ msgid ""
 "Note that changing the order from `(m + n)` to `(n + m)` in the second "
 "parameter will cause an error at the second `xs`:"
 msgstr ""
+"なお、2つ目の引数で`(m + n)`から`(n + m)`に順番を変えると、2つ目の`xs`のとこ"
+"ろでエラーが起きます。"
 
 #. type: Fenced code block (repl)
 #: ../src/Tutorial/Dependent.md:741
 #, no-wrap
 msgid "While processing right hand side of drop'. Can't solve constraint between: plus n 0 and n.\n"
-msgstr ""
+msgstr "While processing right hand side of drop'. Can't solve constraint between: plus n 0 and n.\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Dependent.md:746
 msgid "You will learn why in the next section."
-msgstr ""
+msgstr "次節でその理由を学びましょう。"
 
 #. type: Title ###
 #: ../src/Tutorial/Dependent.md:747

@@ -34,13 +34,9 @@ bogusZipList _ _ _ = []
 
 ## 長さ指標付きリスト
 
-The answer to the issues described above is of course: Dependent types.
-Before we proceed to our example, first consider how Idris recursively
-defines the natural numbers (here affixed with apostrophes to avoid
-introducing a conflict with the actual definition of `Nat`, which you can
-find
-[here](https://github.com/idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Nat.idr)
-for reference):
+上述の問題への答えはもちろん、依存型です。
+例に進む前に、まずIdrisでどのように再帰的に自然数が定義されているか考えます（ここではアポストロフィを付けて、実際の`Nat`の定義と競合するのを回避しています。
+参考までに、元のものは[こちら](https://github.com/idris-lang/Idris-dev/blob/master/libs/prelude/Prelude/Nat.idr)にあります）。
 
 ```idris
 data Nat' : Type where
@@ -48,20 +44,19 @@ data Nat' : Type where
   S' : Nat' -> Nat'
 ```
 
-In this scheme, 0 is represented by `Z`, 1 is represented by `S Z`, 2 is
-represented by `S (S Z)`, and so on. Idris does this automatically so if you
-enter `Z` or `S Z` into the REPL, it will return `0` or `1`. Note that the
-only function inherently available to act on a value of type `Nat` is our
-data constructor `S`, which represents the successor function, i.e. adding
-1.
+この構成では、0が`Z`で、1が`S Z`で、2が`S (S Z)`で、といったように表されます。
+Idrisではこの読み替えが自動で行われるため、REPLに`Z`や`S Z`と入力すると`0`や`1`が返ります。
+なお、この作りにより、`Nat`型の値を扱える関数はデータ構築子`S`だけです。
+これは後続関数を表しています。
+後続関数とは、例えば1を加えるものです。
 
-Also note that in Idris, every `Nat` can be represented as either a `Z` or
-an `S n` where `n` is another `Nat`. Much as every `List a` can be
-represented as either a `Nil` or an `x :: xs` (where `x` is an `a` and `xs`
-is a `List a`), this informs our pattern matching when solving problems.
+また、Idrisでは`Nat`は必ず`Z`か`S n`の何れかで表されます。
+ただし`n`は別の`Nat`です。
+`List a`が必ず`Nil`か`x :: xs`（ただし`x`は`a`型、`xs`は`List
+a`型）の何れかで表せるのと同様に、問題を解くときのパターン合致でこの情報が使われます。
 
-Now we can consider the textbook introductory example of dependent types,
-the *vector*, which is a list indexed by its length:
+これで、教科書の導入で出てくるような依存型の例を考えられます。
+それが*ベクタ*で、長さで指標付けられたリストです。
 
 ```idris
 data Vect : (len : Nat) -> (a : Type) -> Type where
@@ -438,8 +433,8 @@ replicate (S k) va = va :: replicate k va
 
 ### 演習 その1
 
-1. Implement a function `len : List a -> Nat` for calculating the length of
-   a `List`. For example, `len [1, 1, 1]` produces `3`.
+1. `List`の長さを計算する関数`len : List a -> Nat`を実装してください。
+   例えば`len [1, 1, 1]`は`3`になります。
 
 2. 関数`head`を非空のベクタに実装してください。
 
@@ -680,14 +675,13 @@ drop' 0     xs        = xs
 drop' (S k) (_ :: xs) = drop' k xs
 ```
 
-Note that changing the order from `(m + n)` to `(n + m)` in the second
-parameter will cause an error at the second `xs`:
+なお、2つ目の引数で`(m + n)`から`(n + m)`に順番を変えると、2つ目の`xs`のところでエラーが起きます。
 
 ```repl
 While processing right hand side of drop'. Can't solve constraint between: plus n 0 and n.
 ```
 
-You will learn why in the next section.
+次節でその理由を学びましょう。
 
 ### 制約
 

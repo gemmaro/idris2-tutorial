@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Functional Programming in Idris 2\n"
 "POT-Creation-Date: 2025-12-26 08:43+0900\n"
-"PO-Revision-Date: 2025-03-30 13:17+0900\n"
+"PO-Revision-Date: 2025-12-26 09:23+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -819,6 +819,9 @@ msgid ""
 "Refactor `handleRequest` to use `Either`, such that `handleRequest : DB -> "
 "Request -> Either Failure Album`, where"
 msgstr ""
+"`handleRequest`を、`Either`を使うように改修してください。\n"
+"`handleRequest : DB -> Request -> Either Failure Album`とします。\n"
+"ここで、`Failure`は次の通り。"
 
 #. type: Fenced code block (idris)
 #: ../src/Tutorial/Functions2.md:359
@@ -829,12 +832,16 @@ msgid ""
 "     InvalidPassword : Failure\n"
 "     AccessDenied : Email -> Album -> Failure\n"
 msgstr ""
+"   data Failure : Type where\n"
+"     UnknownUser : Email -> Failure\n"
+"     InvalidPassword : Failure\n"
+"     AccessDenied : Email -> Album -> Failure\n"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:367
 #, no-wrap
 msgid "   Hint: You may find nested `case` statements helpful.\n"
-msgstr ""
+msgstr "   手掛かり：入れ子の`case`式が役に立つかもしれません。\n"
 
 #. type: Bullet: '3. '
 #: ../src/Tutorial/Functions2.md:377
@@ -1656,6 +1663,9 @@ msgid ""
 "As an optional exercise, you may wish to attempt this yourself first.  "
 "You've seen everything you need. Consider:"
 msgstr ""
+"おまけの演習として、まずは自分でやってみるといいかもしれません。\n"
+"必要なことは全て見てきましたから。\n"
+"次のことを考慮してください。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions2.md:734
@@ -1663,25 +1673,27 @@ msgid ""
 "semigroups have an append operation `<+> : e -> e -> e` that combines two "
 "values into one"
 msgstr ""
+"半群 (semigroup) には、2つの値を1つに組み合わせる結合操作`<+> : e -> e -> e`"
+"があります。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions2.md:734
 msgid "the empty list will succeed vacuously"
-msgstr ""
+msgstr "空リストは空のものとして成功します。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions2.md:734
 msgid ""
 "if any of the function applications fail, you'll return a consolidation of "
 "all of the errors `e`"
-msgstr ""
+msgstr "関数適用がどれか失敗したら、全てのエラーを一纏めにした`e`を返します。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions2.md:734
 msgid ""
 "if all of the function applications succeed, you'll return a list with all "
 "of the results `b`"
-msgstr ""
+msgstr "全ての関数適用が成功したら、全ての結果があるリスト`b`を返します。"
 
 #. type: Bullet: '* '
 #: ../src/Tutorial/Functions2.md:734
@@ -1689,6 +1701,9 @@ msgid ""
 "if you get it to compile, there are some test functions and variables at the "
 "bottom of this section for you to confirm that it's working as intended"
 msgstr ""
+"コンパイルできるようになったら、本節の末尾にテスト用の関数と変数を用意してい"
+"ます。\n"
+"意図通りに動いているか確認してください。"
 
 #. type: Plain text
 #: ../src/Tutorial/Functions2.md:739

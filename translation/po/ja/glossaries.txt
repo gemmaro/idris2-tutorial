@@ -12,3 +12,5 @@ match: 合致。マッチとガッチで似ているため。
 scope: スコープ。「範疇」にすることを考えています。
 signature: 処方。type signatureは型処方です。
 utility: 補助、ユーティリティ。「便利」や「小間物」のように訳してみましたが、どうもしっくり来ませんでした。
+index: 指標としています。添字のほうがかえっていいかも。
+append: 結合。<https://ja.wikipedia.org/wiki/%E5%8D%8A%E7%BE%A4>

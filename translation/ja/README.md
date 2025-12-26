@@ -1,10 +1,8 @@
 # Idrisでの関数型プログラミング
 
-Note: This is the original version of the Idris2 tutorial, which is now
-deprecated. The current version is being maintained by the Idris2 community
-and can be found
-[here](https://github.com/idris-community/idris2-tutorial).  All fixes and
-new contributions should go there.
+注意：これはIdris2入門の原版ですが、現在は非推奨です。
+現在のバージョンはIdris2コミュニティで維持されており、[こちら](https://github.com/idris-community/idris2-tutorial)にあります。
+全ての修正や新しく貢献する際はそちらでお願いします。
 
 [中文翻译](https://github.com/running-grass/idris2-tutorial-zh/blob/main/translation/README.md),
 [日本語訳](https://github.com/gemmaro/idris2-tutorial/blob/ja/translation/ja/README.md)
